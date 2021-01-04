@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
+        "laravolt/indonesia": "^0.28.0",
         "spatie/laravel-permission": "^3.18",
         "yajra/laravel-datatables-oracle": "^9.15"
     },
