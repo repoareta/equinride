@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// custom load
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes(['verify' => 'true']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
