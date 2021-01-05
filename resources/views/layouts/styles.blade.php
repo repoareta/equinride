@@ -32,12 +32,6 @@
         position: absolute;
         top: -4px;
         right: 4px;
-        text-align: center;
-        font-size: 9px;
-        padding: 2px 3px;
-        line-height: .9;
-        border-radius: inherit;
-        width: 70px;
     }
 
     .scroll {
@@ -50,5 +44,34 @@
     /* [5] */
     .scroll::-webkit-scrollbar {
     display: none; 
+    }
+
+    .carousel-content {
+        position: absolute;
+        left: 30px;
+        top: 50px;
+        width: 70%;
+        z-index: 2;
+    }
+
+    .carousel-content .title {
+        font-weight: 900;
+        font-size: 30px;
+        color: #ffffff;
+    }
+
+    ol.carousel-indicators {
+        justify-content: unset;
+        margin-right: unset;
+        margin-left: unset;
+        left: unset;
+        right: 30px;
+        bottom: 10px;
+    }
+
+    .carousel-content .subtitle {
+        font-weight: normal;
+        font-size: 16px;
+        color: #ffffff;
     }
 </style>

@@ -36,28 +36,28 @@
 						<li class="menu-item" aria-haspopup="true">
 							<a href="#" class="menu-link">
 								<span class="menu-text">COMPETITIONS</span>
-								<span class="label label-danger">Coming Soon</span>
+								<span class="label label-inline label-danger">Coming Soon</span>
 							</a>
 						</li>
 
 						<li class="menu-item" aria-haspopup="true">
 							<a href="#" class="menu-link">
 								<span class="menu-text">VIRTUAL STABLING</span>
-								<span class="label label-danger">Coming Soon</span>
+								<span class="label label-inline label-danger">Coming Soon</span>
 							</a>
 						</li>
 
 						<li class="menu-item" aria-haspopup="true">
 							<a href="#" class="menu-link">
 								<span class="menu-text">HORSE DEAL</span>
-								<span class="label label-danger">Coming Soon</span>
+								<span class="label label-inline label-danger">Coming Soon</span>
 							</a>
 						</li>
 
 						<li class="menu-item" aria-haspopup="true">
 							<a href="#" class="menu-link">
 								<span class="menu-text">MARKETPLACE</span>
-								<span class="label label-danger">Coming Soon</span>
+								<span class="label label-inline label-danger">Coming Soon</span>
 							</a>
 						</li>
 						

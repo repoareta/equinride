@@ -1,26 +1,458 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="alert alert-custom alert-white alert-shadow gutter-b" role="alert">
-    <div class="alert-icon alert-icon-top">
-        <span class="svg-icon svg-icon-3x svg-icon-primary mt-4">
-            <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Tools/Tools.svg-->
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <rect x="0" y="0" width="24" height="24"></rect>
-                    <path d="M15.9497475,3.80761184 L13.0246125,6.73274681 C12.2435639,7.51379539 12.2435639,8.78012535 13.0246125,9.56117394 L14.4388261,10.9753875 C15.2198746,11.7564361 16.4862046,11.7564361 17.2672532,10.9753875 L20.1923882,8.05025253 C20.7341101,10.0447871 20.2295941,12.2556873 18.674559,13.8107223 C16.8453326,15.6399488 14.1085592,16.0155296 11.8839934,14.9444337 L6.75735931,20.0710678 C5.97631073,20.8521164 4.70998077,20.8521164 3.92893219,20.0710678 C3.1478836,19.2900192 3.1478836,18.0236893 3.92893219,17.2426407 L9.05556629,12.1160066 C7.98447038,9.89144078 8.36005124,7.15466739 10.1892777,5.32544095 C11.7443127,3.77040588 13.9552129,3.26588995 15.9497475,3.80761184 Z" fill="#000000"></path>
-                    <path d="M16.6568542,5.92893219 L18.0710678,7.34314575 C18.4615921,7.73367004 18.4615921,8.36683502 18.0710678,8.75735931 L16.6913928,10.1370344 C16.3008685,10.5275587 15.6677035,10.5275587 15.2771792,10.1370344 L13.8629656,8.7228208 C13.4724413,8.33229651 13.4724413,7.69913153 13.8629656,7.30860724 L15.2426407,5.92893219 C15.633165,5.5384079 16.26633,5.5384079 16.6568542,5.92893219 Z" fill="#000000" opacity="0.3"></path>
-                </g>
-            </svg>
-            <!--end::Svg Icon-->
-        </span>
+<div class="row">
+    <div class="col-xl-8">
+        <div id="carouselExampleIndicators" class="carousel slide card-stretch" data-ride="carousel" >
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-content">
+                        <h5 class="title">
+                            RIDING CLASS FOR EVERYONE
+                        </h5>
+                        <p class="subtitle">
+                            Choose a class that you can take according to your current abilities
+                        </p>
+                        <a href="#" class="btn btn-warning">
+                            <b>JOIN THE CLASS</b>
+                        </a>
+                    </div>
+                    <div class="overlay"></div>
+                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h5 class="title">
+                            RIDING CLASS FOR EVERYONE
+                        </h5>
+                        <p class="subtitle">
+                            Choose a class that you can take according to your current abilities
+                        </p>
+                        <a href="#" class="btn btn-warning">
+                            <b>JOIN THE CLASS</b>
+                        </a>
+                    </div>
+                    <div class="overlay"></div>
+                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h5 class="title">
+                            RIDING CLASS FOR EVERYONE
+                        </h5>
+                        <p class="subtitle">
+                            Choose a class that you can take according to your current abilities
+                        </p>
+                        <a href="#" class="btn btn-warning">
+                            <b>JOIN THE CLASS</b>
+                        </a>
+                    </div>
+                    <div class="overlay"></div>
+                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="Third slide">
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="alert-text">
-        <p>The layout builder is to assist your set and configure your preferred project layout specifications and preview it in real time. The configured layout options will be saved until you change or reset them. To use the layout builder, choose the layout options and click the 
-        <code>Preview</code>button to preview the changes and click the 
-        <code>Export</code>button to download the HTML template with its includable partials of this demo. In the downloaded folder the partials(header, footer, aside, topbar, etc) will be placed seperated from the base layout to allow you to integrate base layout into your application</p>
-        <p>
-        <span class="label label-inline label-pill label-danger label-rounded mr-2">NOTE:</span>The downloaded version does not include the assets folder since the layout builder's main purpose is to help to generate the final HTML code without hassle.</p>
+
+    {{-- carousel end --}}
+
+    <div class="col-xl-4">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label"># Rank</h3>
+                </div>
+                <div class="card-toolbar">
+                    <ul class="nav nav-bold nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_7_1">Athlete</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_7_2">Club</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="kt_tab_pane_7_1" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/avatars/004-boy-1.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 1</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/avatars/002-girl.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 2</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 3</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary font-weight-bold px-5 py-3">
+                                View All
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="kt_tab_pane_7_2" role="tabpanel" aria-labelledby="kt_tab_pane_7_2">
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/misc/003-puzzle.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Club 1</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/misc/014-kickstarter.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Club 2</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="d-flex align-items-center flex-wrap mb-8">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-50 symbol-light mr-5">
+                                <span class="symbol-label">
+                                    <img src="assets/media/svg/misc/014-kickstarter.svg" class="h-50 align-self-center" alt="">
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Club 3</a>
+                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
+                            </div>
+                            <!--end::Text-->
+                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary font-weight-bold px-5 py-3">
+                                View All
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{{-- first row end --}}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="d-flex align-items-baseline flex-wrap mr-5 mb-5 mt-5">
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Latest Competitions</h5>
+            <span class="label label-inline label-pill label-danger label-rounded mr-2">Coming Soon</span>
+        </div>
+    </div>
+</div>
+
+<div class="lastest-competitions">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="assets/media/branchsto/lastest-competition.png" alt="Card image cap">
+                <div class="card-body p-5">
+                    <h5 class="card-title">JAKARTA HORSE EVENT</h5>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 1</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 2</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 3</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="assets/media/branchsto/lastest-competition.png" alt="Card image cap">
+                <div class="card-body p-5">
+                    <h5 class="card-title">JAKARTA HORSE EVENT</h5>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 1</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 2</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 3</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="assets/media/branchsto/lastest-competition.png" alt="Card image cap">
+                <div class="card-body p-5">
+                    <h5 class="card-title">JAKARTA HORSE EVENT</h5>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 1</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 2</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 3</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="assets/media/branchsto/lastest-competition.png" alt="Card image cap">
+                <div class="card-body p-5">
+                    <h5 class="card-title">JAKARTA HORSE EVENT</h5>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 1</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 2</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-50 symbol-light mr-2">
+                            <span class="symbol-label">
+                                <img src="assets/media/svg/avatars/008-boy-3.svg" class="h-50 align-self-center" alt="">
+                            </span>
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Text-->
+                        <div class="d-flex flex-column flex-grow-1 mr-2">
+                            <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Rider 3</a>
+                            <span class="text-muted font-weight-bold">Mark</span>
+                        </div>
+                        <!--end::Text-->
+                        <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">2334</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
