@@ -9,7 +9,7 @@
 							<div class="d-flex align-items-stretch mr-2">
 
 								<!--begin::Page Title-->
-								<h3 class="d-none text-dark d-lg-flex align-items-center mr-10 mb-0">Dashboard</h3>
+								<h3 class="d-none text-dark d-lg-flex align-items-center mr-10 mb-0">EQUINRIDE</h3>
 
 								<!--end::Page Title-->
 
@@ -3038,6 +3038,7 @@
 										<form>
 
 											<!--[html-partial:include:{"file":"partials/_extras/dropdown/notifications.html"}]/-->
+											@include('layoutsnew.partials._extras.dropdown.notifications')
 										</form>
 									</div>
 
@@ -3076,6 +3077,7 @@
 									<div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
 
 										<!--[html-partial:include:{"file":"partials/_extras/dropdown/quick-actions.html"}]/-->
+										@include('layoutsnew.partials._extras.dropdown.quick-actions')
 									</div>
 
 									<!--end::Dropdown-->
