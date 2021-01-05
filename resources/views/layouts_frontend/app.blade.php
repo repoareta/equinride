@@ -53,26 +53,19 @@
 				</div>
 				<!--begin::Aside-->
 				<!--begin::Content-->
-				<div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">					
+				<div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
 					<!--begin::Content body-->
 					<div class="d-flex flex-column-fluid flex-center">
-						
 						<!--begin::Signin-->
 						<div class="login-form login-signin">
 							<!--begin::Form-->
 							<form class="form" novalidate="novalidate" id="kt_login_signin_form">
 								<!--begin::Title-->
-								<div class="pb-5 pt-lg-0 pt-5">
+								<div class="pb-13 pt-lg-0 pt-5">
 									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to Equinride</h3>
 									<span class="text-muted font-weight-bold font-size-h4">New Here?
 									<a href="{{ route('register') }}" class="text-primary font-weight-bolder">Create an Account</a></span>
 								</div>
-
-								{{-- <div class="alert alert-custom alert-danger" role="alert">
-									<div class="alert-icon"><i class="flaticon-danger"></i></div>
-									<div class="alert-text">A simple primary alert—check it out!</div>
-								</div> --}}
-
 								<!--begin::Title-->
 								<!--begin::Form group-->
 								<div class="form-group">

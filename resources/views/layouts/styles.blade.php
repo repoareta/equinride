@@ -27,4 +27,28 @@
     .aside {
         background-color: #292d46;
     }
+
+    .menu-link span.label.label-danger {
+        position: absolute;
+        top: -4px;
+        right: 4px;
+        text-align: center;
+        font-size: 9px;
+        padding: 2px 3px;
+        line-height: .9;
+        border-radius: inherit;
+        width: 70px;
+    }
+
+    .scroll {
+        white-space: nowrap; /* [1] */
+        overflow-x: auto; /* [2] */
+        -webkit-overflow-scrolling: touch; /* [3] */
+        -ms-overflow-style: -ms-autohiding-scrollbar; /* [4] */ 
+    }
+
+    /* [5] */
+    .scroll::-webkit-scrollbar {
+    display: none; 
+    }
 </style>
