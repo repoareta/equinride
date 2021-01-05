@@ -1,4 +1,4 @@
-@extends('layoutsnew.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="alert alert-custom alert-white alert-shadow gutter-b" role="alert">
