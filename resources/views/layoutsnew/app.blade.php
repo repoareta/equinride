@@ -5,16 +5,15 @@
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>Metronic Live preview | Keenthemes</title>
+		<title>EQUINRIDE</title>
 		<meta name="description" content="Updates and statistics" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		<link rel="canonical" href="https://keenthemes.com/metronic" />
+		<link rel="canonical" href="https://equinride.com/" />
 
 		<!-- CSRF Token -->
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-		@include('layoutsnew.styles')
 
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		@include('layoutsnew.styles')
 	</head>
 
 	<!--end::Head-->
@@ -80,7 +79,6 @@
 		@include('layoutsnew.partials._extras.scrolltop')
 
 		@include('layoutsnew.scripts')
-		
 		
 	</body>
 
