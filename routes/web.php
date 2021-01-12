@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-// custom load
+// custom load Facades
 use Illuminate\Support\Facades\Auth;
+
+// load controllers
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +20,15 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Auth::routes(['verify' => 'true']);
+Auth::routes([
+    'verify' => 'true'
+]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::group(['middleware' => ['auth', 'verified']], function () {
+//     Route::get('/home', [HomeController::class, 'index'])->name('home');
+// });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');

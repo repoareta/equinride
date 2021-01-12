@@ -27,4 +27,51 @@
     .aside {
         background-color: #292d46;
     }
+
+    .menu-link span.label.label-danger {
+        position: absolute;
+        top: -4px;
+        right: 4px;
+    }
+
+    .scroll {
+        white-space: nowrap; /* [1] */
+        overflow-x: auto; /* [2] */
+        -webkit-overflow-scrolling: touch; /* [3] */
+        -ms-overflow-style: -ms-autohiding-scrollbar; /* [4] */ 
+    }
+
+    /* [5] */
+    .scroll::-webkit-scrollbar {
+    display: none; 
+    }
+
+    .carousel-content {
+        position: absolute;
+        left: 30px;
+        top: 50px;
+        width: 70%;
+        z-index: 2;
+    }
+
+    .carousel-content .title {
+        font-weight: 900;
+        font-size: 30px;
+        color: #ffffff;
+    }
+
+    ol.carousel-indicators {
+        justify-content: unset;
+        margin-right: unset;
+        margin-left: unset;
+        left: unset;
+        right: 30px;
+        bottom: 10px;
+    }
+
+    .carousel-content .subtitle {
+        font-weight: normal;
+        font-size: 16px;
+        color: #ffffff;
+    }
 </style>

@@ -70,8 +70,8 @@
 <!--end::Global Theme Bundle-->
 
 <!--begin::Page Vendors(used by this page)-->
-<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script>
+{{-- <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script> --}}
 
 <!--end::Page Vendors-->
 
@@ -79,5 +79,12 @@
 <script src="assets/js/pages/widgets.js"></script>
 
 <!--end::Page Scripts-->
+
+<script type="text/javascript">
+    $( document ).ready(function() {
+        // replace empty url
+        // $("a[href='#']").attr('href','{{ url()->current() }}');
+    });
+</script>
 
 @yield("scripts")
