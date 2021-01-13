@@ -7,7 +7,7 @@
 @section('content')
 <div class="row" data-sticky-container="">
     <div class="col-lg-4 col-xl-3">
-        <div class="card card-custom sticky" data-sticky="true" data-margin-top="120px" data-sticky-for="1023" data-sticky-class="sticky">
+        <div class="card card-custom sticky mb-10" data-sticky="true" data-margin-top="120px" data-sticky-for="1023" data-sticky-class="sticky">
             <div class="card-body p-0">
                 <ul class="navi navi-bold navi-hover my-5" role="tablist">
                     <li class="navi-item">
