@@ -7,7 +7,7 @@
 
 						<!--begin::Logo-->
 						<a href="index.html">
-							<img alt="Logo" src="assets/media/branchsto/logo-branchsto.svg" class="max-h-80px" />
+							<img alt="Logo" src="{{ asset('assets/media/branchsto/logo-branchsto.svg') }}" class="max-h-80px" />
 						</a>
 
 						<!--end::Logo-->
