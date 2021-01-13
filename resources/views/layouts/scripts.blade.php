@@ -63,9 +63,9 @@
 <!--end::Global Config-->
 
 <!--begin::Global Theme Bundle(used by all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 
 <!--end::Global Theme Bundle-->
 
@@ -76,15 +76,8 @@
 <!--end::Page Vendors-->
 
 <!--begin::Page Scripts(used by this page)-->
-<script src="assets/js/pages/widgets.js"></script>
+<script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
 
 <!--end::Page Scripts-->
-
-<script type="text/javascript">
-    $( document ).ready(function() {
-        // replace empty url
-        // $("a[href='#']").attr('href','{{ url()->current() }}');
-    });
-</script>
 
 @yield("scripts")
