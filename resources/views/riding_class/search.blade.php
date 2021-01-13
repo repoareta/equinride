@@ -8,75 +8,52 @@
 <div class="row" data-sticky-container="">
     <div class="col-lg-4 col-xl-3">
         <div class="card card-custom sticky mb-10" data-sticky="true" data-margin-top="120px" data-sticky-for="1023" data-sticky-class="sticky">
-            <div class="card-body p-0">
-                <ul class="navi navi-bold navi-hover my-5" role="tablist">
-                    <li class="navi-item">
-                        <a class="navi-link active" data-toggle="tab" href="#kt_profile_tab_personal_information">
-                            <span class="navi-icon">
-                                <i class="flaticon-avatar"></i>
-                            </span>
-                            <span class="navi-text">Personal Information</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" data-toggle="tab" href="#kt_profile_tab_account_information">
-                            <span class="navi-icon">
-                                <i class="flaticon-lock"></i>
-                            </span>
-                            <span class="navi-text">Acccount Information</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" data-toggle="tab" href="#kt_profile_change_password">
-                            <span class="navi-icon">
-                                <i class="flaticon-settings"></i>
-                            </span>
-                            <span class="navi-text">Change Password</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" data-toggle="tab" href="#kt_profile_email_settings">
-                            <span class="navi-icon">
-                                <i class="flaticon-multisymbol-2"></i>
-                            </span>
-                            <span class="navi-text">Email Settings</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" href="#" data-toggle="tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
-                            <span class="navi-icon">
-                                <i class="flaticon-coins"></i>
-                            </span>
-                            <span class="navi-text">Saved Credit Cards</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" href="#" data-toggle="tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
-                            <span class="navi-icon">
-                                <i class="flaticon-customer"></i>
-                            </span>
-                            <span class="navi-text">Social Networks</span>
-                        </a>
-                    </li>
-                    <li class="navi__separator"></li>
-                    <li class="navi-item">
-                        <a class="navi-link" href="#" data-toggle="tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
-                            <span class="navi-icon">
-                                <i class="flaticon-diagram"></i>
-                            </span>
-                            <span class="navi-text">Tax Information</span>
-                        </a>
-                    </li>
-                    <li class="navi-item">
-                        <a class="navi-link" href="#" data-toggle="tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
-                            <span class="navi-icon">
-                                <i class="flaticon-bag"></i>
-                            </span>
-                            <span class="navi-text">Purchases</span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="card-header p-5">
+                <h3 class="card-title">
+                    Search
+                </h3>
             </div>
+            <!--begin::Form-->
+            <form action="{{ route('riding_class.search') }}" method="get">
+                <div class="card-body p-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="stable_name" placeholder="Enter Stable Name">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-search-location"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <input type="text" class="form-control" id="kt_datepicker_2" readonly="readonly" autocomplete="off" name="date_start" placeholder="Select Date">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-calendar-check-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group timepicker">
+                            <input class="form-control datetimepicker-input" id="datetimepicker3" data-toggle="datetimepicker" data-target="#datetimepicker3" readonly="readonly" autocomplete="off" name="time_start" placeholder="Select Time" type="text">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-5">
+                    <button type="submit" class="btn btn-secondary mb-5 float-right">Submit</button>
+                </div>
+            </form>
+            <!--end::Form-->
         </div>
     </div>
     <div class="col-lg-8 col-xl-9">
@@ -165,7 +142,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder text-uppercase mr-2 p-3">Book Now</a>
+                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder mr-2 p-3">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
@@ -261,7 +238,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder text-uppercase mr-2 p-3">Book Now</a>
+                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder mr-2 p-3">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
@@ -357,7 +334,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder text-uppercase mr-2 p-3">Book Now</a>
+                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder mr-2 p-3">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
@@ -453,7 +430,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder text-uppercase mr-2 p-3">Book Now</a>
+                                <a href="#" class="btn btn-sm btn-dark font-weight-bolder mr-2 p-3">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
