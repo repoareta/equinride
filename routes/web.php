@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 // load controllers
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RidingClassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,7 @@ Auth::routes([
 // });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// RIDING CLASS START
+Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
+Route::get('/riding-class/search', [RidingClassController::class, 'search'])->name('riding_class.search');
