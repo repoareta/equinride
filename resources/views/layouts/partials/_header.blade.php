@@ -22,13 +22,13 @@
 					<!--begin::Header Nav-->
 					<ul class="menu-nav">
 						<li class="menu-item menu-item-active" aria-haspopup="true">
-							<a href="index.html" class="menu-link">
+							<a href="{{ route('home') }}" class="menu-link">
 								<span class="menu-text">HOME</span>
 							</a>
 						</li>
 
 						<li class="menu-item" aria-haspopup="true">
-							<a href="#" class="menu-link">
+							<a href="{{ route('riding_class') }}" class="menu-link">
 								<span class="menu-text">RIDING CLASS</span>
 							</a>
 						</li>
