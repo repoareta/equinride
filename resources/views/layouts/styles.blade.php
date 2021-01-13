@@ -4,17 +4,17 @@
 <!--end::Fonts-->
 
 <!--begin::Page Vendors Styles(used by this page)-->
-<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/plugins/custom/leaflet/leaflet.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 <!--end::Page Vendors Styles-->
 
 <!--begin::Global Theme Styles(used by all pages)-->
-<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
-<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
 
 <!--end::Global Theme Styles-->
 

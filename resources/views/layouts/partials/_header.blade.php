@@ -168,7 +168,7 @@
 
 			<!--end::Quick Actions-->
 
-			<!--begin::Chat-->
+			{{-- <!--begin::Chat-->
 			<div class="topbar-item mr-5">
 				<div class="btn btn-icon btn-clean btn-lg" data-toggle="modal" data-target="#kt_chat_modal">
 					<span class="svg-icon svg-icon-xl">
@@ -187,7 +187,7 @@
 				</div>
 			</div>
 
-			<!--end::Chat-->
+			<!--end::Chat--> --}}
 
 			<!--begin::User-->
 			<div class="topbar-item">

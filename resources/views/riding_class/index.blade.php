@@ -14,7 +14,7 @@
 <div class="row" style="margin-left:-25px; margin-right:-25px">
     <div class="col-md-12 p-0">
         <div class="m-0">
-            <div class="subheader py-5 py-lg-10 gutter-b subheader-transparent" style="background-color: #663259; background-position: right bottom; background-size: auto 100%; background-repeat: no-repeat; background-image: url(assets/media/svg/patterns/taieri.svg)">
+            <div class="subheader py-5 py-lg-10 gutter-b subheader-transparent" style="background-color: #353a52; background-position: right bottom; background-size: auto 100%; background-repeat: no-repeat; background-image: url(assets/media/svg/patterns/taieri.svg)">
                 <div class="container-fluid d-flex flex-column">
                     <!--begin::Title-->
                     <div class="d-flex align-items-sm-end flex-column flex-sm-row mb-5">
