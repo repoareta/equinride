@@ -24,6 +24,10 @@
                     max-width: 650px;
                 }
             }
+
+			.invalid-feedback {
+				display: block;
+			}
         </style>
 	</head>
 	<!--end::Head-->

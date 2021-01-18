@@ -6,58 +6,7 @@
 
 @section('content')
 <div class="row" data-sticky-container="">
-    <div class="col-lg-4 col-xl-3">
-        <div class="card card-custom sticky mb-10" data-sticky="true" data-margin-top="120px" data-sticky-for="1023" data-sticky-class="sticky">
-            <div class="card-header p-5">
-                <h3 class="card-title">
-                    Search
-                </h3>
-            </div>
-            <!--begin::Form-->
-            <form action="{{ route('riding_class.search') }}" method="get">
-                <div class="card-body p-5">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="stable_name" placeholder="Enter Stable Name" value="{{ request()->input('stable_name') }}">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-search-location"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-group date">
-                            <input type="text" class="form-control" id="kt_datepicker_2" readonly="readonly" autocomplete="off" name="date_start" placeholder="Select Date" value="{{ request()->input('date_start') }}">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-calendar-check-o"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-group timepicker">
-                            <input class="form-control datetimepicker-input" id="datetimepicker3" data-toggle="datetimepicker" data-target="#datetimepicker3" readonly="readonly" autocomplete="off" name="time_start" placeholder="Select Time" type="text" value="{{ request()->input('time_start') }}">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-clock-o"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer p-5">
-                    <button type="submit" class="btn btn-secondary font-weight-bolder mb-5 float-right">Submit</button>
-                </div>
-            </form>
-            <!--end::Form-->
-        </div>
-    </div>
     <div class="col-lg-8 col-xl-9">
-        @for ($i = 0; $i < 10; $i++)
         <div class="card card-custom gutter-b">
             <div class="card-body p-5">
                 <div class="d-flex">
@@ -153,7 +102,57 @@
                 </div>
             </div>
         </div>
-        @endfor
+    </div>
+
+    <div class="col-lg-4 col-xl-3">
+        <div class="card card-custom sticky mb-10" data-sticky="true" data-margin-top="120px" data-sticky-for="1023" data-sticky-class="sticky">
+            <div class="card-header p-5">
+                <h3 class="card-title">
+                    Search
+                </h3>
+            </div>
+            <!--begin::Form-->
+            <form action="{{ route('riding_class.search') }}" method="get">
+                <div class="card-body p-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="stable_name" placeholder="Enter Stable Name" value="{{ request()->input('stable_name') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-search-location"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <input type="text" class="form-control" id="kt_datepicker_2" readonly="readonly" autocomplete="off" name="date_start" placeholder="Select Date" value="{{ request()->input('date_start') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-calendar-check-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group timepicker">
+                            <input class="form-control datetimepicker-input" id="datetimepicker3" data-toggle="datetimepicker" data-target="#datetimepicker3" readonly="readonly" autocomplete="off" name="time_start" placeholder="Select Time" type="text" value="{{ request()->input('time_start') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-5">
+                    <button type="submit" class="btn btn-secondary font-weight-bolder mb-5 float-right">Submit</button>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
     </div>
 </div>
 
