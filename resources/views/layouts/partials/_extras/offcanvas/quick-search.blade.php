@@ -67,7 +67,7 @@
 								<!--begin::Item-->
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 bg-transparent flex-shrink-0">
-										<img src="assets/media/svg/files/doc.svg" alt="" />
+										<img src="{{ asset('assets/media/svg/files/doc.svg') }}" alt="" />
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">AirPlus Requirements</a>
@@ -80,7 +80,7 @@
 								<!--begin::Item-->
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 bg-transparent flex-shrink-0">
-										<img src="assets/media/svg/files/pdf.svg" alt="" />
+										<img src="{{ asset('assets/media/svg/files/pdf.svg') }}" alt="" />
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">TechNav Documentation</a>
@@ -93,7 +93,7 @@
 								<!--begin::Item-->
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 bg-transparent flex-shrink-0">
-										<img src="assets/media/svg/files/xml.svg" alt="" />
+										<img src="{{ asset('assets/media/svg/files/xml.svg') }}" alt="" />
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">All Framework Docs</a>
@@ -106,7 +106,7 @@
 								<!--begin::Item-->
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 bg-transparent flex-shrink-0">
-										<img src="assets/media/svg/files/csv.svg" alt="" />
+										<img src="{{ asset('assets/media/svg/files/csv.svg') }}" alt="" />
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">Finance &amp; Accounting Reports</a>
@@ -124,7 +124,7 @@
 							<div class="mb-10">
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 flex-shrink-0">
-										<div class="symbol-label" style="background-image:url('assets/media/users/300_20.jpg')"></div>
+										<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_20.jpg')."'" }})"></div>
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">Milena Gibson</a>
@@ -133,7 +133,7 @@
 								</div>
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 flex-shrink-0">
-										<div class="symbol-label" style="background-image:url('assets/media/users/300_15.jpg')"></div>
+										<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_15.jpg')."'" }})"></div>
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">Stefan JohnStefan</a>
@@ -142,7 +142,7 @@
 								</div>
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 flex-shrink-0">
-										<div class="symbol-label" style="background-image:url('assets/media/users/300_12.jpg')"></div>
+										<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_12.jpg')."'" }})"></div>
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">Anna Strong</a>
@@ -151,7 +151,7 @@
 								</div>
 								<div class="d-flex align-items-center flex-grow-1 mb-2">
 									<div class="symbol symbol-30 flex-shrink-0">
-										<div class="symbol-label" style="background-image:url('assets/media/users/300_16.jpg')"></div>
+										<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_16.jpg')."'" }})"></div>
 									</div>
 									<div class="d-flex flex-column ml-3 mt-2 mb-2">
 										<a href="#" class="font-weight-bold text-dark text-hover-primary">Nick Bold</a>

@@ -22,13 +22,13 @@
 					<!--begin::Header Nav-->
 					<ul class="menu-nav">
 						<li class="menu-item menu-item-active" aria-haspopup="true">
-							<a href="index.html" class="menu-link">
+							<a href="{{ route('home') }}" class="menu-link">
 								<span class="menu-text">HOME</span>
 							</a>
 						</li>
 
 						<li class="menu-item" aria-haspopup="true">
-							<a href="#" class="menu-link">
+							<a href="{{ route('riding_class') }}" class="menu-link">
 								<span class="menu-text">RIDING CLASS</span>
 							</a>
 						</li>
@@ -168,7 +168,7 @@
 
 			<!--end::Quick Actions-->
 
-			<!--begin::Chat-->
+			{{-- <!--begin::Chat-->
 			<div class="topbar-item mr-5">
 				<div class="btn btn-icon btn-clean btn-lg" data-toggle="modal" data-target="#kt_chat_modal">
 					<span class="svg-icon svg-icon-xl">
@@ -187,7 +187,7 @@
 				</div>
 			</div>
 
-			<!--end::Chat-->
+			<!--end::Chat--> --}}
 
 			<!--begin::User-->
 			<div class="topbar-item">
