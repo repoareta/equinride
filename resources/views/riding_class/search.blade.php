@@ -143,7 +143,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="#" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                                <a href="{{ route('riding_class.package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
@@ -154,6 +154,25 @@
             </div>
         </div>
         @endfor
+
+        <div class="d-flex align-items-center flex-wrap p5-10 justify-content-center">
+            <div class="d-flex flex-wrap py-2 mr-3">
+                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
+        
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
+                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+        
+                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
+                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+            </div>
+        </div>
     </div>
 </div>
 
