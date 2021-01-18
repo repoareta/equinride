@@ -33,3 +33,8 @@ Auth::routes([
 // });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// RIDING CLASS
+Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
+Route::get('/riding-class/search', [RidingClassController::class, 'search'])->name('riding_class.search');
+Route::get('/riding-class/package/{package}/booking', [RidingClassController::class, 'booking'])->name('riding_class.package.booking');
