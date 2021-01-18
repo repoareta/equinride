@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+//load models
+use App\Models\Package;
+
 class RidingClassController extends Controller
 {
     /**
@@ -90,5 +94,10 @@ class RidingClassController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function booking(Package $package)
+    {
+        return view('booking');
     }
 }

@@ -31,6 +31,15 @@
 							<!--end::Item-->
 
 							<!--begin::Item-->
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stable Setup">
+								<a href="#" class="nav-link btn btn-icon btn-icon-white btn-lg" data-toggle="tab" data-target="#kt_aside_tab_1" role="tab">
+									<i class="la la-horse-head icon-lg"></i>
+								</a>
+							</li>
+
+							<!--end::Item-->
+
+							<!--begin::Item-->
 							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Metronic Features">
 								<a href="#" class="nav-link btn btn-icon btn-icon-white btn-lg" data-toggle="tab" data-target="#kt_aside_tab_2" role="tab">
 									<i class="flaticon2-list-3 icon-lg"></i>
