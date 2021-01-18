@@ -124,11 +124,36 @@
                     <!--begin: Info-->
                     <div class="flex-grow-1">
                         <div class="d-flex">
-                            <h3>
+                            <div class="d-flex align-items-center text-dark font-size-h5 font-weight-bold mr-3">
                                 Nama Stable
-                            </h3>
+                            </div>
                         </div>
 
+                        <!--Start::Dashed Line-->
+                        <div class="separator separator-dashed separator-border-2 my-3"></div>
+                        <!--End::Dashed Line-->
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
+                                </div>
+                                <div class="col-md-6 text-right-md mt-3 mt-md-0">
+                                    Rp. 400.000
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="row text-success">
+                                <div class="col-md-6">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
+                                </div>
+                                <div class="col-md-6 text-right-md mt-3 mt-md-0">
+                                    Rp. 400.000
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--end::Info-->
                 </div>
@@ -136,11 +161,11 @@
 
             <div class="card-footer d-flex justify-content-between p-5">
                 <h3 class="text-dark font-weight-bolder mr-2">Total:</h3>
-                <h3 class="text-dark font-weight-bolder mr-2">Rp. 50.000.000</h3>
+                <h3 class="text-dark font-weight-bolder mr-2">Rp. 800.000</h3>
             </div>
         </div>
 
-        <div class="d-flex-1 mb-10">
+        <div class="d-flex-1 mb-10 d-none d-lg-flex">
             <div class="flex-grow-1">
                 <div class="d-flex align-items-center flex-wrap justify-content-between">
                     <!--begin::Description-->
