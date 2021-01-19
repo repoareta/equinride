@@ -80,6 +80,7 @@
 
 		@include('layouts.scripts')
 		
+		@stack('scripts')
 	</body>
 
 	<!--end::Body-->
