@@ -138,7 +138,7 @@
                                 <div class="col-md-6">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
                                 </div>
-                                <div class="col-md-6 text-right-md mt-3 mt-md-0">
+                                <div class="col-md-6 text-right mt-3 mt-md-0">
                                     Rp. 400.000
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                 <div class="col-md-6">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
                                 </div>
-                                <div class="col-md-6 text-right-md mt-3 mt-md-0">
+                                <div class="col-md-6 text-right mt-3 mt-md-0">
                                     Rp. 400.000
                                 </div>
                             </div>

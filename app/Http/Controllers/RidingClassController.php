@@ -100,4 +100,10 @@ class RidingClassController extends Controller
     {
         return view('booking');
     }
+
+    // Transfer Payment
+    public function payment(Package $package)
+    {
+        return view('transfer-payment');
+    }
 }
