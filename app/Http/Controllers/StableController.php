@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
-//load models
-use App\Models\Package;
-
-class RidingClassController extends Controller
+class StableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,17 +13,7 @@ class RidingClassController extends Controller
      */
     public function index()
     {
-        return view('riding-class.index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search()
-    {
-        return view('riding-class.search');
+        //
     }
 
     /**
@@ -94,22 +80,5 @@ class RidingClassController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function booking(Package $package)
-    {
-        return view('booking');
-    }
-
-    // Payment Method
-    public function payment_method(Package $package)
-    {
-        return view('payment-method');
-    }
-
-    // Transfer Payment
-    public function payment(Package $package)
-    {
-        return view('transfer-payment');
     }
 }
