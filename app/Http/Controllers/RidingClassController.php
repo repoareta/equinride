@@ -101,6 +101,12 @@ class RidingClassController extends Controller
         return view('booking');
     }
 
+    // Payment Method
+    public function payment_method(Package $package)
+    {
+        return view('payment_method');
+    }
+
     // Transfer Payment
     public function payment(Package $package)
     {
