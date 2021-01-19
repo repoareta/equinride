@@ -38,4 +38,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
 Route::get('/riding-class/search', [RidingClassController::class, 'search'])->name('riding_class.search');
 Route::get('/riding-class/package/{package}/booking', [RidingClassController::class, 'booking'])->name('riding_class.package.booking');
+Route::get('/riding-class/package/{package}/payment-method', [RidingClassController::class, 'payment_method'])->name('riding_class.package.payment_method');
 Route::get('/riding-class/package/{package}/payment', [RidingClassController::class, 'payment'])->name('riding_class.package.payment');
