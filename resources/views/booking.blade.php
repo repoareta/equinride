@@ -63,17 +63,17 @@
                             <div class="col-12">
                                 <h6>Riding Class Details</h6>
                                 <div class="row">
-                                    <div class="col-md-2 my-5">
+                                    <div class="col-md-2 my-3">
                                         Stable
                                     </div>
-                                    <div class="col-md-10 my-5">
+                                    <div class="col-md-10 my-3">
                                         Wild Horse
                                     </div>
-                                    <div class="col-md-2 my-5">
+                                    <div class="col-md-2 my-3">
                                         Description
                                     </div>
-                                    <div class="col-md-10 my-5 text-justify">
-                                        This is the most effective riding package for beginners who want to become professionals
+                                    <div class="col-md-10 my-3 text-justify">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, asperiores! Corrupti quaerat animi a non id ut est iusto. Dolorem magni ab autem dolores fugit? Adipisci quos quam saepe cum?
                                     </div>
                                 </div>
                             </div>
@@ -135,11 +135,13 @@
 
                         <div class="d-flex justify-content-between mb-3">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 font-weight-bolder">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
                                 </div>
                                 <div class="col-md-6 text-right mt-3 mt-md-0">
-                                    Rp. 400.000
+                                    <h3 class="font-weight-bolder">
+                                        Rp. 400.000
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +152,9 @@
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
                                 </div>
                                 <div class="col-md-6 text-right mt-3 mt-md-0">
-                                    Rp. 400.000
+                                    <h3 class="font-weight-bolder">
+                                        Rp. 400.000
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -160,8 +164,8 @@
             </div>
 
             <div class="card-footer d-flex justify-content-between p-5">
-                <h3 class="text-dark font-weight-bolder mr-2">Total:</h3>
-                <h3 class="text-dark font-weight-bolder mr-2">Rp. 800.000</h3>
+                <h3 class="text-dark font-weight-bolder">Total:</h3>
+                <h3 class="text-dark font-weight-bolder">Rp. 80.000.000</h3>
             </div>
         </div>
 
