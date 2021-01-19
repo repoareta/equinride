@@ -70,22 +70,40 @@
 								<!--end::Title-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" type="text" placeholder="Fullname" name="fullname" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6 @error('name') is-invalid @enderror" type="text" placeholder="Fullname" name="name" autocomplete="off" value="{{ old('name') }}" required />
+									@error('name')
+										<span class="invalid-feedback d-block" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+                                	@enderror
 								</div>
+								
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" type="email" placeholder="Email" name="email" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6 @error('email') is-invalid @enderror" type="email" placeholder="Email" name="email" autocomplete="off" value="{{ old('name') }}" required />
+									@error('email')
+										<span class="invalid-feedback d-block" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+                                	@enderror
 								</div>
+								
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" type="password" placeholder="Password" name="password" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6 @error('password') is-invalid @enderror" type="password" placeholder="Password" name="password" autocomplete="off" value="{{ old('name') }}" required />
+									@error('password')
+										<span class="invalid-feedback d-block" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+                                	@enderror
 								</div>
+								
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" type="password" placeholder="Confirm password" name="cpassword" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" type="password" placeholder="Confirm password" name="password_confirmation" autocomplete="off" value="{{ old('name') }}" required />
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
@@ -100,7 +118,7 @@
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
-									<button type="button" id="kt_login_signup_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
+									<button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
 									<a href="{{ url('/') }}" type="button" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Cancel</a>
 								</div>
 								<!--end::Form group-->
