@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('riding-class') }}
+@endsection
+
 @section('content')
 <div class="d-flex flex-row">
     <!--begin::Aside-->
