@@ -36,7 +36,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // PROFILE
 Route::get('/profile', function(){
-    return view('stable.dashboard');
+    return view('user.personal-information');
 })->name('profile.personal-information');
 Route::get('/profile/change_password', function(){
     return view('user.change-password');
