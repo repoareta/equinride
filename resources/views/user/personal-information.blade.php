@@ -95,10 +95,6 @@
                     <div>
                         <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
                         <div class="text-muted">Application Developer</div>
-                        <div class="mt-2">
-                            <a href="#" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1">Chat</a>
-                            <a href="#" class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1">Follow</a>
-                        </div>
                     </div>
                 </div>
                 <!--end::User-->
@@ -121,7 +117,7 @@
                 <!--begin::Nav-->
                 <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                     <div class="navi-item mb-2">
-                        <a href="/metronic/demo4/custom/apps/profile/profile-1/personal-information.html" class="navi-link py-4 active">
+                        <a href="{{route('profile.personal-information')}}" class="navi-link py-4 active">
                             <span class="navi-icon mr-2">
                                 <span class="svg-icon">
                                     <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/General/User.svg-->
@@ -139,7 +135,7 @@
                         </a>
                     </div>
                     <div class="navi-item mb-2">
-                        <a href="/metronic/demo4/custom/apps/profile/profile-1/account-information.html" class="navi-link py-4">
+                        <a href="#" class="navi-link py-4">
                             <span class="navi-icon mr-2">
                                 <span class="svg-icon">
                                     <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Code/Compiling.svg-->
@@ -157,7 +153,7 @@
                         </a>
                     </div>
                     <div class="navi-item mb-2">
-                        <a href="/metronic/demo4/custom/apps/profile/profile-1/change-password.html" class="navi-link py-4">
+                        <a href="{{route('profile.change-password')}}" class="navi-link py-4">
                             <span class="navi-icon mr-2">
                                 <span class="svg-icon">
                                     <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Shield-user.svg-->

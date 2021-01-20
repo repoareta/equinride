@@ -38,6 +38,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', function(){
     return view('user.personal-information');
 })->name('profile.personal-information');
+Route::get('/profile/change_password', function(){
+    return view('user.change-password');
+})->name('profile.change-password');
 
 // RIDING CLASS
 Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
