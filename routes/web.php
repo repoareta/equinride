@@ -34,6 +34,14 @@ Auth::routes([
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// PROFILE
+Route::get('/profile', function(){
+    return view('user.personal-information');
+})->name('profile.personal-information');
+Route::get('/profile/change_password', function(){
+    return view('user.change-password');
+})->name('profile.change-password');
+
 // RIDING CLASS
 Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
 Route::get('/riding-class/search', [RidingClassController::class, 'search'])->name('riding_class.search');
@@ -50,4 +58,5 @@ Route::get('/package/{package}/payment-confirmation', [RidingClassController::cl
 // HORSE
 
 // STABLE
+
 // Payment Approval
