@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<!--begin::Head-->
-	<head><base href="../../../">
+	<head>
+		<base href="../../../">
 		<meta charset="utf-8" />
 		<title>EQUINRIDE</title>
 		<meta name="description" content="Login page example" />
@@ -82,7 +83,7 @@
 								<!--begin::Form group-->
 								<div class="form-group">
 									<label class="font-size-h6 font-weight-bolder text-dark">{{ __('E-Mail Address') }}</label>
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="email" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto font-size-h3 px-5 py-3 rounded-lg" type="text" name="email" autocomplete="off" />
 
 									@error('email')
 										<span class="invalid-feedback" role="alert">
@@ -97,7 +98,7 @@
 										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
 										<a href="javascript:;" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>
 									</div>
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="password" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto font-size-h3 px-5 py-3 rounded-lg" type="password" name="password" autocomplete="off" />
 									
 									@error('password')
 										<span class="invalid-feedback" role="alert">
