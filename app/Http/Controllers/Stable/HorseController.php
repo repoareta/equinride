@@ -14,8 +14,14 @@ class HorseController extends Controller
      */
     public function index()
     {
-        //
+        return view('stable.horse.index');
     }
+
+    /**
+     * To Display data on datatables
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +30,7 @@ class HorseController extends Controller
      */
     public function create()
     {
-        //
+        return view('stable.horse.create');
     }
 
     /**
@@ -57,7 +63,7 @@ class HorseController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('stable.horse.edit');
     }
 
     /**
