@@ -25,48 +25,47 @@
                 </div>
             </div>
             <!--end::Header-->
-                <!--begin::Body-->
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Horse Name</th>
-                                    <th scope="col">Birth Date</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Sex</th>
-                                    <th scope="col">Passport Number</th>
-                                    <th scope="col">Horse Owner</th>
-                                    <th scope="col">Horse Breeds</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for ($i = 0; $i < 20; $i++)
-                                <tr>
-                                    <td>1</td>
-                                    <td>Steven</td>
-                                    <td>17-01-2011</td>
-                                    <td>10 years</td>
-                                    <td>Mare</td>
-                                    <td>1231390121</td>
-                                    <td>Agus</td>
-                                    <td>Not Found</td>
-                                    <td nowrap="nowrap">
-                                        <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Edit details">
-                                            <i class="la la-edit icon-xl"></i>
-                                        </a>
+            <!--begin::Body-->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Horse Name</th>
+                                <th scope="col">Birth Date</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Sex</th>
+                                <th scope="col">Passport Number</th>
+                                <th scope="col">Horse Owner</th>
+                                <th scope="col">Horse Breeds</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 1; $i < 20; $i++)
+                            <tr>
+                                <td>{{$i}}</td>
+                                <td>Steven</td>
+                                <td>17-01-2011</td>
+                                <td>10 years</td>
+                                <td>Mare</td>
+                                <td>1231390121</td>
+                                <td>Agus</td>
+                                <td>Not Found</td>
+                                <td nowrap="nowrap">
+                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                                        <i class="la la-edit icon-xl"></i>
+                                    </a>
 
-                                        <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteHorse" data-id="{{ $i }}">
-                                            <i class="la la-trash icon-lg"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endfor
-                            </tbody>
-                        </table>
-                    </div>
+                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteHorse" data-id="{{ $i }}">
+                                        <i class="la la-trash icon-lg"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endfor
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <!--end::Body-->
