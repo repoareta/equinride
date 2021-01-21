@@ -58,7 +58,7 @@
                                             <i class="la la-edit icon-xl"></i>
                                         </a>
 
-                                        <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details">
+                                        <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteHorse" data-id="{{ $i }}">
                                             <i class="la la-trash icon-lg"></i>
                                         </a>
                                     </td>
