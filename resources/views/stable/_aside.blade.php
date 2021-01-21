@@ -126,7 +126,7 @@
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4 {{ Route::is('stable.horse.*') ? 'active' : '' }}" href="{{ route('stable.horse.index') }}">
                         <span class="navi-icon mr-2">
-                            <i class="fas fa-chess-knight"></i>
+                            <i class="fas fa-horse"></i>
                         </span>
                         <span class="navi-text">Horse</span>
                         <span class="navi-label">
@@ -166,6 +166,19 @@
                             <i class="fas fa-user-friends"></i>
                         </span>
                         <span class="navi-text">Coach</span>
+                        <span class="navi-label">
+                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                        </span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+
+                <li class="navi-item mb-2">
+                    <a class="navi-link py-4" href="#">
+                        <span class="navi-icon mr-2">
+                            <i class="fas fa-id-card-alt"></i>
+                        </span>
+                        <span class="navi-text">Booking Order</span>
                         <span class="navi-label">
                             <span class="label label-inline label-light-success font-weight-bold">Pending</span>
                         </span>

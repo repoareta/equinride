@@ -68,40 +68,18 @@
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 
 <!--end::Global Theme Bundle-->
-
+{{-- 
 <!--begin::Page Vendors(used by this page)-->
-{{-- <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script> --}}
+<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script> 
 
 <!--end::Page Vendors-->
+--}}
 
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+
 <!--end::Page Scripts-->
-
-<script type="text/javascript">
-    $('#kt_datepicker_2').datepicker({
-        todayHighlight: true,
-        startDate: new Date(),
-        orientation: "bottom left",
-        autoclose: true,
-        // language : 'id',
-        format   : 'yyyy-mm-dd',
-        container     : '.date'
-    });
-
-    $('#search_datepicker').datepicker({
-        todayHighlight: true,
-        startDate: new Date(),
-        orientation: "bottom left",
-        autoclose: true,
-        format   : 'yyyy-mm-dd'
-    });
-
-    $('#datetimepicker3').datetimepicker({
-        format: 'HH:mm'
-    });
-</script>
 
 <!--begin::Page Scripts(used by this page)-->
 @stack("page-scripts")
