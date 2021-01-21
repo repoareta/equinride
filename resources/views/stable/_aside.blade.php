@@ -90,6 +90,9 @@
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
                     <div class="text-muted">Application Developer</div>
+                    <div class="mt-2">
+                        <button disabled class="btn btn-sm btn-danger font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1">Pending</button>
+                    </div>
                 </div>
             </div>
             <!--end::User-->
@@ -212,6 +215,11 @@
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
+                </li>
+                <li class="navi-item mb-2">
+                    <div class="nav-link my-4">
+                        <button type="submit" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5">Submit All</button>
+                    </div>
                 </li>
 
             </ul>
