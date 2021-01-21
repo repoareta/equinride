@@ -75,7 +75,7 @@ Route::get('/stable/coach/{coach}/destroy', [CoachController::class, 'destroy'])
 Route::get('/stable/horse', [HorseController::class, 'index'])->name('stable.horse.index');
 Route::get('/stable/horse/create', [HorseController::class, 'create'])->name('stable.horse.create');
 Route::get('/stable/horse/{horse}/edit', [HorseController::class, 'edit'])->name('stable.horse.edit');
-Route::get('/stable/horse/{horse}/destroy', [HorseController::class, 'destroy'])->name('stable.horse.destroy');
+Route::get('/stable/horse/destroy', [HorseController::class, 'destroy'])->name('stable.horse.destroy');
 
 // SCHEDULE
 Route::get('/stable/schedule', [HorseController::class, 'index'])->name('stable.schedule.index');
