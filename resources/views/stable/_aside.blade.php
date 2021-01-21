@@ -84,7 +84,7 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image:url('{{asset('assets/media/users/300_21.jpg')}}')"></div>
+                    <div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg')}}')"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
@@ -112,9 +112,9 @@
             <!--begin::Nav-->
             <ul class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{Route::is('stable.index') ? 'active' : ''}}" href="{{route('stable.index')}}">
+                    <a class="navi-link py-4 {{ Route::is('stable.index') ? 'active' : '' }}" href="{{ route('stable.index') }}">
                         <span class="navi-icon mr-2">
-                            <i class="icon-xl fas fa-tachometer-alt"></i>
+                            <i class="fas fa-tachometer-alt"></i>
                         </span>
                         <span class="navi-text">Dashboard</span>
                         <span class="navi-label">
@@ -124,7 +124,7 @@
                     </a>
                 </li>
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{Route::is('stable.horse.*') ? 'active' : ''}}" href="{{route('stable.horse.index')}}">
+                    <a class="navi-link py-4 {{ Route::is('stable.horse.*') ? 'active' : '' }}" href="{{ route('stable.horse.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-chess-knight"></i>
                         </span>
@@ -160,7 +160,7 @@
                     </a>
                 </li>
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4" {{ Route::is('stable.coach.*') ? 'active' : '' }}" href="{{ route('stable.coach.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-user-friends"></i>
                         </span>

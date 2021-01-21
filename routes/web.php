@@ -18,6 +18,9 @@ use App\Http\Controllers\AppOwner\DashboardController;
 // Load controller horse
 use App\Http\Controllers\Stable\HorseController;
 
+// Load controller coach
+use App\Http\Controllers\Stable\CoachController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,12 +48,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // USER PROFILE
 Route::get('/profile', function () {
-    return view('user.personal-information');
-})->name('profile.personal-information');
+    return view('user.personal_information');
+})->name('profile.personal_information');
 
 Route::get('/profile/change_password', function () {
-    return view('user.change-password');
-})->name('profile.change-password');
+    return view('user.change_password');
+})->name('profile.change_password');
 
 // RIDING CLASS
 Route::get('/riding-class', [RidingClassController::class, 'index'])->name('riding_class');
@@ -67,9 +70,9 @@ Route::get('/stable/{stable}/edit', [StableController::class, 'index'])->name('s
 
 // COACH
 Route::get('/stable/coach', [CoachController::class, 'index'])->name('stable.coach.index');
-Route::get('/stable/coach/create', [CoachController::class, 'create'])->name('stable.coach.index');
-Route::get('/stable/coach/{coach}/edit', [CoachController::class, 'edit'])->name('stable.coach.index');
-Route::get('/stable/coach/{coach}/destroy', [CoachController::class, 'destroy'])->name('stable.coach.index');
+Route::get('/stable/coach/create', [CoachController::class, 'create'])->name('stable.coach.create');
+Route::get('/stable/coach/{coach}/edit', [CoachController::class, 'edit'])->name('stable.coach.edit');
+Route::get('/stable/coach/destroy', [CoachController::class, 'destroy'])->name('stable.coach.destroy');
 
 // HORSE
 Route::get('/stable/horse', [HorseController::class, 'index'])->name('stable.horse.index');

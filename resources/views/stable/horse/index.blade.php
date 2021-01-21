@@ -5,7 +5,7 @@
 @endsection
 
 @push('page-styles')
-<link rel="stylesheet" href="{{url('assets/plugins/custom/datatables/datatables.bundle.css')}}" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" type="text/css">
 @endpush
 
 @section('content')
@@ -45,7 +45,7 @@
                         <tbody>
                             @for ($i = 1; $i < 20; $i++)
                             <tr>
-                                <td>{{$i}}</td>
+                                <td>{{ $i }}</td>
                                 <td>Steven</td>
                                 <td>17-01-2011</td>
                                 <td>10 years</td>
@@ -54,11 +54,11 @@
                                 <td>Agus</td>
                                 <td>Not Found</td>
                                 <td nowrap="nowrap">
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                                    <a href="{{ route('stable.horse.edit', $i) }}" class="btn btn-clean btn-icon mr-2" title="Edit details">
                                         <i class="la la-edit icon-xl"></i>
                                     </a>
 
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteHorse" data-id="{{ $i }}">
+                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteHorse">
                                         <i class="la la-trash icon-lg"></i>
                                     </a>
                                 </td>
@@ -77,8 +77,8 @@
 
 @push('page-scripts')
 <!--Start::dataTable-->
-<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('assets/js/pages/crud/datatables/advanced/row-grouping.js')}}"></script>
+<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/pages/crud/datatables/advanced/row-grouping.js') }}"></script>
 <!--End::dataTable-->
 <script type="text/javascript">
     $(document).ready( function () {
@@ -86,7 +86,7 @@
 			scrollX   : true,
 			processing: true
 		});
-        $("#dataTable_filter").append("<a href='{{route('stable.horse.create')}}' class='btn btn-primary ml-5'>Add New +</a>");
+        $("#dataTable_filter").append("<a href='{{ route('stable.horse.create') }}' class='btn btn-primary ml-5'>Add New +</a>");
 
         $('#dataTable tbody').on( 'click', '#deleteHorse', function (e) {
 			e.preventDefault();
