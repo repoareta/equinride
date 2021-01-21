@@ -73,7 +73,7 @@
 				<div class="navi navi-spacer-x-0 p-0">
 
 					<!--begin::Item-->
-					<a href="{{route('profile.personal-information')}}" class="navi-item">
+					<a href="{{ route('profile.personal_information') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">
@@ -125,7 +125,7 @@
 					<!--end:Item-->
 
 					<!--begin::Item-->
-					<a href="{{route('stable.index')}}" class="navi-item">
+					<a href="{{ route('stable.index') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">

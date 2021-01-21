@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Stable;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CoachController extends Controller
@@ -13,7 +14,7 @@ class CoachController extends Controller
      */
     public function index()
     {
-        //
+        return view('stable.coach.index');
     }
 
     /**
@@ -23,7 +24,7 @@ class CoachController extends Controller
      */
     public function create()
     {
-        //
+        return view('stable.coach.create');
     }
 
     /**
@@ -56,7 +57,7 @@ class CoachController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('stable.coach.edit');
     }
 
     /**
