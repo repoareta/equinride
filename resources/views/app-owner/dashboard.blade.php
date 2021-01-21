@@ -121,31 +121,46 @@
                             <span class="navi-icon mr-2">
                                 <i class="fas fa-chess-knight"></i>
                             </span>
-                            <span class="navi-text">Stable</span>
+                            <span class="navi-text">Stable Approval</span>
                             <span class="navi-label">
                                 <span class="label label-light-info font-weight-bold">2</span>
                             </span>
                             <span class="navi-arrow"></span>
                         </a>
                     </li>
+
                     <li class="navi-item mb-2">
                         <a class="navi-link py-4" href="#">
                             <span class="navi-icon mr-2">
-                                <i class="flaticon2-layers-1"></i>
+                                <i class="fas fa-chess-knight"></i>
                             </span>
-                            <span class="navi-text">Package</span>
+                            <span class="navi-text">Stable Withdraw</span>
+                            <span class="navi-label">
+                                <span class="label label-light-info font-weight-bold">2</span>
+                            </span>
+                            <span class="navi-arrow"></span>
+                        </a>
+                    </li>
+
+                    <li class="navi-item mb-2">
+                        <a class="navi-link py-4" href="#">
+                            <span class="navi-icon mr-2">
+                                <i class="fab fa-buffer"></i>
+                            </span>
+                            <span class="navi-text">Package Payment</span>
                             <span class="navi-label">
                                 <span class="label label-inline label-light-primary font-weight-bold">Updated</span>
                             </span>
                             <span class="navi-arrow"></span>
                         </a>
                     </li>
+
                     <li class="navi-item mb-2">
                         <a class="navi-link py-4" href="#">
                             <span class="navi-icon mr-2">
-                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fas fa-user-friends"></i>
                             </span>
-                            <span class="navi-text">Schedule</span>
+                            <span class="navi-text">Admin Management</span>
                             <span class="navi-label">
                                 <span class="label label-inline label-light-danger font-weight-bold">New</span>
                             </span>
@@ -190,7 +205,7 @@
                             <span class="navi-icon mr-2">
                                 <i class="la la-bank icon-xl"></i>
                             </span>
-                            <span class="navi-text">Bank Payment</span>
+                            <span class="navi-text">Bank Account</span>
                             <span class="navi-label">
                                 <span class="label label-inline label-light-success font-weight-bold">Pending</span>
                             </span>
@@ -315,6 +330,7 @@
 @endsection
 
 @push('page-scripts')
+<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
     $('#datePicker').datepicker({
         todayHighlight: true,
