@@ -10,6 +10,16 @@ Breadcrumbs::for('riding-class', function ($trail) {
     $trail->push('Riding Class', route('riding_class'));
 });
 
+// Profile
+Breadcrumbs::for('profile', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Profile', route('profile.personal-information'));
+});
+Breadcrumbs::for('profile-password', function ($trail) {
+    $trail->parent('profile');
+    $trail->push('Change Password', route('profile.change-password'));
+});
+
 // Stable
 Breadcrumbs::for('stable-dashboard', function ($trail) {
     $trail->parent('home');

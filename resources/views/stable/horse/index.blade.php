@@ -11,7 +11,7 @@
 @section('content')
 <div class="d-flex flex-row">
     <!--begin::Aside-->
-    @include('stable.side_stable')
+    @include('stable._aside')
     <!--end::Aside-->
     <!--begin::Content-->
     <div class="flex-row-fluid ml-lg-8">
