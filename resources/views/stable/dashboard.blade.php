@@ -32,7 +32,7 @@
 </div>
 @endsection
 
-@push('scripts')
+@push('page-scripts')
 <script>
     $('#datePicker').datepicker({
         todayHighlight: true,

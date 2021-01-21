@@ -7,6 +7,7 @@
 <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet" type="text/css" />
 
+@stack("page-styles")
 <!--end::Page Vendors Styles-->
 
 <!--begin::Global Theme Styles(used by all pages)-->
