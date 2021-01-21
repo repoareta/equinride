@@ -124,7 +124,7 @@
                     </a>
                 </li>
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{Route::is('stable.horse.index') ? 'active' : ''}}" href="{{route('stable.horse.index')}}">
+                    <a class="navi-link py-4 {{Route::is('stable.horse.*') ? 'active' : ''}}" href="{{route('stable.horse.index')}}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-chess-knight"></i>
                         </span>

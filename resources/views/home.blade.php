@@ -27,7 +27,7 @@
                         </a>
                     </div>
                     <div class="overlay"></div>
-                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="First slide">
+                    <img class="d-block w-100" src="{{asset('assets/media/branchsto/slider-img.png')}}" alt="First slide">
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-content">
@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <div class="overlay"></div>
-                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="Second slide">
+                    <img class="d-block w-100" src="{{asset('assets/media/branchsto/slider-img.png')}}" alt="Second slide">
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-content">
@@ -57,7 +57,7 @@
                         </a>
                     </div>
                     <div class="overlay"></div>
-                    <img class="d-block w-100" src="{{url('assets/media/branchsto/slider-img.png')}}" alt="Third slide">
+                    <img class="d-block w-100" src="{{asset('assets/media/branchsto/slider-img.png')}}" alt="Third slide">
                 </div>
             </div>
         </div>

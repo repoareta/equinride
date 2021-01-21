@@ -30,3 +30,11 @@ Breadcrumbs::for('stable-horse', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Horse', route('stable.horse.index'));
 });
+Breadcrumbs::for('stable-horse-create', function ($trail) {    
+    $trail->parent('stable-horse');
+    $trail->push('Create', route('stable.horse.create'));
+});
+Breadcrumbs::for('stable-horse-edit', function ($trail) {    
+    $trail->parent('stable-horse');
+    $trail->push('Edit', route('stable.horse.edit', 1));
+});
