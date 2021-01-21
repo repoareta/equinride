@@ -104,4 +104,6 @@
     });
 </script>
 
-@yield("scripts")
+<!--begin::Page Scripts(used by this page)-->
+@stack("page-scripts")
+<!--end::Page Scripts-->

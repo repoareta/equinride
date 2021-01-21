@@ -14,7 +14,6 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		@include('layouts.styles')
-		@stack('styles')
 	</head>
 
 	<!--end::Head-->
@@ -80,8 +79,6 @@
 		@include('layouts.partials._extras.scrolltop')
 
 		@include('layouts.scripts')
-		
-		@stack('scripts')
 	</body>
 
 	<!--end::Body-->

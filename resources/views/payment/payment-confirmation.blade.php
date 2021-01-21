@@ -171,7 +171,7 @@
 </div>
 
 @endsection
-@push('scripts')
+@push('page-scripts')
     <script>
         $("#dropZone").dropzone({ 
             url: "https://keenthemes.com/scripts/void.php",
