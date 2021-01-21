@@ -160,7 +160,7 @@
                     </a>
                 </li>
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" {{ Route::is('stable.coach.*') ? 'active' : '' }}" href="{{ route('stable.coach.index') }}">
+                    <a class="navi-link py-4 {{ Route::is('stable.coach.*') ? 'active' : '' }}" href="{{ route('stable.coach.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-user-friends"></i>
                         </span>
