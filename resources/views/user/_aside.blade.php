@@ -84,7 +84,7 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image:url('{{asset('assets/media/users/300_21.jpg')}}')"></div>
+                    <div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg') }}')"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
@@ -112,7 +112,7 @@
             <!--begin::Nav-->
             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <div class="navi-item mb-2">
-                    <a href="{{route('profile.personal-information')}}" class="navi-link py-4 {{Route::is('profile.personal-information') ? 'active' : ''}}">
+                    <a href="{{ route('profile.personal_information') }}" class="navi-link py-4 {{ Route::is('profile.personal_information') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
                                 <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/General/User.svg-->
@@ -148,7 +148,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="{{route('profile.change-password')}}" class="navi-link py-4 {{Route::is('profile.change-password') ? 'active' : ''}}">
+                    <a href="{{ route('profile.change_password') }}" class="navi-link py-4 {{ Route::is('profile.change_password') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
                                 <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Shield-user.svg-->
