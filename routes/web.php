@@ -15,6 +15,9 @@ use App\Http\Controllers\Stable\StableController;
 // Load controller app-owner
 use App\Http\Controllers\AppOwner\DashboardController;
 
+// Load controller horse
+use App\Http\Controllers\Stable\HorseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,7 +63,7 @@ Route::get('/package/{package}/payment-confirmation', [RidingClassController::cl
 
 // STABLE
 Route::get('/stable/dashboard', [StableController::class, 'index'])->name('stable.index');
-Route::get('/stable/{stable}/edit', [StableController::class, 'index'])->name('stable.index');
+Route::get('/stable/{stable}/edit', [StableController::class, 'index'])->name('stable.edit');
 
 // COACH
 Route::get('/stable/coach', [CoachController::class, 'index'])->name('stable.coach.index');
@@ -70,9 +73,9 @@ Route::get('/stable/coach/{coach}/destroy', [CoachController::class, 'destroy'])
 
 // HORSE
 Route::get('/stable/horse', [HorseController::class, 'index'])->name('stable.horse.index');
-Route::get('/stable/horse/create', [HorseController::class, 'index'])->name('stable.horse.index');
-Route::get('/stable/horse/{horse}/edit', [HorseController::class, 'index'])->name('stable.horse.index');
-Route::get('/stable/horse/{horse}/destroy', [HorseController::class, 'index'])->name('stable.horse.index');
+Route::get('/stable/horse/create', [HorseController::class, 'create'])->name('stable.horse.create');
+Route::get('/stable/horse/{horse}/edit', [HorseController::class, 'edit'])->name('stable.horse.edit');
+Route::get('/stable/horse/{horse}/destroy', [HorseController::class, 'destroy'])->name('stable.horse.destroy');
 
 // SCHEDULE
 Route::get('/stable/schedule', [HorseController::class, 'index'])->name('stable.schedule.index');

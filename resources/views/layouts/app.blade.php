@@ -14,6 +14,7 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		@include('layouts.styles')
+		@stack('styles')
 	</head>
 
 	<!--end::Head-->
