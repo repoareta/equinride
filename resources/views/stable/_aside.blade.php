@@ -114,7 +114,7 @@
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4 {{Route::is('stable.index') ? 'active' : ''}}" href="{{route('stable.index')}}">
                         <span class="navi-icon mr-2">
-                            <i class="icon-xl fas fa-tachometer-alt"></i>
+                            <i class="fab fa-elementor"></i>
                         </span>
                         <span class="navi-text">Dashboard</span>
                         <span class="navi-label">
@@ -138,7 +138,7 @@
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4" href="#">
                         <span class="navi-icon mr-2">
-                            <i class="flaticon2-layers-1"></i>
+                            <i class="fab fa-buffer"></i>
                         </span>
                         <span class="navi-text">Package</span>
                         <span class="navi-label">
@@ -159,6 +159,7 @@
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
+
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4" href="#">
                         <span class="navi-icon mr-2">
@@ -171,18 +172,48 @@
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
+
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4" href="#">
                         <span class="navi-icon mr-2">
-                            <i class="fas fa-calendar-times"></i>
+                            <i class="fas fa-wallet"></i>
                         </span>
-                        <span class="navi-text">Exceptional Date</span>
+                        <span class="navi-text">Withdrawals</span>
                         <span class="navi-label">
                             <span class="label label-inline label-light-success font-weight-bold">Pending</span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
+
+                <li class="navi-section mt-5 text-primary text-uppercase font-weight-bolder pb-0">Settings</li>
+
+                <li class="navi-item mb-2">
+                    <a class="navi-link py-4" href="#">
+                        <span class="navi-icon mr-2">
+                            <i class="fas fa-hotel"></i>
+                        </span>
+                        <span class="navi-text">Stable Profile</span>
+                        <span class="navi-label">
+                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                        </span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+
+                <li class="navi-item mb-2">
+                    <a class="navi-link py-4" href="#">
+                        <span class="navi-icon mr-2">
+                            <i class="fas fa-house-user"></i>
+                        </span>
+                        <span class="navi-text">Admin Management</span>
+                        <span class="navi-label">
+                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                        </span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+
             </ul>
             <!--end::Nav-->
         </div>

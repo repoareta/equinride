@@ -77,7 +77,6 @@
 
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
-<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <!--end::Page Scripts-->
 
 <script type="text/javascript">

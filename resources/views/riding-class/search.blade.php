@@ -143,7 +143,7 @@
                         <div class="d-flex flex-wrap float-right">
                             <!--begin::Progress-->
                             <div class="mb-1">
-                                <a href="{{ route('riding_class.package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                                <a href="{{ route('package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
                             </div>
                             <!--end::Progress-->
                         </div>
