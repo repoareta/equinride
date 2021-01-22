@@ -1114,7 +1114,7 @@ if ( true && typeof module.exports !== 'undefined') {
 				$('body').on('show.bs.dropdown', '.' + pfx + 'datatable .' + pfx + 'datatable-body', function(e) {
 					dropdownMenu = $(e.target).find('.dropdown-menu');
 					$('body').append(dropdownMenu.detach());
-					dropdownMenu.css('display', 'block');
+					// dropdownMenu.css('display', 'block');
 					dropdownMenu.position({
 						'my': 'right top',
 						'at': 'right bottom',
@@ -2018,8 +2018,8 @@ if ( true && typeof module.exports !== 'undefined') {
 					|| options.data.serverFiltering === false && action === 'search'
 				) {
 					setTimeout(function() {
-						afterGetData();
 						Plugin.setAutoColumns();
+						afterGetData();
 					});
 					return;
 				}
@@ -2965,7 +2965,13 @@ if ( true && typeof module.exports !== 'undefined') {
 					$(datatable.table).find('.' + pfx + 'datatable-cell').show();
 					$(datatable.tableBody).each(function() {
 						var recursive = 0;
-						while ($(this)[0].offsetWidth < $(this)[0].scrollWidth && recursive < options.columns.length) {
+						var offsetWidth = $(this)[0].offsetWidth;
+						var scrollWidth = $(this)[0].scrollWidth;
+
+						while (offsetWidth < scrollWidth && (scrollWidth - offsetWidth) > Plugin.cellOffset && recursive < options.columns.length) {
+							offsetWidth = $(this)[0].offsetWidth;
+							scrollWidth = $(this)[0].scrollWidth;
+
 							$(datatable.table).find('.' + pfx + 'datatable-row').each(function(i) {
 								var cell = $(this).find('.' + pfx + 'datatable-cell:not(:hidden):not([data-autohide-disabled])').last();
 									if (cell.length) {
@@ -11268,29 +11274,19 @@ KTUtil.ready(function() {
         KTLayoutHeaderTopbar.init('kt_header_mobile_topbar_toggle');
     }
 
-    // Init Brand Panel For Logo
-    if (typeof KTLayoutBrand !== 'undefined') {
-        KTLayoutBrand.init('kt_brand');
-    }
-
     // Init Aside
     if (typeof KTLayoutAside !== 'undefined') {
         KTLayoutAside.init('kt_aside');
     }
 
-    // Init Aside Menu Toggle
-    if (typeof KTLayoutAsideToggle !== 'undefined') {
-        KTLayoutAsideToggle.init('kt_aside_toggle');
-    }
-
-    // Init Aside Menu
-    if (typeof KTLayoutAsideMenu !== 'undefined') {
-        KTLayoutAsideMenu.init('kt_aside_menu');
-    }
-
     // Init Subheader
     if (typeof KTLayoutSubheader !== 'undefined') {
         KTLayoutSubheader.init('kt_subheader');
+    }
+
+    // Init Advanced Search
+    if (typeof KTLayoutAdvanceSearch !== 'undefined') {
+        KTLayoutAdvanceSearch.init();
     }
 
     // Init Content
@@ -11349,7 +11345,7 @@ KTUtil.ready(function() {
     }
 
     // Init Quick Offcanvas Panel
-    if (typeof KTLayoutQuickPanel!== 'undefined') {
+    if (typeof KTLayoutQuickPanel !== 'undefined') {
         KTLayoutQuickPanel.init('kt_quick_panel');
     }
 
@@ -11358,22 +11354,12 @@ KTUtil.ready(function() {
         KTLayoutQuickUser.init('kt_quick_user');
     }
 
-    // Init Quick Search Panel
+    // Init Quick Search Offcanvas Panel
     if (typeof KTLayoutQuickSearch !== 'undefined') {
         KTLayoutQuickSearch.init('kt_quick_search');
     }
 
-    // Init Quick Cart Panel
-    if (typeof KTLayoutQuickCartPanel !== 'undefined') {
-        KTLayoutQuickCartPanel.init('kt_quick_cart');
-    }
-
-    // Init Search For Quick Search Dropdown
-    if (typeof KTLayoutSearch !== 'undefined') {
-        KTLayoutSearch().init('kt_quick_search_dropdown');
-    }
-
-    // Init Search For Quick Search Offcanvas Panel
+    // Init Search Example For Quick Search Offcanvas Panel
     if (typeof KTLayoutSearchOffcanvas !== 'undefined') {
         KTLayoutSearchOffcanvas().init('kt_quick_search_offcanvas');
     }
