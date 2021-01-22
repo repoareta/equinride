@@ -52,3 +52,16 @@ Breadcrumbs::for('stable-coach-edit', function ($trail) {
     $trail->parent('stable-coach');
     $trail->push('Edit', route('stable.coach.edit', 1));
 });
+// Stable Package
+Breadcrumbs::for('stable-package', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Stable Package', route('stable.package.index'));
+});
+Breadcrumbs::for('stable-package-create', function ($trail) {    
+    $trail->parent('stable-package');
+    $trail->push('Create', route('stable.package.create'));
+});
+Breadcrumbs::for('stable-package-edit', function ($trail) {    
+    $trail->parent('stable-package');
+    $trail->push('Edit', route('stable.package.edit', 1));
+});

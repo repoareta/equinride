@@ -14,7 +14,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        return view('stable.package.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        return view('stable.package.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('stable.package.edit');
     }
 
     /**

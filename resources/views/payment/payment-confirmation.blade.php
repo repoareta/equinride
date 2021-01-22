@@ -104,7 +104,7 @@
                                 <div class="card-body p-5">
                                     <form action="/file-upload" id="dropZone" class="dropzone dropzone-default dropzone-primary dz-clickable" enctype="multipart/form-data">
                                         <div class="fallback">
-                                            <input name="file" type="file" multiple />
+                                            <input name="file" type="file" />
                                         </div>
                                     </form>
                                 </div>

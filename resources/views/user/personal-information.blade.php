@@ -26,7 +26,7 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form">
+            <form class="form" enctype="multipart/form-data">
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="row">
@@ -85,7 +85,7 @@
                                         <i class="la la-phone"></i>
                                     </span>
                                 </div>
-                                <input type="number" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Phone" />
+                                <input type="number" min="0" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Phone" />
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Complete Address</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <textarea name="address"rows="5" class="form-control form-control-lg form-control-solid"></textarea>
+                                <textarea name="address" rows="5" class="form-control form-control-lg form-control-solid"></textarea>
                             </div>
                         </div>
                     </div>

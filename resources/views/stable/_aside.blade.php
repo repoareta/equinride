@@ -139,7 +139,7 @@
                     </a>
                 </li>
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4 {{ Route::is('stable.package.*') ? 'active' : '' }}" href="{{ route('stable.package.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fab fa-buffer"></i>
                         </span>
