@@ -48,10 +48,10 @@
           .wizard.wizard-2 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-icon {
             transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
             .wizard.wizard-2 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-icon i {
-              color: #8950FC !important; }
+              color: #0c1b3a !important; }
             .wizard.wizard-2 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-icon .svg-icon svg g [fill] {
               transition: fill 0.3s ease;
-              fill: #8950FC !important; }
+              fill: #0c1b3a !important; }
             .wizard.wizard-2 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-icon .svg-icon svg:hover g [fill] {
               transition: fill 0.3s ease; }
           .wizard.wizard-2 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"]:after {
