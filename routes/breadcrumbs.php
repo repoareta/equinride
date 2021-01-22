@@ -65,3 +65,8 @@ Breadcrumbs::for('stable-package-edit', function ($trail) {
     $trail->parent('stable-package');
     $trail->push('Edit', route('stable.package.edit', 1));
 });
+// Stable Schedule
+Breadcrumbs::for('stable-schedule', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Stable Schedule', route('stable.schedule.index'));
+});

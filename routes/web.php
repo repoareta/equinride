@@ -21,6 +21,9 @@ use App\Http\Controllers\Stable\CoachController;
 // Load controller stable package
 use App\Http\Controllers\Stable\PackageController;
 
+// Load controller stable package
+use App\Http\Controllers\Stable\ScheduleController;
+
 // Load controller app-owner
 use App\Http\Controllers\AppOwner\DashboardController;
 
@@ -91,8 +94,8 @@ Route::get('/stable/package/{package}/edit', [PackageController::class, 'edit'])
 Route::get('/stable/package/destroy', [PackageController::class, 'destroy'])->name('stable.package.destroy');
 
 // SCHEDULE
-Route::get('/stable/schedule', [HorseController::class, 'index'])->name('stable.schedule.index');
-
+Route::get('/stable/schedule', [ScheduleController::class, 'index'])->name('stable.schedule.index');
+Route::get('/stable/schedule/destroy', [ScheduleController::class, 'destroy'])->name('stable.schedule.destroy');
 // APP OWNER
 Route::get('/app-owner/dashboard', [DashboardController::class, 'index'])->name('app_owner.index');
 
