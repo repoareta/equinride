@@ -22,8 +22,8 @@
 						<ul class="nav flex-column">
 
 							<!--begin::Item-->
-							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Latest Projects">
-								<a href="{{ route('home') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg active">
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Home">
+								<a href="{{ route('home') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ Route::is('home') ? 'active' : '' }}">
 									<i class="fas fa-home"></i>
 								</a>
 							</li>
@@ -32,7 +32,7 @@
 
 							<!--begin::Item-->
 							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stable Register">
-								<a href="{{ route('stable.register') }}" class="nav-link btn btn-icon btn-icon-white btn-lg" data-toggle="tab" data-target="#kt_aside_tab_1" role="tab">
+								<a href="{{ route('stable.register') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ Route::is('stable.*') ? 'active' : '' }}">
 									<i class="la la-horse-head icon-lg"></i>
 								</a>
 							</li>
@@ -40,8 +40,8 @@
 							<!--end::Item-->
 
 							<!--begin::Item-->
-							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Club Register">
-								<a href="#" class="nav-link btn btn-icon btn-icon-white btn-lg" data-toggle="tab" data-target="#kt_aside_tab_2" role="tab">
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stable Register">
+								<a href="#" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg">
 									<i class="fab fa-black-tie"></i>
 								</a>
 							</li>

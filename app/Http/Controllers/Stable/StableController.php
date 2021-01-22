@@ -22,9 +22,9 @@ class StableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function register()
     {
-        //
+        return view('stable.register');
     }
 
     /**
