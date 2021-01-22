@@ -13,7 +13,7 @@ Breadcrumbs::for('riding-class', function ($trail) {
 // Profile
 Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('home');
-    $trail->push('Profile', route('profile.personal_information'));
+    $trail->push('Profile', route('user.personal_information'));
 });
 Breadcrumbs::for('profile-password', function ($trail) {
     $trail->parent('profile');

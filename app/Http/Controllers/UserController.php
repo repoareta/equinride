@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Stable;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class StableController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class StableController extends Controller
      */
     public function index()
     {
-        return view('stable.dashboard');
+        //
     }
 
     /**
@@ -22,9 +21,9 @@ class StableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register()
+    public function create()
     {
-        return view('stable.register');
+        //
     }
 
     /**

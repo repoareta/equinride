@@ -112,7 +112,7 @@
             <!--begin::Nav-->
             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <div class="navi-item mb-2">
-                    <a href="{{ route('profile.personal_information') }}" class="navi-link py-4 {{ Route::is('profile.personal_information') ? 'active' : '' }}">
+                    <a href="{{ route('user.personal_information') }}" class="navi-link py-4 {{ Route::is('user.personal_information') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
                                 <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/General/User.svg-->
