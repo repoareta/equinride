@@ -61,7 +61,7 @@
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
                                 <div class="input-group-append">
-                                    <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
+                                    <span class="input-group-text">RP</span>
                                 </div>
                                 <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="price"/>
                             </div>
