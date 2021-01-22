@@ -12,14 +12,18 @@ use App\Http\Controllers\RidingClassController;
 // Load controller stable
 use App\Http\Controllers\Stable\StableController;
 
+// Load controller stable horse
+use App\Http\Controllers\Stable\HorseController;
+
+// Load controller stable coach
+use App\Http\Controllers\Stable\CoachController;
+
+// Load controller stable package
+use App\Http\Controllers\Stable\PackageController;
+
 // Load controller app-owner
 use App\Http\Controllers\AppOwner\DashboardController;
 
-// Load controller horse
-use App\Http\Controllers\Stable\HorseController;
-
-// Load controller coach
-use App\Http\Controllers\Stable\CoachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,11 +52,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // USER PROFILE
 Route::get('/profile', function () {
-    return view('user.personal_information');
+    return view('user.personal-information');
 })->name('profile.personal_information');
 
 Route::get('/profile/change_password', function () {
-    return view('user.change_password');
+    return view('user.change-password');
 })->name('profile.change_password');
 
 // RIDING CLASS
@@ -68,17 +72,23 @@ Route::get('/package/{package}/payment-confirmation', [RidingClassController::cl
 Route::get('/stable/dashboard', [StableController::class, 'index'])->name('stable.index');
 Route::get('/stable/{stable}/edit', [StableController::class, 'index'])->name('stable.edit');
 
-// COACH
+// STABLE COACH
 Route::get('/stable/coach', [CoachController::class, 'index'])->name('stable.coach.index');
 Route::get('/stable/coach/create', [CoachController::class, 'create'])->name('stable.coach.create');
 Route::get('/stable/coach/{coach}/edit', [CoachController::class, 'edit'])->name('stable.coach.edit');
 Route::get('/stable/coach/destroy', [CoachController::class, 'destroy'])->name('stable.coach.destroy');
 
-// HORSE
+// STABLE HORSE
 Route::get('/stable/horse', [HorseController::class, 'index'])->name('stable.horse.index');
 Route::get('/stable/horse/create', [HorseController::class, 'create'])->name('stable.horse.create');
 Route::get('/stable/horse/{horse}/edit', [HorseController::class, 'edit'])->name('stable.horse.edit');
 Route::get('/stable/horse/destroy', [HorseController::class, 'destroy'])->name('stable.horse.destroy');
+
+// STABLE HORSE
+Route::get('/stable/package', [PackageController::class, 'index'])->name('stable.package.index');
+Route::get('/stable/package/create', [PackageController::class, 'create'])->name('stable.package.create');
+Route::get('/stable/package/{package}/edit', [PackageController::class, 'edit'])->name('stable.package.edit');
+Route::get('/stable/package/destroy', [PackageController::class, 'destroy'])->name('stable.package.destroy');
 
 // SCHEDULE
 Route::get('/stable/schedule', [HorseController::class, 'index'])->name('stable.schedule.index');

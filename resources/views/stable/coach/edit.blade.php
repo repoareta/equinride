@@ -26,7 +26,7 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form">
+            <form class="form" enctype="multipart/form-data">
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="form-group row">
@@ -78,7 +78,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Experience</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input type="number" name="experience" class="form-control form-control-lg form-control-solid" />
+                            <input type="number" min="0" name="experience" class="form-control form-control-lg form-control-solid" />
                         </div>
                     </div>
                     <div class="form-group row">
