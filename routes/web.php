@@ -2,16 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
-// custom load Facades
+// CUSTOM LOAD FACADES
 use Illuminate\Support\Facades\Auth;
 
 // LOAD USER CONTROLLER START
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RidingClassController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PackageController as UserPackageController; // USE 'AS' BECAUSE CONFLICT WITH STABLE PACKAGE CONTROLLER NAME
+// USE 'AS' BECAUSE CONFLICT WITH STABLE PACKAGE CONTROLLER NAME
+use App\Http\Controllers\PackageController as UserPackageController;
+use App\Http\Controllers\BookingController;
 
-// LOAD USER CONTROLLER START
+// LOAD USER CONTROLLER END
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN START
 use App\Http\Controllers\Stable\StableController;
@@ -19,9 +21,17 @@ use App\Http\Controllers\Stable\HorseController;
 use App\Http\Controllers\Stable\CoachController;
 use App\Http\Controllers\Stable\PackageController;
 use App\Http\Controllers\Stable\ScheduleController;
-use App\Http\Controllers\AppOwner\DashboardController;
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN END
+
+// LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN START
+use App\Http\Controllers\AppOwner\DashboardController;
+use App\Http\Controllers\AppOwner\BankPaymentController;
+use App\Http\Controllers\AppOwner\HorseBreedController;
+use App\Http\Controllers\AppOwner\HorseSexController;
+use App\Http\Controllers\AppOwner\StableApprovalController;
+
+// LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +55,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // HOME
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    // USER || MEMBER START
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
         Route::get('/personal-information', [UserController::class, 'personalInformation'])->name('personal_information');
@@ -62,11 +73,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/{package}/payment', [UserPackageController::class, 'paymentMethod'])->name('payment_method');
         Route::get('/{package}/payment-confirmation', [UserPackageController::class, 'paymentConfirmation'])->name('payment_confirmation');
     });
-    
-    
-    
-    // STABLE OWNER || STABLE ADMIN
-    Route::group(['prefix' => 'stable', 'as' => 'stable.', 'namespace' => 'Stable'], function () {
+
+    // USER || MEMBER END
+
+    // STABLE OWNER || STABLE ADMIN START
+    Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
         Route::get('/register', [StableController::class, 'register'])->name('register');
         Route::get('/dashboard', [StableController::class, 'index'])->name('index');
         Route::get('/{stable}/edit', [StableController::class, 'index'])->name('edit');
@@ -101,12 +112,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
         });
     });
+    // STABLE OWNER || STABLE ADMIN END
+
+    // APP OWNER
+    Route::get('/app-owner/dashboard', [DashboardController::class, 'index'])->name('app_owner.index');
 });
-
-
-
-
-// APP OWNER
-Route::get('/app-owner/dashboard', [DashboardController::class, 'index'])->name('app_owner.index');
-
-// Payment Approval
