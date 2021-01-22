@@ -150,19 +150,6 @@
                     </a>
                 </li>
 
-                <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-user-friends"></i>
-                        </span>
-                        <span class="navi-text">Admin Management</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-danger font-weight-bold">New</span>
-                        </span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li>
-
                 <li class="navi-section mt-5 text-primary text-uppercase font-weight-bolder pb-0">Settings</li>
 
                 <li class="navi-item mb-2">
@@ -203,6 +190,19 @@
                         <span class="navi-text">Bank Account</span>
                         <span class="navi-label">
                             <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                        </span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+                
+                <li class="navi-item mb-2">
+                    <a class="navi-link py-4" href="#">
+                        <span class="navi-icon mr-2">
+                            <i class="fas fa-user-friends"></i>
+                        </span>
+                        <span class="navi-text">Admin Management</span>
+                        <span class="navi-label">
+                            <span class="label label-inline label-light-danger font-weight-bold">New</span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
