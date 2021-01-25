@@ -41,6 +41,23 @@
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @for ($i = 1; $i < 4; $i++)
+                            <tr>
+                                <td>{{ $i }}</td>
+                                <td>Stallion</td>
+                                <td nowrap="nowrap">
+                                    <a href="{{ route('stable.coach.edit', $i) }}" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                                        <i class="la la-edit icon-xl"></i>
+                                    </a>
+
+                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteCoach" data-id="{{ $i }}">
+                                        <i class="la la-trash icon-lg"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endfor
+                        </tbody>
                     </table>
                 </div>
             </div>

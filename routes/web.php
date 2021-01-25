@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::group(['prefix' => 'horse', 'as' => 'horse.'], function() {
 
             // Horse Sex
-            Route::group(['prefix' => 'horse-sex', 'as' => 'horse-sex.'], function() {
+            Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function() {
                 Route::get('/', [HorseSexController::class, 'index'])->name('index');
                 Route::get('list/json', [HorseSexController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseSexController::class, 'store'])->name('store');
