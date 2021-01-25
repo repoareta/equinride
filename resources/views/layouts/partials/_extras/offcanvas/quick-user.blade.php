@@ -167,7 +167,7 @@
 					</a>
 
 					<!--begin::Item-->
-					<a href="#" class="navi-item">
+					<a href="{{ route('app_owner.index') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">

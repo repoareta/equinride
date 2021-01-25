@@ -30,6 +30,7 @@ use App\Http\Controllers\AppOwner\BankPaymentController;
 use App\Http\Controllers\AppOwner\HorseBreedController;
 use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
+use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
@@ -167,6 +168,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::delete('delete', [BankPaymentController::class, 'delete'])->name('delete');
         });
         
+        // Payment Verification
+        Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
+            Route::get('verification', [UserPaymentApprovalController::class, 'index'])->name('verification');
+        });
+
     });
     // APP OWNER END
 });

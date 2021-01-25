@@ -20,7 +20,7 @@ class UserPaymentApprovalController extends Controller
 {
     public function index()
     {
-        return view('app-owner.user-payment');
+        return view('app-owner.payment.verification');
     }
     public function listJsonApprov()
     {
