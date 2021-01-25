@@ -29,7 +29,17 @@
 
                     <div class="form-group">
                         <div class="input-group date">
-                            <input type="text" class="form-control" id="kt_datepicker_2" readonly="readonly" autocomplete="off" name="date_start" placeholder="Select Date" value="{{ request()->input('date_start') }}">
+                            <input 
+                            type="text" 
+                            class="form-control datetimepicker-input" 
+                            id="kt_datepicker_2" 
+                            readonly="readonly" 
+                            autocomplete="off" 
+                            name="date_start" 
+                            placeholder="Select Date" 
+                            value="{{ request()->input('date_start') }}" 
+                            data-target="#kt_datepicker_2"
+                            data-toggle="datetimepicker">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar-check-o"></i>

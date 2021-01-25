@@ -25,8 +25,9 @@ class RidingClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $request)
     {
+        // dd(\Carbon\Carbon::parse('Tue, 02 Mar 2021')->format('Y-m-d'));
         return view('riding-class.search');
     }
 
