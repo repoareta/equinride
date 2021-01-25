@@ -25,15 +25,15 @@
             <!--begin::Header-->
             <div class="card-header py-3">
                 <div class="card-title align-items-start flex-column">
-                    <h3 class="card-label font-weight-bolder text-dark">Horse Sex Management</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting horse sex</span>
+                    <h3 class="card-label font-weight-bolder text-dark">Horse Breed Management</h3>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting horse breed</span>
                 </div>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-data table-striped" id="dataTable">
+                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -45,13 +45,13 @@
                             @for ($i = 1; $i < 4; $i++)
                             <tr>
                                 <td>{{ $i }}</td>
-                                <td>Stallion</td>
+                                <td>Arabian</td>
                                 <td nowrap="nowrap">
-                                    <a href="{{ route('stable.coach.edit', $i) }}" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                                    <a href="javascript:;" data-id="{{ $i }}" id="editData" class="btn btn-clean btn-icon mr-2" title="Edit details">
                                         <i class="la la-edit icon-xl"></i>
                                     </a>
 
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteCoach" data-id="{{ $i }}">
+                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteData" data-id="{{ $i }}">
                                         <i class="la la-trash icon-lg"></i>
                                     </a>
                                 </td>
@@ -63,8 +63,8 @@
             </div>
             <!--end::Body-->
             <!-- begin::Modal -->
-            @include('app-owner.horse-sex.create')
-            @include('app-owner.horse-sex.edit')
+            @include('app-owner.horse-setting-breed.create')
+            @include('app-owner.horse-setting-breed.edit')
             <!--end::Modal-->
         </div>
     </div>
@@ -86,7 +86,7 @@
 
         $("#dataTable_filter").append("<button class='btn btn-primary ml-5' data-toggle='modal' data-target='#modalAdd'>Add New +</button>");		
 
-		$('#dataTable tbody').on( 'click', '.delete-horse', function (e) {
+		$('#dataTable tbody').on( 'click', '#deleteData', function (e) {
 			e.preventDefault();
 			var id = $(this).attr('data-id');
 			Swal.fire({
@@ -102,6 +102,8 @@
 
 		$('body').on('click', '#editData', function () {
             var id = $(this).data('id');
+
+            jQuery.noConflict();
             $('#modalEdit').modal('show');
         });
     } );

@@ -144,6 +144,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
             });
 
+            // Horse Breed
+            Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function() {
+                Route::get('/', [HorseBreedController::class, 'index'])->name('index');
+                Route::get('list/json', [HorseBreedController::class, 'listJson'])->name('list.json');
+                Route::post('store', [HorseBreedController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
+                Route::patch('update', [HorseBreedController::class, 'update'])->name('update');
+                Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
+            });
+
         });
     });
     // APP OWNER END

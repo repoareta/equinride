@@ -15,7 +15,7 @@ class HorseBreedController extends Controller
 {
     public function index()
     {        
-        return view('app-owner.horse-breed.index');
+        return view('app-owner.horse-setting-breed.index');
     }
 
     public function listJson()
