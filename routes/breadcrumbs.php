@@ -87,3 +87,9 @@ Breadcrumbs::for('owner-stable-approval-step-2', function ($trail) {
     $trail->parent('owner-dashboard');
     $trail->push('Stable Approval Step 2', route('app_owner.stable.approval.step_2'));
 });
+
+// App Owner Bank Setting
+Breadcrumbs::for('owner-bank', function ($trail) {
+    $trail->parent('owner-dashboard');
+    $trail->push('Bank', route('app_owner.bank.index'));
+});

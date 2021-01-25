@@ -17,7 +17,7 @@ class BankPaymentController extends Controller
 {
     public function index()
     {
-        return view('app-owner.bank.index');
+        return view('app-owner.payment-setting-bank.index');
     }
 
     public function listJson()

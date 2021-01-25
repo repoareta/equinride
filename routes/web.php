@@ -154,7 +154,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
             });
 
+            
         });
+
+        // Bank Account
+        Route::group(['prefix' => 'bank', 'as' => 'bank.'], function () {
+            Route::get('/', [BankPaymentController::class, 'index'])->name('index');
+            route::get('list/json', [BankPaymentController::class, 'listJson'])->name('list.json');
+            Route::post('store', [BankPaymentController::class, 'store'])->name('store');
+            Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('edit');
+            Route::patch('update', [BankPaymentController::class, 'update'])->name('update');
+            Route::delete('delete', [BankPaymentController::class, 'delete'])->name('delete');
+        });
+        
     });
     // APP OWNER END
 });
