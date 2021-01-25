@@ -14,10 +14,14 @@ use Carbon\Carbon;
 use App\Models\{User,Stable, Coach, Horse, Package, Slot, Province, City, District, Village};
 class StableApprovalController extends Controller
 {
-    // Stable Approval 1
     public function index()
     {
-        return view('app-owner.stable-approval');
+        return view('app-owner.stable.index');
+    }
+    // Stable Approval 1
+    public function step_1()
+    {
+        return view('app-owner.stable.approval-step-1');
     }
     public function listJsonApprov()
     {
@@ -189,9 +193,9 @@ class StableApprovalController extends Controller
 
 
     // Stable Approval 2
-    public function index2()
+    public function step_2()
     {
-        return view('app-owner.stable-approval2');
+        return view('app-owner.stable.approval-step-2');
     }
 
     public function listJsonApprov2()

@@ -70,3 +70,25 @@ Breadcrumbs::for('stable-schedule', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Schedule', route('stable.schedule.index'));
 });
+
+// App Owner
+Breadcrumbs::for('owner-dashboard', function ($trail) {
+    $trail->parent('home');
+    $trail->push('App Owner', route('app_owner.index'));
+});
+
+// App Owner Stable Approval
+Breadcrumbs::for('owner-stable-approval', function ($trail) {
+    $trail->parent('owner-dashboard');
+    $trail->push('Stable Approval', route('app_owner.stable.approval.index'));
+});
+// App Owner Stable Approval Step 1
+Breadcrumbs::for('owner-stable-approval-step-1', function ($trail) {
+    $trail->parent('owner-stable-approval');
+    $trail->push('Step 1', route('app_owner.stable.approval.step_1'));
+});
+// App Owner Stable Approval Step 2
+Breadcrumbs::for('owner-stable-approval-step-2', function ($trail) {
+    $trail->parent('owner-stable-approval');
+    $trail->push('Step 2', route('app_owner.stable.approval.step_2'));
+});

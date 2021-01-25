@@ -112,7 +112,19 @@
             <!--begin::Nav-->
             <ul class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 active" href="#">
+                    <a class="navi-link py-4 {{ Route::is('app_owner.index') ? 'active' : '' }}" href="{{ route('app_owner.index') }}">
+                        <span class="navi-icon mr-2">
+                            <i class="fab fa-elementor"></i>
+                        </span>
+                        <span class="navi-text">Dashboard</span>
+                        <span class="navi-label">
+                            <span class="label label-light-info font-weight-bold">2</span>
+                        </span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+                <li class="navi-item mb-2">
+                    <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.*') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-chess-knight"></i>
                         </span>
