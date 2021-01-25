@@ -15,7 +15,7 @@ class HorseSexController extends Controller
 {
     public function index()
     {        
-        return view('app-owner.horse-sex.index');
+        return view('app-owner.horse-setting-sex.index');
     }
 
     public function listJson()
