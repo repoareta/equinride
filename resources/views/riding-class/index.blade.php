@@ -43,7 +43,8 @@
                                     <span class="svg-icon svg-icon-lg">
                                         <i class="la la-calendar-check-o icon-lg"></i>
                                     </span>
-                                    <input type="text" class="form-control border-0 font-weight-bold pl-2" id="search_datepicker" readonly="readonly" name="date_start" placeholder="Enter Date">
+                                    <input type="text" class="form-control border-0 font-weight-bold pl-2" id="search_datepicker" readonly="readonly" placeholder="Enter Date">
+                                    <input type="hidden" id="search_datepicker_store" name="date_start">
                                 </div>
                                 <!--end::Input-->
 
