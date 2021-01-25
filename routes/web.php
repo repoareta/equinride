@@ -114,6 +114,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     // STABLE OWNER || STABLE ADMIN END
 
-    // APP OWNER
-    Route::get('/app-owner/dashboard', [DashboardController::class, 'index'])->name('app_owner.index');
+    // APP OWNER START
+    Route::group(['prefix' => 'owner', 'as' => 'app_owner.'], function() {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+
+        // STABLE
+        Route::group(['prefix' => 'stable', 'as' => 'stable.'], function() {
+
+            // STABLE APPROVAL
+            Route::group(['prefix' => 'approval', 'as' => 'approval.'], function() {
+                Route::get('/', [StableApprovalController::class, 'index'])->name('index');
+                Route::get('/step-1', [StableApprovalController::class, 'step_1'])->name('step_1');
+                Route::get('/step-2', [StableApprovalController::class, 'step_2'])->name('step_2');
+            });
+
+            
+
+        });
+
+    });
+    // APP OWNER END
 });
