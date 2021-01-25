@@ -168,7 +168,7 @@
                 </li>
 
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4 {{ Route::is('app_owner.payment.verification') ? 'active' : '' }}" href="{{ route('app_owner.payment.verification') }}">
                         <span class="navi-icon mr-2">
                             <i class="fab fa-buffer"></i>
                         </span>

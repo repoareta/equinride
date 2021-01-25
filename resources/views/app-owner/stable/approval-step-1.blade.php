@@ -53,26 +53,26 @@
                                 </thead>
                                 <tbody>
                                     @for ($i = 1; $i < 20; $i++)
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>Steven Stable</td>
-                                        <td>Steven</td>
-                                        <td>087744779090</td>
-                                        <td>Steven Coa</td>
-                                        <td>2020-06-06</td>
-                                        <td>Pending</td>
-                                        <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="accept" title="Accept">
-                                                <i class='fas fa-check-circle'></i>
-                                            </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="decline" title="Decline">
-                                                <i class='fas fa-ban'></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>Steven Stable</td>
+                                            <td>Steven</td>
+                                            <td>087744779090</td>
+                                            <td>Steven Coa</td>
+                                            <td>2020-06-06</td>
+                                            <td>Pending</td>
+                                            <td nowrap="nowrap">
+                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="accept" title="Accept">
+                                                    <i class='fas fa-check-circle'></i>
+                                                </a>
+                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="decline" title="Decline">
+                                                    <i class='fas fa-ban'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endfor
                                 </tbody>
                             </table>
