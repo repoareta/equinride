@@ -123,7 +123,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // STABLE APPROVAL
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function() {
-                Route::get('/', [StableApprovalController::class, 'index'])->name('index');
                 Route::get('/step-1', [StableApprovalController::class, 'step_1'])->name('step_1');
                 Route::get('/step-2', [StableApprovalController::class, 'step_2'])->name('step_2');
             });
@@ -132,6 +131,20 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
         });
 
+        // Horse
+        Route::group(['prefix' => 'horse', 'as' => 'horse.'], function() {
+
+            // Horse Sex
+            Route::group(['prefix' => 'horse-sex', 'as' => 'horse-sex.'], function() {
+                Route::get('/', [HorseSexController::class, 'index'])->name('index');
+                Route::get('list/json', [HorseSexController::class, 'listJson'])->name('list.json');
+                Route::post('store', [HorseSexController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('edit');
+                Route::patch('update', [HorseSexController::class, 'update'])->name('update');
+                Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
+            });
+
+        });
     });
     // APP OWNER END
 });

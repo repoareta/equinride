@@ -14,10 +14,6 @@ use Carbon\Carbon;
 use App\Models\{User,Stable, Coach, Horse, Package, Slot, Province, City, District, Village};
 class StableApprovalController extends Controller
 {
-    public function index()
-    {
-        return view('app-owner.stable.index');
-    }
     // Stable Approval 1
     public function step_1()
     {

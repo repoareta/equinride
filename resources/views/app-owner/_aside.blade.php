@@ -123,17 +123,35 @@
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
+                
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.*') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.index') }}">
+                    <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.*') ? 'active' : '' }}" href="#stableApprovalSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-chess-knight"></i>
                         </span>
                         <span class="navi-text">Stable Approval</span>
-                        <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">2</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
+
+                    <ul class="collapse list-unstyled mt-2" id="stableApprovalSubmenu">
+                        <li class="navi-item mb-2 pl-3">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_1') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_1') }}">
+                                <span class="navi-icon mr-2">
+                                    <i class="fas fa-check-circle"></i>
+                                </span>
+                                <span class="navi-text">Approval Step 1</span>
+                            </a>
+                        </li>
+
+                        <li class="navi-item mb-2 pl-3">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2') }}">
+                                <span class="navi-icon mr-2">
+                                    <i class="fas fa-check-circle"></i>
+                                </span>
+                                <span class="navi-text">Approval Step 2</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="navi-item mb-2">

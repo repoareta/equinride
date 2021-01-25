@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive mb-5">
-                            <table class="table table-data table-danger" id="dataTableunapprov">
+                            <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableunapprov">
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
@@ -62,13 +62,13 @@
                                         <td>2020-06-06</td>
                                         <td>Pending</td>
                                         <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-toggle="modal" data-id="{{ $i }}" class="btn btn-info text-center mr-2" id="openBtn" data-toggle="Detail" data-placement="top" title="Detail">
+                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-success text-center mr-2" id="accept" data-toggle="Detail" data-placement="top" title="Accept">
+                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="accept" title="Accept">
                                                 <i class='fas fa-check-circle'></i>
                                             </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-danger text-center mr-2" id="decline" data-toggle="Detail" data-placement="top" title="Decline">
+                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="decline" title="Decline">
                                                 <i class='fas fa-ban'></i>
                                             </a>
                                         </td>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive mb-5">
-                            <table class="table table-data table-success" id="dataTable">
+                            <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable">
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
@@ -109,7 +109,7 @@
                                         <td>2020-06-06</td>
                                         <td>Email Sent</td>
                                         <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-toggle="modal" data-id="{{ $i }}" class="btn btn-info text-center mr-2" id="openBtn" data-toggle="Detail" data-placement="top" title="Detail">
+                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">											
-                                <button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
+                                <button data-dismiss="modal" class="btn btn-primary font-weight-bold">Close</button>
                             </form>
                         </div>
                     </div>
@@ -241,7 +241,7 @@
         });
         $('body').on( 'click', '#openBtn', function () {
             var id = $(this).data('id');
-            
+            jQuery.noConflict();
             $('#modalDetail').modal('show');
         });              
     } );
