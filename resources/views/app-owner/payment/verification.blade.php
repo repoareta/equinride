@@ -175,6 +175,8 @@
             <!-- Modal -->
         </div>
     </div>
+    
+    </div>
     <!--end::Content-->
 </div>
 @endsection
