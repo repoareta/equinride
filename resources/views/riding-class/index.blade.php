@@ -43,8 +43,16 @@
                                     <span class="svg-icon svg-icon-lg">
                                         <i class="la la-calendar-check-o icon-lg"></i>
                                     </span>
-                                    <input type="text" class="form-control border-0 font-weight-bold pl-2" id="search_datepicker" readonly="readonly" placeholder="Enter Date">
-                                    <input type="hidden" id="search_datepicker_store" name="date_start">
+                                    <input 
+                                    type="text" 
+                                    class="form-control border-0 font-weight-bold pl-2 datetimepicker-input" id="kt_datepicker_2" 
+                                    readonly="readonly" 
+                                    placeholder="Select Date"
+                                    readonly="readonly" 
+                                    autocomplete="off" 
+                                    name="date_start"
+                                    data-target="#kt_datepicker_2"
+                                    data-toggle="datetimepicker">
                                 </div>
                                 <!--end::Input-->
 
