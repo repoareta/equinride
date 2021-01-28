@@ -4,7 +4,7 @@
 	<!--begin::Head-->
 	<head><base href="../../../">
 		<meta charset="utf-8" />
-		<title>EQUINRIDE</title>
+		<title>{{ config('app.name', 'EQUINRIDE') }}</title>
 		<meta name="description" content="Login page example" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="{{ config('app.url', url()) }}" />
@@ -14,7 +14,7 @@
 		@include('layouts.styles')
         
         <!--begin::Page Custom Styles(used by this page)-->
-		<link href="assets/css/pages/login/login-1.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/pages/login/login-1.css') }}" rel="stylesheet" type="text/css" />
         <!--end::Page Custom Styles-->
         
         <style>

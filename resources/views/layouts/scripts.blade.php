@@ -72,14 +72,11 @@
 <!--begin::Page Vendors(used by this page)-->
 <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 <script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script> 
-
 <!--end::Page Vendors-->
 --}}
 
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
-<!--end::Page Scripts-->
 
-<!--begin::Page Scripts(used by this page)-->
 @stack("page-scripts")
 <!--end::Page Scripts-->

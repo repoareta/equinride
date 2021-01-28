@@ -9,6 +9,14 @@
     body {
         overflow-x: hidden;
     }
+
+    .select2-container--default.select2-container--open .select2-selection--single {
+        border: 0 !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border: 0 !important;
+    }
 </style>
 
 <div class="row" style="margin-left:-25px; margin-right:-25px">
@@ -32,7 +40,12 @@
                                     <span class="svg-icon svg-icon-lg">
                                         <i class="la la-search-location icon-lg"></i>
                                     </span>
-                                    <input type="text" class="form-control border-0 font-weight-bold pl-2" name="stable_name" placeholder="Enter Stable Name">
+                                    <select class="form-control select2 border-0 font-weight-bold pl-2" name="stable_name" id="stable_name">
+                                        <option value="">Select Stable</option>
+                                        @foreach ($stables as $stable)
+                                            <option value="{{ $stable->name }}">{{ ucwords($stable->name) }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <!--end::Input-->
 
@@ -97,60 +110,17 @@
 
 <div class="lastest-competitions">
     <div class="row">
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
+        @foreach ($stables_footer as $stable)
+            <div class="col-md-3 p-5">
+                <div class="card">
+                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
+                    <div class="card-body p-5">
+                    <h5 class="card-title">{{ $stable->name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
+                    </div>
                 </div>
-              </div>
-        </div>
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
-                </div>
-              </div>
-        </div>
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
-                </div>
-              </div>
-        </div>
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
-                </div>
-              </div>
-        </div>
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
-                </div>
-              </div>
-        </div>
-        <div class="col-md-3 p-5">
-            <div class="card">
-                <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
-                <div class="card-body p-5">
-                  <h5 class="card-title">Branchsto</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
-                </div>
-              </div>
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>
 
@@ -158,20 +128,7 @@
     <div class="col-md-12">
         <div class="d-flex align-items-center flex-wrap p5-10 justify-content-center">
             <div class="d-flex flex-wrap py-2 mr-3">
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-back icon-xs"></i></a>
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
-        
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-        
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+                {{ $stables_footer->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>
