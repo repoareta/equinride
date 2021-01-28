@@ -79,6 +79,8 @@
 		@include('layouts.partials._extras.scrolltop')
 
 		@include('layouts.scripts')
+
+		@include('sweetalert::alert')	
 	</body>
 
 	<!--end::Body-->

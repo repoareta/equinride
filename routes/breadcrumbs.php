@@ -17,7 +17,7 @@ Breadcrumbs::for('profile', function ($trail) {
 });
 Breadcrumbs::for('profile-password', function ($trail) {
     $trail->parent('profile');
-    $trail->push('Change Password', route('profile.change_password'));
+    $trail->push('Change Password', route('user.change_password'));
 });
 
 // Stable

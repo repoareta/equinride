@@ -12,20 +12,22 @@
     <div class="flex-row-fluid ml-lg-8">
         <!--begin::Card-->
         <div class="card card-custom">
+            <!--begin::Form-->
+            <form class="form" action="{{ route('user.change_password.update') }}" method="post">
+            @method('PATCH')
+            @csrf
             <!--begin::Header-->
-            <div class="card-header py-3">
-                <div class="card-title align-items-start flex-column">
+            <div class="card-header py-3 d-flex justify-content-between">
+                <div class="card-title align-items-start flex-column mb-0">
                     <h3 class="card-label font-weight-bolder text-dark">Change Password</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Change your account password</span>
                 </div>
                 <div class="card-toolbar">
-                    <button type="reset" class="btn btn-success mr-2">Save Changes</button>
+                    <button type="submit" class="btn btn-success mr-2">Save Changes</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
             <!--end::Header-->
-            <!--begin::Form-->
-            <form class="form">
                 <div class="card-body">
                     <!--begin::Alert-->
                     <div class="alert alert-custom alert-light-danger fade show mb-10" role="alert">
