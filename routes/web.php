@@ -46,6 +46,9 @@ use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 */
 
 Route::get('/', function () {
+    if (Auth::user()) {
+        return redirect('/home');
+    }
     return view('auth.login');
 });
 
@@ -118,27 +121,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // STABLE OWNER || STABLE ADMIN END
 
     // APP OWNER START
-    Route::group(['prefix' => 'owner', 'as' => 'app_owner.'], function() {
+    Route::group(['prefix' => 'owner', 'as' => 'app_owner.'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
         // STABLE
-        Route::group(['prefix' => 'stable', 'as' => 'stable.'], function() {
+        Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
 
             // STABLE APPROVAL
-            Route::group(['prefix' => 'approval', 'as' => 'approval.'], function() {
+            Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
                 Route::get('/step-1', [StableApprovalController::class, 'step_1'])->name('step_1');
                 Route::get('/step-2', [StableApprovalController::class, 'step_2'])->name('step_2');
             });
-
-            
-
         });
 
         // Horse
-        Route::group(['prefix' => 'horse', 'as' => 'horse.'], function() {
+        Route::group(['prefix' => 'horse', 'as' => 'horse.'], function () {
 
             // Horse Sex
-            Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function() {
+            Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function () {
                 Route::get('/', [HorseSexController::class, 'index'])->name('index');
                 Route::get('list/json', [HorseSexController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseSexController::class, 'store'])->name('store');
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             });
 
             // Horse Breed
-            Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function() {
+            Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function () {
                 Route::get('/', [HorseBreedController::class, 'index'])->name('index');
                 Route::get('list/json', [HorseBreedController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseBreedController::class, 'store'])->name('store');
@@ -156,8 +156,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::patch('update', [HorseBreedController::class, 'update'])->name('update');
                 Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
             });
-
-            
         });
 
         // Bank Account
@@ -174,7 +172,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('verification', [UserPaymentApprovalController::class, 'index'])->name('verification');
         });
-
     });
     // APP OWNER END
 });
