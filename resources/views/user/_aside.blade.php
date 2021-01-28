@@ -84,11 +84,15 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg') }}')"></div>
+                    @if( !Auth::user()->photo )
+                        <div class="symbol-label" style="background-image:url('{{ asset('assets/media/branchsto/profile.png') }}')"></div>
+                    @else
+                        <div class="symbol-label" style="background-image:url('{{ asset(Auth::user()->photo) }}')"></div>
+                    @endif
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
-                    <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+                    <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
                     <div class="text-muted">Application Developer</div>
                 </div>
             </div>
@@ -97,15 +101,15 @@
             <div class="py-9">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="font-weight-bold mr-2">Email:</span>
-                    <a href="#" class="text-muted text-hover-primary">matt@fifestudios.com</a>
+                    <a href="#" class="text-muted text-hover-primary">{{ Auth::user()->email }}</a>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="font-weight-bold mr-2">Phone:</span>
-                    <span class="text-muted">44(76)34254578</span>
+                    <span class="text-muted">{{ Auth::user()->phone }}</span>
                 </div>
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="font-weight-bold mr-2">Location:</span>
-                    <span class="text-muted">Melbourne</span>
+                    <span class="text-muted">{{ Auth::user()->address }}</span>
                 </div>
             </div>
             <!--end::Contact-->
@@ -148,7 +152,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="{{ route('profile.change_password') }}" class="navi-link py-4 {{ Route::is('profile.change_password') ? 'active' : '' }}">
+                    <a href="{{ route('user.change_password') }}" class="navi-link py-4 {{ Route::is('user.change_password') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
                                 <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Shield-user.svg-->

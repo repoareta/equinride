@@ -60,8 +60,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
         Route::get('/personal-information', [UserController::class, 'personalInformation'])->name('personal_information');
+        Route::patch('/personal-information', [UserController::class, 'personalInformationUpdate'])->name('personal_information.update');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
-        Route::get('/order-history', [UserController::class, 'changePassword'])->name('change_password');
+        Route::patch('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
+        Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history');
     });
 
     // USER RIDING CLASS
