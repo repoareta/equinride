@@ -115,8 +115,12 @@
                 <div class="card">
                     <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
                     <div class="card-body p-5">
-                    <h5 class="card-title">{{ $stable->name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Rating Stable</h6>
+                    <h5 class="card-title">
+                        <a href="{{ route('search') }}">
+                            {{ $stable->name }}
+                        </a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ $stable->city->name }}</h6>
                     </div>
                 </div>
             </div>
