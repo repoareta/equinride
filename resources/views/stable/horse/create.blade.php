@@ -22,14 +22,15 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" enctype="multipart/form-data">
+            <form class="form" method="post" action="{{ route('stable.horse.store') }}" enctype="multipart/form-data">
+                @csrf
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Photo</label>
                         <div class="col-lg-9 col-xl-6">
-                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url({{ asset('assets/media/users/300_21.jpg') }})">
-                                <div class="image-input-wrapper" style="background-image: url({{ asset('assets/media/users/300_21.jpg') }})"></div>
+                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url({{ asset('assets/media/users/blank.png') }})">
+                                <div class="image-input-wrapper" style="background-image: none;"></div>
                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                     <i class="fa fa-pen icon-sm text-muted"></i>
                                     <input type="file" name="photo" accept=".png, .jpg, .jpeg">
@@ -48,22 +49,34 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Name</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="name" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Owner</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="owner"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="owner" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Sex</label>
                         <div class="col-lg-9 col-xl-6">
                             <select class="form-control form-control-lg form-control-solid" name="horse_sex_id">
-                                <option value="1">Stallion</option>
-                                <option value="2">Mare</option>
-                                <option value="3">Gelding</option>
+                                <option value="">-- Please choose your horse sex --</option>
+                                @foreach ($sexs as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Horse Breed</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <select class="form-control form-control-lg form-control-solid" name="horse_breed_id">
+                                <option value="">--Please choose your horse breed--</option>
+                                @foreach ($breeds as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -71,7 +84,7 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid"/>
+                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -81,29 +94,19 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Passport Number</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input type="number" min="0" name="passport_number" class="form-control form-control-lg form-control-solid" />
+                            <input type="number" min="0" name="passport_number" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Horse Breed</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="horse_breed_id">
-                                <option value="1">European</option>
-                                <option value="2">Arabian</option>
-                                <option value="3">Pony</option>
-                            </select>
-                        </div>
-                    </div>                    
+                    </div>                                        
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Pedigree Male</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_male"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_male" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Pedigree Female</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_female"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_female" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="row">
@@ -127,13 +130,40 @@
 @endsection
 
 @push('page-scripts')
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\HorseStore') !!}
+
+<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
     $('#datePicker').datepicker({
         todayHighlight: true,
         orientation: "bottom left",
         autoclose: true,
-        // language : 'id',
-        format   : 'yyyy-mm-dd'
+        format: {
+            /*
+            * Say our UI should display a week ahead,
+            * but textbox should store the actual date.
+            * This is useful if we need UI to select local dates,
+            * but store in UTC
+            */
+            toDisplay: function (date, format, language) {
+                var d = new Date(date);
+                d.setDate(d.getDate());
+
+                return d.toLocaleDateString('default', { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: '2-digit' 
+                });
+            },
+            toValue: function (date, format, language) {
+                var d = new Date(date);
+                d.setDate(d.getDate());
+                return new Date(d);
+            }
+        }
     });
 </script>
 @endpush

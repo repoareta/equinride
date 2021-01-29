@@ -107,12 +107,12 @@ class UserController extends Controller
         
 
         if($request->hasFile('photo')){
-            File::delete(public_path('/storage/user/photo/'.$request->logo));
+            File::delete(public_path('/storage/user/photo/'.$request->photo));
             $Query->photo = $request->file('photo')->getClientOriginalName();
             $dir = $request->file('photo')->storeAs('user/photo', $Query->photo, 'public');
             $Query->photo = 'storage/'.$dir;
         }else{
-            File::delete(public_path('/storage/user/photo/'.$request->logo));
+            File::delete(public_path('/storage/user/photo/'.$request->photo));
             $Query->photo = null;
         }
 
