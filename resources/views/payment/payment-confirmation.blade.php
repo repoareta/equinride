@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('riding-class') }}
+    {{ Breadcrumbs::render('package-payment-confirmation', $package) }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                 <div class="alert alert-custom alert-notice alert-light-success fade show p-2" role="alert">
                     <div class="alert-icon"><i class="flaticon2-information"></i></div>
                     <div class="alert-text">Payment instructions have been sent to your email</div>
-                    <div class="alert-close">
+                    <div class="alert-close mr-2">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="ki ki-close"></i></span>
                         </button>
@@ -26,7 +26,7 @@
                         <!--begin::Title-->
                             <!--begin::User-->
                             <div class="d-flex align-items-center mt-5 mb-5">
-                                <span class="label label-xl label-success">1</span>
+                                <span class="label label-xl label-primary">1</span>
                                 <div class="font-size-h4 font-weight-bold ml-3">
                                     Make a Payment Before
                                 </div>
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="d-flex align-items-center mt-10 mb-5">
-                                <span class="label label-xl label-success">2</span>
+                                <span class="label label-xl label-primary">2</span>
                                 <div class="font-size-h4 font-weight-bold ml-3">
                                     Please Transfer to:
                                 </div>
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="d-flex align-items-center mt-10 mb-5">
-                                <span class="label label-xl label-success">3</span>
+                                <span class="label label-xl label-primary">3</span>
                                 <div class="font-size-h4 font-weight-bold ml-3">
                                     Complete Your Payment
                                 </div>
@@ -102,16 +102,30 @@
 
                             <div class="card">
                                 <div class="card-body p-5">
-                                    <form action="/file-upload" id="dropZone" class="dropzone dropzone-default dropzone-primary dz-clickable" enctype="multipart/form-data">
+                                    <form action="{{ route('package.payment_confirmation_submit', ['package' => $package->id]) }}" method="POST" id="payment-confirmation-form" class="dropzone dropzone-default dropzone-primary dz-clickable" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="fallback">
                                             <input name="file" type="file" />
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                    
+                            </div>                    
                     </div>
                     <!--end::Info-->
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <div class="row">
+                <div class="col-md-7">
+                    By clicking this button, you ackowladge than you hav read amd agreed to the 
+                    <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of Equinride
+                </div>
+                <div class="col-md-5 mt-3 mt-md-0">
+                    <button class="btn btn-block font-weight-bolder btn-warning py-5" onclick="event.preventDefault();document.getElementById('payment-confirmation-form').submit();">
+                        Submit Payment
+                    </button>
                 </div>
             </div>
         </div>
@@ -134,25 +148,25 @@
                     BOOKING DETAILS
                 </div>
                 <div class="d-flex align-items-center">
-                    <span class="label label-dot label-success"></span>
+                    <span class="label label-dot label-primary"></span>
                     <p class="ml-2 mb-0">
                         Tuesday, June 20th 2020
                     </p>
                 </div>
                 <div class="d-flex align-items-center">
-                    <span class="label label-dot label-success"></span>
+                    <span class="label label-dot label-primary"></span>
                     <p class="ml-2 mb-0">
                         07:00 - 08:00
                     </p>
                 </div>
                 <div class="d-flex align-items-center">
-                    <span class="label label-dot label-success"></span>
+                    <span class="label label-dot label-primary"></span>
                     <p class="ml-2 mb-0">
                         Wild Horse
                     </p>
                 </div>
                 <div class="d-flex align-items-center">
-                    <span class="label label-dot label-success"></span>
+                    <span class="label label-dot label-primary"></span>
                     <p class="ml-2 mb-0">
                         This is the most effective riding package for beginners who want to become professionals
                     </p>
@@ -173,15 +187,12 @@
 @endsection
 @push('page-scripts')
     <script>
-        $("#dropZone").dropzone({ 
-            url: "https://keenthemes.com/scripts/void.php",
+        $("#payment-confirmation-form").dropzone({
+            autoProcessQueue: false,
             paramName: "file",
             maxFiles: 1,
             maxFilesize: 5,
-            addRemoveLinks: !0,
-            accept: function(e, o) {
-                "justinbieber.jpg" == e.name ? o("Naha, you don't.") : o()
-            }
+            addRemoveLinks: !0
         });
     </script>
 @endpush

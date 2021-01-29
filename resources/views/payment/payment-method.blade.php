@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('riding-class') }}
+    {{ Breadcrumbs::render('package-payment-method', $package) }}
 @endsection
 
 @section('content')
@@ -185,15 +185,20 @@
 
                                 <div class="mb-5">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-7">
                                             By clicking this button, you ackowladge than you hav read amd agreed to the 
                                         <a href="#">Terms &amp; Conditions</a>
                                         and <a href="#">Privacy Policy</a> of Equinride
                                         </div>
-                                        <div class="col-md-4 mt-3 mt-md-0">
-                                            <button class="btn btn-block font-weight-bolder btn-warning py-5">
+                                        <div class="col-md-5 mt-3 mt-md-0">
+                                            <button class="btn btn-block font-weight-bolder btn-warning py-5" onclick="event.preventDefault();document.getElementById('payment-method-form').submit();">
                                                 Pay with Bank Transfer
                                             </button>
+
+                                            <form id="payment-method-form" action="{{ route('package.payment_confirmation', ['package' => $package->id]) }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
