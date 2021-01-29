@@ -10,6 +10,11 @@ Breadcrumbs::for('riding-class', function ($trail) {
     $trail->push('Riding Class', route('riding_class'));
 });
 
+Breadcrumbs::for('riding-class-search', function ($trail) {
+    $trail->parent('riding-class');
+    $trail->push('Search', route('riding_class.search'));
+});
+
 // Profile
 Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('home');
@@ -31,11 +36,11 @@ Breadcrumbs::for('stable-horse', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Horse', route('stable.horse.index'));
 });
-Breadcrumbs::for('stable-horse-create', function ($trail) {    
+Breadcrumbs::for('stable-horse-create', function ($trail) {
     $trail->parent('stable-horse');
     $trail->push('Create', route('stable.horse.create'));
 });
-Breadcrumbs::for('stable-horse-edit', function ($trail) {    
+Breadcrumbs::for('stable-horse-edit', function ($trail) {
     $trail->parent('stable-horse');
     $trail->push('Edit', route('stable.horse.edit', 1));
 });
@@ -44,11 +49,11 @@ Breadcrumbs::for('stable-coach', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Coach', route('stable.coach.index'));
 });
-Breadcrumbs::for('stable-coach-create', function ($trail) {    
+Breadcrumbs::for('stable-coach-create', function ($trail) {
     $trail->parent('stable-coach');
     $trail->push('Create', route('stable.coach.create'));
 });
-Breadcrumbs::for('stable-coach-edit', function ($trail) {    
+Breadcrumbs::for('stable-coach-edit', function ($trail) {
     $trail->parent('stable-coach');
     $trail->push('Edit', route('stable.coach.edit', 1));
 });
@@ -57,11 +62,11 @@ Breadcrumbs::for('stable-package', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Package', route('stable.package.index'));
 });
-Breadcrumbs::for('stable-package-create', function ($trail) {    
+Breadcrumbs::for('stable-package-create', function ($trail) {
     $trail->parent('stable-package');
     $trail->push('Create', route('stable.package.create'));
 });
-Breadcrumbs::for('stable-package-edit', function ($trail) {    
+Breadcrumbs::for('stable-package-edit', function ($trail) {
     $trail->parent('stable-package');
     $trail->push('Edit', route('stable.package.edit', 1));
 });

@@ -2,6 +2,11 @@
 <script type="text/javascript">
 // Shorthand for $( document ).ready()
 $(function() {
+    $('.select2').select2({
+        placeholder: "Select Stable",
+        width:"100%",
+    });
+
     $('#kt_datepicker_2').datetimepicker({
         format: 'ddd, DD MMM YYYY',
         widgetPositioning: {

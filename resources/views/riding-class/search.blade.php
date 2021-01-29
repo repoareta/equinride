@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('riding-class') }}
+    {{ Breadcrumbs::render('riding-class-search') }}
 @endsection
 
 @section('content')
@@ -17,14 +17,12 @@
             <form action="{{ route('riding_class.search') }}" method="get">
                 <div class="card-body p-5">
                     <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="stable_name" placeholder="Enter Stable Name" value="{{ request()->input('stable_name') }}">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-search-location"></i>
-                                </span>
-                            </div>
-                        </div>
+                        <select class="form-control select2" placeholder="Select Stable" name="stable_name" id="stable_name">
+                            <option value="">Selet Stable</option>
+                            @foreach ($stables as $stable)
+                                <option value="{{ $stable->name }}" @if($stable->name == request()->input('stable_name')) selected @endif>{{ $stable->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -50,7 +48,17 @@
 
                     <div class="form-group">
                         <div class="input-group timepicker">
-                            <input class="form-control datetimepicker-input" id="datetimepicker3" data-toggle="datetimepicker" data-target="#datetimepicker3" readonly="readonly" autocomplete="off" name="time_start" placeholder="Select Time" type="text" value="{{ request()->input('time_start') }}">
+                            <input 
+                            type="text" 
+                            class="form-control datetimepicker-input" 
+                            id="datetimepicker3" 
+                            readonly="readonly" 
+                            autocomplete="off" 
+                            name="time_start" 
+                            placeholder="Select Time" 
+                            value="{{ request()->input('time_start') }}"
+                            data-toggle="datetimepicker" 
+                            data-target="#datetimepicker3">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-clock-o"></i>
@@ -67,120 +75,108 @@
         </div>
     </div>
     <div class="col-lg-8 col-xl-9">
-        @for ($i = 0; $i < 10; $i++)
-        <div class="card card-custom gutter-b">
-            <div class="card-body p-5">
-                <div class="d-flex">
-                    <!--begin::Pic-->
-                    <div class="flex-shrink-0 mr-7">
-                        <div class="symbol symbol-50 symbol-lg-150">
-                            <img alt="Pic" src="{{ asset('assets/media//users/300_1.jpg') }}">
-                        </div>
-                    </div>
-                    <!--end::Pic-->
-                    <!--begin: Info-->
-                    <div class="flex-grow-1">
-                        <!--begin::Title-->
-                        <div class="d-flex align-items-center justify-content-between flex-wrap">
-                            <!--begin::User-->
-                            <div class="mr-3">
-                                <div class="d-flex align-items-center mr-3">
-                                    <!--begin::Name-->
-                                    <a href="#" class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">David Smith</a>
-                                    <!--end::Name-->
-                                    <span class="label label-light-success label-inline font-weight-bolder mr-1">Customer</span>
-                                </div>
-                                <!--begin::Contacts-->
-                                <div class="d-flex flex-wrap my-2">
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                    <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
-                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Mail-notification.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <path d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z" fill="#000000"></path>
-                                                <circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5"></circle>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>david.s@loop.com</a>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                    <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
-                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/General/Lock.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <mask fill="white">
-                                                    <use xlink:href="#path-1"></use>
-                                                </mask>
-                                                <g></g>
-                                                <path d="M7,10 L7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 L17,10 L18,10 C19.1045695,10 20,10.8954305 20,12 L20,18 C20,19.1045695 19.1045695,20 18,20 L6,20 C4.8954305,20 4,19.1045695 4,18 L4,12 C4,10.8954305 4.8954305,10 6,10 L7,10 Z M12,5 C10.3431458,5 9,6.34314575 9,8 L9,10 L15,10 L15,8 C15,6.34314575 13.6568542,5 12,5 Z" fill="#000000"></path>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>PR Manager</a>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold">
-                                    <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
-                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Map/Marker2.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <path d="M9.82829464,16.6565893 C7.02541569,15.7427556 5,13.1079084 5,10 C5,6.13400675 8.13400675,3 12,3 C15.8659932,3 19,6.13400675 19,10 C19,13.1079084 16.9745843,15.7427556 14.1717054,16.6565893 L12,21 L9.82829464,16.6565893 Z M12,12 C13.1045695,12 14,11.1045695 14,10 C14,8.8954305 13.1045695,8 12,8 C10.8954305,8 10,8.8954305 10,10 C10,11.1045695 10.8954305,12 12,12 Z" fill="#000000"></path>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>Melbourne</a>
-                                </div>
-                                <!--end::Contacts-->
+        @forelse ($packages as $package)
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-5">
+                    <div class="d-flex">
+                        <!--begin::Pic-->
+                        <div class="flex-shrink-0 mr-7">
+                            <div class="symbol symbol-50 symbol-lg-150">
+                                @if ($package->photo)
+                                    <img alt="Pic" src="{{ asset('assets/media//users/300_7.jpg') }}"> 
+                                @else
+                                    <img alt="Pic" src="{{ asset('assets/media//users/300_1.jpg') }}">
+                                @endif
                             </div>
-                            <!--begin::User-->
                         </div>
-                        <!--end::Title-->
-                        <!--begin::Content-->
-                        <div class="d-flex align-items-center flex-wrap justify-content-between">
-                            <!--begin::Description-->
-                            <div class="flex-grow-1 font-weight-bold text-dark-50 py-2 py-lg-2 mr-5">I distinguish three main text objectives could be merely to inform people. 
-                            <br>A second could be persuade people. You want people to bay objective.</div>
-                            <!--end::Description-->
-                            <!--begin::Progress-->
-                            <div class="mb-0">
-                                <h4 class="text-dark font-weight-bolder mr-2">Rp. 50.000.000</h4>
+                        <!--end::Pic-->
+                        <!--begin: Info-->
+                        <div class="flex-grow-1">
+                            <!--begin::Title-->
+                            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                <!--begin::User-->
+                                <div class="mr-3">
+                                    <div class="d-flex align-items-center mr-3">
+                                        <!--begin::Name-->
+                                        <span class="d-flex align-items-center text-dark text-hover-primary font-size-h2 font-weight-bold mr-3">
+                                            {{ $package->name }}
+                                        </span>
+                                        <!--end::Name-->
+                                    </div>
+                                    <!--begin::Contacts-->
+                                    <div class="d-flex flex-wrap my-2">
+                                        <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Mail-notification.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect opacity="0.300000012" x="0" y="0" width="24" height="24"/>
+                                                    <polygon fill="#000000" fill-rule="nonzero" opacity="0.3" points="7 4.89473684 7 21 5 21 5 3 11 3 11 4.89473684"/>
+                                                    <path d="M10.1782982,2.24743315 L18.1782982,3.6970464 C18.6540619,3.78325557 19,4.19751166 19,4.68102291 L19,19.3190064 C19,19.8025177 18.6540619,20.2167738 18.1782982,20.3029829 L10.1782982,21.7525962 C9.63486295,21.8510675 9.11449486,21.4903531 9.0160235,20.9469179 C9.00536265,20.8880837 9,20.8284119 9,20.7686197 L9,3.23140966 C9,2.67912491 9.44771525,2.23140966 10,2.23140966 C10.0597922,2.23140966 10.119464,2.2367723 10.1782982,2.24743315 Z M11.9166667,12.9060229 C12.6070226,12.9060229 13.1666667,12.2975724 13.1666667,11.5470105 C13.1666667,10.7964487 12.6070226,10.1879981 11.9166667,10.1879981 C11.2263107,10.1879981 10.6666667,10.7964487 10.6666667,11.5470105 C10.6666667,12.2975724 11.2263107,12.9060229 11.9166667,12.9060229 Z" fill="#000000"/>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>{{ $package->stable->name }}</a>
+                                        
+                                        <a href="#" class="text-muted text-hover-primary font-weight-bold">
+                                        <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Map/Marker2.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M9.82829464,16.6565893 C7.02541569,15.7427556 5,13.1079084 5,10 C5,6.13400675 8.13400675,3 12,3 C15.8659932,3 19,6.13400675 19,10 C19,13.1079084 16.9745843,15.7427556 14.1717054,16.6565893 L12,21 L9.82829464,16.6565893 Z M12,12 C13.1045695,12 14,11.1045695 14,10 C14,8.8954305 13.1045695,8 12,8 C10.8954305,8 10,8.8954305 10,10 C10,11.1045695 10.8954305,12 12,12 Z" fill="#000000"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>{{ $package->stable->city->name }}</a>
+                                    </div>
+                                    <!--end::Contacts-->
+                                </div>
+                                <!--begin::User-->
                             </div>
-                            <!--end::Progress-->
-                        </div>
-                        <!--end::Content-->
+                            <!--end::Title-->
+                            <!--begin::Content-->
+                            <div class="d-flex align-items-center flex-wrap justify-content-between">
+                                <!--begin::Description-->
+                                <div class="flex-grow-1 font-weight-bold text-dark-50 py-2 py-lg-2 mr-5">
+                                    {{ $package->description }}
+                                </div>
+                                <!--end::Description-->
+                                <!--begin::Progress-->
+                                <div class="mb-0">
+                                    <h4 class="text-dark font-weight-bolder mr-2">
+                                        Rp. {{ number_format($package->price, 0, ",", ".") }}
+                                    </h4>
+                                </div>
+                                <!--end::Progress-->
+                            </div>
+                            <!--end::Content-->
 
-                        <!--begin::Content-->
-                        <div class="d-flex flex-wrap float-right">
-                            <!--begin::Progress-->
-                            <div class="mb-1">
-                                <a href="{{ route('package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                            <!--begin::Content-->
+                            <div class="d-flex flex-wrap float-right">
+                                <!--begin::Progress-->
+                                <div class="mb-1">
+                                    <a href="{{ route('package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                                </div>
+                                <!--end::Progress-->
                             </div>
-                            <!--end::Progress-->
+                            <!--end::Content-->
                         </div>
-                        <!--end::Content-->
+                        <!--end::Info-->
                     </div>
-                    <!--end::Info-->
                 </div>
             </div>
-        </div>
-        @endfor
+        @empty
+            No Packages Found
+        @endforelse
 
         <div class="d-flex align-items-center flex-wrap p5-10 justify-content-center">
             <div class="d-flex flex-wrap py-2 mr-3">
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-back icon-xs"></i></a>
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
-        
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
-                <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-        
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
-                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+                {{ $packages->appends([
+                    'stable_name' => request()->input('stable_name'),
+                    'date_start' => request()->input('date_start'),
+                    'time_start' => request()->input('time_start')
+                    ])->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //load models
 use App\Models\Package;
+use App\Models\Stable;
 
 class RidingClassController extends Controller
 {
@@ -17,7 +18,12 @@ class RidingClassController extends Controller
      */
     public function index()
     {
-        return view('riding-class.index');
+        $stables = Stable::all();
+        $stables_footer = Stable::paginate(8);
+        return view('riding-class.index', compact(
+            'stables',
+            'stables_footer'
+        ));
     }
 
     /**
@@ -28,7 +34,12 @@ class RidingClassController extends Controller
     public function search(Request $request)
     {
         // dd(\Carbon\Carbon::parse('Tue, 02 Mar 2021')->format('Y-m-d'));
-        return view('riding-class.search');
+        $stables = Stable::all();
+        $packages = Package::paginate(10);
+        return view('riding-class.search', compact(
+            'stables',
+            'packages'
+        ));
     }
 
     /**
