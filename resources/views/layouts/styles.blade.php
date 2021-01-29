@@ -75,4 +75,8 @@
         font-size: 16px;
         color: #ffffff;
     }
+
+    .help-block.error-help-block{
+        color: red;
+    }
 </style>

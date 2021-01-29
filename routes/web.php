@@ -100,7 +100,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::group(['prefix' => 'horse', 'as' => 'horse.'], function () {
             Route::get('/', [HorseController::class, 'index'])->name('index');
             Route::get('/create', [HorseController::class, 'create'])->name('create');
+            Route::post('/create', [HorseController::class, 'store'])->name('store');
             Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
+            Route::patch('/{horse}/edit', [HorseController::class, 'update'])->name('update');
             Route::get('/destroy', [HorseController::class, 'destroy'])->name('destroy');
         });
     

@@ -65,7 +65,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" value="{{ Auth::user()->name }}" name="name"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" value="{{ Auth::user()->name }}" name="name" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -92,7 +92,7 @@
                                         <i class="la la-phone"></i>
                                     </span>
                                 </div>
-                                <input type="number" min="0" name="phone" value="{{ Auth::user()->phone }}" class="form-control form-control-lg form-control-solid" placeholder="Phone" />
+                                <input type="number" min="0" name="phone" value="{{ Auth::user()->phone }}" class="form-control form-control-lg form-control-solid" placeholder="Phone" autocomplete="off"/>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" value="{{ date('D, M d, Y', strtotime(Auth::user()->birth_date)) }}" id="datePicker" class="form-control form-control-lg form-control-solid"/>
+                                <input type="text" name="birth_date" value="{{ date('D, M d, Y', strtotime(Auth::user()->birth_date)) }}" id="datePicker" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -111,7 +111,7 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Complete Address</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <textarea name="address" rows="5" class="form-control form-control-lg form-control-solid">{{ Auth::user()->address }}</textarea>
+                                <textarea name="address" rows="5" class="form-control form-control-lg form-control-solid" autocomplete="off">{{ Auth::user()->address }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
 @endsection
 
 @push('page-scripts')
-<script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
+<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
     $('#datePicker').datepicker({
         orientation: "bottom left",

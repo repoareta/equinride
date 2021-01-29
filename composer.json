@@ -18,9 +18,10 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
         "laravolt/indonesia": "^0.28.0",
+        "proengsoft/laravel-jsvalidation": "^4.4",
         "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-permission": "^3.18",
-        "yajra/laravel-datatables-oracle": "^9.15"
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
