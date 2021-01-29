@@ -56,7 +56,7 @@
                                         <i class="flaticon2-information"></i>
                                     </div>
                                     <div class="alert-text text-dark font-weight-light font-size-h5">
-                                        You can transfer from any banking channel(m-banking, SMS banking or ATM)
+                                        You can transfer from any banking channel (m-banking, SMS banking or ATM)
                                     </div>
                                 </div>
                                 

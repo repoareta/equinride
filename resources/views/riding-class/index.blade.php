@@ -116,7 +116,7 @@
                     <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
                     <div class="card-body p-5">
                     <h5 class="card-title">
-                        <a href="{{ route('search') }}">
+                        <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">
                             {{ $stable->name }}
                         </a>
                     </h5>

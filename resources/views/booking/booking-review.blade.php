@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('riding-class') }}
+    {{ Breadcrumbs::render('package-booking', $package) }}
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@
                             <div class="mr-3">
                                 <div class="d-flex align-items-center mr-3">
                                     <!--begin::Name-->
-                                    <div class="d-flex align-items-center text-dark font-size-h5 font-weight-bold mr-3">Regular Package A</div>
+                                    <div class="d-flex align-items-center text-dark font-size-h5 font-weight-bold mr-3">{{ $package->name }}</div>
                                     <!--end::Name-->
                                 </div>
                             </div>
@@ -36,12 +36,12 @@
                         <div class="row mr-30">
                             <div class="col-md-4">
                                 <h6>Date</h6>
-                                <p>15-06-2021</p>
+                                <p>{{ $date_start }}</p>
                             </div>
     
                             <div class="col-md-4">
                                 <h6>Time Start</h6>
-                                <p>08:00</p>
+                                <p>{{ $time_start }}</p>
                             </div>
     
                             <div class="col-md-4">
@@ -51,7 +51,9 @@
 
                             <div class="col-md-4">
                                 <h6>Guest Name</h6>
-                                <p>Yudi</p>
+                                <p>
+                                    {{ ucwords(Auth::user()->name) }}
+                                </p>
                             </div>
                         </div>
 
@@ -67,13 +69,13 @@
                                         Stable
                                     </div>
                                     <div class="col-md-10 my-3">
-                                        Wild Horse
+                                        {{ $package->stable->name }}
                                     </div>
                                     <div class="col-md-2 my-3">
                                         Description
                                     </div>
                                     <div class="col-md-10 my-3 text-justify">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, asperiores! Corrupti quaerat animi a non id ut est iusto. Dolorem magni ab autem dolores fugit? Adipisci quos quam saepe cum?
+                                        {{ $package->description }}
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +108,7 @@
                             <!--End::Dashed Line-->
                             
                             <p class="text-justify">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus beatae ab at eligendi a similique dolore unde libero quisquam nemo, impedit odit praesentium eius natus quibusdam. Ipsum officia accusamus repellendus voluptatibus officiis sunt? Animi, expedita iste vel qui explicabo inventore exercitationem, ipsa, sunt vitae temporibus earum distinctio eius id modi?
+                                Free reschedule for same package only 1 attempt as long as not expired or closed by stable.
                             </p>
                     </div>
                     <!--end::Info-->
@@ -125,7 +127,7 @@
                     <div class="flex-grow-1">
                         <div class="d-flex">
                             <div class="d-flex align-items-center text-dark font-size-h5 font-weight-bold mr-3">
-                                Nama Stable
+                                {{ $package->stable->name }}
                             </div>
                         </div>
 
@@ -133,29 +135,25 @@
                         <div class="separator separator-dashed separator-border-2 my-3"></div>
                         <!--End::Dashed Line-->
 
-                        <div class="d-flex justify-content-between mb-3">
-                            <div class="row">
-                                <div class="col-md-6 font-weight-bolder">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
-                                </div>
-                                <div class="col-md-6 text-right mt-3 mt-md-0">
-                                    <h3 class="font-weight-bolder">
-                                        Rp. 400.000
-                                    </h3>
-                                </div>
+                        <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
+                            <div class="font-weight-bolder font-size-h5 text-dark">
+                                [1x] {{ $package->stable->name }}, {{ $package->name }}
+                            </div>
+                            <div class="text-right mt-3 mt-md-0">
+                                <h3 class="font-weight-bolder font-size-h5 text-dark">
+                                    Rp. {{ number_format($package->price, 0, ",", ".") }}
+                                </h3>
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <div class="row text-success">
-                                <div class="col-md-6">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia laudantium illo aliquam. Accusamus esse sapiente quia tenetur quas possimus quis nul
-                                </div>
-                                <div class="col-md-6 text-right mt-3 mt-md-0">
-                                    <h3 class="font-weight-bolder">
-                                        Rp. 400.000
-                                    </h3>
-                                </div>
+                        <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
+                            <div class="font-weight-bolder font-size-h5 text-success">
+                                Taxes and Other Fees
+                            </div>
+                            <div class="text-right mt-3 mt-md-0">
+                                <h3 class="font-weight-bolder font-size-h5 text-success">
+                                    Included
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -164,8 +162,8 @@
             </div>
 
             <div class="card-footer d-flex justify-content-between p-5">
-                <h3 class="text-dark font-weight-bolder">Total:</h3>
-                <h3 class="text-dark font-weight-bolder">Rp. 80.000.000</h3>
+                <h3 class="font-weight-bolder font-size-h5 text-dark">Total:</h3>
+                <h3 class="font-weight-bolder font-size-h5 text-dark">Rp. {{ number_format($package->price, 0, ",", ".") }}</h3>
             </div>
         </div>
 
@@ -182,7 +180,7 @@
                     <!--end::Description-->
                     <!--begin::Progress-->
                     <div class="mb-0">
-                        <button class="btn btn-block font-weight-bolder btn-warning px-10 py-5">
+                        <button class="btn btn-block font-weight-bolder btn-warning px-10 py-5" onclick="event.preventDefault();document.getElementById('booking-review-form').submit();">
                             Continue to Payment
                         </button>
                     </div>
@@ -200,7 +198,12 @@
                     By clicking this button, you ackowladge than you hav read amd agreed to the <a href="#">Terms & Conditions</a>
                     and <a href="#">Privacy Policy</a> of Equinride 
                 </p>
-                <button class="btn btn-block font-weight-bolder btn-warning">Continue to Payment</button>
+                <button class="btn btn-block font-weight-bolder btn-warning" onclick="event.preventDefault();document.getElementById('booking-review-form').submit();">Continue to Payment</button>
+
+                <form id="booking-review-form" action="{{ route('package.payment_method', ['package' => $package->id]) }}" method="POST" class="d-none">
+                    @csrf
+                    <input type="hidden" name="price" value="{{ $package->price }}">
+                </form>
             </div>
         </div>
     </div>
