@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//load models
+use App\Models\Package;
+use App\Models\Stable;
+
 class PackageController extends Controller
 {
     /**
@@ -21,9 +25,15 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function booking(Request $request, Package $package)
     {
-        //
+        $date_start = $request->date_start;
+        $time_start = $request->time_start;
+        return view('booking.booking-review', compact(
+            'package',
+            'date_start',
+            'time_start'
+        ));
     }
 
     /**
@@ -32,9 +42,11 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function paymentMethod(Request $request, Package $package)
     {
-        //
+        return view('payment.payment-method', compact(
+            'package'
+        ));
     }
 
     /**

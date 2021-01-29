@@ -156,7 +156,12 @@
                             <div class="d-flex flex-wrap float-right">
                                 <!--begin::Progress-->
                                 <div class="mb-1">
-                                    <a href="{{ route('package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                                    <form class="d-inline" method="POST" action="{{ route('package.booking', ['package' => $package->id]) }}">
+                                        @csrf
+                                        <input type="hidden" name="date_start" value="{{ request()->input('date_start') }}">
+                                        <input type="hidden" name="time_start" value="{{ request()->input('time_start') }}">
+                                        <button type="submit" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</button>
+                                    </form>
                                 </div>
                                 <!--end::Progress-->
                             </div>

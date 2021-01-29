@@ -15,6 +15,12 @@ Breadcrumbs::for('riding-class-search', function ($trail) {
     $trail->push('Search', route('riding_class.search'));
 });
 
+Breadcrumbs::for('package-booking', function ($trail, $package) {
+    $trail->parent('riding-class');
+    $trail->push($package->name, route('package.booking', ['package' => $package->id]));
+    $trail->push('Booking');
+});
+
 // Profile
 Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('home');

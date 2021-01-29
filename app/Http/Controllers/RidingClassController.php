@@ -108,11 +108,6 @@ class RidingClassController extends Controller
         //
     }
 
-    public function booking(Package $package)
-    {
-        return view('booking');
-    }
-
     // Payment Method
     public function payment_method(Package $package)
     {
