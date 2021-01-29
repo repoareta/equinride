@@ -15,10 +15,23 @@ Breadcrumbs::for('riding-class-search', function ($trail) {
     $trail->push('Search', route('riding_class.search'));
 });
 
+// PACAKAGE
 Breadcrumbs::for('package-booking', function ($trail, $package) {
     $trail->parent('riding-class');
-    $trail->push($package->name, route('package.booking', ['package' => $package->id]));
+    $trail->push($package->name);
     $trail->push('Booking');
+});
+
+Breadcrumbs::for('package-payment-method', function ($trail, $package) {
+    $trail->parent('riding-class');
+    $trail->push($package->name);
+    $trail->push('Payment method');
+});
+
+Breadcrumbs::for('package-payment-confirmation', function ($trail, $package) {
+    $trail->parent('riding-class');
+    $trail->push($package->name);
+    $trail->push('Payment confirmation');
 });
 
 // Profile

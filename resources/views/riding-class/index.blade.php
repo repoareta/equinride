@@ -58,13 +58,13 @@
                                     </span>
                                     <input 
                                     type="text" 
-                                    class="form-control border-0 font-weight-bold pl-2 datetimepicker-input" id="kt_datepicker_2" 
+                                    class="form-control border-0 font-weight-bold pl-2 datetimepicker-input" id="date_start" 
                                     readonly="readonly" 
                                     placeholder="Select Date"
                                     readonly="readonly" 
                                     autocomplete="off" 
                                     name="date_start"
-                                    data-target="#kt_datepicker_2"
+                                    data-target="#date_start"
                                     data-toggle="datetimepicker">
                                 </div>
                                 <!--end::Input-->

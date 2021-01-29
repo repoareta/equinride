@@ -27,7 +27,8 @@
 							</a>
 						</li>
 
-						<li class="menu-item {{ Route::is('riding_class.*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+						<li class="menu-item 
+						{{ Route::is('riding_class.*') || Route::is('riding_class') ? 'menu-item-active' : '' }}" aria-haspopup="true">
 							<a href="{{ route('riding_class') }}" class="menu-link">
 								<span class="menu-text">RIDING CLASS</span>
 							</a>

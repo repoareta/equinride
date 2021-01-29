@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/{package}/booking', [UserPackageController::class, 'booking'])->name('booking');
         Route::post('/{package}/payment', [UserPackageController::class, 'paymentMethod'])->name('payment_method');
         Route::post('/{package}/payment-confirmation', [UserPackageController::class, 'paymentConfirmation'])->name('payment_confirmation');
+        Route::post('/{package}/payment-confirmation-submit', [UserPackageController::class, 'paymentConfirmationSubmit'])->name('payment_confirmation_submit');
     });
 
     // USER || MEMBER END

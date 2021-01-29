@@ -5,7 +5,7 @@
 	<head><base href="../../../">
 		<meta charset="utf-8" />
 		<title>{{ config('app.name', 'EQUINRIDE') }}</title>
-		<meta name="description" content="Login page example" />
+		<meta name="description" content="Amazing Equinride" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="{{ config('app.url', url()) }}" />
 		<!-- CSRF Token -->

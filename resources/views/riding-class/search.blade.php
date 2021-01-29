@@ -30,13 +30,13 @@
                             <input 
                             type="text" 
                             class="form-control datetimepicker-input" 
-                            id="kt_datepicker_2" 
+                            id="date_start" 
                             readonly="readonly" 
                             autocomplete="off" 
                             name="date_start" 
                             placeholder="Select Date" 
                             value="{{ request()->input('date_start') }}" 
-                            data-target="#kt_datepicker_2"
+                            data-target="#date_start"
                             data-toggle="datetimepicker">
                             <div class="input-group-append">
                                 <span class="input-group-text">
