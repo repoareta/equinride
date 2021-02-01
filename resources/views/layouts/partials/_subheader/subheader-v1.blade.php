@@ -1,6 +1,6 @@
 
 <!--begin::Subheader-->
-<div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
 	<div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
 
 		<!--begin::Info-->
@@ -29,7 +29,7 @@
 		<!--end::Info-->
 
 		<!--begin::Toolbar-->
-		<div class="d-flex align-items-center">
+		{{-- <div class="d-flex align-items-center">
 
 			<!--begin::Actions-->
 			<a href="#" class="btn btn-light-primary font-weight-bolder btn-sm">Actions</a>
@@ -113,7 +113,7 @@
 			</div>
 
 			<!--end::Dropdown-->
-		</div>
+		</div> --}}
 
 		<!--end::Toolbar-->
 	</div>

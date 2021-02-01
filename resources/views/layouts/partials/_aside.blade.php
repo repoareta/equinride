@@ -31,7 +31,7 @@
 							<!--end::Item-->
 
 							<!--begin::Item-->
-							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stable Register">
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@role('stable-owner|stable-admin') Manage Stable @else Stable Register @endrole">
 								<a href="{{ route('stable.register') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ Route::is('stable.*') ? 'active' : '' }}">
 									<i class="la la-horse-head icon-lg"></i>
 								</a>
@@ -40,7 +40,7 @@
 							<!--end::Item-->
 
 							<!--begin::Item-->
-							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stable Register">
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@role('club-owner|club-admin') Manage Club @else Club Register @endrole">
 								<a href="#" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg">
 									<i class="fab fa-black-tie"></i>
 								</a>
