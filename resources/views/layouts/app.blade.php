@@ -1,14 +1,15 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 	<!--begin::Head-->
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>EQUINRIDE</title>
+		<title>{{ config('app.name', 'EQUINRIDE') }}</title>
 		<meta name="description" content="Amazing Equinride" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		<link rel="canonical" href="https://equinride.com/" />
+		<link rel="canonical" href="{{ config('app.url', url()) }}" />
 
 		<!-- CSRF Token -->
 		<meta name="csrf-token" content="{{ csrf_token() }}">

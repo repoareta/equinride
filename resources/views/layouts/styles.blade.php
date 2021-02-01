@@ -15,7 +15,7 @@
 <link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
-<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+<link rel="shortcut icon" href="{{ asset('assets/media/branchsto/favicon-1.ico') }}" />
 
 <!--end::Global Theme Styles-->
 
