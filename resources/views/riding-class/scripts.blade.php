@@ -16,10 +16,18 @@ $(function() {
         minDate: new Date()
     });
 
+    $('#date_start').val("{{ request()->input('date_start') }}");
+
     $('#datetimepicker3').datetimepicker({
         format: 'HH:mm'
     });
 });
+
+function bookNow(packageId) {
+    alert(packageId);
+    $('#date_start').datetimepicker('show');
+    $('#package-booking-form-' + packageId).submit();
+}
 </script>
     
 @endpush

@@ -105,7 +105,7 @@
                                     </div>
                                     <!--begin::Contacts-->
                                     <div class="d-flex flex-wrap my-2">
-                                        <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        <span class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                         <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Mail-notification.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -116,9 +116,9 @@
                                                 </g>
                                             </svg>
                                             <!--end::Svg Icon-->
-                                        </span>{{ $package->stable->name }}</a>
+                                        </span>{{ $package->stable->name }}</span>
                                         
-                                        <a href="#" class="text-muted text-hover-primary font-weight-bold">
+                                        <span class="text-muted text-hover-primary font-weight-bold">
                                         <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Map/Marker2.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -128,7 +128,7 @@
                                                 </g>
                                             </svg>
                                             <!--end::Svg Icon-->
-                                        </span>{{ $package->stable->city->name }}</a>
+                                        </span>{{ $package->stable->city->name }}</span>
                                     </div>
                                     <!--end::Contacts-->
                                 </div>
@@ -156,11 +156,12 @@
                             <div class="d-flex flex-wrap float-right">
                                 <!--begin::Progress-->
                                 <div class="mb-1">
-                                    <form class="d-inline" method="POST" action="{{ route('package.booking', ['package' => $package->id]) }}">
+                                    <button class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10" onclick="bookNow({{ $package->id }})">Book Now</button>
+
+                                    <form class="d-none" id="package-booking-form-{{ $package->id }}" method="POST" action="{{ route('package.booking', ['package' => $package->id]) }}">
                                         @csrf
-                                        <input type="hidden" name="date_start" value="{{ request()->input('date_start') }}">
-                                        <input type="hidden" name="time_start" value="{{ request()->input('time_start') }}">
-                                        <button type="submit" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</button>
+                                        <input type="text" name="date_start" value="{{ request()->input('date_start') }}">
+                                        <input type="text" name="time_start" value="{{ request()->input('time_start') }}">
                                     </form>
                                 </div>
                                 <!--end::Progress-->

@@ -33,20 +33,21 @@
                             <!--End::Dashed Line-->
                             <!--begin::User-->
                         <!--end::Title-->
+
                         <div class="row mr-30">
                             <div class="col-md-4">
-                                <h6>Date</h6>
-                                <p>{{ $date_start }}</p>
+                                <h6>Booking Date</h6>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}</p>
                             </div>
     
                             <div class="col-md-4">
                                 <h6>Time Start</h6>
-                                <p>{{ $time_start }}</p>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}</p>
                             </div>
     
                             <div class="col-md-4">
                                 <h6>Time End</h6>
-                                <p>08:00</p>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_end)->format('H:i') }}</p>
                             </div>
 
                             <div class="col-md-4">
@@ -137,7 +138,7 @@
 
                         <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
                             <div class="font-weight-bolder font-size-h5 text-dark">
-                                [1x] {{ $package->stable->name }}, {{ $package->name }}
+                                [{{ $package->attendance }}x] {{ $package->stable->name }}, {{ $package->name }}
                             </div>
                             <div class="text-right mt-3 mt-md-0">
                                 <h3 class="font-weight-bolder font-size-h5 text-dark">
@@ -202,7 +203,8 @@
 
                 <form id="booking-review-form" action="{{ route('package.payment_method', ['package' => $package->id]) }}" method="POST" class="d-none">
                     @csrf
-                    <input type="hidden" name="price" value="{{ $package->price }}">
+                    <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}">
+                    <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}">
                 </form>
             </div>
         </div>
