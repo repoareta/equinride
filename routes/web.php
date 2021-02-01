@@ -83,45 +83,63 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // USER || MEMBER END
 
-    // STABLE OWNER || STABLE ADMIN START
+    // STABLE START
     Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
-        Route::get('/register', [StableController::class, 'register'])->name('register');
-        Route::get('/dashboard', [StableController::class, 'index'])->name('index');
-        Route::get('/{stable}/edit', [StableController::class, 'index'])->name('edit');
-    
-        // STABLE COACH
-        Route::group(['prefix' => 'coach', 'as' => 'coach.'], function () {
-            Route::get('/', [CoachController::class, 'index'])->name('index');
-            Route::get('/create', [CoachController::class, 'create'])->name('create');
-            Route::get('/{coach}/edit', [CoachController::class, 'edit'])->name('edit');
-            Route::get('/destroy', [CoachController::class, 'destroy'])->name('destroy');
-        });
+        Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete');
         
-        // STABLE HORSE
-        Route::group(['prefix' => 'horse', 'as' => 'horse.'], function () {
-            Route::get('/', [HorseController::class, 'index'])->name('index');
-            Route::get('/create', [HorseController::class, 'create'])->name('create');
-            Route::post('/create', [HorseController::class, 'store'])->name('store');
-            Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
-            Route::patch('/{horse}/edit', [HorseController::class, 'update'])->name('update');
-            Route::get('/destroy', [HorseController::class, 'destroy'])->name('destroy');
+        // ONLY STABLE OWNER HAD ACCESS
+        Route::group(['middleware' => ['role:stable-owner']], function () {
+            // STABLE EDIT
+            Route::get('/{stable}/edit', [StableController::class, 'index'])->name('edit');
+
+            //STABLE ADMIN CRUD
+            Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+                Route::get('/', [StableAdminController::class, 'index'])->name('index');
+                Route::get('/create', [StableAdminController::class, 'create'])->name('create');
+                Route::get('/{admin}/edit', [StableAdminController::class, 'edit'])->name('edit');
+                Route::get('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
+            });
         });
+
+        // ONLY STABLE OWNER OR STABLE ADMIN HAD ACCESS
+        Route::group(['middleware' => ['role:stable-owner|stable-admin']], function () {
+            // STABLE DASHBOARD
+            Route::get('/dashboard', [StableController::class, 'index'])->name('index');
+
+            // STABLE COACH
+            Route::group(['prefix' => 'coach', 'as' => 'coach.'], function () {
+                Route::get('/', [CoachController::class, 'index'])->name('index');
+                Route::get('/create', [CoachController::class, 'create'])->name('create');
+                Route::get('/{coach}/edit', [CoachController::class, 'edit'])->name('edit');
+                Route::get('/destroy', [CoachController::class, 'destroy'])->name('destroy');
+            });
+        
+            // STABLE HORSE
+            Route::group(['prefix' => 'horse', 'as' => 'horse.'], function () {
+                Route::get('/', [HorseController::class, 'index'])->name('index');
+                Route::get('/create', [HorseController::class, 'create'])->name('create');
+                Route::post('/create', [HorseController::class, 'store'])->name('store');
+                Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
+                Route::patch('/{horse}/edit', [HorseController::class, 'update'])->name('update');
+                Route::get('/destroy', [HorseController::class, 'destroy'])->name('destroy');
+            });
     
-        // STABLE PACKAGE
-        Route::group(['prefix' => 'package', 'as' => 'package.'], function () {
-            Route::get('/', [PackageController::class, 'index'])->name('index');
-            Route::get('/create', [PackageController::class, 'create'])->name('create');
-            Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-            Route::get('/destroy', [PackageController::class, 'destroy'])->name('destroy');
-        });
+            // STABLE PACKAGE
+            Route::group(['prefix' => 'package', 'as' => 'package.'], function () {
+                Route::get('/', [PackageController::class, 'index'])->name('index');
+                Route::get('/create', [PackageController::class, 'create'])->name('create');
+                Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
+                Route::get('/destroy', [PackageController::class, 'destroy'])->name('destroy');
+            });
     
-        // STABLE SCHEDULE
-        Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
-            Route::get('/', [ScheduleController::class, 'index'])->name('index');
-            Route::get('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
+            // STABLE SCHEDULE
+            Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
+                Route::get('/', [ScheduleController::class, 'index'])->name('index');
+                Route::get('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
+            });
         });
     });
-    // STABLE OWNER || STABLE ADMIN END
+    // STABLE END
 
     // APP OWNER START
     Route::group(['prefix' => 'owner', 'as' => 'app_owner.'], function () {
