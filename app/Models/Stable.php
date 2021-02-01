@@ -42,6 +42,14 @@ class Stable extends Model
     }
 
     /**
+    * Get the slot of stable
+    */
+    public function slot()
+    {
+        return $this->hasMany(Slot::class);
+    }
+
+    /**
     * Get the package of stable
     */
     public function province()
@@ -68,5 +76,4 @@ class Stable extends Model
     {
         return $this->belongsTo(User::class, 'approval_by', 'id');
     }
-
 }

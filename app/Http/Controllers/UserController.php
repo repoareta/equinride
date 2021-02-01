@@ -10,6 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 // Load models
 use App\Models\User;
+
 class UserController extends Controller
 {
     /**
@@ -102,28 +103,28 @@ class UserController extends Controller
         $Query->name         =   $request->name;
         $Query->sex          =   $request->sex;
         $Query->phone        =   $request->phone;
-        $Query->birth_date   =   date('Y-m-d',strtotime($request->birth_date));
+        $Query->birth_date   =   date('Y-m-d', strtotime($request->birth_date));
         $Query->address      =   $request->address;
         
 
-        if($request->hasFile('photo')){
+        if ($request->hasFile('photo')) {
             File::delete(public_path('/storage/user/photo/'.$request->photo));
             $Query->photo = $request->file('photo')->getClientOriginalName();
             $dir = $request->file('photo')->storeAs('user/photo', $Query->photo, 'public');
             $Query->photo = 'storage/'.$dir;
-        }else{
+        } else {
             File::delete(public_path('/storage/user/photo/'.$request->photo));
             $Query->photo = null;
         }
 
-        if(!$Query){
+        if (!$Query) {
             Alert::error('Update Profile Error.', 'Please complete your form.');
             return redirect()->back();
         }
         
         $Query->save();
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->back();  
+        return redirect()->back();
     }
 
     // Change Password page index
@@ -137,12 +138,11 @@ class UserController extends Controller
     {
         $data = User::where('id', Auth::user()->id)->first();
         
-        if(Hash::check($request->old_password, $data->password))
-        {
+        if (Hash::check($request->old_password, $data->password)) {
             $validator = \Validator::make($request->all(), [
                             'password' => 'required|confirmed|min:8',
                         ]);
-            if($validator->fails()){
+            if ($validator->fails()) {
                 Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
                 return redirect()->back();
             }
@@ -161,6 +161,6 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-
+        return view('booking.booking-history');
     }
 }
