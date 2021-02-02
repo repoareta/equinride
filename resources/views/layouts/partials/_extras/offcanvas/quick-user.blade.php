@@ -5,7 +5,7 @@
 			<!--begin::Header-->
 			<div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
 				<h3 class="font-weight-bold m-0">User Profile
-					<small class="text-muted font-size-sm ml-2">12 messages</small>
+					{{-- <small class="text-muted font-size-sm ml-2">12 messages</small> --}}
 				</h3>
 				<a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
 					<i class="ki ki-close icon-xs text-muted"></i>
@@ -24,8 +24,7 @@
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">
-						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
-						<div class="text-muted mt-1">Application Developer</div>
+						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
 						<div class="navi mt-2">
 							<a href="#" class="navi-item">
 								<span class="navi-link p-0 pb-2">
@@ -44,7 +43,9 @@
 											<!--end::Svg Icon-->
 										</span>
 									</span>
-									<span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+									<span class="navi-text text-muted text-hover-primary">
+										{{ Auth::user()->email }}
+									</span>
 								</span>
 							</a>
 							<a 
@@ -103,7 +104,7 @@
 					<!--end:Item-->
 
 					<!--begin::Item-->
-					<a href="#" class="navi-item">
+					<a href="{{ route('user.order_history') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">
@@ -124,6 +125,7 @@
 
 					<!--end:Item-->
 
+					@role('stable-owner|stable-admin')
 					<!--begin::Item-->
 					<a href="{{ route('stable.index') }}" class="navi-item">
 						<div class="navi-link">
@@ -145,7 +147,9 @@
 					</a>
 
 					<!--end:Item-->
-
+					@endrole
+					
+					@role('club-owner|club-admin')
 					<!--begin::Item-->
 					<a href="#" class="navi-item">
 						<div class="navi-link">
@@ -166,7 +170,12 @@
 						</div>
 					</a>
 
+					<!--end:Item-->
+					@endrole
+
+					@role('app-owner|app-admin')
 					<!--begin::Item-->
+					
 					<a href="{{ route('app_owner.index') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
@@ -187,7 +196,7 @@
 					</a>
 
 					<!--end:Item-->
-
+					@endrole
 				</div>
 
 				<!--end::Nav-->

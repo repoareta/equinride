@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//load models
+use App\Models\Package;
+use App\Models\Stable;
+use App\Models\BankPayment;
+
 class PackageController extends Controller
 {
     /**
@@ -21,9 +26,18 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function booking(Request $request, Package $package)
     {
-        //
+        $package = Package::where('id', $package->id)
+        ->with(['stable.slot' => function ($q) use ($request) {
+            $q->where('date', $request->date_start);
+            $q->where('time_start', $request->time_start);
+        }])
+        ->firstOrFail();
+
+        return view('booking.booking-review', compact(
+            'package'
+        ));
     }
 
     /**
@@ -32,9 +46,21 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function paymentMethod(Request $request, Package $package)
     {
-        //
+        $package = Package::where('id', $package->id)
+        ->with(['stable.slot' => function ($q) use ($request) {
+            $q->where('date', $request->date_start);
+            $q->where('time_start', $request->time_start);
+        }])
+        ->firstOrFail();
+
+        $bank_payments = BankPayment::all();
+
+        return view('payment.payment-method', compact(
+            'package',
+            'bank_payments'
+        ));
     }
 
     /**
@@ -43,9 +69,22 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function paymentConfirmation(Request $request, Package $package)
     {
-        //
+        $package = Package::where('id', $package->id)
+        ->with(['stable.slot' => function ($q) use ($request) {
+            $q->where('date', $request->date_start);
+            $q->where('time_start', $request->time_start);
+        }])
+        ->firstOrFail();
+
+        
+        $bank_payment = BankPayment::find($request->bank_payment_id);
+
+        return view('payment.payment-confirmation', compact(
+            'package',
+            'bank_payment'
+        ));
     }
 
     /**
@@ -54,31 +93,19 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function paymentConfirmationSubmit(Request $request, Package $package)
     {
-        //
-    }
+        $package = Package::where('id', $package->id)
+        ->with(['stable.slot' => function ($q) use ($request) {
+            $q->where('date', $request->date_start);
+            $q->where('time_start', $request->time_start);
+        }])
+        ->firstOrFail();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        // return view('payment.payment-confirmation-submit', compact(
+        //     'package'
+        // ));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('user.order_history');
     }
 }

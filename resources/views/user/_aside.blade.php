@@ -1,86 +1,8 @@
-<div class="flex-row-auto offcanvas-mobile w-250px w-xxl-350px" id="kt_profile_aside">
+<div class="flex-row-auto offcanvas-mobile w-350px w-xxl-350px" id="kt_profile_aside">
     <!--begin::Profile Card-->
     <div class="card card-custom card-stretch">
         <!--begin::Body-->
         <div class="card-body pt-4">
-            <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end">
-                <div class="dropdown dropdown-inline">
-                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ki ki-bold-more-hor"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                        <!--begin::Navigation-->
-                        <ul class="navi navi-hover py-5">
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-drop"></i>
-                                    </span>
-                                    <span class="navi-text">New Group</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-list-3"></i>
-                                    </span>
-                                    <span class="navi-text">Contacts</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-rocket-1"></i>
-                                    </span>
-                                    <span class="navi-text">Groups</span>
-                                    <span class="navi-link-badge">
-                                        <span class="label label-light-primary label-inline font-weight-bold">new</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-bell-2"></i>
-                                    </span>
-                                    <span class="navi-text">Calls</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-gear"></i>
-                                    </span>
-                                    <span class="navi-text">Settings</span>
-                                </a>
-                            </li>
-                            <li class="navi-separator my-3"></li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-magnifier-tool"></i>
-                                    </span>
-                                    <span class="navi-text">Help</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="flaticon2-bell-2"></i>
-                                    </span>
-                                    <span class="navi-text">Privacy</span>
-                                    <span class="navi-link-badge">
-                                        <span class="label label-light-danger label-rounded font-weight-bold">5</span>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!--end::Navigation-->
-                    </div>
-                </div>
-            </div>
-            <!--end::Toolbar-->
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
@@ -93,7 +15,7 @@
                 </div>
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
-                    <div class="text-muted">Application Developer</div>
+                    <div class="text-muted">Profile Page</div>
                 </div>
             </div>
             <!--end::User-->
@@ -134,24 +56,6 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="#" class="navi-link py-4">
-                        <span class="navi-icon mr-2">
-                            <span class="svg-icon">
-                                <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Code/Compiling.svg-->
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3"></path>
-                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000"></path>
-                                    </g>
-                                </svg>
-                                <!--end::Svg Icon-->
-                            </span>
-                        </span>
-                        <span class="navi-text font-size-lg">Account Information</span>
-                    </a>
-                </div>
-                <div class="navi-item mb-2">
                     <a href="{{ route('user.change_password') }}" class="navi-link py-4 {{ Route::is('user.change_password') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
@@ -168,6 +72,24 @@
                             </span>
                         </span>
                         <span class="navi-text font-size-lg">Change Password</span>
+                    </a>
+                </div>
+                <div class="navi-item mb-2">
+                    <a href="{{ route('user.order_history') }}" class="navi-link py-4">
+                        <span class="navi-icon mr-2">
+                            <span class="svg-icon">
+                                <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Code/Compiling.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Shopping/Cart1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M18.1446364,11.84388 L17.4471627,16.0287218 C17.4463569,16.0335568 17.4455155,16.0383857 17.4446387,16.0432083 C17.345843,16.5865846 16.8252597,16.9469884 16.2818833,16.8481927 L4.91303792,14.7811299 C4.53842737,14.7130189 4.23500006,14.4380834 4.13039941,14.0719812 L2.30560137,7.68518803 C2.28007524,7.59584656 2.26712532,7.50338343 2.26712532,7.4104669 C2.26712532,6.85818215 2.71484057,6.4104669 3.26712532,6.4104669 L16.9929851,6.4104669 L17.606173,3.78251876 C17.7307772,3.24850086 18.2068633,2.87071314 18.7552257,2.87071314 L20.8200821,2.87071314 C21.4717328,2.87071314 22,3.39898039 22,4.05063106 C22,4.70228173 21.4717328,5.23054898 20.8200821,5.23054898 L19.6915238,5.23054898 L18.1446364,11.84388 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M6.5,21 C5.67157288,21 5,20.3284271 5,19.5 C5,18.6715729 5.67157288,18 6.5,18 C7.32842712,18 8,18.6715729 8,19.5 C8,20.3284271 7.32842712,21 6.5,21 Z M15.5,21 C14.6715729,21 14,20.3284271 14,19.5 C14,18.6715729 14.6715729,18 15.5,18 C16.3284271,18 17,18.6715729 17,19.5 C17,20.3284271 16.3284271,21 15.5,21 Z" fill="#000000"/>
+                                    </g>
+                                </svg><!--end::Svg Icon--></span>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </span>
+                        <span class="navi-text font-size-lg">Order History</span>
                     </a>
                 </div>
             </div>

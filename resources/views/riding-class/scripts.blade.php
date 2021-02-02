@@ -7,54 +7,27 @@ $(function() {
         width:"100%",
     });
 
-    $('#kt_datepicker_2').datetimepicker({
+    $('#date_start').datetimepicker({
         format: 'ddd, DD MMM YYYY',
         widgetPositioning: {
             horizontal: 'left',
             vertical: 'bottom'
-        }
+        },
+        minDate: new Date()
     });
 
-    $('#search_datepicker').datepicker({
-        todayHighlight: true,
-        startDate: new Date(),
-        orientation: "bottom left",
-        autoclose: true,
-        format: {
-            /*
-            * Say our UI should display a week ahead,
-            * but textbox should store the actual date.
-            * This is useful if we need UI to select local dates,
-            * but store in UTC
-            */
-            toDisplay: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
-
-                return d.toLocaleDateString('default', { 
-                    weekday: 'short', 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: '2-digit' 
-                });
-            },
-            toValue: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
-                return new Date(d);
-            }
-        }
-    });
-
-    $('#search_datepicker').on('changeDate', function(e){
-        // console.log( moment(e.date).format('YYYY-MM-DD') );
-        $('#search_datepicker_store').val( moment(e.date).format('YYYY-MM-DD') );
-    });
+    $('#date_start').val("{{ request()->input('date_start') }}");
 
     $('#datetimepicker3').datetimepicker({
         format: 'HH:mm'
     });
 });
+
+function bookNow(packageId) {
+    alert(packageId);
+    $('#date_start').datetimepicker('show');
+    $('#package-booking-form-' + packageId).submit();
+}
 </script>
     
 @endpush

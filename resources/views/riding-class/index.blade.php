@@ -58,13 +58,13 @@
                                     </span>
                                     <input 
                                     type="text" 
-                                    class="form-control border-0 font-weight-bold pl-2 datetimepicker-input" id="kt_datepicker_2" 
+                                    class="form-control border-0 font-weight-bold pl-2 datetimepicker-input" id="date_start" 
                                     readonly="readonly" 
                                     placeholder="Select Date"
                                     readonly="readonly" 
                                     autocomplete="off" 
                                     name="date_start"
-                                    data-target="#kt_datepicker_2"
+                                    data-target="#date_start"
                                     data-toggle="datetimepicker">
                                 </div>
                                 <!--end::Input-->
@@ -116,7 +116,7 @@
                     <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
                     <div class="card-body p-5">
                     <h5 class="card-title">
-                        <a href="{{ route('search') }}">
+                        <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">
                             {{ $stable->name }}
                         </a>
                     </h5>

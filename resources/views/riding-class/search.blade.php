@@ -30,13 +30,13 @@
                             <input 
                             type="text" 
                             class="form-control datetimepicker-input" 
-                            id="kt_datepicker_2" 
+                            id="date_start" 
                             readonly="readonly" 
                             autocomplete="off" 
                             name="date_start" 
                             placeholder="Select Date" 
                             value="{{ request()->input('date_start') }}" 
-                            data-target="#kt_datepicker_2"
+                            data-target="#date_start"
                             data-toggle="datetimepicker">
                             <div class="input-group-append">
                                 <span class="input-group-text">
@@ -105,7 +105,7 @@
                                     </div>
                                     <!--begin::Contacts-->
                                     <div class="d-flex flex-wrap my-2">
-                                        <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        <span class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                         <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Communication/Mail-notification.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -116,9 +116,9 @@
                                                 </g>
                                             </svg>
                                             <!--end::Svg Icon-->
-                                        </span>{{ $package->stable->name }}</a>
+                                        </span>{{ $package->stable->name }}</span>
                                         
-                                        <a href="#" class="text-muted text-hover-primary font-weight-bold">
+                                        <span class="text-muted text-hover-primary font-weight-bold">
                                         <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Map/Marker2.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -128,7 +128,7 @@
                                                 </g>
                                             </svg>
                                             <!--end::Svg Icon-->
-                                        </span>{{ $package->stable->city->name }}</a>
+                                        </span>{{ $package->stable->city->name }}</span>
                                     </div>
                                     <!--end::Contacts-->
                                 </div>
@@ -156,7 +156,13 @@
                             <div class="d-flex flex-wrap float-right">
                                 <!--begin::Progress-->
                                 <div class="mb-1">
-                                    <a href="{{ route('package.booking', ['package' => 14]) }}" class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10">Book Now</a>
+                                    <button class="btn btn-sm btn-warning font-weight-bolder mr-2 p-3 px-10" onclick="bookNow({{ $package->id }})">Book Now</button>
+
+                                    <form class="d-none" id="package-booking-form-{{ $package->id }}" method="POST" action="{{ route('package.booking', ['package' => $package->id]) }}">
+                                        @csrf
+                                        <input type="text" name="date_start" value="{{ request()->input('date_start') }}">
+                                        <input type="text" name="time_start" value="{{ request()->input('time_start') }}">
+                                    </form>
                                 </div>
                                 <!--end::Progress-->
                             </div>

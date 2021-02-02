@@ -10,12 +10,21 @@ class Slot extends Model
     use HasFactory;
 
     protected $fillable=['user_id','date','time_start', 'time_end','capacity','capacity_booked'];
+    
     /**
-    * Get the owner of stable
+    * Get the owner of package
     */
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    /**
+    * Get the owner of slot
+    */
+    public function stable()
+    {
+        return $this->belongsTo(Stable::class);
     }
 
     /**
