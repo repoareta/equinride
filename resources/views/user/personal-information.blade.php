@@ -192,7 +192,6 @@
 @endsection
 
 @push('page-scripts')
-<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
     $(function() {
 

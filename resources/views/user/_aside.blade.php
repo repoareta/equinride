@@ -2,7 +2,7 @@
     <!--begin::Profile Card-->
     <div class="card card-custom card-stretch">
         <!--begin::Body-->
-        <div class="card-body pt-4">
+        <div class="card-body">
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">

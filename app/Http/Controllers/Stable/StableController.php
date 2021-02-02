@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Stable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+// load models
+use App\Models\Stable;
+
 class StableController extends Controller
 {
     /**
@@ -33,9 +36,9 @@ class StableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function registerSubmit(Request $request, Stable $stable)
     {
-        //
+        dd($request->all());
     }
 
     /**

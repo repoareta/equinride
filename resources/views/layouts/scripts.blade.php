@@ -74,9 +74,9 @@
 <script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script> 
 <!--end::Page Vendors-->
 --}}
-
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 @stack("page-scripts")
 
 <!--end::Page Scripts-->
