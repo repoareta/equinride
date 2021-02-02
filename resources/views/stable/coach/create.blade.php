@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-9 text-right">
+                        <div class="col-xl-9">
                             <a href="{{ route('stable.coach.index') }}" class="btn btn-warning" type="submit">
                                 Back
                             </a>

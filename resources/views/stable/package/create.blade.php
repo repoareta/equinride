@@ -22,7 +22,8 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" enctype="multipart/form-data">
+            <form class="form" action="{{ route('stable.package.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="form-group row">
@@ -30,7 +31,7 @@
                         <div class="col-lg-9 col-xl-6">
                             <div id="dropZone" class="dropzone dropzone-default dropzone-primary dz-clickable">
                                 <div class="fallback">
-                                    <input name="file" type="file"  />
+                                    <input name="photo" type="file"  />
                                 </div>
                             </div>
                             <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
@@ -104,7 +105,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-9 text-right">
+                        <div class="col-xl-9">
                             <a href="{{ route('stable.package.index') }}" class="btn btn-warning" type="submit">
                                 Back
                             </a>
@@ -125,15 +126,18 @@
 
 @push('page-scripts')
     <script>
-        $("#dropZone").dropzone({ 
-            url: "https://keenthemes.com/scripts/void.php",
-            paramName: "file",
-            maxFiles: 1,
-            maxFilesize: 5,
-            addRemoveLinks: !0,
-            accept: function(e, o) {
-                "justinbieber.jpg" == e.name ? o("Naha, you don't.") : o()
-            }
-        });
+    var dz = $("#dropZone").dropzone({ 
+                url: "{{ route('stable.package.store') }}",                
+                maxFiles: 1,
+                maxFilesize: 5,
+                addRemoveLinks: !0,
+                autoProcessQueue: false,
+                maxFilesize: 1,
+                acceptedFiles: "image/*"
+            });
+
+    $('#uploadFile').click(function(){
+        dz.processQueue();
+    });
     </script>
 @endpush
