@@ -138,6 +138,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
+                Route::post('/create', [PackageController::class, 'store'])->name('store');
+                Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
+                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
         });
