@@ -98,31 +98,26 @@ class UserController extends Controller
     // Personal Information update data
     public function personalInformationUpdate(Request $request)
     {
-        $Query = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
 
-        $Query->name         =   $request->name;
-        $Query->sex          =   $request->sex;
-        $Query->phone        =   $request->phone;
-        $Query->birth_date   =   date('Y-m-d', strtotime($request->birth_date));
-        $Query->address      =   $request->address;
-        
+        $user->name       = $request->name;
+        $user->sex        = $request->sex;
+        $user->phone      = $request->phone;
+        $user->height     = $request->height;
+        $user->weight     = $request->weight;
+        $user->birth_date = $request->birth_date;
+        $user->address    = $request->address;
 
         if ($request->hasFile('photo')) {
+            // delete old photo
             File::delete(public_path('/storage/user/photo/'.$request->photo));
-            $Query->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('user/photo', $Query->photo, 'public');
-            $Query->photo = 'storage/'.$dir;
-        } else {
-            File::delete(public_path('/storage/user/photo/'.$request->photo));
-            $Query->photo = null;
-        }
-
-        if (!$Query) {
-            Alert::error('Update Profile Error.', 'Please complete your form.');
-            return redirect()->back();
+            $user->photo = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('user/photo', $user->photo, 'public');
+            $user->photo = 'storage/'.$dir;
         }
         
-        $Query->save();
+        $user->save();
+
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }

@@ -15,23 +15,18 @@
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
             <!--begin::Form-->
-            <form class="form" action="{{ route('user.personal_information.update') }}" method="post" enctype="multipart/form-data">
-            @method('PATCH')
-            @csrf
             <div class="card-header d-flex justify-content-between py-3">
                 <div class="card-title align-items-start flex-column mb-0">
                     <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
                 </div>
-                <div class="card-toolbar">
-                    <button type="submit" class="btn btn-success mr-2">Save Changes</button>
-                    <button type="reset" class="btn btn-secondary">Cancel</button>
-                </div>
             </div>
             <!--end::Header-->
                 <!--begin::Body-->
+                <form class="form" action="{{ route('user.personal_information.update') }}" method="post" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
                 <div class="card-body">
-
                     @if ($message = Session::get('warning'))
                     <div class="alert alert-custom alert-light-warning fade show mb-10" role="alert">
                         <div class="alert-icon">
@@ -61,12 +56,6 @@
                     </div>
                     @endif
                     
-                    <div class="row">
-                        <label class="col-xl-3"></label>
-                        <div class="col-lg-9 col-xl-6">
-                            <h5 class="font-weight-bold mb-6">Customer Info</h5>
-                        </div>
-                    </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
                         <div class="col-lg-9 col-xl-6">
@@ -98,21 +87,49 @@
                             <input class="form-control form-control-lg form-control-solid" type="text" value="{{ Auth::user()->name }}" name="name" autocomplete="off"/>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Sex</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="form-group">
-                                <div class="radio-inline">
-                                    <label class="radio">
+                        <label class="col-3 col-form-label">Sex</label>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
                                     <input type="radio" name="sex" value="male" {{ Auth::user()->sex == 'male' ? 'checked' : ''}}>
                                     <span></span>Male</label>
                                     <label class="radio">
                                     <input type="radio" name="sex" value="female" {{ Auth::user()->sex == 'female' ? 'checked' : ''}}>
-                                    <span></span>Female</label>														
+                                    <span></span>Female</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Weight</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <input type="number" min="0" name="weight" value="{{ Auth::user()->weight }}" class="form-control form-control-lg form-control-solid" placeholder="Weight" autocomplete="off"/>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        kg
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Height</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <input type="number" min="0" name="height" value="{{ Auth::user()->height }}" class="form-control form-control-lg form-control-solid" placeholder="Height" autocomplete="off"/>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        cm
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
                         <div class="col-lg-9 col-xl-6">
@@ -122,7 +139,7 @@
                                         <i class="la la-phone"></i>
                                     </span>
                                 </div>
-                                <input type="number" min="0" name="phone" value="{{ Auth::user()->phone }}" class="form-control form-control-lg form-control-solid" placeholder="Phone" autocomplete="off"/>
+                                <input type="text" name="phone" value="{{ Auth::user()->phone }}" class="form-control form-control-lg form-control-solid" placeholder="Phone" autocomplete="off"/>
                             </div>
                         </div>
                     </div>
@@ -130,19 +147,38 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" value="{{ date('D, M d, Y', strtotime(Auth::user()->birth_date)) }}" id="datePicker" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                                <input 
+                                type="text" 
+                                name="birth_date" 
+                                id="birth_date"
+                                value="{{ date('D, d M Y', strtotime(Auth::user()->birth_date)) }}"
+                                readonly="readonly" 
+                                autocomplete="off"
+                                placeholder="Select Date"
+                                data-target="#birth_date"
+                                data-toggle="datetimepicker"
+                                class="form-control form-control-lg form-control-solid datetimepicker-input" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Complete Address</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Address</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
                                 <textarea name="address" rows="5" class="form-control form-control-lg form-control-solid" autocomplete="off">{{ Auth::user()->address }}</textarea>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-9 col-xl-6">
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
+                            <button type="reset" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -158,33 +194,19 @@
 @push('page-scripts')
 <script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
-    $('#datePicker').datepicker({
-        orientation: "bottom left",
-        autoclose: true,
-        format: {
-            /*
-            * Say our UI should display a week ahead,
-            * but textbox should store the actual date.
-            * This is useful if we need UI to select local dates,
-            * but store in UTC
-            */
-            toDisplay: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
+    $(function() {
 
-                return d.toLocaleDateString('default', { 
-                    weekday: 'short', 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: '2-digit' 
-                });
-            },
-            toValue: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
-                return new Date(d);
-            }
-        }
+    $('#birth_date').datetimepicker({
+        format: 'ddd, DD MMM YYYY',
+        widgetPositioning: {
+            horizontal: 'left',
+            vertical: 'bottom'
+        },
+        date: "{{ date('D, d M Y', strtotime(Auth::user()->birth_date)) }}",
+        useCurrent: false
     });
+
+    $('#birth_date').val("{{ date('D, d M Y', strtotime(Auth::user()->birth_date)) }}");
+});
 </script>
 @endpush
