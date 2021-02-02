@@ -38,12 +38,19 @@ class RidingClassController extends Controller
         $packages = Package::where('session_usage', 'Yes')
         ->whereHas('stable', function ($q) use ($request) {
             $q->where('approval_status', 'Accepted');
-            $q->where('name', $request->stable_name);
+            $q->when(request('stable_name'), function ($query) use ($request) {
+                return $query->where('name', $request->stable_name);
+            });
         })
         ->whereHas('stable.slot', function ($q) use ($request) {
-            $q->where('date', $request->date_start);
-            $q->where('time_start', $request->time_start);
+            $q->when(request('date_start'), function ($query) use ($request) {
+                return $query->where('date', $request->date_start);
+            });
+            $q->when(request('time_start'), function ($query) use ($request) {
+                return $query->where('time_start', $request->time_start);
+            });
         })
+        ->latest()
         ->paginate(10);
 
         return view('riding-class.search', compact(

@@ -20,6 +20,13 @@
         
         @csrf
 
+        @php
+            $random_digit = rand ( 100 , 999 );
+            $price_total = $random_digit + $package->price;
+        @endphp
+
+        <input type="hidden" name="random_digit" value="{{ $random_digit }}">
+        <input type="hidden" name="price_total" value="{{ $price_total }}">
         <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}">
         <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}">
 
@@ -74,12 +81,12 @@
                     </div>
 
                     <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
-                        <div class="font-weight-bolder font-size-h5 text-success">
-                            Taxes and Other Fees
+                        <div class="font-weight-bolder font-size-h5 text-dark">
+                            Unique Code
                         </div>
                         <div class="text-right mt-3 mt-md-0">
                             <h3 class="font-weight-bolder font-size-h5 text-success">
-                                Included
+                                Rp. {{ $random_digit }}
                             </h3>
                         </div>
                     </div>
@@ -91,7 +98,7 @@
 
         <div class="card-footer d-flex justify-content-between p-5">
             <h3 class="text-dark font-weight-bolder">Total:</h3>
-            <h3 class="text-dark font-weight-bolder">Rp. {{ number_format($package->price, 0, ",", ".") }}</h3>
+            <h3 class="text-dark font-weight-bolder">Rp. {{ number_format($price_total, 0, ",", ".") }}</h3>
         </div>
     </div>
 
