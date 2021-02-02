@@ -33,6 +33,7 @@
             <!--end::Header-->
             <!--begin::Form-->
             <form class="form" action="{{ route('stable.register.submit') }}" enctype="multipart/form-data" method="POST">
+                @csrf
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="form-group row">
@@ -45,28 +46,39 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Province</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <select class="form-control form-control-lg form-control-solid" id="province" name="province" onchange="ajaxChained('#province','#city','city')">
+                                <option value="">Select province</option>
+                                @foreach ($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">City</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <select class="form-control form-control-lg form-control-solid" id="city" name="city" disabled onchange="ajaxChained('#city','#district','district')">
+                                <option value="">Select city</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">District</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <select class="form-control form-control-lg form-control-solid" id="district" name="district" disabled onchange="ajaxChained('#district','#village','village')">
+                                <option value="">Select district</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Village</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <select class="form-control form-control-lg form-control-solid" id="village" name="village" disabled>
+                                <option value="">Select village</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -82,7 +94,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone Name</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="contact_phone_name" placeholder="Phone Name"/>
                         </div>
                     </div>
                     
@@ -95,7 +107,7 @@
                                         <i class="la la-phone"></i>
                                     </span>
                                 </div>
-                                <input type="number" min="0" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Phone" />
+                                <input type="number" min="0" name="contact_phone_number" class="form-control form-control-lg form-control-solid" placeholder="Phone Number" />
                             </div>
                         </div>
                     </div>
@@ -120,12 +132,49 @@
 
 @push('page-scripts')
 <script>
-    $('#datePicker').datepicker({
+    $(function() {
+        $('#datePicker').datepicker({
         todayHighlight: true,
-        orientation: "bottom left",
-        autoclose: true,
-        // language : 'id',
-        format   : 'yyyy-mm-dd'
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
+
+        $('#province').select2({
+            width:"100%"
+        });
     });
+
+    function ajaxChained(source, target, slug){
+        var pid = $(source + ' option:selected').val(); //$(this).val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('/') }}/api/'+ slug +'/'+ pid,
+                dataType: 'json',
+                data: { 
+                    id : pid 
+                }
+            }).done(function(response){
+                //get JSON
+
+                $(target).prop("disabled", true);
+
+                //generate <options from JSON
+                var list_html = '';
+                list_html += '<option value=""></option>';
+                $.each(response.data, function(i, item) {
+                    list_html += '<option value='+response.data[i].id+'>'+response.data[i].name+'</option>';
+                });
+                
+                //replace <select2 with new options
+                $(target).html(list_html);
+                $(target).prop("disabled", false);
+                //change placeholder text
+                // $(target).select2({placeholder: response.data.length +' results'});
+                $(target).select2({placeholder: 'select ' + slug});
+            });
+    }
 </script>
 @endpush
