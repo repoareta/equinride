@@ -13,7 +13,7 @@ class PackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         return view('stable.package.index');
     }
 

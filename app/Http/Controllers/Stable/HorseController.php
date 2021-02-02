@@ -104,13 +104,7 @@ class HorseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(HorseStore $request, Horse $horse)
-    {
-        if($request->hasFile('photo')){
-            File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $horse->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
-            $horse->photo = 'storage/'.$dir;
-        }
+    {    
 
         // Check Stable
         $stable = Stable::where('user_id', Auth::user()->id)->first();
@@ -125,12 +119,12 @@ class HorseController extends Controller
         $horse->pedigree_female = $request->pedigree_female;
         $horse->stable_id       = $stable->id;
         $horse->user_id         = Auth::user()->id;
-
-        if(!$horse){
-            Alert::error('Create Horse Error.', 'Please complete your form.');
-            return redirect()->back();
+        if($request->hasFile('photo')){
+            File::delete(public_path('/storage/horse/photo/'.$request->photo));
+            $horse->photo = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
+            $horse->photo = 'storage/'.$dir;
         }
-        
         $horse->save();
 
         Alert::success('Create Horse Success.', 'Success.')->persistent(true)->autoClose(3600);
@@ -172,13 +166,6 @@ class HorseController extends Controller
      */
     public function update(Request $request, Horse $horse)
     {
-        if($request->hasFile('photo')){
-            File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $horse->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
-            $horse->photo = 'storage/'.$dir;
-        }
-
         // Check Stable
         $stable = Stable::where('user_id', Auth::user()->id)->first();
 
@@ -193,9 +180,11 @@ class HorseController extends Controller
         $horse->stable_id       = $stable->id;
         $horse->user_id         = Auth::user()->id;
 
-        if(!$horse){
-            Alert::error('Create Horse Error.', 'Please complete your form.');
-            return redirect()->back();
+        if($request->hasFile('photo')){
+            File::delete(public_path('/storage/horse/photo/'.$request->photo));
+            $horse->photo = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
+            $horse->photo = 'storage/'.$dir;
         }
         
         $horse->save();

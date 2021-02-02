@@ -63,9 +63,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
         Route::get('/personal-information', [UserController::class, 'personalInformation'])->name('personal_information');
-        Route::patch('/personal-information', [UserController::class, 'personalInformationUpdate'])->name('personal_information.update');
+        Route::put('/personal-information', [UserController::class, 'personalInformationUpdate'])->name('personal_information.update');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
-        Route::patch('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
+        Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history');
     });
 
@@ -120,7 +120,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/create', [HorseController::class, 'create'])->name('create');
                 Route::post('/create', [HorseController::class, 'store'])->name('store');
                 Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
-                Route::patch('/{horse}/edit', [HorseController::class, 'update'])->name('update');
+                Route::put('/{horse}/edit', [HorseController::class, 'update'])->name('update');
                 Route::delete('/destroy', [HorseController::class, 'destroy'])->name('destroy');
             });
     
@@ -164,7 +164,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('list/json', [HorseSexController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseSexController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('edit');
-                Route::patch('update', [HorseSexController::class, 'update'])->name('update');
+                Route::put('update', [HorseSexController::class, 'update'])->name('update');
                 Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
             });
 
@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('list/json', [HorseBreedController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseBreedController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
-                Route::patch('update', [HorseBreedController::class, 'update'])->name('update');
+                Route::put('update', [HorseBreedController::class, 'update'])->name('update');
                 Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
             });
         });
@@ -185,7 +185,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             route::get('list/json', [BankPaymentController::class, 'listJson'])->name('list.json');
             Route::post('store', [BankPaymentController::class, 'store'])->name('store');
             Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('edit');
-            Route::patch('update', [BankPaymentController::class, 'update'])->name('update');
+            Route::put('update', [BankPaymentController::class, 'update'])->name('update');
             Route::delete('delete', [BankPaymentController::class, 'delete'])->name('delete');
         });
         

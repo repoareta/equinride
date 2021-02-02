@@ -23,7 +23,7 @@
             <!--end::Header-->
             <!--begin::Form-->
             <form class="form" enctype="multipart/form-data" method="POST" action="{{ route('stable.horse.update', $item->id) }}">
-                @method('PATCH')
+                @method('PUT')
                 @csrf
                 <!--begin::Body-->
                 <div class="card-body">
