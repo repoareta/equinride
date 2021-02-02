@@ -91,13 +91,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-9">
-                            <a href="{{ route('stable.coach.index') }}" class="btn btn-warning" type="submit">
-                                Back
-                            </a>
-                            <button class="btn btn-primary" type="submit">
-                                Update
-                            </button>
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-9 col-xl-6">
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
+                            <a href="{{ route('stable.coach.index') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
                         </div>
                     </div>
                 </div>
