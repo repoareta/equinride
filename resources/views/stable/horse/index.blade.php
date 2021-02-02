@@ -39,7 +39,8 @@
                                 <th scope="col">Passport Number</th>
                                 <th scope="col">Horse Owner</th>
                                 <th scope="col">Horse Breed</th>
-                                <th scope="col">Horse Pedigree</th>
+                                <th scope="col">Pedigree Male</th>
+                                <th scope="col">Pedigree Female</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -71,7 +72,11 @@
                 url : '{!! url()->current() !!}'
             },
             columns: [
-                {data: 'id', name: 'id'},
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
                 {data: 'name', name: 'name'},
                 {data: 'birth_date', name: 'birth_date'},
                 {data: 'age', name: 'age'},
@@ -79,7 +84,8 @@
                 {data: 'passport_number', name: 'passport_number'},
                 {data: 'owner', name: 'owner'},
                 {data: 'horse_breed', name: 'horse_breed'},
-                {data: 'pedigree', name: 'pedigree'},
+                {data: 'pedigree_male', name: 'pedigree_male'},
+                {data: 'pedigree_female', name: 'pedigree_female'},
                 {
                     data: 'action',
                     name: 'action',

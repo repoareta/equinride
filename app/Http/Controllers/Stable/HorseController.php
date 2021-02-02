@@ -31,6 +31,7 @@ class HorseController extends Controller
 
             $query = Horse::where('user_id', Auth::user()->id)->get();
             return Datatables::of($query)
+                ->addIndexColumn()
                 ->addColumn('age', function($item){
                     $dateOfBirth = $item->birth_date;
                     return Carbon::parse($dateOfBirth)->age;
@@ -44,24 +45,25 @@ class HorseController extends Controller
                 ->addColumn('horse_breed', function($item){
                     return $item->breed->name;
                 })
-                ->addColumn('pedigree', function($item){
-                    if($item->pedigree_male){
-                        return 'Male '.$item->pedigree_male.' & Female not found';
-                    }
-                    elseif($item->pedigree_female){
-                        return 'Male not found & Female '.$item->pedigree_female;
-                    }
-                    elseif($item->pedigree_female && $item->pedigree_male)
-                    {
-                        return 'Male '.$item->pedigree_male.' & Female '.$item->pedigree_female;
-                    }else{
-                        return 'Male & Female not found';
-                    }
+                ->addColumn('passport_number', function($item){
+                    return $item->passport_number == null ? 
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                    $item->passport_number;
+                })
+                ->addColumn('pedigree_male', function($item){
+                    return $item->pedigree_male == null ? 
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                    $item->pedigree_male;
+                })
+                ->addColumn('pedigree_female', function($item){
+                    return $item->pedigree_female == null ? 
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                    $item->pedigree_female;
                 })
                 ->addColumn('action', function($item){
                     return '
                     <td nowrap="nowrap">
-                        <a href="{{ route("stable.horse.edit", '.$item->id.') }}" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                        <a href="'. route("stable.horse.edit", $item->id) . '" class="btn btn-clean btn-icon mr-2" title="Edit details">
                             <i class="la la-edit icon-xl"></i>
                         </a>
                         <a href="javascript:;" class="btn btn-clean btn-icon mr-2" data-id="'.$item->id.'" title="Delete details" id="deleteHorse">
@@ -70,7 +72,7 @@ class HorseController extends Controller
                     </td>
                     ';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'pedigree_female', 'pedigree_male', 'passport_number'])
                 ->make();
         }
         return view('stable.horse.index');
@@ -101,40 +103,35 @@ class HorseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HorseStore $request, Horse $horse)
     {
-        $Query = New Horse();
-        
         if($request->hasFile('photo')){
             File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $Query->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('horse/photo', $Query->photo, 'public');
-            $Query->photo = 'storage/'.$dir;
-        }else{
-            File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $Query->photo = null;
+            $horse->photo = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
+            $horse->photo = 'storage/'.$dir;
         }
 
         // Check Stable
         $stable = Stable::where('user_id', Auth::user()->id)->first();
 
-        $Query->name            = $request->name;
-        $Query->owner           = $request->owner;
-        $Query->birth_date      = $request->birth_date;
-        $Query->horse_sex_id    = $request->horse_sex_id;
-        $Query->horse_breed_id  = $request->horse_breed_id;
-        $Query->passport_number = $request->passport_number;
-        $Query->pedigree_male   = $request->pedigree_male;
-        $Query->pedigree_female = $request->pedigree_female;
-        $Query->stable_id       = $stable->id;
-        $Query->user_id         = Auth::user()->id;
+        $horse->name            = $request->name;
+        $horse->owner           = $request->owner;
+        $horse->birth_date      = $request->birth_date;
+        $horse->horse_sex_id    = $request->horse_sex_id;
+        $horse->horse_breed_id  = $request->horse_breed_id;
+        $horse->passport_number = $request->passport_number;
+        $horse->pedigree_male   = $request->pedigree_male;
+        $horse->pedigree_female = $request->pedigree_female;
+        $horse->stable_id       = $stable->id;
+        $horse->user_id         = Auth::user()->id;
 
-        if(!$Query){
+        if(!$horse){
             Alert::error('Create Horse Error.', 'Please complete your form.');
             return redirect()->back();
         }
         
-        $Query->save();
+        $horse->save();
 
         Alert::success('Create Horse Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.horse.index');  
@@ -159,7 +156,11 @@ class HorseController extends Controller
      */
     public function edit($id)
     {
-        return view('stable.horse.edit');
+        $item = Horse::find($id);
+        $sexes = HorseSex::all();
+        $breeds = HorseBreed::all();
+
+        return view('stable.horse.edit', compact('item', 'sexes', 'breeds'));
     }
 
     /**
@@ -169,9 +170,38 @@ class HorseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Horse $horse)
     {
-        //
+        if($request->hasFile('photo')){
+            File::delete(public_path('/storage/horse/photo/'.$request->photo));
+            $horse->photo = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
+            $horse->photo = 'storage/'.$dir;
+        }
+
+        // Check Stable
+        $stable = Stable::where('user_id', Auth::user()->id)->first();
+
+        $horse->name            = $request->name;
+        $horse->owner           = $request->owner;
+        $horse->birth_date      = $request->birth_date;
+        $horse->horse_sex_id    = $request->horse_sex_id;
+        $horse->horse_breed_id  = $request->horse_breed_id;
+        $horse->passport_number = $request->passport_number;
+        $horse->pedigree_male   = $request->pedigree_male;
+        $horse->pedigree_female = $request->pedigree_female;
+        $horse->stable_id       = $stable->id;
+        $horse->user_id         = Auth::user()->id;
+
+        if(!$horse){
+            Alert::error('Create Horse Error.', 'Please complete your form.');
+            return redirect()->back();
+        }
+        
+        $horse->save();
+
+        Alert::success('Create Horse Success.', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.horse.index');
     }
 
     /**
@@ -180,8 +210,9 @@ class HorseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(Request $request)
     {
-        //
+        Horse::find($request->id)->delete();
+        return response()->json();
     }
 }

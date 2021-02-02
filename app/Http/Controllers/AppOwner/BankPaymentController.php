@@ -76,7 +76,7 @@ class BankPaymentController extends Controller
 
     public function update(BankPaymentStore $request, BankPayment $bankPayment)
     {
-        $bankPayment = BankPayment::find($request->id);
+        // $bankPayment = BankPayment::find($request->id);
         $bankPayment->account_number    = $request->account_number;
         $bankPayment->account_name      = $request->account_name;
         $bankPayment->branch            = $request->branch;
