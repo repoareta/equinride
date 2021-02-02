@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [CoachController::class, 'index'])->name('index');
                 Route::get('/create', [CoachController::class, 'create'])->name('create');
                 Route::get('/{coach}/edit', [CoachController::class, 'edit'])->name('edit');
-                Route::get('/destroy', [CoachController::class, 'destroy'])->name('destroy');
+                Route::delete('/destroy', [CoachController::class, 'destroy'])->name('destroy');
             });
         
             // STABLE HORSE
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::post('/create', [HorseController::class, 'store'])->name('store');
                 Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
                 Route::patch('/{horse}/edit', [HorseController::class, 'update'])->name('update');
-                Route::get('/destroy', [HorseController::class, 'destroy'])->name('destroy');
+                Route::delete('/destroy', [HorseController::class, 'destroy'])->name('destroy');
             });
     
             // STABLE PACKAGE
@@ -129,13 +129,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [PackageController::class, 'index'])->name('index');
                 Route::get('/create', [PackageController::class, 'create'])->name('create');
                 Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-                Route::get('/destroy', [PackageController::class, 'destroy'])->name('destroy');
+                Route::delete('/destroy', [PackageController::class, 'destroy'])->name('destroy');
             });
     
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
-                Route::get('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
+                Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
         });
     });

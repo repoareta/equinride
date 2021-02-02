@@ -22,7 +22,9 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" enctype="multipart/form-data">
+            <form class="form" enctype="multipart/form-data" method="POST" action="{{ route('stable.horse.update', $item->id) }}">
+                @method('PATCH')
+                @csrf
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="form-group row">
@@ -48,30 +50,32 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Name</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="name" value="{{ $item->name }}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Owner</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="owner"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="owner" value="{{ $item->owner }}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Sex</label>
                         <div class="col-lg-9 col-xl-6">
                             <select class="form-control form-control-lg form-control-solid" name="horse_sex_id">
-                                <option value="1">Stallion</option>
-                                <option value="2">Mare</option>
-                                <option value="3">Gelding</option>
-                            </select>
+                                @forelse ($sexes as $sex)
+                                    <option value="{{ $sex->id }}" @php $item->id == $sex->id ? 'selected' : '' @endphp>{{ $sex->name }}</option>                                
+                                @empty
+                                    <option>Data Not Found</option>
+                                @endforelse
+                            </select>                                
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid"/>
+                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid" value="{{ date('D, M d, Y', strtotime($item->birth_date)) }}" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -81,29 +85,31 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Passport Number</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input type="number" min="0" name="passport_number" class="form-control form-control-lg form-control-solid" />
+                            <input type="number" min="0" name="passport_number" class="form-control form-control-lg form-control-solid" value="{{ $item->passport_number }}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Breed</label>
                         <div class="col-lg-9 col-xl-6">
                             <select class="form-control form-control-lg form-control-solid" name="horse_breed_id">
-                                <option value="1">European</option>
-                                <option value="2">Arabian</option>
-                                <option value="3">Pony</option>
+                                @forelse ($breeds as $breed)
+                                    <option value="{{ $breed->id }}" @php $item->id == $sex->id ? 'selected' : '' @endphp>{{ $breed->name }}</option>                                
+                                @empty
+                                    <option>Data Not Found</option>
+                                @endforelse
                             </select>
                         </div>
                     </div>                    
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Pedigree Male</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_male"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_male" value="{{ $item->pedigree_male }}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Pedigree Female</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_female"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="pedigree_female" value="{{ $item->pedigree_female }}"/>
                         </div>
                     </div>
                     <div class="row">
