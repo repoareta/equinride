@@ -9,16 +9,19 @@ class Province extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the cities for Province.
-     */
-    public function city()
-    {
-        return $this->belongsTo(City::class, 'city_id');
-    }    
+    
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * Get the all cities of this Province.
+     */
+    public function city()
+    {
+        return $this->hasMany(City::class);
+    }
+
     public function stable()
     {
         return $this->hasOne(Stable::class);

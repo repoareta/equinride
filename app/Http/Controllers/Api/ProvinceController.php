@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Stable;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Province;
 use Illuminate\Http\Request;
 
-// load models
-use App\Models\Stable;
-use Illuminate\Support\Facades\Auth;
-
-class StableController extends Controller
+class ProvinceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +14,7 @@ class StableController extends Controller
      */
     public function index()
     {
-        return view('stable.dashboard');
+        //
     }
 
     /**
@@ -27,10 +22,9 @@ class StableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register()
+    public function create()
     {
-        $provinces = Province::all();
-        return view('stable.register', compact('provinces'));
+        //
     }
 
     /**
@@ -39,23 +33,9 @@ class StableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function registerSubmit(Request $request, Stable $stable)
+    public function store(Request $request)
     {
-        $stable->name           = $request->name;
-        $stable->contact_person = $request->contact_phone_name;
-        $stable->contact_number = $request->contact_phone_number;
-        $stable->address        = $request->address;
-        $stable->province_id    = $request->province;
-        $stable->city_id        = $request->city;
-        $stable->district_id    = $request->district;
-        $stable->village_id     = $request->village;
-        $stable->user_id        = Auth::user()->id;
-
-        $stable->save();
-
-        Auth::user()->syncRoles('stable-owner');
-
-        return redirect()->route('stable.index');
+        //
     }
 
     /**
