@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Package;
 use App\Models\Stable;
 use App\Models\BankPayment;
+use App\Models\Booking;
+use App\Models\BookingDetail;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
@@ -69,7 +72,7 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function paymentConfirmation(Request $request, Package $package)
+    public function paymentConfirmation(Request $request, Package $package, Booking $booking, BookingDetail $booking_detail)
     {
         $package = Package::where('id', $package->id)
         ->with(['stable.slot' => function ($q) use ($request) {
@@ -78,12 +81,28 @@ class PackageController extends Controller
         }])
         ->firstOrFail();
 
-        
         $bank_payment = BankPayment::find($request->bank_payment_id);
+
+        // CREATE BOOKING
+        $booking->user_id = Auth::user()->id;
+        $booking->price_total = $request->price_total;
+        $booking->bank_payment_id = $request->bank_payment_id;
+
+        $booking->save();
+
+        // CREATE BOOKING DETAIL
+        $booking_detail->package_id = $package->id;
+        $booking_detail->price_subtotal = $package->price;
+
+        $booking->booking_detail()->save($booking_detail);
+
+        // CREATE SLOT USER
+        // Auth::user()->slot()
 
         return view('payment.payment-confirmation', compact(
             'package',
-            'bank_payment'
+            'bank_payment',
+            'booking'
         ));
     }
 

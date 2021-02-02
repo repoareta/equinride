@@ -24,9 +24,29 @@ $(function() {
 });
 
 function bookNow(packageId) {
-    alert(packageId);
-    $('#date_start').datetimepicker('show');
-    $('#package-booking-form-' + packageId).submit();
+    var date_start = $('#package-booking-form-' + packageId + " input[name='date_start']").val();
+    var time_start = $('#package-booking-form-' + packageId + " input[name='time_start']").val();
+    if(date_start === ""){
+        Swal.fire({
+            title  : 'Warning',
+            text   : 'Please select Date and re-submit Search form',
+            icon   : 'warning',
+            buttons: true
+        }).then(function(value){
+            $('#date_start').datetimepicker('show');
+        });
+    } else if (time_start === "") {
+        Swal.fire({
+            title  : 'Warning',
+            text   : 'Please select Time and re-submit Search form',
+            icon   : 'warning',
+            buttons: true
+        }).then(function(value){
+            $('#datetimepicker3').datetimepicker('show');
+        });
+    } else {
+        $('#package-booking-form-' + packageId).submit();
+    }
 }
 </script>
     
