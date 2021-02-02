@@ -31,8 +31,10 @@
 							<!--end::Item-->
 
 							<!--begin::Item-->
-							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@role('stable-owner|stable-admin') Manage Stable @else Stable Register @endrole">
-								<a href="{{ route('stable.register') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ Route::is('stable.*') ? 'active' : '' }}">
+							<li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" 
+							data-boundary="window" 
+							title="@role('stable-owner|stable-admin') Manage Stable @else Stable Register @endrole">
+								<a href="@role('stable-owner|stable-admin') {{ route('stable.index') }} @else {{ route('stable.register') }} @endrole" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ Route::is('stable.*') ? 'active' : '' }}">
 									<i class="la la-horse-head icon-lg"></i>
 								</a>
 							</li>
