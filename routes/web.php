@@ -128,7 +128,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'package', 'as' => 'package.'], function () {
                 Route::get('/', [PackageController::class, 'index'])->name('index');
                 Route::get('/create', [PackageController::class, 'create'])->name('create');
+                Route::post('/create', [PackageController::class, 'store'])->name('store');
                 Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
+                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
                 Route::delete('/destroy', [PackageController::class, 'destroy'])->name('destroy');
             });
     

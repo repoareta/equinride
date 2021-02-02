@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-3 col-form-label">Sex</label>
+                        <label class="col-12 col-lg-3 col-form-label">Sex</label>
                         <div class="col-9 col-form-label">
                             <div class="radio-inline">
                                 <label class="radio">

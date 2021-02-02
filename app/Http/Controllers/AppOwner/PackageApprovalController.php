@@ -74,13 +74,13 @@ class PackageApprovalController extends Controller
                 <i class='fas fa-eye'></i>
             </a>
             <form class='d-inline' id='formAccept".$data->id."' method='post' action='" . route('package_approval.approv.package',$data->id) . "'>
-            " . method_field('PATCH') . csrf_field() . "
+            " . method_field('PUT') . csrf_field() . "
                 <button class='btn btn-success text-center mr-2' type='submit' id='accept".$data->id."' data-toggle='Accept' data-placement='top' title='Accept'>
                     <i class='fas fa-check-circle'></i>
                 </button>
             </form>
             <form class='d-inline' id='formDecline".$data->id."' method='post' action='" . route('package_approval.unapprov.package',$data->id) . "'>
-            " . method_field('PATCH') . csrf_field() . "
+            " . method_field('PUT') . csrf_field() . "
                 <button class='btn btn-danger text-center mr-2' type='submit' id='decline".$data->id."' data-toggle='Decline' data-placement='top' title='Decline'>
                 <i class='fas fa-ban'></i>
                 </button>
