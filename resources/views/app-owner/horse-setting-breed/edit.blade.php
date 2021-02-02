@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" method="POST" id="formHorseBreed">
-                    @method('PATCH')
+                    @method('PUT')
                     @csrf
                     <input type="hidden" name="id" id="idData">
                     <div class="form-group row">

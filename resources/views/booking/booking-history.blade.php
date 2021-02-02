@@ -15,7 +15,7 @@
         <div class="card card-custom">
             <!--begin::Form-->
             <form class="form" action="{{ route('user.change_password.update') }}" method="post">
-            @method('PATCH')
+            @method('PUT')
             @csrf
             <!--begin::Header-->
             <div class="card-header py-3 d-flex justify-content-between">
