@@ -111,7 +111,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'coach', 'as' => 'coach.'], function () {
                 Route::get('/', [CoachController::class, 'index'])->name('index');
                 Route::get('/create', [CoachController::class, 'create'])->name('create');
+                Route::post('/create', [CoachController::class, 'store'])->name('store');
+                Route::post('/create/image', [CoachController::class, 'storeImage'])->name('store_img');
                 Route::get('/{coach}/edit', [CoachController::class, 'edit'])->name('edit');
+                Route::put('/{coach}/edit', [CoachController::class, 'update'])->name('update');
                 Route::delete('/destroy', [CoachController::class, 'destroy'])->name('destroy');
             });
         
@@ -120,6 +123,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [HorseController::class, 'index'])->name('index');
                 Route::get('/create', [HorseController::class, 'create'])->name('create');
                 Route::post('/create', [HorseController::class, 'store'])->name('store');
+                Route::post('/create/image', [HorseController::class, 'storeImage'])->name('store_img');
                 Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
                 Route::put('/{horse}/edit', [HorseController::class, 'update'])->name('update');
                 Route::delete('/destroy', [HorseController::class, 'destroy'])->name('destroy');
@@ -130,8 +134,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [PackageController::class, 'index'])->name('index');
                 Route::get('/create', [PackageController::class, 'create'])->name('create');
                 Route::post('/create', [PackageController::class, 'store'])->name('store');
+                Route::post('/create/image', [PackageController::class, 'storeImage'])->name('store_img');
                 Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
+                Route::put('/{package}/edit', [PackageController::class, 'update'])->name('update');
                 Route::delete('/destroy', [PackageController::class, 'destroy'])->name('destroy');
             });
     

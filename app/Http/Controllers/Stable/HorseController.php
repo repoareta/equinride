@@ -29,7 +29,7 @@ class HorseController extends Controller
     {
         if(request()->ajax()){
 
-            $query = Horse::where('user_id', Auth::user()->id)->get();
+            $query = Horse::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
                 ->addColumn('age', function($item){
@@ -103,32 +103,29 @@ class HorseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HorseStore $request, Horse $horse)
+    public function store(Request $request, Horse $horse)
     {    
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
 
-        // Check Stable
-        $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $horse->name            = $request->name;
+            $horse->owner           = $request->owner;
+            $horse->birth_date      = $request->birth_date;
+            $horse->horse_sex_id    = $request->horse_sex_id;
+            $horse->horse_breed_id  = $request->horse_breed_id;
+            $horse->passport_number = $request->passport_number;
+            $horse->pedigree_male   = $request->pedigree_male;
+            $horse->pedigree_female = $request->pedigree_female;
+            $horse->stable_id       = $stable->id;
+            $horse->user_id         = Auth::user()->id;
 
-        $horse->name            = $request->name;
-        $horse->owner           = $request->owner;
-        $horse->birth_date      = $request->birth_date;
-        $horse->horse_sex_id    = $request->horse_sex_id;
-        $horse->horse_breed_id  = $request->horse_breed_id;
-        $horse->passport_number = $request->passport_number;
-        $horse->pedigree_male   = $request->pedigree_male;
-        $horse->pedigree_female = $request->pedigree_female;
-        $horse->stable_id       = $stable->id;
-        $horse->user_id         = Auth::user()->id;
-        if($request->hasFile('photo')){
-            File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $horse->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
-            $horse->photo = 'storage/'.$dir;
-        }
-        $horse->save();
+            $horse->save();
 
-        Alert::success('Create Horse Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('stable.horse.index');  
+            return response()->json(['status'=>"success", 'horseid'=>$horse->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }        
     }
 
     /**
@@ -166,31 +163,26 @@ class HorseController extends Controller
      */
     public function update(Request $request, Horse $horse)
     {
-        // Check Stable
-        $stable = Stable::where('user_id', Auth::user()->id)->first();
-
-        $horse->name            = $request->name;
-        $horse->owner           = $request->owner;
-        $horse->birth_date      = $request->birth_date;
-        $horse->horse_sex_id    = $request->horse_sex_id;
-        $horse->horse_breed_id  = $request->horse_breed_id;
-        $horse->passport_number = $request->passport_number;
-        $horse->pedigree_male   = $request->pedigree_male;
-        $horse->pedigree_female = $request->pedigree_female;
-        $horse->stable_id       = $stable->id;
-        $horse->user_id         = Auth::user()->id;
-
-        if($request->hasFile('photo')){
-            File::delete(public_path('/storage/horse/photo/'.$request->photo));
-            $horse->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
-            $horse->photo = 'storage/'.$dir;
-        }
-        
-        $horse->save();
-
-        Alert::success('Create Horse Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('stable.horse.index');
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            
+            $horse->name            = $request->name;
+            $horse->owner           = $request->owner;
+            $horse->birth_date      = $request->birth_date;
+            $horse->horse_sex_id    = $request->horse_sex_id;
+            $horse->horse_breed_id  = $request->horse_breed_id;
+            $horse->passport_number = $request->passport_number;
+            $horse->pedigree_male   = $request->pedigree_male;
+            $horse->pedigree_female = $request->pedigree_female;
+            $horse->stable_id       = $stable->id;
+            $horse->user_id         = Auth::user()->id;
+            
+            $horse->save();
+            return response()->json(['status'=>"success", 'horseid'=>$horse->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }    
     }
 
     /**
@@ -201,7 +193,27 @@ class HorseController extends Controller
      */
     public function destroy(Request $request)
     {
-        Horse::find($request->id)->delete();
+        $data = Horse::find($request->id);
+        File::delete(public_path($data->photo));
+        $data->delete();
         return response()->json();
+    }
+
+    // Store image to database and directory from dropZone
+    public function storeImage(Request $request)
+    {
+        if($request->file('photo')){
+            
+            //here we are geeting horseid align with an image
+            $horse = Horse::find($request->horseid);
+            File::delete(public_path('/storage/horse/photo/'.$request->photo));
+            $name = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('horse/photo', $name, 'public');
+            $nameDir = 'storage/'.$dir;
+            $horse->photo = $nameDir;
+            $horse->update();
+
+            return response()->json(['status'=>"success",'imgdata'=>$nameDir,'horseid'=>$horse->id]);
+        }
     }
 }

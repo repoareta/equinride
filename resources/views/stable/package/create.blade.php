@@ -22,19 +22,18 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" action="{{ route('stable.package.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="form" name="createform" id="createform" action="{{ route('stable.package.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Body-->
+                <input type="hidden" class="packageid" name="packageid" id="packageid" value="">
                 <div class="card-body">
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Photo</label>
                         <div class="col-lg-9 col-xl-6">
-                            <div id="dropZone" class="dropzone dropzone-default dropzone-primary dz-clickable">
-                                <div class="fallback">
-                                    <input name="photo" type="file"  />
+                            <div class="form-group">
+                                <div id="dropzoneDragArea" class="dropzone dropzone-default dropzone-primary dz-clickable">                                    
                                 </div>
                             </div>
-                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -69,12 +68,6 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Attendance</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="attendance"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Session Usage</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="form-group">
@@ -95,10 +88,10 @@
                             <div class="form-group">
                                 <div class="radio-inline">
                                     <label class="radio">
-                                    <input type="radio" name="session_usage" value="Yes">
+                                    <input type="radio" name="status" value="Yes">
                                     <span></span>Publish</label>
                                     <label class="radio">
-                                    <input type="radio" name="session_usage" value="">
+                                    <input type="radio" name="status" value="">
                                     <span></span>No Publish</label>														
                                 </div>
                             </div>
@@ -122,19 +115,66 @@
 @endsection
 
 @push('page-scripts')
-    <script>
-    var dz = $("#dropZone").dropzone({ 
-                url: "{{ route('stable.package.store') }}",                
-                maxFiles: 1,
-                maxFilesize: 5,
-                addRemoveLinks: !0,
+<script>
+    Dropzone.autoDiscover = false;
+    // Dropzone.options.createform = false;	
+    let token = $('meta[name="csrf-token"]').attr('content');
+    var dz = $("div#dropzoneDragArea").dropzone({
+                paramName: "photo",
+                url: "{{ route('stable.package.store_img') }}",                
+                addRemoveLinks: true,
                 autoProcessQueue: false,
-                maxFilesize: 1,
-                acceptedFiles: "image/*"
-            });
+                uploadMultiple: false,
+                parallelUploads: 1,
+                maxFiles: 1,
+                params: {
+                    _token: token
+                },
+                // The setting up of the dropzone
+                init: function() {
+                    var myDropzone = this;
+                    //form submission code goes here
+                    $("form[name='createform']").submit(function(event) {
+                        //Make sure that the form isn't actully being sent.
+                        event.preventDefault();
 
-    $('#uploadFile').click(function(){
-        dz.processQueue();
-    });
-    </script>
+                        URL = $("#createform").attr('action');
+                        formData = $('#createform').serialize();
+                        if(myDropzone.files == ''){
+                            location.href = "{{ route('stable.package.index') }}";
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: URL,
+                            data: formData,
+                            success: function(result){
+                                if(result.status == "success"){
+                                    // fetch the useid 
+                                    var packageid = result.packageid;
+                                    $("#packageid").val(packageid); // inseting packageid into hidden input field
+                                    //process the queue
+                                    myDropzone.processQueue();
+                                }else{
+                                    console.log("error");
+                                }
+                            }
+                        });
+                    });
+
+                    //Gets triggered when we submit the image.
+                    this.on('sending', function(file, xhr, formData){
+                        //fetch the user id from hidden input field and send that packageid with our image
+                        let packageid = document.getElementById('packageid').value;
+                        formData.append('packageid', packageid);
+                    });
+                    
+                    this.on("success", function (file, response) {
+                        location.href = "{{ route('stable.package.index') }}";
+                    });
+                }
+            });
+</script>
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\PackageStore') !!}
 @endpush
