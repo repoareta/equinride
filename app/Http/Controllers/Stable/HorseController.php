@@ -29,7 +29,7 @@ class HorseController extends Controller
     {
         if(request()->ajax()){
 
-            $query = Horse::where('user_id', Auth::user()->id)->get();
+            $query = Horse::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
                 ->addColumn('age', function($item){
@@ -119,19 +119,14 @@ class HorseController extends Controller
             $horse->pedigree_female = $request->pedigree_female;
             $horse->stable_id       = $stable->id;
             $horse->user_id         = Auth::user()->id;
-            if($request->hasFile('photo')){
-                File::delete(public_path('/storage/horse/photo/'.$request->photo));
-                $horse->photo = $request->file('photo')->getClientOriginalName();
-                $dir = $request->file('photo')->storeAs('horse/photo', $horse->photo, 'public');
-                $horse->photo = 'storage/'.$dir;
-            }
+
             $horse->save();
 
             return response()->json(['status'=>"success", 'horseid'=>$horse->id]);
         } catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
         }        
-    }    
+    }
 
     /**
      * Display the specified resource.
@@ -171,7 +166,7 @@ class HorseController extends Controller
         try {
             // Check Stable
             $stable = Stable::where('user_id', Auth::user()->id)->first();
-
+            
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
             $horse->birth_date      = $request->birth_date;

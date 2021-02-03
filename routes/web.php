@@ -131,8 +131,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [PackageController::class, 'index'])->name('index');
                 Route::get('/create', [PackageController::class, 'create'])->name('create');
                 Route::post('/create', [PackageController::class, 'store'])->name('store');
+                Route::post('/create/image', [PackageController::class, 'storeImage'])->name('store_img');
                 Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
+                Route::put('/{package}/edit', [PackageController::class, 'update'])->name('update');
                 Route::delete('/destroy', [PackageController::class, 'destroy'])->name('destroy');
             });
     
