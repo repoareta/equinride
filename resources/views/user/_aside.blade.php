@@ -6,10 +6,10 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    @if( !Auth::user()->photo )
-                        <div class="symbol-label" style="background-image:url('{{ asset('assets/media/branchsto/profile.png') }}')"></div>
-                    @else
+                    @if(Auth::user()->photo)
                         <div class="symbol-label" style="background-image:url('{{ asset(Auth::user()->photo) }}')"></div>
+                    @else
+                        <div class="symbol-label" style="background-image:url('{{ asset('assets/media/branchsto/profile.png') }}')"></div>
                     @endif
                     <i class="symbol-badge bg-success"></i>
                 </div>

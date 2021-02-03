@@ -14,7 +14,6 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <!--begin::Form-->
             <div class="card-header d-flex justify-content-between py-3">
                 <div class="card-title align-items-start flex-column mb-0">
                     <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
@@ -22,10 +21,12 @@
                 </div>
             </div>
             <!--end::Header-->
+            <!--begin::Form-->
+            <form class="form" id="user-form" action="{{ route('user.personal_information.update') }}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            
                 <!--begin::Body-->
-                <form class="form" action="{{ route('user.personal_information.update') }}" method="post" enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
                 <div class="card-body">
                     @if ($message = Session::get('warning'))
                     <div class="alert alert-custom alert-light-warning fade show mb-10" role="alert">
@@ -57,28 +58,11 @@
                     @endif
                     
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Photo</label>
                         <div class="col-lg-9 col-xl-6">
-                            @if ( !Auth::user()->photo )
-                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url('{{ asset('assets/media/users/blank.png') }}')">
-                                <div class="image-input-wrapper" style="background-image: none;"></div>                                
-                            @else
-                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url('{{ asset('assets/media/users/blank.png') }}')">
-                                <div class="image-input-wrapper" style="background-image: url('{{ asset(Auth::user()->photo) }}')"></div>
-                            @endif
-                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                    <input type="file" name="photo" accept=".png, .jpg, .jpeg">
-                                    <input type="hidden" name="profile_avatar_remove">
-                                </label>
-                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                </span>
-                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                </span>
+                            <div class="form-group">
+                                <div class="dropzone dropzone-default dropzone-primary dz-clickable" id="dropzoneDragArea"></div>
                             </div>
-                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -183,6 +167,7 @@
                     </div>
                 </div>
                 <!--end::Body-->
+
             </form>
             <!--end::Form-->
         </div>
@@ -193,7 +178,7 @@
 
 @push('page-scripts')
 <script>
-    $(function() {
+$(function() {
 
     $('#birth_date').datetimepicker({
         format: 'ddd, DD MMM YYYY',
@@ -206,6 +191,77 @@
     });
 
     $('#birth_date').val("{{ date('D, d M Y', strtotime(Auth::user()->birth_date)) }}");
+});
+
+Dropzone.autoDiscover = false;
+
+let token = $('meta[name="csrf-token"]').attr('content');
+const userForm = $('form#user-form');
+const url = "{{ route('user.personal_information.media') }}";
+
+var dz = $("#dropzoneDragArea").dropzone({
+    // The configuration we've talked about above
+    maxFiles: 1,
+    maxFilesize: 2, // MB
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true,
+    url: url,
+    headers: {
+        'X-CSRF-TOKEN': token
+    },
+    params: {
+        size: 2, // for server validator
+        path: 'user/photo'
+    },
+    success: function (file, response) {
+        userForm.find('input[name="photo"]').remove();
+        userForm.append('<input type="hidden" name="photo" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+        var name = file.name; 
+
+        var json = JSON.parse(file.xhr.responseText);
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                name  : json.name,
+                action: 'delete',
+                _token: token
+            },
+            success: function(response){
+                console.log('success delete ' + response.name);
+            }
+        });
+
+        file.previewElement.remove();
+
+        if (file.status !== 'error') {
+            userForm.find('input[name="photo"]').remove();
+            this.options.maxFiles = this.options.maxFiles
+        }
+    },
+    init: function () {},
+    error: function (file, response) {
+        let message;
+
+        if ($.type(response) === 'string') {
+            message = response //dropzone sends it's own error messages in string
+        } else {
+            message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error');
+        let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+        let _results = [];
+        for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+            let node = _ref[_i];
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+
 });
 </script>
 @endpush

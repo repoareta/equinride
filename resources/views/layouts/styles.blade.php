@@ -79,4 +79,12 @@
     .help-block.error-help-block{
         color: red;
     }
+
+    .dropzone .dz-preview .dz-error-message {
+        top: 150px!important;
+    }
+
+    .dropzone.dropzone-default .dz-remove {
+        font-size: 10px;
+    }
 </style>

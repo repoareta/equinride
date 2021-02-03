@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\MediaUploadingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -17,90 +18,16 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    use MediaUploadingTrait;
 
     // Personal Information page index
-    public function personalInformation()
+    public function index()
     {
         return view('user.personal-information');
     }
 
     // Personal Information update data
-    public function personalInformationUpdate(Request $request)
+    public function update(Request $request)
     {
         $user = User::find(Auth::user()->id);
 
@@ -112,17 +39,15 @@ class UserController extends Controller
         $user->birth_date = $request->birth_date;
         $user->address    = $request->address;
 
-        if ($request->hasFile('photo')) {
+        if ($request->photo) {
             // delete old photo
-            File::delete(public_path('/storage/user/photo/'.$request->photo));
-            $user->photo = $request->file('photo')->getClientOriginalName();
-            $dir = $request->file('photo')->storeAs('user/photo', $user->photo, 'public');
-            $user->photo = 'storage/'.$dir;
+            File::delete($user->photo);
+            $user->photo = $request->photo;
         }
         
         $user->save();
 
-        Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
+        Alert::success('Update Profile Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
