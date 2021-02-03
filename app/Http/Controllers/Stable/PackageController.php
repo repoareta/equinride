@@ -28,13 +28,9 @@ class PackageController extends Controller
     {
         if(request()->ajax()){
 
-            $query = Package::where('user_id', Auth::user()->id)->get();
+            $query = Package::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
-                ->addColumn('price', function($item){
-                    $price = number_format(($item->price/100), 2);
-                    return 'RP. '.$price;
-                })  
                 ->addColumn('price', function($item){
                     $price = number_format(($item->price/100), 2);
                     return 'RP. '.$price;
@@ -52,14 +48,14 @@ class PackageController extends Controller
                 ->addColumn('approval_status', function($item){
                     if($item->approval_status == null)
                     {
-                        "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
+                        return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
                     }
                     elseif($item->approval_status == 'Accepted')
                     {
-                        "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
+                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
                     }else
                     {
-                        "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
                     }
                 })
                 ->addColumn('action', function($item){
@@ -96,9 +92,28 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request, Package $package)
+    {    
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
+
+            $package->name            = $request->name;
+            $package->package_number  = $request->package_number;
+            $package->attendance      = 1;
+            $package->description     = $request->description;
+            $package->price           = $request->price;
+            $package->stable_id       = $stable->id;
+            $package->session_usage   = $request->session_usage;      
+            $package->package_status  = $request->status;
+            $package->user_id         = Auth::user()->id;
+
+            $package->save();
+
+            return response()->json(['status'=>"success", 'packageid'=>$package->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }        
     }
 
     /**
@@ -120,7 +135,9 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
-        return view('stable.package.edit');
+        $item = Package::find($id);
+
+        return view('stable.package.edit', compact('item'));
     }
 
     /**
@@ -130,9 +147,27 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Package $package)
     {
-        //
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            
+            $package->name            = $request->name;
+            $package->package_number  = $request->package_number;
+            $package->attendance      = 1;
+            $package->description     = $request->description;
+            $package->price           = $request->price;
+            $package->stable_id       = $stable->id;
+            $package->session_usage   = $request->session_usage;      
+            $package->package_status  = $request->status;
+            $package->user_id         = Auth::user()->id;
+            
+            $package->save();
+            return response()->json(['status'=>"success", 'packageid'=>$package->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }
     }
 
     /**
@@ -141,8 +176,29 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $data = Package::find($request->id);
+        File::delete(public_path($data->photo));
+        $data->delete();
+        return response()->json();
+    }
+
+    // Store image to database and directory from dropZone
+    public function storeImage(Request $request)
+    {
+        if($request->file('photo')){
+            
+            //here we are geeting packageid align with an image
+            $package = Package::find($request->packageid);
+            File::delete(public_path('/storage/package/photo/'.$request->photo));
+            $name = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('package/photo', $name, 'public');
+            $nameDir = 'storage/'.$dir;
+            $package->photo = $nameDir;
+            $package->update();
+
+            return response()->json(['status'=>"success",'imgdata'=>$nameDir,'packageid'=>$package->id]);
+        }
     }
 }
