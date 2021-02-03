@@ -94,10 +94,13 @@ class PackageController extends Controller
         $booking_detail->package_id = $package->id;
         $booking_detail->price_subtotal = $package->price;
 
-        $booking->booking_detail()->save($booking_detail);
+        $booking_detail = $booking->booking_detail()->save($booking_detail);
 
         // CREATE SLOT USER
-        // Auth::user()->slot()
+        Auth::user()->slots->attach(Auth::user()->id, [
+            'booking_detail_id' => $booking_detail->id,
+            'slot_id'           => $package->stable->slot->first()->id
+        ]);
 
         return view('payment.payment-confirmation', compact(
             'package',
@@ -121,9 +124,7 @@ class PackageController extends Controller
         }])
         ->firstOrFail();
 
-        // return view('payment.payment-confirmation-submit', compact(
-        //     'package'
-        // ));
+        $booking = Booking::find($request->booking_id);
 
         return redirect()->route('user.order_history');
     }

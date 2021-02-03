@@ -66,7 +66,7 @@
                             Transfer Amount :
                         </div>
                         <div class="font-size-h6 font-weight-normal col-md-9">
-                            Rp. 800.000
+                            Rp. {{ number_format($booking->price_total, 0, ",", ".") }}
                         </div>
                     </div>
                 </div>
@@ -83,9 +83,12 @@
                 <div class="card-body p-0">
                     <form action="{{ route('package.payment_confirmation_submit', ['package' => $package->id]) }}" method="POST" id="payment-confirmation-form" class="dropzone dropzone-default dropzone-primary dz-clickable" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="fallback">
                             <input name="file" type="file" />
                         </div>
+
+                        <input type="hidden" value="{{ $booking->id }}" name="booking_id">
                     </form>
                 </div>
             </div>                    
