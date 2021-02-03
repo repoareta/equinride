@@ -28,11 +28,21 @@ class ScheduleController extends Controller
         if($request->ajax()){
             if(!empty($request->input('from_date')))
             {
-                return response()->json($request->input('from_date'));die;
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
                 if($request->input('from_date') === $request->input('end_date')){
                     //kita filter tanggalnya sesuai dengan request input('from_date')
-                    $query = Slot::where('user_id',Auth::user()->id)->whereDate('date','=', $request->input('from_date'))->orderBy('date', 'asc')->get();
+                    $from = date('Y-m-d', strtotime($request->input('from_date')));
+                    $query = Slot::where('user_id',Auth::user()->id)
+                            ->whereDate('date','=', $from)
+                            ->get();
+                }
+                else{
+                    //kita filter dari tanggal awal ke akhir
+                    $from = date('Y-m-d', strtotime($request->input('from_date')));
+                    $end = date('Y-m-d', strtotime($request->input('end_date')));
+                    $query = Slot::where('user_id',Auth::user()->id)
+                    ->whereBetween('date', array($from, $end))
+                    ->get();
                 }
                 
             }else{

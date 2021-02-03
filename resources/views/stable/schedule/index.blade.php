@@ -33,7 +33,7 @@
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
                 </div>
                 <div>
-                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary'>Add New +</a>
+                    <a href='javascript:;' data-toggle='modal' data-target='#modalGenerateSchedule' class='btn btn-primary'>Generate Schedule +</a>
                     <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 <div class="col-11">
                                     <label>Date</label>
-                                    <div class="input-daterange input-group date_range">
+                                    <div class="input-daterange input-group date_range" id="date_range">
                                         <input type="text" class="form-control" name="start" autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
