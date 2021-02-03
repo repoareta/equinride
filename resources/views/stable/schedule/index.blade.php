@@ -293,16 +293,59 @@
             todayHighlight: true,
             orientation: "bottom left",
             autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd'
+            format: {
+                /*
+                * Say our UI should display a week ahead,
+                * but textbox should store the actual date.
+                * This is useful if we need UI to select local dates,
+                * but store in UTC
+                */
+                toDisplay: function (date, format, language) {
+                    var d = new Date(date);
+                    d.setDate(d.getDate());
+
+                    return d.toLocaleDateString('default', { 
+                        weekday: 'short', 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: '2-digit' 
+                    });
+                },
+                toValue: function (date, format, language) {
+                    var d = new Date(date);
+                    d.setDate(d.getDate());
+                    return new Date(d);
+                }
+            }
         });
         $('#date_range').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
             autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd',
-            startDate: new Date(),
+            format: {
+                /*
+                * Say our UI should display a week ahead,
+                * but textbox should store the actual date.
+                * This is useful if we need UI to select local dates,
+                * but store in UTC
+                */
+                toDisplay: function (date, format, language) {
+                    var d = new Date(date);
+                    d.setDate(d.getDate());
+
+                    return d.toLocaleDateString('default', { 
+                        weekday: 'short', 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: '2-digit' 
+                    });
+                },
+                toValue: function (date, format, language) {
+                    var d = new Date(date);
+                    d.setDate(d.getDate());
+                    return new Date(d);
+                }
+            }
         });
         $('#filter').click(function () {
             var from_date = $('#from_date').val(); 

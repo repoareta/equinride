@@ -10,7 +10,9 @@
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
-                    <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+                    <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                        {{ \App\Models\User::find(Auth::id())->stable->name }}
+                    </a>
                     <div class="mt-2">
                         <span class="label label-inline label-danger font-weight-bold">Pending</span>
                     </div>
