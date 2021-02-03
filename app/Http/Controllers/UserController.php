@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 // Load models
 use App\Models\User;
+use App\Models\Booking;
 
 class UserController extends Controller
 {
@@ -103,8 +106,8 @@ class UserController extends Controller
         $user->name       = $request->name;
         $user->sex        = $request->sex;
         $user->phone      = $request->phone;
-        $user->height     = $request->height;
-        $user->weight     = $request->weight;
+        // $user->height     = $request->height;
+        // $user->weight     = $request->weight;
         $user->birth_date = $request->birth_date;
         $user->address    = $request->address;
 
@@ -156,6 +159,57 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
+        $query = Booking::where('user_id', Auth::user()->id)->get();        
+        if(request()->ajax()){
+            return Datatables::of($query)
+                ->addIndexColumn()
+                ->addColumn('package', function($item){
+                    return 
+                    '
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                            <div class="symbol-label">
+                                <img class="h-75 align-self-end" src="'. asset('assets/media/products/6.png') .'" alt="photo">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column ml-3">
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->booking_detail->package_name.'</div>
+                            <span class="text-muted font-weight-bold font-size-sm">'.$item->booking_detail->stable_name.'</span>
+                        </div>
+                    </div>                    
+                    ';
+                })
+                ->addColumn('created_at', function($item){
+                    return date('D, M d, Y', strtotime($item->created_at));
+                })
+                ->addColumn('approval_status', function($item){
+                    if($item->approval_status == null)
+                    {
+                        return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
+                    }
+                    elseif($item->approval_status == 'Accepted')
+                    {
+                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
+                    }else
+                    {
+                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                    }
+                })
+                ->addColumn('order_location', function($item){
+                    return $item->booking_detail->stable_location;
+                })
+                ->addColumn('action', function(){
+                    return '
+                    <td nowrap="nowrap">
+                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                            <i class="la la-eye icon-xl"></i>
+                        </a>
+                    </td>
+                    ';
+                })
+                ->rawColumns(['action', 'approval_status', 'package'])
+                ->make();
+        }
         return view('booking.booking-history');
     }
 }

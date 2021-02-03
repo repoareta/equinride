@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
         Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete');
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
-        
+                
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner']], function () {
             // STABLE EDIT
@@ -138,6 +138,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
+                Route::post('/create', [PackageController::class, 'store'])->name('store');
+                Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
+                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
         });

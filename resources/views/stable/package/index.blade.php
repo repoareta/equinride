@@ -18,11 +18,12 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Package Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your package</span>
                 </div>
+                <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-5'>Add New +</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -43,27 +44,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 1; $i < 20; $i++)
-                            <tr>
-                                <td>{{ $i }}</td>
-                                <td>Steven</td>
-                                <td>2190311</td>
-                                <td>This is the best package</td>
-                                <td>100,000</td>
-                                <td>1</td>
-                                <td>Publish</td>
-                                <td>Accepted</td>
-                                <td nowrap="nowrap">
-                                    <a href="{{ route('stable.package.edit', $i) }}" class="btn btn-clean btn-icon mr-2" title="Edit details">
-                                        <i class="la la-edit icon-xl"></i>
-                                    </a>
-
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deletePackage" data-id="{{ $i }}">
-                                        <i class="la la-trash icon-lg"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endfor
                         </tbody>
                     </table>
                 </div>
@@ -84,9 +64,36 @@
     $(document).ready( function () {
         var t = $('#dataTable').DataTable({
 			scrollX   : true,
-			processing: true
+            processing: true,
+            ordering: true,
+            serverSide: true,
+            ajax: {
+                url : '{!! url()->current() !!}'
+            },
+            language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'package_number', name: 'package_number'},
+                {data: 'description', name: 'description'},
+                {data: 'price', name: 'price'},
+                {data: 'attendance', name: 'attendance'},
+                {data: 'package_status', name: 'package_status'},
+                {data: 'approval_status', name: 'approval_status'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: 'false',
+                    searchable: 'false',
+                },
+            ]
 		});
-        $("#dataTable_filter").append("<a href='{{ route('stable.package.create') }}' class='btn btn-primary ml-5'>Add New +</a>");
 
         $('#dataTable tbody').on( 'click', '#deletePackage', function (e) {
 			e.preventDefault();

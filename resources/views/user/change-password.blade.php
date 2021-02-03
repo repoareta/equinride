@@ -11,20 +11,12 @@
     <!--begin::Content-->
     <div class="flex-row-fluid ml-lg-8">
         <!--begin::Card-->
-        <div class="card card-custom">
-            <!--begin::Form-->
-            <form class="form" action="{{ route('user.change_password.update') }}" method="post">
-            @method('PUT')
-            @csrf
+        <div class="card card-custom">            
             <!--begin::Header-->
             <div class="card-header py-3 d-flex justify-content-between">
                 <div class="card-title align-items-start flex-column mb-0">
                     <h3 class="card-label font-weight-bolder text-dark">Change Password</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Change your account password</span>
-                </div>
-                <div class="card-toolbar">
-                    <button type="submit" class="btn btn-success mr-2">Save Changes</button>
-                    <button type="reset" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
             <!--end::Header-->
@@ -55,26 +47,36 @@
                         </div>
                     </div>
                     <!--end::Alert-->
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" value="" placeholder="Current password">                            
+                    <form class="form" action="{{ route('user.change_password.update') }}" method="post">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
+                            <div class="col-lg-9 col-xl-6">
+                                <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" value="" placeholder="Current password">                            
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <input type="password" class="form-control form-control-lg form-control-solid" name="password" value="" placeholder="New password">
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
+                            <div class="col-lg-9 col-xl-6">
+                                <input type="password" class="form-control form-control-lg form-control-solid" name="password" value="" placeholder="New password">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Confirm new password">
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
+                            <div class="col-lg-9 col-xl-6">
+                                <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Confirm new password">
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <label class="col-xl-3"></label>
+                            <div class="col-lg-9 col-xl-6">
+                                <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
+                                <button type="reset" class="btn btn-secondary"><i class="fas fa-times"></i> Reset</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
             <!--end::Form-->
         </div>
     </div>

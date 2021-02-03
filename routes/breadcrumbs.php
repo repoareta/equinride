@@ -44,6 +44,11 @@ Breadcrumbs::for('profile-password', function ($trail) {
     $trail->push('Change Password', route('user.change_password'));
 });
 
+Breadcrumbs::for('order-history', function ($trail) {
+    $trail->parent('profile');
+    $trail->push('Order History', route('user.order_history'));
+});
+
 // Stable
 Breadcrumbs::for('stable-dashboard', function ($trail) {
     $trail->parent('home');

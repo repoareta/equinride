@@ -178,7 +178,7 @@
                         <label class="col-xl-3"></label>
                         <div class="col-lg-9 col-xl-6">
                             <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
-                            <button type="reset" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</button>
+                            <button type="reset" class="btn btn-secondary"><i class="fas fa-times"></i> Reset</button>
                         </div>
                     </div>
                 </div>

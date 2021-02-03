@@ -27,10 +27,14 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Schedule Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
+                </div>
+                <div>
+                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary'>Add New +</a>
+                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
             <!--end::Header-->
@@ -64,7 +68,6 @@
                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable" style="width:100%">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Time Start</th>
                                 <th scope="col">Time End</th>
@@ -73,27 +76,6 @@
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @for ($i = 1; $i < 20; $i++)
-                            <tr>
-                                <td>{{ $i }}</td>
-                                <td>2021-01-22</td>
-                                <td>08:00</td>
-                                <td>09:00</td>
-                                <td>5</td>
-                                <td>1</td>
-                                <td nowrap="nowrap">
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" id="editSchedule" title="Edit details">
-                                        <i class="la la-edit icon-xl"></i>
-                                    </a>
-
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteSchedule" data-id="{{ $i }}">
-                                        <i class="la la-trash icon-lg"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endfor
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -165,8 +147,8 @@
                             </button>
                         </div>
                         <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold">SAVE</button>
+                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
                         </form>
                     </div>
                 </div>
@@ -222,9 +204,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold">SAVE</button>
+                        <div class="modal-footer">											                            
+                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
                         </form>
                     </div>
                 </div>
@@ -235,94 +217,12 @@
 </div>
 @endsection
 
-@push('page-scripts')
-<script type="text/javascript">
-    $(document).ready( function () {
-        var t = $('#dataTable').DataTable({
-			scrollX   : true,
-            processing: true
-        });
-        
-        // Filter Date
-        $('#date_range_filter').datepicker({
-            todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd'
-        });
-
-        
-        // Button Generate Schedule
-        $("#dataTable_filter").append("<button class='btn btn-primary ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
-
-        // Generate Date
-        $('.date_range').datepicker({
-            todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd',
-            startDate: new Date(),
-        });
-    
-        // Edit Schedule
-        $('#dataTable tbody').on( 'click', '#editSchedule', function (e) {
-            e.preventDefault();
-            var id = $(this).attr('data-id');
-            $('#modalPackageEdit').modal('show');
-        });
-
-        // Delete Schedule
-        $('#dataTable tbody').on( 'click', '#deleteSchedule', function (e) {
-			e.preventDefault();
-			var id = $(this).attr('data-id');
-			Swal.fire({
-				title: "Are you sure?",
-				text: "You won't be able to revert this!" ,
-				icon: "warning",
-				confirmButtonText: "Delete",
-				confirmButtonColor: '#141D31',
-				showCancelButton: true,
-				reverseButtons: true
-			}).then(function(result) {
-				if (result.value) {
-					$.ajax({
-						url: "{{ route('stable.schedule.destroy') }}",
-						type: 'DELETE',
-						dataType: 'json',
-						data: {
-							"id": id,
-							"_token": "{{ csrf_token() }}",
-						},
-						success: function () {
-							Swal.fire({
-								title: "Delete Data Schedule",
-								text: "success",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok",
-								customClass: {
-									confirmButton: "btn btn-dark"
-								}
-							}).then(function() {
-								location.reload();
-							});
-						},
-						error: function () {
-							alert("An error occurred, please try again later.");
-						}
-					});
-				}
-			});
-        });
-        
-    } );
+@push('page-scripts')   
+<script>
     // Create form repeater to generate a lot of schedule
     $('.repeater').repeater();
-
-    // For time in generate schedule
-    $.noConflict();
+     // For time in generate schedule
+     $.noConflict();
     jQuery(function($) {
         $("input[id=timePickerGen1]").each(function () {
             $(this).timepicker(
@@ -368,6 +268,202 @@
     
         })
     });
+</script>
+<!--Start::dataTable-->
+<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/pages/crud/datatables/advanced/row-grouping.js') }}"></script>
+<!--End::dataTable-->
+<script type="text/javascript">
+    $(document).ready( function () {
+        var collapsedGroups = {};
+
+        $("#sess1").attr('disabled', true);
+        $("#sess2").attr('disabled', true);
+
+        //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //jalankan function load_data diawal agar data ter-load
+        load_data();
+        $('#date_range_filter').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
+        $('#date_range').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd',
+            startDate: new Date(),
+        });
+        $('#filter').click(function () {
+            var from_date = $('#from_date').val(); 
+            var end_date = $('#end_date').val(); 
+            console.log(from_date + end_date);
+            if (from_date != '' && end_date != '') {
+                $('#dataTable').DataTable().destroy();
+                load_data(from_date, end_date);
+            } else {
+                alert('Both Date is required');
+            }
+        });
+
+        $('#refresh').click(function () {
+            $('#from_date').val('');
+            $('#end_date').val('');
+            $('#dataTable').DataTable().destroy();
+            $('#date_range_filter').datepicker('remove');
+            $('#date_range_filter').datepicker({
+                todayHighlight: true,
+                orientation: "bottom left",
+                autoclose: true,
+                // language : 'id',
+                format   : 'yyyy-mm-dd'
+            });
+            load_data();
+        });
+
+        function load_data(from_date = '', end_date = '')
+        {
+            var t = $('#dataTable').DataTable({
+                scrollX   : true,
+                processing: true,
+                ordering: true,
+                serverSide: true,
+                language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+                },
+                ajax: {
+                    url : '{!! url()->current() !!}'
+                },          
+                columns: [
+                        {data: 'date', name: 'date', orderable: false, searchable: false},
+                        {data: 'time_start', name: 'time_start'},
+                        {data: 'time_end', name: 'time_end'},
+                        {data: 'capacity', name: 'capacity'},
+                        {data: 'capacity_booked', name: 'capacity_booked'},
+                        {data: 'action', name: 'action'},
+                ],
+                columnDefs:[
+                    {
+                        // hide columns by index number
+                        targets: [0],
+                        visible: false,
+                    },
+                ],
+                order: [[0, 'asc']],
+                rowGroup: {
+                    // Uses the 'row group' plugin
+                    dataSrc: "date",
+                    startRender: function (rows, group) {
+                        var collapsed = !!collapsedGroups[group];
+        
+                        rows.nodes().each(function (r) {
+                            r.style.display = collapsed ? 'none' : '';
+                        });    
+        
+                        // Add category name to the <tr>. NOTE: Hardcoded colspan
+                        return $('<tr/>')
+                            .append('<td colspan="6">' + group + ' (' + rows.count() + ')</td>')
+                            .attr('data-name', group)
+                            .toggleClass('collapsed', collapsed);
+                    }
+                }
+            });
+            $('#dataTable tbody').on('click', 'tr.dtrg-start', function () {
+                var name = $(this).data('name');
+                collapsedGroups[name] = !collapsedGroups[name];
+                t.draw(false);
+            });  
+        
+            $('#openDetail').click(function(e) {
+                e.preventDefault();
+                $('#modalAddPackage').modal('show');
+                $('#title_modal').data('state', 'add');
+                $(this).find('form').trigger('reset');
+            });        
+        
+            $("body").on("click","#add-more",function(){ 
+                $("#sess1").attr('disabled', false);
+                $("#sess2").attr('disabled', false);
+                var html = $("#copy").html();
+                $("#after-add-more").after(html);
+            });
+        
+            // saat tombol remove dklik control group akan dihapus 
+            $("body").on("click","#remove",function(){ 
+                $(this).parents(".form-group").remove();
+                // $("#sess1").attr('disabled', true);
+                // $("#sess2").attr('disabled', true);
+            });+        
+        
+            $('#dataTable tbody').on( 'click', '.delete-slot', function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!" ,
+                    icon: "warning",
+                    confirmButtonText: "Delete",
+                    confirmButtonColor: '#141D31',
+                    showCancelButton: true,
+                    reverseButtons: true
+                }).then(function(result) {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ route('stable.schedule.destroy') }}",
+                            type: 'DELETE',
+                            dataType: 'json',
+                            data: {
+                                "id": id,
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title: "Delete Data package",
+                                    text: "success",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok",
+                                    customClass: {
+                                        confirmButton: "btn btn-dark"
+                                    }
+                                }).then(function() {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                alert("An error occurred, please try again later.");
+                            }
+                        });
+                    }
+                });
+            });
+        
+            $('#dataTable tbody').on( 'click', '.edit-package', function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                location.replace("{{url('package/edit')}}"+ '/' +id);
+            });
+
+            $('#date').datepicker({
+                todayHighlight: true,
+                orientation: "bottom left",
+                autoclose: true,
+                // language : 'id',
+                format   : 'yyyy-mm-dd'
+            });
+        }    
+        
+    } );   
 </script>
 <!--Start::dataTable-->
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
