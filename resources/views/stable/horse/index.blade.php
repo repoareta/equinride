@@ -18,11 +18,12 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Horse Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your horse</span>
                 </div>
+                <a href='{{ route('stable.horse.create') }}' class='btn btn-primary ml-5'>Add New +</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -97,7 +98,6 @@
                 },
             ]
 		});
-        $("#dataTable_filter").append("<a href='{{ route('stable.horse.create') }}' class='btn btn-primary ml-5'>Add New +</a>");
 
         $('#dataTable tbody').on( 'click', '#deleteHorse', function (e) {
 			e.preventDefault();

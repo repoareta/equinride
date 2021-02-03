@@ -27,10 +27,14 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Schedule Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
+                </div>
+                <div>
+                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary'>Add New +</a>
+                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
             <!--end::Header-->
@@ -143,8 +147,8 @@
                             </button>
                         </div>
                         <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold">SAVE</button>
+                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
                         </form>
                     </div>
                 </div>
@@ -200,9 +204,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold">SAVE</button>
+                        <div class="modal-footer">											                            
+                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
                         </form>
                     </div>
                 </div>
@@ -379,8 +383,6 @@
                 collapsedGroups[name] = !collapsedGroups[name];
                 t.draw(false);
             });  
-        
-            $("#dataTable_filter").append("<button class='btn btn-primary ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
         
             $('#openDetail').click(function(e) {
                 e.preventDefault();
