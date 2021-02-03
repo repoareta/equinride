@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [HorseController::class, 'index'])->name('index');
                 Route::get('/create', [HorseController::class, 'create'])->name('create');
                 Route::post('/create', [HorseController::class, 'store'])->name('store');
+                Route::post('/create/image', [HorseController::class, 'storeImage'])->name('store_img');
                 Route::get('/{horse}/edit', [HorseController::class, 'edit'])->name('edit');
                 Route::put('/{horse}/edit', [HorseController::class, 'update'])->name('update');
                 Route::delete('/destroy', [HorseController::class, 'destroy'])->name('destroy');

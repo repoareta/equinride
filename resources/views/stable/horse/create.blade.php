@@ -22,28 +22,18 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" method="post" action="{{ route('stable.horse.store') }}" enctype="multipart/form-data">
+            <form class="form" method="post" name="createform" id="createform" action="{{ route('stable.horse.store') }}" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Body-->
+                <input type="hidden" class="horseid" name="horseid" id="horseid" value="">
                 <div class="card-body">
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Photo</label>
                         <div class="col-lg-9 col-xl-6">
-                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url({{ asset('assets/media/users/blank.png') }})">
-                                <div class="image-input-wrapper" style="background-image: none;"></div>
-                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                    <input type="file" name="photo" accept=".png, .jpg, .jpeg">
-                                    <input type="hidden" name="profile_avatar_remove">
-                                </label>
-                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                </span>
-                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                </span>
+                            <div class="form-group">
+                                <div id="dropzoneDragArea" class="dropzone dropzone-default dropzone-primary dz-clickable">                                    
+                                </div>
                             </div>
-                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -127,11 +117,6 @@
 @endsection
 
 @push('page-scripts')
-<!-- Laravel Javascript Validation -->
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-{!! JsValidator::formRequest('App\Http\Requests\HorseStore') !!}
-
-<script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
 <script>
     $('#datePicker').datepicker({
         todayHighlight: true,
@@ -162,5 +147,62 @@
             }
         }
     });
+    Dropzone.autoDiscover = false;
+    // Dropzone.options.createform = false;	
+    let token = $('meta[name="csrf-token"]').attr('content');
+    var dz = $("div#dropzoneDragArea").dropzone({
+                paramName: "photo",
+                url: "{{ route('stable.horse.store_img') }}",                
+                addRemoveLinks: true,
+                autoProcessQueue: false,
+                uploadMultiple: false,
+                parallelUploads: 1,
+                maxFiles: 1,
+                params: {
+                    _token: token
+                },
+                // The setting up of the dropzone
+                init: function() {
+                    var myDropzone = this;
+                    //form submission code goes here
+                    $("form[name='createform']").submit(function(event) {
+                        //Make sure that the form isn't actully being sent.
+                        event.preventDefault();
+
+                        URL = $("#createform").attr('action');
+                        formData = $('#createform').serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: URL,
+                            data: formData,
+                            success: function(result){
+                                if(result.status == "success"){
+                                    // fetch the useid 
+                                    var horseid = result.horseid;
+                                    $("#horseid").val(horseid); // inseting horseid into hidden input field
+                                    //process the queue
+                                    myDropzone.processQueue();
+                                }else{
+                                    console.log("error");
+                                }
+                            }
+                        });
+                    });
+
+                    //Gets triggered when we submit the image.
+                    this.on('sending', function(file, xhr, formData){
+                        //fetch the user id from hidden input field and send that horseid with our image
+                        let horseid = document.getElementById('horseid').value;
+                        formData.append('horseid', horseid);
+                    });
+                    
+                    this.on("success", function (file, response) {
+                        location.href = "{{ route('stable.horse.index') }}";
+                    });
+                }
+            });
 </script>
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\HorseStore') !!}
 @endpush
