@@ -172,7 +172,7 @@
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
                         if(myDropzone.files == ''){
-                            location.href = "{{ route('stable.package.index') }}";
+                            location.href = "{{ route('stable.horse.index') }}";
                         }
                         $.ajax({
                             type: 'POST',

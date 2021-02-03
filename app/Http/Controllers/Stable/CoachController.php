@@ -74,9 +74,27 @@ class CoachController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Coach $coach)
     {
-        //
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
+
+            $coach->name            = $request->name;            
+            $coach->birth_date      = $request->birth_date;
+            $coach->sex             = $request->sex;
+            $coach->experience      = $request->experience;
+            $coach->contact_number  = $request->contact_number;
+            $coach->certified       = $request->certified;            
+            $coach->stable_id       = $stable->id;
+            $coach->user_id         = Auth::user()->id;
+
+            $coach->save();
+
+            return response()->json(['status'=>"success", 'coachid'=>$coach->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }
     }
 
     /**
@@ -98,7 +116,8 @@ class CoachController extends Controller
      */
     public function edit($id)
     {
-        return view('stable.coach.edit');
+        $item = Coach::find($id);
+        return view('stable.coach.edit', compact('item'));
     }
 
     /**
@@ -108,9 +127,26 @@ class CoachController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coach $coach)
     {
-        //
+        try {
+            // Check Stable
+            $stable = Stable::where('user_id', Auth::user()->id)->first();
+
+            $coach->name            = $request->name;            
+            $coach->birth_date      = $request->birth_date;
+            $coach->sex             = $request->sex;
+            $coach->experience      = $request->experience;
+            $coach->contact_number  = $request->contact_number;
+            $coach->certified       = $request->certified;            
+            $coach->stable_id       = $stable->id;
+            $coach->user_id         = Auth::user()->id;
+            
+            $coach->save();
+            return response()->json(['status'=>"success", 'coachid'=>$coach->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }    
     }
 
     /**
@@ -119,8 +155,29 @@ class CoachController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $data = Coach::find($request->id);
+        File::delete(public_path($data->photo));
+        $data->delete();
+        return response()->json();
+    }
+
+    // Store image to database and directory from dropZone
+    public function storeImage(Request $request)
+    {
+        if($request->file('photo')){
+            
+            //here we are geeting coachid align with an image
+            $coach = Coach::find($request->coachid);
+            File::delete(public_path('/storage/coach/photo/'.$request->photo));
+            $name = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('coach/photo', $name, 'public');
+            $nameDir = 'storage/'.$dir;
+            $coach->photo = $nameDir;
+            $coach->update();
+
+            return response()->json(['status'=>"success",'imgdata'=>$nameDir,'coachid'=>$coach->id]);
+        }
     }
 }

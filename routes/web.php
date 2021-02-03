@@ -111,7 +111,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'coach', 'as' => 'coach.'], function () {
                 Route::get('/', [CoachController::class, 'index'])->name('index');
                 Route::get('/create', [CoachController::class, 'create'])->name('create');
+                Route::post('/create', [CoachController::class, 'store'])->name('store');
+                Route::post('/create/image', [CoachController::class, 'storeImage'])->name('store_img');
                 Route::get('/{coach}/edit', [CoachController::class, 'edit'])->name('edit');
+                Route::put('/{coach}/edit', [CoachController::class, 'update'])->name('update');
                 Route::delete('/destroy', [CoachController::class, 'destroy'])->name('destroy');
             });
         
