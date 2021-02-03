@@ -159,7 +159,7 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-        $query = Booking::where('user_id', Auth::user()->id)->get();        
+        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)->get();                
         if(request()->ajax()){
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -197,6 +197,10 @@ class UserController extends Controller
                 })
                 ->addColumn('order_location', function($item){
                     return $item->booking_detail->stable_location;
+                })
+                ->addColumn('price_total', function($item){
+                    $price = number_format(($item->price_total/100), 2);
+                    return 'RP. '.$price;
                 })
                 ->addColumn('action', function(){
                     return '
