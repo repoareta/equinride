@@ -173,7 +173,7 @@
                 $(target).prop("disabled", false);
                 //change placeholder text
                 // $(target).select2({placeholder: response.data.length +' results'});
-                $(target).select2({placeholder: 'select ' + slug});
+                $(target).select2({placeholder: 'Select ' + slug});
             });
     }
 </script>
