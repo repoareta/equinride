@@ -62,8 +62,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER || MEMBER START
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
-        Route::get('/personal-information', [UserController::class, 'personalInformation'])->name('personal_information');
-        Route::put('/personal-information', [UserController::class, 'personalInformationUpdate'])->name('personal_information.update');
+        Route::post('/personal-information/media', [UserController::class, 'storeMedia'])->name('personal_information.media');
+        Route::get('/personal-information', [UserController::class, 'index'])->name('personal_information');
+        Route::put('/personal-information', [UserController::class, 'update'])->name('personal_information.update');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
         Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history');

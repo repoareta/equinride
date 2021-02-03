@@ -32,7 +32,7 @@ class PackageController extends Controller
     public function booking(Request $request, Package $package)
     {
         $package = Package::where('id', $package->id)
-        ->with(['stable.slot' => function ($q) use ($request) {
+        ->with(['stable.slots' => function ($q) use ($request) {
             $q->where('date', $request->date_start);
             $q->where('time_start', $request->time_start);
         }])
@@ -52,7 +52,7 @@ class PackageController extends Controller
     public function paymentMethod(Request $request, Package $package)
     {
         $package = Package::where('id', $package->id)
-        ->with(['stable.slot' => function ($q) use ($request) {
+        ->with(['stable.slots' => function ($q) use ($request) {
             $q->where('date', $request->date_start);
             $q->where('time_start', $request->time_start);
         }])
@@ -75,7 +75,7 @@ class PackageController extends Controller
     public function paymentConfirmation(Request $request, Package $package, Booking $booking, BookingDetail $booking_detail)
     {
         $package = Package::where('id', $package->id)
-        ->with(['stable.slot' => function ($q) use ($request) {
+        ->with(['stable.slots' => function ($q) use ($request) {
             $q->where('date', $request->date_start);
             $q->where('time_start', $request->time_start);
         }])
@@ -118,7 +118,7 @@ class PackageController extends Controller
     public function paymentConfirmationSubmit(Request $request, Package $package)
     {
         $package = Package::where('id', $package->id)
-        ->with(['stable.slot' => function ($q) use ($request) {
+        ->with(['stable.slots' => function ($q) use ($request) {
             $q->where('date', $request->date_start);
             $q->where('time_start', $request->time_start);
         }])
