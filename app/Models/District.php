@@ -14,7 +14,7 @@ class District extends Model
      */
     public function villages()
     {
-        return $this->belongsTo(Village::class, 'village_id');
+        return $this->hasMany(Village::class);
     }
 
     /**
@@ -22,6 +22,6 @@ class District extends Model
      */
     public function city()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsTo(City::class);
     }
 }

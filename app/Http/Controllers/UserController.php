@@ -103,8 +103,8 @@ class UserController extends Controller
         $user->name       = $request->name;
         $user->sex        = $request->sex;
         $user->phone      = $request->phone;
-        $user->height     = $request->height;
-        $user->weight     = $request->weight;
+        // $user->height     = $request->height;
+        // $user->weight     = $request->weight;
         $user->birth_date = $request->birth_date;
         $user->address    = $request->address;
 

@@ -19,6 +19,12 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\BookingDetailController;
 use App\Http\Controllers\Api\PaymentController;
 
+// LOCATION
+use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\DistrictController;
+use App\Http\Controllers\Api\VillageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -107,3 +113,8 @@ Route::put('payment/{payment}', [PaymentController::class, 'update']);
 Route::delete('payment/{payment}', [PaymentController::class, 'destroy']);
 Route::get('payment/{payment}', [PaymentController::class, 'show']);
 Route::get('payment/{payment}/approval', [PaymentController::class, 'approval']);
+
+// Location
+Route::post('city/{province}', [CityController::class, 'show']);
+Route::post('district/{city}', [DistrictController::class, 'show']);
+Route::post('village/{district}', [VillageController::class, 'show']);
