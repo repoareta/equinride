@@ -12,15 +12,15 @@ class Stable extends Model
     /**
     * Get the owner of stable
     */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->hasMany(User::class);
     }
 
     /**
     * Get the horses of stable
     */
-    public function horse()
+    public function horses()
     {
         return $this->hasMany(Horse::class);
     }
@@ -28,7 +28,7 @@ class Stable extends Model
     /**
     * Get the coaches of stable
     */
-    public function coach()
+    public function coaches()
     {
         return $this->hasMany(Coach::class);
     }
@@ -36,7 +36,7 @@ class Stable extends Model
     /**
     * Get the package of stable
     */
-    public function package()
+    public function packages()
     {
         return $this->hasMany(Package::class);
     }
@@ -44,7 +44,7 @@ class Stable extends Model
     /**
     * Get the slot of stable
     */
-    public function slot()
+    public function slots()
     {
         return $this->hasMany(Slot::class);
     }
@@ -74,6 +74,6 @@ class Stable extends Model
 
     public function approvalby_stable()
     {
-        return $this->belongsTo(User::class, 'approval_by', 'id');
+        return $this->belongsTo(User::class, 'approval_by');
     }
 }
