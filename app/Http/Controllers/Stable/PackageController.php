@@ -50,9 +50,17 @@ class PackageController extends Controller
                     "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Unpublish</span>";
                 })
                 ->addColumn('approval_status', function($item){
-                    return $item->approval_status == 'Accepted' ? 
-                    "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>" : 
-                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                    if($item->approval_status == null)
+                    {
+                        "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
+                    }
+                    elseif($item->approval_status == 'Accepted')
+                    {
+                        "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
+                    }else
+                    {
+                        "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                    }
                 })
                 ->addColumn('action', function($item){
                     return '
