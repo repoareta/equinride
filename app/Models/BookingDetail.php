@@ -25,4 +25,31 @@ class BookingDetail extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    protected $appends = [
+        'package_name',
+        'stable_name',
+        'stable_location'
+    ];
+
+    public function getPackageNameAttribute()
+    {
+        return $this->package()->first()->name;
+    }
+
+    public function getStableNameAttribute()
+    {
+        $package = Package::find($this->package_id);
+        $stable = Stable::find($package->stable_id);
+
+        return $stable->name;
+    }
+
+    public function getStableLocationAttribute()
+    {
+        $package = Package::find($this->package_id);
+        $stable = Stable::find($package->stable_id);
+
+        return $stable->city->name;
+    }
 }

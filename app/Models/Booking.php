@@ -14,7 +14,7 @@ class Booking extends Model
     */
     public function booking_detail()
     {
-        return $this->hasMany(BookingDetail::class);
+        return $this->hasMany(BookingDetail::class, 'booking_id');
     }
     public function bank()
     {
@@ -27,5 +27,14 @@ class Booking extends Model
     public function approvalby_booking()
     {
         return $this->belongsTo(User::class, 'approval_by', 'id');
+    }
+
+    protected $appends = [
+        'booking_detail'
+    ];
+
+    public function getBookingDetailAttribute()
+    {
+        return $this->booking_detail()->first();
     }
 }
