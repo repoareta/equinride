@@ -42,7 +42,7 @@ class HorseBreedController extends Controller
 
     public function create()
     {
-        return view('app-owner.horse-setting-sex.create');
+        return view('app-owner.horse-setting-breed.create');
     }
 
     public function edit($id)
