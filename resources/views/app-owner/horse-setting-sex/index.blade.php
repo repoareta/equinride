@@ -47,10 +47,6 @@
                 </div>
             </div>
             <!--end::Body-->
-            <!-- begin::Modal -->
-            @include('app-owner.horse-setting-sex.create')
-            @include('app-owner.horse-setting-sex.edit')
-            <!--end::Modal-->
         </div>
     </div>
     <!--end::Content-->
@@ -90,8 +86,6 @@
                 },
             ]
         });
-
-        $("#dataTable_filter").append("<button class='btn btn-primary ml-5' data-toggle='modal' data-target='#modalAdd'>Add New +</button>");		
 
 		$('#dataTable tbody').on( 'click', '#deleteData', function (e) {
 			e.preventDefault();
@@ -135,16 +129,6 @@
 				}
 			});
 		});
-
-		$('body').on('click', '#editData', function () {
-            var id = $(this).data('id');
-            $.get('{{route('app_owner.horse.horse_sex.index')}}'+'/edit/' + id , function (data) {
-                $('#idData').val(data.id);
-                $('#name').val(data.name);
-                jQuery.noConflict();
-                $('#modalEdit').modal('show');
-            })
-        });
     } );
 </script>
 @endpush

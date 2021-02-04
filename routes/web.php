@@ -210,18 +210,20 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // HORSE SEX
             Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function () {
                 Route::get('/', [HorseSexController::class, 'index'])->name('index');
-                Route::post('store', [HorseSexController::class, 'store'])->name('store');
+                Route::get('create', [HorseSexController::class, 'create'])->name('create');
+                Route::post('create', [HorseSexController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('edit');
-                Route::put('update', [HorseSexController::class, 'update'])->name('update');
+                Route::put('edit/{id}', [HorseSexController::class, 'update'])->name('update');
                 Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
             });
 
             // HORSE BREED
             Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function () {
                 Route::get('/', [HorseBreedController::class, 'index'])->name('index');                
-                Route::post('store', [HorseBreedController::class, 'store'])->name('store');
+                Route::get('create', [HorseBreedController::class, 'create'])->name('create');
+                Route::post('create', [HorseBreedController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
-                Route::put('update', [HorseBreedController::class, 'update'])->name('update');
+                Route::put('edit/{id}', [HorseBreedController::class, 'update'])->name('update');
                 Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
             });
         });

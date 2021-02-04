@@ -25,10 +25,10 @@ class HorseSexController extends Controller
             })->addColumn('action', function ($data) {
                 return 
                 "
-                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='editData'>
+                    <a href='". route('app_owner.horse.horse_sex.edit', $data->id) ."' class='btn btn-clean btn-icon mr-2' id='editData'>
                         <i class='fas fa-pen edit-horse pointer-link'></i>
                     </a>
-                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2 delete-horse' id='editData'>
+                    <a href='javascript:void(0)' class='btn btn-clean btn-icon mr-2' id='deleteData'>
                         <i class='fas fa-trash pointer-link'></i>
                     </a>
                 ";
@@ -39,10 +39,15 @@ class HorseSexController extends Controller
         return view('app-owner.horse-setting-sex.index');
     }
 
+    public function create()
+    {
+        return view('app-owner.horse-setting-sex.create');
+    }
+
     public function edit($id)
     {
-        $horsesex = HorseSex::find($id);
-        return response()->json($horsesex);
+        $item = HorseSex::find($id);
+        return view('app-owner.horse-setting-sex.edit', compact('item'));
     }
 
     public function store(HorseSexStore $request, HorseSex $horsesex)
