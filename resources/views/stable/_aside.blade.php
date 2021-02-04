@@ -15,6 +15,9 @@
                     </a>
                     <div class="mt-2">
                         <span class="label label-inline label-danger font-weight-bold">Pending</span>
+                        <button class="btn btn-primary font-weight-bold label label-inline">
+                            Request for review
+                        </button>
                     </div>
                 </div>
             </div>
@@ -43,9 +46,6 @@
                             <i class="fab fa-elementor"></i>
                         </span>
                         <span class="navi-text">Dashboard</span>
-                        <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">2</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -56,7 +56,7 @@
                         </span>
                         <span class="navi-text">Horse</span>
                         <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">
+                            <span class="label label-light-primary font-weight-bold">
                                 {{ $stable->horses->count() }}
                             </span>
                         </span>
@@ -70,7 +70,7 @@
                         </span>
                         <span class="navi-text">Package</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-primary font-weight-bold">
+                            <span class="label label-light-primary font-weight-bold">
                                 {{ $stable->packages->count() }}
                             </span>
                         </span>
@@ -94,7 +94,7 @@
                         </span>
                         <span class="navi-text">Coach</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">
+                            <span class="label label-light-primary font-weight-bold">
                                 {{ $stable->coaches->count() }}
                             </span>
                         </span>
@@ -109,21 +109,20 @@
                         </span>
                         <span class="navi-text">Booking Order</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                            <span class="label label-light-primary font-weight-bold">
+                                0
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
 
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4 {{ Route::is('stable.withdraw.index') ? 'active' : '' }}" href="{{ route('stable.withdraw.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-wallet"></i>
                         </span>
                         <span class="navi-text">Withdrawals</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -136,11 +135,6 @@
                             <i class="fas fa-hotel"></i>
                         </span>
                         <span class="navi-text">Stable Profile</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">
-                                Pending
-                            </span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -150,7 +144,7 @@
                         <span class="navi-icon mr-2">
                             <i class="fas fa-vote-yea"></i>
                         </span>
-                        <span class="navi-text">Withdrawal</span>
+                        <span class="navi-text">Withdraw Method</span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -162,19 +156,13 @@
                         </span>
                         <span class="navi-text">Admin Management</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">
+                            <span class="label label-light-primary font-weight-bold">
                                 0
                             </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
-                <li class="navi-item mb-2">
-                    <div class="nav-link my-4">
-                        <button type="submit" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5">Submit All</button>
-                    </div>
-                </li>
-
             </ul>
             <!--end::Nav-->
         </div>

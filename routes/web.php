@@ -11,7 +11,7 @@ use App\Http\Controllers\RidingClassController;
 use App\Http\Controllers\UserController;
 // USE 'AS' BECAUSE CONFLICT WITH STABLE PACKAGE CONTROLLER NAME
 use App\Http\Controllers\PackageController as UserPackageController;
-use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingController as UserBookingController;
 
 // LOAD USER CONTROLLER END
 
@@ -21,8 +21,10 @@ use App\Http\Controllers\Stable\HorseController;
 use App\Http\Controllers\Stable\CoachController;
 use App\Http\Controllers\Stable\PackageController;
 use App\Http\Controllers\Stable\ScheduleController;
-use App\Http\Controllers\Stable\AdminController as StableAdminController;
 use App\Http\Controllers\Stable\WithdrawController;
+use App\Http\Controllers\Stable\BookingController;
+// USE 'AS' BECAUSE CONFLICT WITH APP OWNER PACKAGE CONTROLLER NAME
+use App\Http\Controllers\Stable\AdminController as StableAdminController;
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN END
 
@@ -154,6 +156,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
 
+            // STABLE BOOKING ORDERED
+            Route::group(['prefix' => 'booking', 'as' => 'booking.'], function () {
+                Route::get('/', [BookingController::class, 'index'])->name('index');
+            });
+
             // STABLE WITHDRAW
             Route::group(['prefix' => 'withdraw', 'as' => 'withdraw.'], function () {
                 Route::get('/', [WithdrawController::class, 'index'])->name('index');
@@ -161,7 +168,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
                 // SETTINGS
                 Route::get('/settings', [WithdrawController::class, 'withdrawSetting'])->name('setting');
-                Route::post('/settings-store', [WithdrawController::class, 'withdrawSettingStore'])->name('setting.store');
+                Route::put('/settings-store', [WithdrawController::class, 'withdrawSettingStore'])->name('setting.store');
             });
         });
     });
@@ -197,10 +204,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             });
         });
 
-        // Horse
+        // HORSE
         Route::group(['prefix' => 'horse', 'as' => 'horse.'], function () {
 
-            // Horse Sex
+            // HORSE SEX
             Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function () {
                 Route::get('/', [HorseSexController::class, 'index'])->name('index');
                 Route::post('store', [HorseSexController::class, 'store'])->name('store');
@@ -209,7 +216,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
             });
 
-            // Horse Breed
+            // HORSE BREED
             Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function () {
                 Route::get('/', [HorseBreedController::class, 'index'])->name('index');                
                 Route::post('store', [HorseBreedController::class, 'store'])->name('store');

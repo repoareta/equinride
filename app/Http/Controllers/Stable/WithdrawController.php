@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Stable;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class WithdrawController extends Controller
 {
@@ -34,6 +36,18 @@ class WithdrawController extends Controller
      */
     public function withdrawSettingStore(Request $request)
     {
-        return route('stable.withdraw.setting');
+        $stable = Auth::user()->stables->first();
+
+        $stable->account_name   = $request->account_name;
+        $stable->account_number = $request->account_number;
+        $stable->branch         = $request->branch;
+
+        $stable->save();
+
+        Alert::success('Withdraw Settings Update Success.')
+        ->persistent(true)
+        ->autoClose(3600);
+
+        return redirect()->route('stable.withdraw.setting');
     }
 }
