@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Horse;
-use App\Models\Stable;
+use App\Models\StableUser;
 use App\Models\HorseSex;
 use App\Models\HorseBreed;
 
@@ -28,16 +28,27 @@ class HorseController extends Controller
     public function index()
     {
         if(request()->ajax()){
-
-            $query = Horse::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $query = Horse::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
-                ->addColumn('age', function($item){
-                    $dateOfBirth = $item->birth_date;
-                    return Carbon::parse($dateOfBirth)->age;
-                })
-                ->addColumn('birth_date', function($item){
-                    return date('D, M d, Y', strtotime($item->birth_date));
+                ->addColumn('horse', function ($item) {
+                    return
+                    '
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                            <div class="symbol-label">
+                                <img class="h-75 align-self-end" src="'. asset($item->photo) .'" alt="photo">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column ml-3">
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->name.'</div>
+                            <span class="text-muted font-weight-bold font-size-sm">
+                                '.date('D, M d, Y', strtotime($item->birth_date)).', '.Carbon::parse($item->birth_date)->age.' years
+                            </span>
+                        </div>
+                    </div>                    
+                    ';
                 })
                 ->addColumn('horse_sex', function($item){
                     return $item->sex->name;
@@ -72,7 +83,7 @@ class HorseController extends Controller
                     </td>
                     ';
                 })
-                ->rawColumns(['action', 'pedigree_female', 'pedigree_male', 'passport_number'])
+                ->rawColumns(['action', 'horse' ,'pedigree_female', 'pedigree_male', 'passport_number'])
                 ->make();
         }
         return view('stable.horse.index');
@@ -91,10 +102,10 @@ class HorseController extends Controller
      */
     public function create()
     {
-        $sexs = HorseSex::all();
+        $sexes = HorseSex::all();
         $breeds = HorseBreed::all();
 
-        return view('stable.horse.create', compact('sexs', 'breeds'));
+        return view('stable.horse.create', compact('sexes', 'breeds'));
     }
 
     /**
@@ -107,7 +118,7 @@ class HorseController extends Controller
     {    
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
 
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
@@ -117,8 +128,8 @@ class HorseController extends Controller
             $horse->passport_number = $request->passport_number;
             $horse->pedigree_male   = $request->pedigree_male;
             $horse->pedigree_female = $request->pedigree_female;
-            $horse->stable_id       = $stable->id;
-            $horse->user_id         = Auth::user()->id;
+            $horse->stable_id       = $stable->stable_id;
+            $horse->user_id         = $stable->user_id;
 
             $horse->save();
 
@@ -165,7 +176,7 @@ class HorseController extends Controller
     {
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
             
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
@@ -175,8 +186,8 @@ class HorseController extends Controller
             $horse->passport_number = $request->passport_number;
             $horse->pedigree_male   = $request->pedigree_male;
             $horse->pedigree_female = $request->pedigree_female;
-            $horse->stable_id       = $stable->id;
-            $horse->user_id         = Auth::user()->id;
+            $horse->stable_id       = $stable->stable_id;
+            $horse->user_id         = $stable->user_id;
             
             $horse->save();
             return response()->json(['status'=>"success", 'horseid'=>$horse->id]);

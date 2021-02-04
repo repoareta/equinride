@@ -34,8 +34,6 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Coach Name</th>
-                                <th scope="col">Birth Date</th>
-                                <th scope="col">Age</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Experience</th>
                                 <th scope="col">Certified</th>											
@@ -78,9 +76,7 @@
                     orderable: false, 
                     searchable: false
                 },
-				{data: 'name', name: 'name'},
-				{data: 'birth_date', name: 'birth_date'},
-				{data: 'age', name: 'age'},
+				{data: 'coach', name: 'coach'},
 				{data: 'sex', name: 'sex'},
 				{data: 'experience', name: 'experience'},
 				{data: 'certified', name: 'certified'},

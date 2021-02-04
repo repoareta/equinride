@@ -13,7 +13,7 @@ use Carbon\CarbonPeriod;
 
 // load model
 use App\Models\Slot;
-use App\Models\Stable;
+use App\Models\StableUser;
 
 class ScheduleController extends Controller
 {
@@ -24,14 +24,15 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){            
+        if($request->ajax()){           
+            $stable = StableUser::where('user_id', Auth::user()->id)->first(); 
             if(!empty($request->input('from_date')))
             {
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
                 if($request->input('from_date') === $request->input('end_date')){
                     //kita filter tanggalnya sesuai dengan request input('from_date')
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
-                    $query = Slot::where('user_id',Auth::user()->id)
+                    $query = Slot::where('user_id',$stable->user_id)
                             ->whereDate('date','=', $from)
                             ->orderBy('time_start', 'asc')
                             ->get();
@@ -40,14 +41,14 @@ class ScheduleController extends Controller
                     //kita filter dari tanggal awal ke akhir
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
                     $end = date('Y-m-d', strtotime($request->input('end_date')));
-                    $query = Slot::where('user_id',Auth::user()->id)
+                    $query = Slot::where('user_id',$stable->user_id)
                     ->whereBetween('date', array($from, $end))
                     ->orderBy('time_start', 'asc')
                     ->get();
                 }
                 
             }else{
-                $query = Slot::where('user_id',Auth::user()->id)->orderBy('date', 'asc')->orderBy('time_start', 'asc')->get();
+                $query = Slot::where('user_id',$stable->user_id)->orderBy('date', 'asc')->orderBy('time_start', 'asc')->get();
             }
 
             return Datatables::of($query)
@@ -154,14 +155,14 @@ class ScheduleController extends Controller
                                 }
                             }
                             
-                            $stable = Stable::where('user_id', Auth::user()->id)->first();
+                            $stable = StableUser::where('user_id', Auth::user()->id)->first();
                             $data2 = array(
-                                'user_id'    => Auth::user()->id,
+                                'user_id'    => $stable->user_id,
                                 'date'       => $date->format('Y-m-d'),
                                 'time_start' => $time1,
                                 'time_end'   => $time2,
                                 'capacity'   => $capacity,
-                                'stable_id'  => $stable->id,
+                                'stable_id'  => $stable->stable_id,
                                 'capacity_booked'   => 0,
                             );
                             Slot::create($data2);  
