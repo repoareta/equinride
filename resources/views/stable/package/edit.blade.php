@@ -70,31 +70,27 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Session Usage</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="form-group">
-                                <div class="radio-inline">
-                                    <label class="radio">
-                                    <input type="radio" name="session_usage" value="Yes" {{ $item->session_usage == 'Yes' ? 'checked' : '' }}>
-                                    <span></span>Yes</label>
-                                    <label class="radio">
-                                    <input type="radio" name="session_usage" value="" {{ $item->session_usage == null ? 'checked' : '' }}>
-                                    <span></span>No</label>														
-                                </div>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="session_usage" value="Yes" {{ $item->session_usage == 'Yes' ? 'checked' : '' }}>
+                                <span></span>Yes</label>
+                                <label class="radio">
+                                <input type="radio" name="session_usage" value="" {{ $item->session_usage == null ? 'checked' : '' }}>
+                                <span></span>No</label>														
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Package Status</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="form-group">
-                                <div class="radio-inline">
-                                    <label class="radio">
-                                    <input type="radio" name="status" value="Yes" {{ $item->session_usage == 'Yes' ? 'checked' : '' }}>
-                                    <span></span>Publish</label>
-                                    <label class="radio">
-                                    <input type="radio" name="status" value="" {{ $item->session_usage == null ? 'checked' : '' }}>
-                                    <span></span>No Publish</label>														
-                                </div>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="status" value="Yes" {{ $item->package_status == 'Yes' ? 'checked' : '' }}>
+                                <span></span>Publish</label>
+                                <label class="radio">
+                                <input type="radio" name="status" value="" {{ $item->package_status == null ? 'checked' : '' }}>
+                                <span></span>No Publish</label>														
                             </div>
                         </div>
                     </div>

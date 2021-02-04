@@ -7,17 +7,15 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
 // load model
 use App\Models\Horse;
-use App\Models\StableUser;
 use App\Models\HorseSex;
 use App\Models\HorseBreed;
 
-//load form request (for validation)
-use App\Http\Requests\HorseStore;
 class HorseController extends Controller
 {
     /**
@@ -28,7 +26,7 @@ class HorseController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
             $query = Horse::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -118,7 +116,7 @@ class HorseController extends Controller
     {    
         try {
             // Check Stable
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
 
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
@@ -176,7 +174,7 @@ class HorseController extends Controller
     {
         try {
             // Check Stable
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
             
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;

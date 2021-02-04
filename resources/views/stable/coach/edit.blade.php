@@ -70,11 +70,15 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="sex">
-                                <option value="Female" {{ $item->sex == 'Female' ? 'selected' : '' }}>Female</option>
-                                <option value="Male" {{ $item->sex == 'Female' ? 'selected' : '' }}>Male</option>
-                            </select>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="sex" value="Male" {{ $item->sex == 'Male' ? 'checked' : '' }}>
+                                <span></span>Male</label>
+                                <label class="radio">
+                                <input type="radio" name="sex" value="Female" {{ $item->sex == 'Female' ? 'checked' : '' }}>
+                                <span></span>Female</label>														
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -98,11 +102,15 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Certified</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="certified">
-                                <option value="Yes" {{ $item->certified == 'Yes' ? 'checked' : '' }}>Yes</option>
-                                <option value="No" {{ $item->certified == 'No' ? 'checked' : '' }}>No</option>
-                            </select>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="certified" value="Yes" {{ $item->certified == 'Yes' ? 'checked' : '' }}>
+                                <span></span>Yes</label>
+                                <label class="radio">
+                                <input type="radio" name="certified" value="No" {{ $item->certified == 'No' ? 'checked' : '' }}>
+                                <span></span>No</label>														
+                            </div>
                         </div>
                     </div>
                     <div class="row">
