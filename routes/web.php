@@ -163,8 +163,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // STABLE APPROVAL
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
-                Route::get('/step-1', [StableApprovalController::class, 'step_1'])->name('step_1');
-                Route::get('/step-2', [StableApprovalController::class, 'step_2'])->name('step_2');
+
+                Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
+                    Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
+                    Route::get('show/{stable}', [StableApprovalController::class, 'show1'])->name('show');
+                    Route::get('approved', [StableApprovalController::class, 'jsonApproved1'])->name('approved');
+                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable1'])->name('approve');
+                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved1'])->name('unapproved');
+                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable1'])->name('unapprove');
+                });
+
+                Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {                    
+                    Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
+                    Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
+                    Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
+                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
+                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
+                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable2'])->name('unapprove');
+                });
             });
         });
 

@@ -51,29 +51,7 @@
                                     <th scope="col">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @for ($i = 1; $i < 20; $i++)
-                                        <tr>
-                                            <td>{{ $i }}</td>
-                                            <td>Steven Stable</td>
-                                            <td>Steven</td>
-                                            <td>087744779090</td>
-                                            <td>Steven Coa</td>
-                                            <td>2020-06-06</td>
-                                            <td>Pending</td>
-                                            <td nowrap="nowrap">
-                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="accept" title="Accept">
-                                                    <i class='fas fa-check-circle'></i>
-                                                </a>
-                                                <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="decline" title="Decline">
-                                                    <i class='fas fa-ban'></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endfor
+                                <tbody>                                    
                                 </tbody>
                             </table>
                         </div>
@@ -99,22 +77,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 1; $i < 20; $i++)
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>Steven Stable</td>
-                                        <td>Steven</td>
-                                        <td>087744779090</td>
-                                        <td>Steven Coa</td>
-                                        <td>2020-06-06</td>
-                                        <td>Email Sent</td>
-                                        <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endfor
                                 </tbody>
                             </table>
                         </div>
@@ -163,8 +125,6 @@
                                     <h4 class="mb-4" id="district"></h4>
                                     <p class="mb-0">Village</p>
                                     <h4 class="mb-4" id="village"></h4>
-                                    <p class="mb-0">Facilities</p>
-                                    <h4 class="mb-4" id="facilities"></h4>
                                     <p class="mb-0">Logo</p>
                                     <img src="" alt="" id="logo" style="max-width: 100px">
                                     <p class="mb-0">Approval At</p>
@@ -200,50 +160,100 @@
         $('#dataTable').DataTable({
             scrollX   : true,
             processing: true,
-        }); 
+            // serverSide: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax      : "{{ route('app_owner.stable.approval.step_1.approved') }}",
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'owner', name: 'owner'},
+                {data: 'contact_person', name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'approval_status', name: 'approval_status'},
+                {data: 'action', name: 'action'},
+            ]
+        });
 
         $('#dataTableunapprov').DataTable({
             scrollX   : true,
             processing: true,
+            // serverSide: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax      : "{{ route('app_owner.stable.approval.step_1.unapproved') }}",
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'owner', name: 'owner'},
+                {data: 'contact_person', name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'approval_status', name: 'approval_status'},
+                {data: 'action', name: 'action'},
+            ]
         }); 
 
-        $("tbody").on("click","#accept", function(e) {
-                                
-            e.preventDefault();
-                
-            Swal.fire({
-                title: "Are you sure?",
-                icon: "warning",
-                text: "This is will be accepted the stable",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Accept",
-                cancelButtonText: "Cancel",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            })
-        });
-            
-        $("tbody").on("click","#decline", function(e) {
-
-            e.preventDefault();
-                
-            Swal.fire({
-                title: "Are you sure?",
-                icon: "warning",
-                text: "This is will be declined the stable",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Accept",
-                cancelButtonText: "Cancel",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            })
-        });
         $('body').on( 'click', '#openBtn', function () {
             var id = $(this).data('id');
-            jQuery.noConflict();
-            $('#modalDetail').modal('show');
+            $.get('{{route('app_owner.stable.approval.step_1.index' )}}'+'/show/' + id , function (data) {
+                    $('#name').html(data[0].name);
+                    $('#owner').html(data[0].owner);
+                    $('#manager').html(data[0].manager);
+                    $('#contact_person').html(data[0].contact_person);
+                    $('#contact_number').html(data[0].contact_number);
+                    $('#capacity_of_stable').html(data[0].capacity_of_stable);
+                    $('#capacity_of_arena').html(data[0].capacity_of_arena);
+                    $('#number_of_coach').html(data[0].number_of_coach);
+                    $('#address').html(data[0].address);
+                    if(data[1][0].name == null){
+                        $('#province').html('Empty');
+                    }else{
+                        $('#province').html(data[1][0].name);
+                    }
+                    if(data[1][1].name == null){
+                        $('#city').html('Empty');
+                    }else{                        
+                        $('#city').html(data[1][1].name);
+                    }
+                    if(data[1][2].name == null){
+                        $('#district').html('Empty');
+                    }else{                        
+                        $('#district').html(data[1][2].name);
+                    }                    
+                    if(data[1][3].name == null){
+                        $('#village').html('Empty');
+                    }else{                        
+                        $('#village').html(data[1][3].name);
+                    }
+                    $('#logo').attr('src','{{asset("storage/stable/logo/")}}/'+(data[0].logo));
+                    $('#approval_status').html(data[0].approval_status);
+                    $('#approval_at').html(data[0].approval_at);                    
+                    if(data[0].approval_at == null){
+                        $('#approval_at').html('Need Approval');    
+                    }
+                    if(data[0].approval_by == null){
+                        $('#approval_by').html('Need Approval');    
+                    }else{
+                        $('#approval_by').html(data[0].approvalby_stable.name);
+                    }
+                    if(data[0].approval_status == null){
+                        $('#approval_status').html('Need Approval');    
+                    }
+                    jQuery.noConflict();
+                    $('#modalDetail').modal('show');
+                })
         });
     } );
 </script>

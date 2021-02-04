@@ -109,12 +109,12 @@ Breadcrumbs::for('owner-dashboard', function ($trail) {
 // App Owner Stable Approval Step 1
 Breadcrumbs::for('owner-stable-approval-step-1', function ($trail) {
     $trail->parent('owner-dashboard');
-    $trail->push('Stable Approval Step 1', route('app_owner.stable.approval.step_1'));
+    $trail->push('Stable Approval Step 1', route('app_owner.stable.approval.step_1.index'));
 });
 // App Owner Stable Approval Step 2
 Breadcrumbs::for('owner-stable-approval-step-2', function ($trail) {
     $trail->parent('owner-dashboard');
-    $trail->push('Stable Approval Step 2', route('app_owner.stable.approval.step_2'));
+    $trail->push('Stable Approval Step 2', route('app_owner.stable.approval.step_2.index'));
 });
 
 // App Owner Bank Setting
