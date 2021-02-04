@@ -119,7 +119,7 @@
 
                     <ul class="collapse list-unstyled mt-2 {{ Route::is('app_owner.horse.*') ? 'show' : '' }}" id="horseSubmenu">
                         <li class="navi-item mb-2 pl-3">
-                            <a class="navi-link py-4 {{ Route::is('app_owner.horse.horse_sex.index') ? 'active' : '' }}" href="{{ route('app_owner.horse.horse_sex.index') }}">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.horse.horse_sex.*') ? 'active' : '' }}" href="{{ route('app_owner.horse.horse_sex.index') }}">
                                 <span class="navi-icon mr-2">
                                     <i class="la la-horse icon-xl"></i>
                                 </span>
@@ -128,7 +128,7 @@
                         </li>
 
                         <li class="navi-item mb-2 pl-3">
-                            <a class="navi-link py-4 {{ Route::is('app_owner.horse.horse_breed.index') ? 'active' : '' }}" href="{{ route('app_owner.horse.horse_breed.index') }}">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.horse.horse_breed.*') ? 'active' : '' }}" href="{{ route('app_owner.horse.horse_breed.index') }}">
                                 <span class="navi-icon mr-2">
                                     <i class="la la-horse icon-xl"></i>
                                 </span>
