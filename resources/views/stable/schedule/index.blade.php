@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <a href='javascript:;' data-toggle='modal' data-target='#modalGenerateSchedule' class='btn btn-primary'>Generate Schedule +</a>
-                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
+                    <a href='#' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
             <!--end::Header-->

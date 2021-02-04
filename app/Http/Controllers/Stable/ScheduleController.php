@@ -25,7 +25,7 @@ class ScheduleController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){           
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first(); 
+            $stable = Auth::user()->stables->first()->pivot; 
             if(!empty($request->input('from_date')))
             {
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
@@ -155,7 +155,7 @@ class ScheduleController extends Controller
                                 }
                             }
                             
-                            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+                            $stable = Auth::user()->stables->first()->pivot;
                             $data2 = array(
                                 'user_id'    => $stable->user_id,
                                 'date'       => $date->format('Y-m-d'),
@@ -165,7 +165,7 @@ class ScheduleController extends Controller
                                 'stable_id'  => $stable->stable_id,
                                 'capacity_booked'   => 0,
                             );
-                            Slot::create($data2);  
+                            Slot::create($data2);
                             $previousData = $data2;                          
                         }
                     }else{

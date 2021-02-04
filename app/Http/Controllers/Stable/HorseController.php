@@ -26,7 +26,7 @@ class HorseController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
             $query = Horse::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -116,7 +116,7 @@ class HorseController extends Controller
     {    
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
 
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
@@ -174,7 +174,7 @@ class HorseController extends Controller
     {
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
             
             $horse->name            = $request->name;
             $horse->owner           = $request->owner;
