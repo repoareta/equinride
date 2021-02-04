@@ -28,9 +28,69 @@
                 <input type="hidden" class="packageid" name="packageid" id="packageid" value="">
                 <div class="card-body">
                     <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Photo</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="form-group">
+                                <div id="dropzoneDragArea" class="dropzone dropzone-default dropzone-primary dz-clickable">                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Package Name</label>
                         <div class="col-lg-9 col-xl-6">
                             <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Package Number</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="package_number"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Description</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <textarea name="description" rows="5" class="form-control form-control-lg form-control-solid"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Price</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">RP</span>
+                                </div>
+                                <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="price"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Session Usage</label>                        
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="session_usage" value="yes">
+                                <span></span>Yes</label>
+                                <label class="radio">
+                                <input type="radio" name="session_usage" value="">
+                                <span></span>No</label>														
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Package Status</label>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="status" value="Yes">
+                                <span></span>Publish</label>
+                                <label class="radio">
+                                <input type="radio" name="status" value="">
+                                <span></span>No Publish</label>													
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -76,7 +136,9 @@
 
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
-                        
+                        if(myDropzone.files == ''){
+                            location.href = "{{ route('stable.package.index') }}";
+                        }
                         $.ajax({
                             type: 'POST',
                             url: URL,
@@ -86,9 +148,6 @@
                                     // fetch the useid 
                                     var packageid = result.packageid;
                                     $("#packageid").val(packageid); // inseting packageid into hidden input field
-                                    if(myDropzone.files == ''){
-                                        location.href = "{{ route('stable.package.index') }}";
-                                    }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-package-edit') }}
+    {{ Breadcrumbs::render('stable-schedule-create') }}
 @endsection
 
 @section('content')
