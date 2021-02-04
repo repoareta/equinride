@@ -51,11 +51,12 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Sex</label>
                         <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="horse_sex_id">
-                                <option value="">-- Please choose your horse sex --</option>
-                                @foreach ($sexs as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
-                                @endforeach
+                            <select class="form-control form-control-lg form-control-solid" name="horse_sex_id">                                
+                                @forelse ($sexes as $sex)
+                                    <option value="{{ $sex->id }}">{{ $sex->name }}</option>                                
+                                @empty
+                                    <option>Data Not Found</option>
+                                @endforelse
                             </select>
                         </div>
                     </div>
@@ -63,10 +64,11 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Horse Breed</label>
                         <div class="col-lg-9 col-xl-6">
                             <select class="form-control form-control-lg form-control-solid" name="horse_breed_id">
-                                <option value="">--Please choose your horse breed--</option>
-                                @foreach ($breeds as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
-                                @endforeach
+                                @forelse ($breeds as $breed)
+                                    <option value="{{ $breed->id }}">{{ $breed->name }}</option>                                
+                                @empty
+                                    <option>Data Not Found</option>
+                                @endforelse
                             </select>
                         </div>
                     </div>

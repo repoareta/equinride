@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Package;
-use App\Models\Stable;
+use App\Models\StableUser;
 
 //load form request (for validation)
 use App\Http\Requests\PackageStore;
@@ -27,10 +27,28 @@ class PackageController extends Controller
     public function index()
     {
         if(request()->ajax()){
-
-            $query = Package::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $query = Package::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
+                ->addColumn('package', function ($item) {
+                    return
+                    '
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                            <div class="symbol-label">
+                                <img class="h-75 align-self-end" src="'. asset($item->photo) .'" alt="photo">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column ml-3">
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->name.'</div>
+                            <span class="text-muted font-weight-bold font-size-sm">
+                                Number : '.$item->package_number.'
+                            </span>
+                        </div>
+                    </div>                    
+                    ';
+                })
                 ->addColumn('price', function($item){
                     $price = number_format(($item->price/100), 2);
                     return 'RP. '.$price;
@@ -70,7 +88,7 @@ class PackageController extends Controller
                     </td>
                     ';
                 })
-                ->rawColumns(['action', 'package_status', 'approval_status', 'package_number'])
+                ->rawColumns(['package','action', 'package_status', 'approval_status', 'package_number'])
                 ->make();
         }        
         return view('stable.package.index');
@@ -96,17 +114,17 @@ class PackageController extends Controller
     {    
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
 
             $package->name            = $request->name;
             $package->package_number  = $request->package_number;
             $package->attendance      = 1;
             $package->description     = $request->description;
             $package->price           = $request->price;
-            $package->stable_id       = $stable->id;
             $package->session_usage   = $request->session_usage;      
             $package->package_status  = $request->status;
-            $package->user_id         = Auth::user()->id;
+            $package->user_id         = $stable->user_id;
+            $package->stable_id       = $stable->stable_id;
 
             $package->save();
 
@@ -151,17 +169,17 @@ class PackageController extends Controller
     {
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
             
             $package->name            = $request->name;
             $package->package_number  = $request->package_number;
             $package->attendance      = 1;
             $package->description     = $request->description;
             $package->price           = $request->price;
-            $package->stable_id       = $stable->id;
             $package->session_usage   = $request->session_usage;      
             $package->package_status  = $request->status;
-            $package->user_id         = Auth::user()->id;
+            $package->user_id         = $stable->user_id;
+            $package->stable_id       = $stable->stable_id;
             
             $package->save();
             return response()->json(['status'=>"success", 'packageid'=>$package->id]);

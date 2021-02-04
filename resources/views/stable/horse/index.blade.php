@@ -33,9 +33,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Horse Name</th>
-                                <th scope="col">Birth Date</th>
-                                <th scope="col">Age</th>
+                                <th scope="col">Horse</th>
                                 <th scope="col">Sex</th>
                                 <th scope="col">Passport Number</th>
                                 <th scope="col">Horse Owner</th>
@@ -81,9 +79,7 @@
                     orderable: false, 
                     searchable: false
                 },
-                {data: 'name', name: 'name'},
-                {data: 'birth_date', name: 'birth_date'},
-                {data: 'age', name: 'age'},
+                {data: 'horse', name: 'horse'},
                 {data: 'horse_sex', name: 'horse_sex'},
                 {data: 'passport_number', name: 'passport_number'},
                 {data: 'owner', name: 'owner'},

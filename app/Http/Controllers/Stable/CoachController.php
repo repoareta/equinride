@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Coach;
-use App\Models\Stable;
+use App\Models\StableUser;
 
 //load form request (for validation)
 use App\Http\Requests\CoachStore;
@@ -26,16 +26,27 @@ class CoachController extends Controller
     public function index()
     {
         if(request()->ajax()){
-
-            $query = Coach::where('user_id', Auth::user()->id)->get();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $query = Coach::where('user_id', $stable->user_id)->get();
             return Datatables::of($query)
                 ->addIndexColumn()
-                ->addColumn('age', function($item){
-                    $dateOfBirth = $item->birth_date;
-                    return Carbon::parse($dateOfBirth)->age.' Years';
-                })
-                ->addColumn('birth_date', function($item){
-                    return date('D, M d, Y', strtotime($item->birth_date));
+                ->addColumn('coach', function ($item) {
+                    return
+                    '
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                            <div class="symbol-label">
+                                <img class="h-75 align-self-end" src="'. asset($item->photo) .'" alt="photo">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column ml-3">
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->name.'</div>
+                            <span class="text-muted font-weight-bold font-size-sm">
+                                '.date('D, M d, Y', strtotime($item->birth_date)).', '.Carbon::parse($item->birth_date)->age.' years
+                            </span>
+                        </div>
+                    </div>                    
+                    ';
                 })
                 ->addColumn('experience', function($item){
                     return $item->experience.' Years';
@@ -52,7 +63,7 @@ class CoachController extends Controller
                     </td>
                     ';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['coach','action'])
                 ->make();
         }
         return view('stable.coach.index');
@@ -78,7 +89,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;
@@ -86,8 +97,8 @@ class CoachController extends Controller
             $coach->experience      = $request->experience;
             $coach->contact_number  = $request->contact_number;
             $coach->certified       = $request->certified;            
-            $coach->stable_id       = $stable->id;
-            $coach->user_id         = Auth::user()->id;
+            $coach->stable_id       = $stable->stable_id;
+            $coach->user_id         = $stable->user_id;
 
             $coach->save();
 
@@ -131,7 +142,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = Stable::where('user_id', Auth::user()->id)->first();
+            $stable = StableUser::where('user_id', Auth::user()->id)->first();
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;
@@ -139,8 +150,8 @@ class CoachController extends Controller
             $coach->experience      = $request->experience;
             $coach->contact_number  = $request->contact_number;
             $coach->certified       = $request->certified;            
-            $coach->stable_id       = $stable->id;
-            $coach->user_id         = Auth::user()->id;
+            $coach->stable_id       = $stable->stable_id;
+            $coach->user_id         = $stable->user_id;
             
             $coach->save();
             return response()->json(['status'=>"success", 'coachid'=>$coach->id]);

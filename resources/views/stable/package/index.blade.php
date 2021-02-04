@@ -33,8 +33,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Package Name</th>
-                                <th scope="col">Package Number</th>
+                                <th scope="col">Package</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Attendance</th>
@@ -79,8 +78,7 @@
                     orderable: false, 
                     searchable: false
                 },
-                {data: 'name', name: 'name'},
-                {data: 'package_number', name: 'package_number'},
+                {data: 'package', name: 'package'},
                 {data: 'description', name: 'description'},
                 {data: 'price', name: 'price'},
                 {data: 'attendance', name: 'attendance'},
