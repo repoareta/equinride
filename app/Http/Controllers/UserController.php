@@ -106,7 +106,7 @@ class UserController extends Controller
                     ';
                 })
                 ->addColumn('created_at', function ($item) {
-                    return date('D, M d, Y', strtotime($item->created_at));
+                    return date('D, M d Y', strtotime($item->created_at));
                 })
                 ->addColumn('approval_status', function ($item) {
                     if ($item->approval_status == null) {

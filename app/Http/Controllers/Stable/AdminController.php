@@ -27,7 +27,7 @@ class AdminController extends Controller
                     return Carbon::parse($dateOfBirth)->age.' Years';
                 })
                 ->addColumn('birth_date', function ($item) {
-                    return date('D, M d, Y', strtotime($item->birth_date));
+                    return date('D, M d Y', strtotime($item->birth_date));
                 })
                 ->addColumn('experience', function ($item) {
                     return $item->experience.' Years';

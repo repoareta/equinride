@@ -39,7 +39,7 @@ class CoachController extends Controller
                         <div class="d-flex flex-column ml-3">
                             <div class="text-primary font-weight-bolder font-size-lg">'.$item->name.'</div>
                             <span class="text-muted font-weight-bold font-size-sm">
-                                '.date('D, M d, Y', strtotime($item->birth_date)).', '.Carbon::parse($item->birth_date)->age.' years
+                                '.date('D, M d Y', strtotime($item->birth_date)).', '.Carbon::parse($item->birth_date)->age.' years
                             </span>
                         </div>
                     </div>                    

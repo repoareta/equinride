@@ -28,7 +28,7 @@ class StableApprovalController extends Controller
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
-            return date('D, M d, Y', strtotime($data->created_at));
+            return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status == 'Email Sent' ?
@@ -53,7 +53,7 @@ class StableApprovalController extends Controller
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
-            return date('D, M d, Y', strtotime($data->created_at));
+            return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function () {
             return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
@@ -183,7 +183,7 @@ class StableApprovalController extends Controller
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
-            return date('D, M d, Y', strtotime($data->created_at));
+            return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status == 'Accepted' ?
@@ -209,7 +209,7 @@ class StableApprovalController extends Controller
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
-            return date('D, M d, Y', strtotime($data->created_at));
+            return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status == 'Email Sent' ?
