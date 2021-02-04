@@ -113,7 +113,11 @@
         @foreach ($stables_footer as $stable)
             <div class="col-md-3 p-5">
                 <div class="card">
-                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">
+                    @if ($stable->logo)
+                    <img src="{{ asset($stable->logo) }}" class="card-img-top" alt="nama stable">   
+                    @else
+                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top" alt="nama stable">   
+                    @endif
                     <div class="card-body p-5">
                     <h5 class="card-title">
                         <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">
