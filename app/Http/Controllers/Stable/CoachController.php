@@ -7,15 +7,12 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
 // load model
 use App\Models\Coach;
-use App\Models\StableUser;
-
-//load form request (for validation)
-use App\Http\Requests\CoachStore;
 class CoachController extends Controller
 {
     /**
@@ -26,7 +23,7 @@ class CoachController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
             $query = Coach::where('user_id', $stable->user_id)->get();
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -89,7 +86,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;
@@ -142,7 +139,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;

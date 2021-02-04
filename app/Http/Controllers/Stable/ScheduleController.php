@@ -25,7 +25,7 @@ class ScheduleController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){           
-            $stable = StableUser::where('user_id', Auth::user()->id)->first(); 
+            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first(); 
             if(!empty($request->input('from_date')))
             {
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
@@ -155,7 +155,7 @@ class ScheduleController extends Controller
                                 }
                             }
                             
-                            $stable = StableUser::where('user_id', Auth::user()->id)->first();
+                            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
                             $data2 = array(
                                 'user_id'    => $stable->user_id,
                                 'date'       => $date->format('Y-m-d'),

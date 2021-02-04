@@ -64,11 +64,15 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="sex">
-                                <option value="Female">Female</option>
-                                <option value="Male">Male</option>
-                            </select>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="sex" value="Male">
+                                <span></span>Male</label>
+                                <label class="radio">
+                                <input type="radio" name="sex" value="Female">
+                                <span></span>Female</label>														
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -92,11 +96,15 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Certified</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" name="certified">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" name="certified" value="Yes">
+                                <span></span>Yes</label>
+                                <label class="radio">
+                                <input type="radio" name="certified" value="No">
+                                <span></span>No</label>														
+                            </div>
                         </div>
                     </div>
                     <div class="row">
