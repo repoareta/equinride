@@ -133,15 +133,6 @@
 @push('page-scripts')
 <script>
     $(function() {
-        $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
-    });
-
         $('#province').select2({
             width:"100%"
         });

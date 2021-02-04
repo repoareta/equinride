@@ -46,9 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the stable associated with the user.
      */
-    public function stable()
+    public function stables()
     {
-        return $this->hasOne(Stable::class);
+        return $this->belongsToMany(Stable::class);
     }
 
     /**
