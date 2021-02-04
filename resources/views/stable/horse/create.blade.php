@@ -118,34 +118,13 @@
 
 @push('page-scripts')
 <script>
-    $('#datePicker').datepicker({
-        todayHighlight: true,
-        orientation: "bottom left",
-        autoclose: true,
-        format: {
-            /*
-            * Say our UI should display a week ahead,
-            * but textbox should store the actual date.
-            * This is useful if we need UI to select local dates,
-            * but store in UTC
-            */
-            toDisplay: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
-
-                return d.toLocaleDateString('default', { 
-                    weekday: 'short', 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: '2-digit' 
-                });
-            },
-            toValue: function (date, format, language) {
-                var d = new Date(date);
-                d.setDate(d.getDate());
-                return new Date(d);
-            }
-        }
+    $('#datePicker').datetimepicker({
+        format: 'ddd, DD MMM YYYY',
+        widgetPositioning: {
+            horizontal: 'left',
+            vertical: 'bottom'
+        },
+        minDate: new Date()
     });
     Dropzone.autoDiscover = false;
     // Dropzone.options.createform = false;	

@@ -21,6 +21,7 @@
         "proengsoft/laravel-jsvalidation": "^4.4",
         "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-permission": "^3.18",
+        "willvincent/laravel-rateable": "^2.3",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

@@ -16,14 +16,17 @@ class Booking extends Model
     {
         return $this->hasMany(BookingDetail::class, 'booking_id');
     }
+
     public function bank()
     {
         return $this->belongsTo(BankPayment::class, 'bank_payment_id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    
     public function approvalby_booking()
     {
         return $this->belongsTo(User::class, 'approval_by', 'id');

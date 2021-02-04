@@ -289,63 +289,21 @@
 
         //jalankan function load_data diawal agar data ter-load
         load_data();
-        $('#date_range_filter').datepicker({
-            todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            format: {
-                /*
-                * Say our UI should display a week ahead,
-                * but textbox should store the actual date.
-                * This is useful if we need UI to select local dates,
-                * but store in UTC
-                */
-                toDisplay: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-
-                    return d.toLocaleDateString('default', { 
-                        weekday: 'short', 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: '2-digit' 
-                    });
-                },
-                toValue: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-                    return new Date(d);
-                }
-            }
+        $('#date_range_filter').datetimepicker({
+            format: 'ddd, DD MMM YYYY',
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'bottom'
+            },
+            minDate: new Date()
         });
-        $('#date_range').datepicker({
-            todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            format: {
-                /*
-                * Say our UI should display a week ahead,
-                * but textbox should store the actual date.
-                * This is useful if we need UI to select local dates,
-                * but store in UTC
-                */
-                toDisplay: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-
-                    return d.toLocaleDateString('default', { 
-                        weekday: 'short', 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: '2-digit' 
-                    });
-                },
-                toValue: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-                    return new Date(d);
-                }
-            }
+        $('#date_range').datetimepicker({
+            format: 'ddd, DD MMM YYYY',
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'bottom'
+            },
+            minDate: new Date()
         });
         $('#filter').click(function () {
             var from_date = $('#from_date').val(); 
@@ -363,13 +321,14 @@
             $('#from_date').val('');
             $('#end_date').val('');
             $('#dataTable').DataTable().destroy();
-            $('#date_range_filter').datepicker('remove');
-            $('#date_range_filter').datepicker({
-                todayHighlight: true,
-                orientation: "bottom left",
-                autoclose: true,
-                // language : 'id',
-                format   : 'yyyy-mm-dd'
+            $('#date_range_filter').datetimepicker('remove');
+            $('#date_range_filter').datetimepicker({
+                format: 'ddd, DD MMM YYYY',
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                minDate: new Date()
             });
             load_data();
         });
@@ -497,12 +456,13 @@
                 location.replace("{{url('package/edit')}}"+ '/' +id);
             });
 
-            $('#date').datepicker({
-                todayHighlight: true,
-                orientation: "bottom left",
-                autoclose: true,
-                // language : 'id',
-                format   : 'yyyy-mm-dd'
+            $('#date').datetimepicker({
+                format: 'ddd, DD MMM YYYY',
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                minDate: new Date()
             });
         }    
         

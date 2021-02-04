@@ -13,6 +13,7 @@ use Carbon\Carbon;
 // Load models
 use App\Models\User;
 use App\Models\Booking;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -106,8 +107,8 @@ class UserController extends Controller
         $user->name       = $request->name;
         $user->sex        = $request->sex;
         $user->phone      = $request->phone;
-        // $user->height     = $request->height;
-        // $user->weight     = $request->weight;
+        $user->height     = $request->height;
+        $user->weight     = $request->weight;
         $user->birth_date = $request->birth_date;
         $user->address    = $request->address;
 
@@ -137,7 +138,7 @@ class UserController extends Controller
         $data = User::where('id', Auth::user()->id)->first();
         
         if (Hash::check($request->old_password, $data->password)) {
-            $validator = \Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                             'password' => 'required|confirmed|min:8',
                         ]);
             if ($validator->fails()) {
@@ -159,12 +160,12 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)->get();                
-        if(request()->ajax()){
+        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)->get();
+        if (request()->ajax()) {
             return Datatables::of($query)
                 ->addIndexColumn()
-                ->addColumn('package', function($item){
-                    return 
+                ->addColumn('package', function ($item) {
+                    return
                     '
                     <div class="d-flex align-items-center">
                         <div class="symbol symbol-50 symbol-sm flex-shrink-0">
@@ -179,30 +180,26 @@ class UserController extends Controller
                     </div>                    
                     ';
                 })
-                ->addColumn('created_at', function($item){
+                ->addColumn('created_at', function ($item) {
                     return date('D, M d, Y', strtotime($item->created_at));
                 })
-                ->addColumn('approval_status', function($item){
-                    if($item->approval_status == null)
-                    {
+                ->addColumn('approval_status', function ($item) {
+                    if ($item->approval_status == null) {
                         return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
-                    }
-                    elseif($item->approval_status == 'Accepted')
-                    {
+                    } elseif ($item->approval_status == 'Accepted') {
                         return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
-                    }else
-                    {
+                    } else {
                         return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
                     }
                 })
-                ->addColumn('order_location', function($item){
+                ->addColumn('order_location', function ($item) {
                     return $item->booking_detail->stable_location;
                 })
-                ->addColumn('price_total', function($item){
+                ->addColumn('price_total', function ($item) {
                     $price = number_format(($item->price_total/100), 2);
                     return 'RP. '.$price;
                 })
-                ->addColumn('action', function(){
+                ->addColumn('action', function () {
                     return '
                     <td nowrap="nowrap">
                         <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit details">

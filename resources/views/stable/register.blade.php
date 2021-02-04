@@ -133,13 +133,14 @@
 @push('page-scripts')
 <script>
     $(function() {
-        $('#datePicker').datepicker({
-        todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd'
-        });
+        $('#datePicker').datetimepicker({
+        format: 'ddd, DD MMM YYYY',
+        widgetPositioning: {
+            horizontal: 'left',
+            vertical: 'bottom'
+        },
+        minDate: new Date()
+    });
 
         $('#province').select2({
             width:"100%"
@@ -173,7 +174,7 @@
                 $(target).prop("disabled", false);
                 //change placeholder text
                 // $(target).select2({placeholder: response.data.length +' results'});
-                $(target).select2({placeholder: 'select ' + slug});
+                $(target).select2({placeholder: 'Select ' + slug});
             });
     }
 </script>

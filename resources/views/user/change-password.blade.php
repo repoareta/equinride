@@ -83,15 +83,3 @@
     <!--end::Content-->
 </div>
 @endsection
-
-@push('page-scripts')
-<script>
-    $('#datePicker').datepicker({
-        todayHighlight: true,
-        orientation: "bottom left",
-        autoclose: true,
-        // language : 'id',
-        format   : 'yyyy-mm-dd'
-    });
-</script>
-@endpush
