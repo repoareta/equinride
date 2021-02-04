@@ -58,7 +58,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">City</label>
                         <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" id="city" name="city" onchange="ajaxChained('#city','#district','district')">
+                            <select class="form-control form-control-lg form-control-solid" id="city" name="city" onchange="ajaxChained('#city','#district','district')" disabled>
                                 <option value="">Select city</option>
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}" @if($city->id == $stable->city_id) selected @endif>{{ $city->name }}</option>
@@ -70,7 +70,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">District</label>
                         <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" id="district" name="district" onchange="ajaxChained('#district','#village','village')">
+                            <select class="form-control form-control-lg form-control-solid" id="district" name="district" onchange="ajaxChained('#district','#village','village')" disabled>
                                 <option value="">Select district</option>
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}" @if($district->id == $stable->district_id) selected @endif>{{ $district->name }}</option>
