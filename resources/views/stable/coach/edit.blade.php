@@ -169,9 +169,6 @@
 
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
-                        if(myDropzone.files == ''){
-                            location.href = "{{ route('stable.coach.index') }}";
-                        }
                         $.ajax({
                             type: 'POST',
                             url: URL,
@@ -182,6 +179,9 @@
                                     var coachid = result.coachid;
                                     $("#coachid").val(coachid); // inseting coachid into hidden input field
                                     //process the queue
+                                    if(myDropzone.files == ''){
+                                        location.href = "{{ route('stable.coach.index') }}";
+                                    }
                                     myDropzone.processQueue();
                                 }else{
                                     console.log("error");

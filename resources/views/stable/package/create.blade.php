@@ -76,9 +76,7 @@
 
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
-                        if(myDropzone.files == ''){
-                            location.href = "{{ route('stable.package.index') }}";
-                        }
+                        
                         $.ajax({
                             type: 'POST',
                             url: URL,
@@ -88,6 +86,9 @@
                                     // fetch the useid 
                                     var packageid = result.packageid;
                                     $("#packageid").val(packageid); // inseting packageid into hidden input field
+                                    if(myDropzone.files == ''){
+                                        location.href = "{{ route('stable.package.index') }}";
+                                    }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{

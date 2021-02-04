@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
-                    <div class="text-muted">Profile Page</div>
+                    <div class="text-muted">App Owner</div>
                 </div>
             </div>
             <!--end::User-->

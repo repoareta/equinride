@@ -231,7 +231,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // Bank Account
         Route::group(['prefix' => 'bank', 'as' => 'bank.'], function () {
             Route::get('/', [BankPaymentController::class, 'index'])->name('index');            
-            Route::post('store', [BankPaymentController::class, 'store'])->name('store');
+            Route::get('create', [BankPaymentController::class, 'create'])->name('create');
+            Route::post('create', [BankPaymentController::class, 'store'])->name('store');
             Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('edit');
             Route::put('update', [BankPaymentController::class, 'update'])->name('update');
             Route::delete('delete', [BankPaymentController::class, 'delete'])->name('delete');
