@@ -37,7 +37,7 @@
                         <label class="col-xl-3"></label>
                         <div class="col-lg-9 col-xl-6">
                             <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
-                            <a href="{{ route('stable.package.index') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
+                            <a href="{{ route('app_owner.horse.horse_sex.index') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
                         </div>
                     </div>
                 </div>

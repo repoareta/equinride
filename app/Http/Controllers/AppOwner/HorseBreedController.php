@@ -20,18 +20,18 @@ class HorseBreedController extends Controller
             $data = HorseBreed::all();
             return datatables()->of($data)
             ->addIndexColumn()
-            ->addColumn('sex', function ($data) {
+            ->addColumn('breed', function ($data) {
                 return $data->name;
             })
             ->addColumn('action', function ($data) {
                 return 
                 "
-                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='editData'>
-                        <i class='fas fa-pen edit-horse pointer-link'></i>
-                    </a>
-                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='deleteData'>
-                        <i class='fas fa-trash pointer-link'></i>
-                    </a>
+                <a href='". route('app_owner.horse.horse_breed.edit', $data->id) ."' class='btn btn-clean btn-icon mr-2' id='editData'>
+                    <i class='fas fa-pen edit-horse pointer-link'></i>
+                </a>
+                <a href='javascript:void(0)' class='btn btn-clean btn-icon mr-2' data-id=".$data->id." id='deleteData'>
+                    <i class='fas fa-trash pointer-link'></i>
+                </a>
                 ";
             })
             ->rawColumns(['action'])
@@ -42,8 +42,8 @@ class HorseBreedController extends Controller
 
     public function edit($id)
     {
-        $horseBreed = HorseBreed::find($id);
-        return response()->json($horseBreed);
+        $item = HorseBreed::find($id);
+        return view('app-owner.horse-setting-breed.edit', compact('item'));
     }
 
     public function store(HorseBreedStore $request, HorseBreed $horseBreed)
@@ -69,7 +69,7 @@ class HorseBreedController extends Controller
         return redirect()->route('app_owner.horse.horse_breed.index');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         HorseBreed::find($request->id)->delete();
         return response()->json();
