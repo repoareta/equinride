@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" id="formHorseSex">
+                <form action="{{ route('app_owner.horse.horse_sex.store') }}" method="POST" id="formHorseSex">
                     @csrf
                     <div class="form-group row">
                         <div class="col-md-6">

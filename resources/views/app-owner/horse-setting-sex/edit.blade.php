@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" id="formHorseSex">
+                <form action="{{ route('app_owner.horse.horse_sex.update') }}" method="POST" id="formHorseSex">
                     @method('PUT')
                     @csrf
                     <input type="hidden" name="id" id="idData">
