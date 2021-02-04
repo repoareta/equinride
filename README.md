@@ -4,49 +4,49 @@ Equinride adalah aplikasi untuk berkuda.
 
 ## Installation
 
-Clone repository ini
+### Clone repository ini
 
 ```bash
 git clone https://github.com/repoareta/equinride.git
 ```
 
-Composer Install
+### Composer Install
 
 ```bash
 composer install
 ```
 
-Buat file .env dan generate key
+### Buat file .env dan generate key
 
 ```bash
 php artisan key:generate
 ```
 
-Migrate Database
+### Migrate Database
 
 ```bash
 php artisan migrate
 ```
 
-Seeder Laravolt
+### Seeder Laravolt
 
 ```bash
 php artisan laravolt:indonesia:seed
 ```
 
-Seeder Horse Breeds
+### Seeder Horse Breeds
 
 ```bash
 pip install foobar
 ```
 
-Seeder Horse Sexes
+### Seeder Horse Sexes
 
 ```bash
 pip install foobar
 ```
 
-Seeder Roles
+### Seeder Roles
 
 ```bash
 pip install foobar
