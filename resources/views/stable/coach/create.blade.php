@@ -46,7 +46,16 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid"/>
+                                <input 
+                                type="text" 
+                                name="birth_date" 
+                                id="datePicker"                                
+                                readonly="readonly" 
+                                autocomplete="off"
+                                placeholder="Select Date"
+                                data-target="#datePicker"
+                                data-toggle="datetimepicker"
+                                class="form-control form-control-lg form-control-solid datetimepicker-input" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -115,7 +124,8 @@
             horizontal: 'left',
             vertical: 'bottom'
         },
-        minDate: new Date()
+        date: new Date(),
+        useCurrent: false
     });
     Dropzone.autoDiscover = false;
     // Dropzone.options.createform = false;	

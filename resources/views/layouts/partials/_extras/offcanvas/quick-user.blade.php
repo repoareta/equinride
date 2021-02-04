@@ -20,7 +20,11 @@
 				<!--begin::Header-->
 				<div class="d-flex align-items-center mt-5">
 					<div class="symbol symbol-100 mr-5">
-						<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_21.jpg')."'" }})"></div>
+						@if (Auth::user()->photo)
+							<div class="symbol-label" style="background-image:url({{ asset(Auth::user()->photo) }})"></div>
+						@else
+							<div class="symbol-label" style="background-image:url({{ "'". asset('assets/media/users/300_21.jpg')."'" }})"></div>
+						@endif
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">
@@ -51,8 +55,7 @@
 							<a 
 								href="{{ route('logout') }}" 
 								class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
-								onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-							>
+								onclick="event.preventDefault();document.getElementById('logout-form').submit();">
 								Sign Out
 							</a>
 

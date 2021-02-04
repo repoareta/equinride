@@ -42,7 +42,7 @@ class RidingClassController extends Controller
                 return $query->where('name', $request->stable_name);
             });
         })
-        ->whereHas('stable.slot', function ($q) use ($request) {
+        ->whereHas('stable.slots', function ($q) use ($request) {
             $q->when(request('date_start'), function ($query) use ($request) {
                 return $query->where('date', $request->date_start);
             });

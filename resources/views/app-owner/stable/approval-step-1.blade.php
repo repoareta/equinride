@@ -244,7 +244,7 @@
             var id = $(this).data('id');
             jQuery.noConflict();
             $('#modalDetail').modal('show');
-        });              
+        });
     } );
 </script>
 @endpush

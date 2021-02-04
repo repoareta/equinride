@@ -31,6 +31,7 @@ use App\Http\Controllers\AppOwner\HorseBreedController;
 use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
+use Illuminate\Console\Scheduling\Schedule;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
@@ -62,8 +63,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER || MEMBER START
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
-        Route::get('/personal-information', [UserController::class, 'personalInformation'])->name('personal_information');
-        Route::put('/personal-information', [UserController::class, 'personalInformationUpdate'])->name('personal_information.update');
+        Route::post('/personal-information/media', [UserController::class, 'storeMedia'])->name('personal_information.media');
+        Route::get('/personal-information', [UserController::class, 'index'])->name('personal_information');
+        Route::put('/personal-information', [UserController::class, 'update'])->name('personal_information.update');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
         Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history');
@@ -143,9 +145,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
-                Route::post('/create', [PackageController::class, 'store'])->name('store');
-                Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
+                Route::post('/create', [ScheduleController::class, 'store'])->name('store');
+                Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
+                Route::put('/{schedule}/edit', [ScheduleController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
         });

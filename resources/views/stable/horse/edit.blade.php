@@ -65,7 +65,17 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid" value="{{ date('D, M d, Y', strtotime($item->birth_date)) }}" />
+                                <input 
+                                type="text" 
+                                name="birth_date" 
+                                id="datePicker"                                
+                                readonly="readonly" 
+                                autocomplete="off"
+                                value="{{ date('D, d M Y', strtotime($item->birth_date)) }}"
+                                placeholder="Select Date"
+                                data-target="#datePicker"
+                                data-toggle="datetimepicker"
+                                class="form-control form-control-lg form-control-solid datetimepicker-input" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -121,14 +131,19 @@
 
 @push('page-scripts')
 <script>
-    $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
+    $(function() {
+
+        $('#datePicker').datetimepicker({
+            format: 'ddd, DD MMM YYYY',
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'bottom'
+            },
+            useCurrent: false
+        });
+        
     });
+    
     Dropzone.autoDiscover = false;
     // Dropzone.options.createform = false;	
     let token = $('meta[name="csrf-token"]').attr('content');
@@ -154,7 +169,7 @@
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
                         if(myDropzone.files == ''){
-                            location.href = "{{ route('stable.package.index') }}";
+                            location.href = "{{ route('stable.horse.index') }}";
                         }
                         $.ajax({
                             type: 'POST',

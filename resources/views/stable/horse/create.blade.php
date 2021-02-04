@@ -74,7 +74,16 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="input-group input-group-lg input-group-solid">
-                                <input type="text" name="birth_date" id="datePicker" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                                <input 
+                                type="text" 
+                                name="birth_date" 
+                                id="datePicker"                                
+                                readonly="readonly" 
+                                autocomplete="off"
+                                placeholder="Select Date"
+                                data-target="#datePicker"
+                                data-toggle="datetimepicker"
+                                class="form-control form-control-lg form-control-solid datetimepicker-input" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
                                 </div>
@@ -118,13 +127,19 @@
 
 @push('page-scripts')
 <script>
-    $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
+    $(function() {
+
+        $('#datePicker').datetimepicker({
+            format: 'ddd, DD MMM YYYY',
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'bottom'
+            },
+            date: new Date(),
+            useCurrent: false
+        });
+
+        // $('#birth_date').val("{{ date('D, d M Y', strtotime(Auth::user()->birth_date)) }}");
     });
     Dropzone.autoDiscover = false;
     // Dropzone.options.createform = false;	

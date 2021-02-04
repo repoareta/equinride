@@ -117,14 +117,6 @@
 
 @push('page-scripts')
 <script>
-    $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
-    });
     Dropzone.autoDiscover = false;
     // Dropzone.options.createform = false;	
     let token = $('meta[name="csrf-token"]').attr('content');
