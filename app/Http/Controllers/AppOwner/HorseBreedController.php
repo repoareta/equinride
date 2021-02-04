@@ -40,6 +40,11 @@ class HorseBreedController extends Controller
         return view('app-owner.horse-setting-breed.index');
     }
 
+    public function create()
+    {
+        return view('app-owner.horse-setting-sex.create');
+    }
+
     public function edit($id)
     {
         $item = HorseBreed::find($id);
