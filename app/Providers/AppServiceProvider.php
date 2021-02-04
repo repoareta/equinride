@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // SHARE STABLE PAGES
         View::composer(['stable.*'], function ($view) {
             //
             $view->with('stable', Auth::user()->stables->first());

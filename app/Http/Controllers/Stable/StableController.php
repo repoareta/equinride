@@ -23,6 +23,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class StableController extends Controller
 {
     use MediaUploadingTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -92,10 +93,21 @@ class StableController extends Controller
      */
     public function edit()
     {
+        $stable = Auth::user()->stables->first();
+
         $provinces = Province::all();
-        $cities = City::all();
-        $districts = District::all();
-        $villages = Village::all();
+
+        $cities    = City::whereHas('province', function ($q) use ($stable) {
+            $q->where('province_id', $stable->province_id);
+        })->get();
+
+        $districts = District::whereHas('city', function ($q) use ($stable) {
+            $q->where('city_id', $stable->city_id);
+        })->get();
+
+        $villages  = Village::whereHas('district', function ($q) use ($stable) {
+            $q->where('district_id', $stable->district_id);
+        })->get();
 
         return view('stable.edit', compact(
             'provinces',
