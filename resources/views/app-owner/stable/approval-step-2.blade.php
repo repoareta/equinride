@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('owner-stable-approval-step-1') }}
+    {{ Breadcrumbs::render('owner-stable-approval-step-2') }}
 @endsection
 
 @push('page-styles')
@@ -52,28 +52,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 1; $i < 20; $i++)
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>Steven Stable</td>
-                                        <td>Steven</td>
-                                        <td>087744779090</td>
-                                        <td>Steven Coa</td>
-                                        <td>2020-06-06</td>
-                                        <td>Pending</td>
-                                        <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="accept" title="Accept">
-                                                <i class='fas fa-check-circle'></i>
-                                            </a>
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="decline" title="Decline">
-                                                <i class='fas fa-ban'></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endfor
                                 </tbody>
                             </table>
                         </div>
@@ -99,22 +77,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 1; $i < 20; $i++)
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>Steven Stable</td>
-                                        <td>Steven</td>
-                                        <td>087744779090</td>
-                                        <td>Steven Coa</td>
-                                        <td>2020-06-06</td>
-                                        <td>Email Sent</td>
-                                        <td nowrap="nowrap">
-                                            <a href="javascript:void(0)" data-id="{{ $i }}" class="btn btn-clean btn-icon mr-2" id="openBtn" title="Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endfor
                                 </tbody>
                             </table>
                         </div>
@@ -200,51 +162,51 @@
         $('#dataTable').DataTable({
             scrollX   : true,
             processing: true,
+            // serverSide: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax      : "{{ route('app_owner.stable.approval.step_2.approved') }}",
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'owner', name: 'owner'},
+                {data: 'contact_person', name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'approval_status', name: 'approval_status'},
+                {data: 'action', name: 'action'},
+            ]
         }); 
 
         $('#dataTableunapprov').DataTable({
             scrollX   : true,
             processing: true,
+            // serverSide: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax      : "{{ route('app_owner.stable.approval.step_2.unapproved') }}",
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'owner', name: 'owner'},
+                {data: 'contact_person', name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'approval_status', name: 'approval_status'},
+                {data: 'action', name: 'action'},
+            ]
         }); 
 
-        $("tbody").on("click","#accept", function(e) {
-                                
-            e.preventDefault();
-                
-            Swal.fire({
-                title: "Are you sure?",
-                icon: "warning",
-                text: "This is will be accepted the stable",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Accept",
-                cancelButtonText: "Cancel",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            })
-        });
-            
-        $("tbody").on("click","#decline", function(e) {
-
-            e.preventDefault();
-                
-            Swal.fire({
-                title: "Are you sure?",
-                icon: "warning",
-                text: "This is will be declined the stable",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Accept",
-                cancelButtonText: "Cancel",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            })
-        });
-        $('body').on( 'click', '#openBtn', function () {
-            var id = $(this).data('id');
-            jQuery.noConflict();
-            $('#modalDetail').modal('show');
-        });              
     } );
 </script>
 @endpush

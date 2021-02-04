@@ -135,7 +135,7 @@
 
                     <ul class="collapse list-unstyled mt-2 {{ Route::is('app_owner.stable.approval.*') ? 'show' : '' }}" id="stableApprovalSubmenu">
                         <li class="navi-item mb-2 pl-3">
-                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_1') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_1') }}">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_1.index') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_1.index') }}">
                                 <span class="navi-icon mr-2">
                                     <i class="fas fa-check-circle"></i>
                                 </span>
@@ -144,7 +144,7 @@
                         </li>
 
                         <li class="navi-item mb-2 pl-3">
-                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2') }}">
+                            <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2.index') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2.index') }}">
                                 <span class="navi-icon mr-2">
                                     <i class="fas fa-check-circle"></i>
                                 </span>

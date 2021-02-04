@@ -165,8 +165,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // STABLE APPROVAL
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
-                Route::get('/step-1', [StableApprovalController::class, 'step_1'])->name('step_1');
-                Route::get('/step-2', [StableApprovalController::class, 'step_2'])->name('step_2');
+
+                Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
+                    Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
+                    Route::get('show/{stable}', [StableApprovalController::class, 'show1'])->name('show');
+                    Route::get('approved', [StableApprovalController::class, 'jsonApproved1'])->name('approved');
+                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable1'])->name('approve');
+                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved1'])->name('unapproved');
+                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable1'])->name('unapprove');
+                });
+
+                Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {                    
+                    Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
+                    Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
+                    Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
+                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
+                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
+                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable2'])->name('unapprove');
+                });
             });
         });
 
@@ -176,7 +192,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // Horse Sex
             Route::group(['prefix' => 'horse-sex', 'as' => 'horse_sex.'], function () {
                 Route::get('/', [HorseSexController::class, 'index'])->name('index');
-                Route::get('list/json', [HorseSexController::class, 'listJson'])->name('list.json');
                 Route::post('store', [HorseSexController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('edit');
                 Route::put('update', [HorseSexController::class, 'update'])->name('update');
@@ -185,8 +200,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // Horse Breed
             Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function () {
-                Route::get('/', [HorseBreedController::class, 'index'])->name('index');
-                Route::get('list/json', [HorseBreedController::class, 'listJson'])->name('list.json');
+                Route::get('/', [HorseBreedController::class, 'index'])->name('index');                
                 Route::post('store', [HorseBreedController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
                 Route::put('update', [HorseBreedController::class, 'update'])->name('update');
@@ -196,8 +210,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
         // Bank Account
         Route::group(['prefix' => 'bank', 'as' => 'bank.'], function () {
-            Route::get('/', [BankPaymentController::class, 'index'])->name('index');
-            route::get('list/json', [BankPaymentController::class, 'listJson'])->name('list.json');
+            Route::get('/', [BankPaymentController::class, 'index'])->name('index');            
             Route::post('store', [BankPaymentController::class, 'store'])->name('store');
             Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('edit');
             Route::put('update', [BankPaymentController::class, 'update'])->name('update');

@@ -14,27 +14,29 @@ use Illuminate\Support\Facades\Auth;
 class HorseSexController extends Controller
 {
     public function index()
-    {        
-        return view('app-owner.horse-setting-sex.index');
-    }
-
-    public function listJson()
     {
-        $data = HorseSex::all();
-        return datatables()->of($data)
-        ->addColumn('horse_name', function ($data) {
-            return $data->name;
-        })->addColumn('action', function ($data) {
-            return 
-            "
-                <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='mr-2' id='editData'>
-                    <i class='fas fa-pen edit-horse pointer-link'></i>                    
-                </a>
-                <i class='fas fa-trash delete-horse pointer-link' data-id='".$data->id."'></i>
-            ";
-        })
-        ->rawColumns(['profile','action'])
-        ->make(true);
+        if(request()->ajax())
+        {
+            $data = HorseSex::all();
+            return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('sex', function ($data) {
+                return $data->name;
+            })->addColumn('action', function ($data) {
+                return 
+                "
+                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='editData'>
+                        <i class='fas fa-pen edit-horse pointer-link'></i>
+                    </a>
+                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2 delete-horse' id='editData'>
+                        <i class='fas fa-trash pointer-link'></i>
+                    </a>
+                ";
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }        
+        return view('app-owner.horse-setting-sex.index');
     }
 
     public function edit($id)
@@ -51,7 +53,7 @@ class HorseSexController extends Controller
         $horsesex->save();
         
         Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('owner.horse-sex');
+        return redirect()->route('app_owner.horse.horse_sex.index');
     }
 
     public function update(HorseSexStore $request, HorseSex $horsesex)
@@ -63,7 +65,7 @@ class HorseSexController extends Controller
         $horsesex->update();
         
         Alert::success('Update Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('owner.horse-sex');
+        return redirect()->route('app_owner.horse.horse_sex.index');
     }
 
     public function delete(Request $request)

@@ -138,21 +138,21 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Capacity of Stable</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="capacity_of_stable" placeholder="Capacity of Stable" value="{{ $stable->capacity_of_stable }}"/>
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="capacity_of_stable" placeholder="Capacity of Stable" value="{{ $stable->capacity_of_stable }}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Capacity of Arena</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="capacity_of_arena" placeholder="Capacity of Arena" value="{{ $stable->capacity_of_arena }}" />
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="capacity_of_arena" placeholder="Capacity of Arena" value="{{ $stable->capacity_of_arena }}" />
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Number of Coach</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="number_of_coach" placeholder="Number of Coach" value="{{ $stable->number_of_coach }}"/>
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="number_of_coach" placeholder="Number of Coach" value="{{ $stable->number_of_coach }}"/>
                         </div>
                     </div>
 
