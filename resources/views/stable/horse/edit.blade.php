@@ -168,9 +168,7 @@
 
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
-                        if(myDropzone.files == ''){
-                            location.href = "{{ route('stable.horse.index') }}";
-                        }
+
                         $.ajax({
                             type: 'POST',
                             url: URL,
@@ -180,6 +178,9 @@
                                     // fetch the useid 
                                     var horseid = result.horseid;
                                     $("#horseid").val(horseid); // inseting horseid into hidden input field
+                                    if(myDropzone.files == ''){
+                                        location.href = "{{ route('stable.horse.index') }}";
+                                    }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{

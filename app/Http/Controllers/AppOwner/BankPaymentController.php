@@ -28,7 +28,7 @@ class BankPaymentController extends Controller
             ->addColumn('action', function ($data) {
                 return 
                 "
-                    <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='editData'>
+                    <a href='". route('app_owner.bank.edit', $data->id) ."' class='btn btn-clean btn-icon mr-2' id='editData'>
                         <i class='fas fa-pen edit-horse pointer-link'></i>
                     </a>
                     <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='deleteData'>
@@ -42,11 +42,10 @@ class BankPaymentController extends Controller
         return view('app-owner.payment-setting-bank.index');
     }
 
-    public function edit($id)
+    public function create()
     {
-        $bankPayment = BankPayment::find($id);
-        return response()->json($bankPayment);
-    }
+        return view('app-wner.payment-setting-bank.create');
+    }    
 
     public function store(BankPaymentStore $request, BankPayment $bankPayment)
     {        
@@ -65,6 +64,12 @@ class BankPaymentController extends Controller
         
         Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('app_owner.bank.index');
+    }
+
+    public function edit($id)
+    {
+        $item = BankPayment::find($id);
+        return view('app-wner.payment-setting-bank.edit', compact('item'));
     }
 
     public function update(BankPaymentStore $request, BankPayment $bankPayment)

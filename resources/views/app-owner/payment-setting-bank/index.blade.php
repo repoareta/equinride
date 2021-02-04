@@ -27,11 +27,12 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Bank Account Management</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting bank</span>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your bank account</span>
                 </div>
+                <a href='{{ route('app_owner.bank.create') }}' class='btn btn-primary ml-5'>Add New +</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -54,10 +55,6 @@
                 </div>
             </div>
             <!--end::Body-->
-            <!-- begin::Modal -->
-            @include('app-owner.payment-setting-bank.create')
-            @include('app-owner.payment-setting-bank.edit')
-            <!--end::Modal-->
         </div>
     </div>
     <!--end::Content-->
@@ -100,8 +97,6 @@
                 },
             ]
         });
-
-        $("#dataTable_filter").append("<button class='btn btn-primary ml-5' data-toggle='modal' data-target='#modalAdd'>Add New +</button>");		
 
 		$('#dataTable tbody').on( 'click', '#deleteData', function (e) {
 			e.preventDefault();
@@ -146,17 +141,6 @@
 			});
 		});
 
-		$('body').on('click', '#editData', function () {
-            var id = $(this).data('id');
-            $.get('{{route('app_owner.bank.index')}}'+'/edit/' + id , function (data) {
-                $('#idData').val(data.id);
-                $('#account_name').val(data.account_name);
-                $('#account_number').val(data.account_number);
-                $('#branch').val(data.branch);
-                jQuery.noConflict();
-                $('#modalEdit').modal('show');
-            })
-        });
     } );
 </script>
 @endpush
