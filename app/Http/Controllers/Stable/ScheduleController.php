@@ -54,7 +54,7 @@ class ScheduleController extends Controller
             return Datatables::of($query)
             ->addIndexColumn()
             ->addColumn('date', function($item){
-                return date('D, M d, Y', strtotime($item->date));
+                return date('D, M d Y', strtotime($item->date));
             })
             ->addColumn('time_start', function ($query) {
                 return date('H:i', strtotime($query->time_start));
