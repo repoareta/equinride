@@ -132,41 +132,41 @@
 
 @push('page-scripts')
 <script>
-    $(function() {
-        $('#province').select2({
-            width:"100%"
-        });
+$(function() {
+    $('#province').select2({
+        width:"100%"
     });
+});
 
-    function ajaxChained(source, target, slug){
-        var pid = $(source + ' option:selected').val(); //$(this).val();
+function ajaxChained(source, target, slug){
+    var pid = $(source + ' option:selected').val(); //$(this).val();
 
-            $.ajax({
-                type: 'POST',
-                url: '{{ url('/') }}/api/'+ slug +'/'+ pid,
-                dataType: 'json',
-                data: { 
-                    id : pid 
-                }
-            }).done(function(response){
-                //get JSON
+    $.ajax({
+        type: 'POST',
+        url: '{{ url('/') }}/api/'+ slug +'/'+ pid,
+        dataType: 'json',
+        data: { 
+            id : pid 
+        }
+    }).done(function(response){
+        //get JSON
 
-                $(target).prop("disabled", true);
+        $(target).prop("disabled", true);
 
-                //generate <options from JSON
-                var list_html = '';
-                list_html += '<option value=""></option>';
-                $.each(response.data, function(i, item) {
-                    list_html += '<option value='+response.data[i].id+'>'+response.data[i].name+'</option>';
-                });
-                
-                //replace <select2 with new options
-                $(target).html(list_html);
-                $(target).prop("disabled", false);
-                //change placeholder text
-                // $(target).select2({placeholder: response.data.length +' results'});
-                $(target).select2({placeholder: 'Select ' + slug});
-            });
-    }
+        //generate <options from JSON
+        var list_html = '';
+        list_html += '<option value=""></option>';
+        $.each(response.data, function(i, item) {
+            list_html += '<option value='+response.data[i].id+'>'+response.data[i].name+'</option>';
+        });
+        
+        //replace <select2 with new options
+        $(target).html(list_html);
+        $(target).prop("disabled", false);
+        //change placeholder text
+        // $(target).select2({placeholder: response.data.length +' results'});
+        $(target).select2({placeholder: 'Select ' + slug});
+    });
+}
 </script>
 @endpush
