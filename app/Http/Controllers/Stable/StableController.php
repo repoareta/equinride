@@ -74,7 +74,6 @@ class StableController extends Controller
             $stable->users()->attach(Auth::user()->id);
         });
         
-
         // SET AS STABLE OWNER ROLE
         Auth::user()->assignRole('stable-owner');
 
@@ -86,10 +85,9 @@ class StableController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Undocumented function
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function edit()
     {

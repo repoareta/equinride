@@ -31,7 +31,6 @@ use App\Http\Controllers\AppOwner\HorseBreedController;
 use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
-use Illuminate\Console\Scheduling\Schedule;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
