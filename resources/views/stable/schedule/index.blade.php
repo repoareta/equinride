@@ -33,7 +33,7 @@
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
                 </div>
                 <div>
-                    <a href='javascript:;' data-toggle='modal' data-target='#modalGenerateSchedule' class='btn btn-primary'>Generate Schedule +</a>
+                    <a href='{{ route('stable.schedule.create') }}' class='btn btn-primary'>Generate Schedule +</a>
                     <a href='#' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>

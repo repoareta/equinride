@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-package-edit') }}
+    {{ Breadcrumbs::render('stable-schedule-edit') }}
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="card-header py-3">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Edit Schedule</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Edit your new schedule</span>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Edit your schedule</span>
                 </div>
             </div>
             <!--end::Header-->

@@ -99,6 +99,14 @@ Breadcrumbs::for('stable-schedule', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Stable Schedule', route('stable.schedule.index'));
 });
+Breadcrumbs::for('stable-schedule-create', function ($trail) {
+    $trail->parent('stable-schedule');
+    $trail->push('Create', route('stable.schedule.create'));
+});
+Breadcrumbs::for('stable-schedule-edit', function ($trail) {
+    $trail->parent('stable-schedule');
+    $trail->push('Edit', route('stable.schedule.edit', 1));
+});
 
 // App Owner
 Breadcrumbs::for('owner-dashboard', function ($trail) {
@@ -117,8 +125,44 @@ Breadcrumbs::for('owner-stable-approval-step-2', function ($trail) {
     $trail->push('Stable Approval Step 2', route('app_owner.stable.approval.step_2.index'));
 });
 
+// App Owner Horse Sex
+Breadcrumbs::for('owner-horse-sex', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Horse Sex', route('app_owner.horse.horse_sex.index'));
+});
+Breadcrumbs::for('owner-horse-sex-create', function ($trail) {
+    $trail->parent('owner-horse-sex');
+    $trail->push('Create', route('app_owner.horse.horse_sex.create'));
+});
+Breadcrumbs::for('owner-horse-sex-edit', function ($trail) {
+    $trail->parent('owner-horse-sex');
+    $trail->push('Edit', route('app_owner.horse.horse_sex.edit', 1));
+});
+
+// App Owner Horse Breed
+Breadcrumbs::for('owner-horse-breed', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Horse Breed', route('app_owner.horse.horse_breed.index'));
+});
+Breadcrumbs::for('owner-horse-breed-create', function ($trail) {
+    $trail->parent('owner-horse-breed');
+    $trail->push('Create', route('app_owner.horse.horse_breed.create'));
+});
+Breadcrumbs::for('owner-horse-breed-edit', function ($trail) {
+    $trail->parent('owner-horse-breed');
+    $trail->push('Edit', route('app_owner.horse.horse_breed.edit', 1));
+});
+
 // App Owner Bank Setting
 Breadcrumbs::for('owner-bank', function ($trail) {
     $trail->parent('owner-dashboard');
     $trail->push('Bank', route('app_owner.bank.index'));
+});
+Breadcrumbs::for('owner-bank-create', function ($trail) {
+    $trail->parent('owner-bank');
+    $trail->push('Create', route('app_owner.bank.create'));
+});
+Breadcrumbs::for('owner-bank-edit', function ($trail) {
+    $trail->parent('owner-bank');
+    $trail->push('Edit', route('app_owner.bank.edit', 1));
 });

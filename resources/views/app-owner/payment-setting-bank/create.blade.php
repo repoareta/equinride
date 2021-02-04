@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-bank-edit') }}
+    {{ Breadcrumbs::render('owner-bank-create') }}
 @endsection
 
 @section('content')
 <div class="d-flex flex-row">
     <!--begin::Aside-->
-    @include('stable._aside')
+    @include('app-owner._aside')
     <!--end::Aside-->
     <!--begin::Content-->
     <div class="flex-row-fluid ml-lg-8">
@@ -22,7 +22,7 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" method="post" name="createform" id="createform" action="{{ route('stable.bank.store') }}" enctype="multipart/form-data">
+            <form class="form" method="post" name="createform" id="createform" action="{{ route('app_owner.bank.store') }}" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Body-->
                 <input type="hidden" class="bankid" name="bankid" id="bankid" value="">
@@ -39,79 +39,26 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Bank Name</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="name"/>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="account_name"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Bank Number</label>
                         <div class="col-lg-9 col-xl-6">
-                            <div class="input-group input-group-lg input-group-solid">
-                                <input 
-                                type="text" 
-                                name="birth_date" 
-                                id="datePicker"                                
-                                readonly="readonly" 
-                                autocomplete="off"
-                                placeholder="Select Date"
-                                data-target="#datePicker"
-                                data-toggle="datetimepicker"
-                                class="form-control form-control-lg form-control-solid datetimepicker-input" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
-                                </div>
-                            </div>
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="account_number"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
-                        <div class="col-9 col-form-label">
-                            <div class="radio-inline">
-                                <label class="radio">
-                                <input type="radio" name="sex" value="Male">
-                                <span></span>Male</label>
-                                <label class="radio">
-                                <input type="radio" name="sex" value="Female">
-                                <span></span>Female</label>														
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Branch</label>
                         <div class="col-lg-9 col-xl-6">
-                            <div class="input-group input-group-lg input-group-solid">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="la la-phone"></i>
-                                    </span>
-                                </div>
-                                <input type="text" name="contact_number" class="form-control form-control-lg form-control-solid" placeholder="Phone" autocomplete="off"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Experience</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <input type="number" name="experience" min="0" class="form-control form-control-lg form-control-solid" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Certified</label>
-                        <div class="col-9 col-form-label">
-                            <div class="radio-inline">
-                                <label class="radio">
-                                <input type="radio" name="certified" value="Yes">
-                                <span></span>Yes</label>
-                                <label class="radio">
-                                <input type="radio" name="certified" value="No">
-                                <span></span>No</label>														
-                            </div>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="branch"/>
                         </div>
                     </div>
                     <div class="row">
                         <label class="col-xl-3"></label>
                         <div class="col-lg-9 col-xl-6">
                             <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Save</button>
-                            <a href="{{ route('stable.bank.index') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
+                            <a href="{{ route('app_owner.bank.index') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
                         </div>
                     </div>
                 </div>
@@ -131,7 +78,7 @@
     let token = $('meta[name="csrf-token"]').attr('content');
     var dz = $("div#dropzoneDragArea").dropzone({
                 paramName: "photo",
-                url: "{{ route('stable.bank.store_img') }}",                
+                url: "{{ route('app_owner.bank.store_img') }}",                
                 addRemoveLinks: true,
                 autoProcessQueue: false,
                 uploadMultiple: false,
@@ -150,9 +97,7 @@
 
                         URL = $("#createform").attr('action');
                         formData = $('#createform').serialize();
-                        if(myDropzone.files == ''){
-                            location.href = "{{ route('app_owner.bank.index') }}";
-                        }
+                        
                         $.ajax({
                             type: 'POST',
                             url: URL,
@@ -162,6 +107,9 @@
                                     // fetch the useid 
                                     var bankid = result.bankid;
                                     $("#bankid").val(bankid); // inseting bankid into hidden input field
+                                    if(myDropzone.files == ''){
+                                        location.href = "{{ route('app_owner.bank.index') }}";
+                                    }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{
@@ -186,5 +134,5 @@
 </script>
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-{!! JsValidator::formRequest('App\Http\Requests\BankStore') !!}
+{!! JsValidator::formRequest('App\Http\Requests\BankPaymentStore') !!}
 @endpush

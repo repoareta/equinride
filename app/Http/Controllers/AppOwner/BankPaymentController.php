@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BankPaymentStore;
 use Illuminate\Http\Request;
 
 // Call Models
@@ -11,7 +10,6 @@ use App\Models\BankPayment;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 class BankPaymentController extends Controller
 {
@@ -44,55 +42,52 @@ class BankPaymentController extends Controller
 
     public function create()
     {
-        return view('app-wner.payment-setting-bank.create');
+        return view('app-owner.payment-setting-bank.create');
     }    
 
-    public function store(BankPaymentStore $request, BankPayment $bankPayment)
+    public function store(Request $request, BankPayment $bankPayment)
     {        
-        $bankPayment->account_number    = $request->account_number;
-        $bankPayment->account_name      = $request->account_name;
-        $bankPayment->branch            = $request->branch;
-        $bankPayment->photo             = $request->photo;
-        if($request->hasFile('photo')){
-            File::delete(public_path($bankPayment->photo));
-            $dir = $request->file('photo')->store('bank_payment/photo', 'public');
-            $bankPayment->photo = 'storage/'.$dir;
-        }
-        $bankPayment->user_id         = Auth::user()->id;    
+        try {
+            
+            $bankPayment->account_number    = $request->account_number;
+            $bankPayment->account_name      = $request->account_name;
+            $bankPayment->branch            = $request->branch;
+            $bankPayment->photo             = $request->photo;
+            $bankPayment->user_id           = Auth::user()->id;    
+    
+            $bankPayment->save();
 
-        $bankPayment->save();
-        
-        Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('app_owner.bank.index');
+            return response()->json(['status'=>"success", 'bankid'=>$bankPayment->id]);
+        } catch (\Exception $e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+        }
     }
 
     public function edit($id)
     {
         $item = BankPayment::find($id);
-        return view('app-wner.payment-setting-bank.edit', compact('item'));
+        return view('app-owner.payment-setting-bank.edit', compact('item'));
     }
 
-    public function update(BankPaymentStore $request, BankPayment $bankPayment)
+    public function update(Request $request, $id)
     {
         // $bankPayment = BankPayment::find($request->id);
-        $bankPayment->account_number    = $request->account_number;
-        $bankPayment->account_name      = $request->account_name;
-        $bankPayment->branch            = $request->branch;
-        $bankPayment->photo             = $request->photo;
-        if ($request->hasFile('photo')) {
-            File::delete(public_path($bankPayment->photo));
-            $dir = $request->file('photo')->store('bank_payment/photo', 'public');
-            $bankPayment->photo = 'storage/'.$dir;
+        try {        
+            $bankPayment                    = BankPayment::find($id);
+            $bankPayment->account_number    = $request->account_number;
+            $bankPayment->account_name      = $request->account_name;
+            $bankPayment->branch            = $request->branch;
+            $bankPayment->photo             = $request->photo;
+            $bankPayment->user_id           = Auth::user()->id;
+            
+            $bankPayment->update();
+            return response()->json(['status'=>"success", 'bankid'=>$bankPayment->id]);
+        } catch (\Exception$e) {
+            return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
         }
-        $bankPayment->user_id         = Auth::user()->id;
-        
-        $bankPayment->update();
-        
-        Alert::success('Update Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('app_owner.bank.index');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         $bankPayment = BankPayment::find($request->id);
         if ($bankPayment->photo) {
@@ -101,5 +96,23 @@ class BankPaymentController extends Controller
         }
         $bankPayment->delete();
         return response()->json();
+    }
+
+    // Store image to database and directory from dropZone
+    public function storeImage(Request $request)
+    {
+        if($request->file('photo')){
+            
+            //here we are geeting bankid align with an image
+            $bank = BankPayment::find($request->bankid);
+            File::delete(public_path($request->photo));
+            $name = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('bank_payment/photo', $name, 'public');
+            $nameDir = 'storage/'.$dir;
+            $bank->photo = $nameDir;
+            $bank->update();
+
+            return response()->json(['status'=>"success",'imgdata'=>$nameDir,'bankid'=>$bank->id]);
+        }
     }
 }

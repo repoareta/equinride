@@ -150,6 +150,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
+                Route::get('/create', [ScheduleController::class, 'create'])->name('create');
                 Route::post('/create', [ScheduleController::class, 'store'])->name('store');
                 Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
                 Route::put('/{schedule}/edit', [ScheduleController::class, 'update'])->name('update');
@@ -233,9 +234,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/', [BankPaymentController::class, 'index'])->name('index');            
             Route::get('create', [BankPaymentController::class, 'create'])->name('create');
             Route::post('create', [BankPaymentController::class, 'store'])->name('store');
+            Route::post('/create/image', [BankPaymentController::class, 'storeImage'])->name('store_img');
             Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('edit');
-            Route::put('update', [BankPaymentController::class, 'update'])->name('update');
-            Route::delete('delete', [BankPaymentController::class, 'delete'])->name('delete');
+            Route::put('update/{id}', [BankPaymentController::class, 'update'])->name('update');
+            Route::delete('delete', [BankPaymentController::class, 'destroy'])->name('destroy');
         });
         
         // Payment Verification

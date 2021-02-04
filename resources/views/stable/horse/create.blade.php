@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-horse-create') }}
+    {{ Breadcrumbs::render('owner-horse-sex-create') }}
 @endsection
 
 @section('content')

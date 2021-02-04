@@ -88,7 +88,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return view('stable.schedule.create');
     }
 
     /**

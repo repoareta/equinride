@@ -112,7 +112,7 @@
 			}).then(function(result) {
 				if (result.value) {
 					$.ajax({
-						url: "{{ route('app_owner.bank.delete') }}",
+						url: "{{ route('app_owner.bank.destroy') }}",
 						type: 'DELETE',
 						dataType: 'json',
 						data: {
