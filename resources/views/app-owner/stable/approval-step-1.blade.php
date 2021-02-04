@@ -237,7 +237,7 @@
                     }else{                        
                         $('#village').html(data[1][3].name);
                     }
-                    $('#logo').attr('src','{{asset("storage/stable/logo/")}}/'+(data[0].logo));
+                    $('#logo').attr('src','{{asset('')}}'+(data[0].logo));
                     $('#approval_status').html(data[0].approval_status);
                     $('#approval_at').html(data[0].approval_at);                    
                     if(data[0].approval_at == null){

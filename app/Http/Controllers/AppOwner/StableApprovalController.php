@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 // load model
@@ -30,7 +31,7 @@ class StableApprovalController extends Controller
             return date('D, M d, Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
-            return $data->approbal_status == 'Email Sent' ?
+            return $data->approval_status == 'Email Sent' ?
                 "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
                     ".$data->approval_status."
                 </span>" : "";
@@ -137,33 +138,35 @@ class StableApprovalController extends Controller
 
     public function approveStable1($id)
     {
-        $data = Stable::find($id);
+        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data2 = Stable::find($data1->stable_id);
 
-        $user = User::where('id', $data->user_id)->first();
-                    $user->notify(new SendKeyStableMail($data));
+        $user = User::where('id', $data1->user_id)->first();
+                    $user->notify(new SendKeyStableMail($data2));
 
-        Stable::where('id', $data->id)->update([
+        Stable::where('id', $data2->id)->update([
             'approval_status' => 'Email Sent', 
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
-        Alert::success($data->name.' Email Sent', 'Success.')->persistent(true)->autoClose(3600);
+        Alert::success($data2->name.' Email Sent', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
     public function unapproveStable1($id)
     {
-        $data = Stable::find($id);
+        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data2 = Stable::find($data1->stable_id);
 
-        $user = User::where('id', $data->user_id)->first();
-                    $user->notify(new StableDecline($data));
-        Stable::where('id', $data->id)->update([
+        $user = User::where('id', $data1->user_id)->first();
+                    $user->notify(new StableDecline($data2));
+        Stable::where('id', $data2->id)->update([
             'approval_status' => 'Decline', 
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
 
-        Alert::success($data->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
+        Alert::success($data2->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
@@ -191,7 +194,7 @@ class StableApprovalController extends Controller
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='" . route('app_owner.stable.approval.step_1.show',$data->user_id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_1.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -209,15 +212,15 @@ class StableApprovalController extends Controller
             return date('D, M d, Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
-            return $data->approbal_status == 'Accepted' ?
-                "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
-                    ".$data->approval_status."
+            return $data->approval_status == 'Email Sent' ?
+                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
+                    Pending second Approval
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='" . route('app_owner.stable.approval.step_1.show',$data->user_id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_1.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -260,8 +263,13 @@ class StableApprovalController extends Controller
 
     public function approveStable2($id)
     {
-        $data = Stable::find($id);
-        Stable::where('id', $data->id)->update([
+        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data2 = Stable::find($data1->stable_id);
+
+        $user = User::where('id', $data1->user_id)->first();
+                    $user->notify(new StableApproveStep2($data2));
+
+        Stable::where('id', $data2->id)->update([
             'approval_status' => 'Accepted', 
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
@@ -278,15 +286,15 @@ class StableApprovalController extends Controller
             ]);
         }
 
-        $user = User::where('id', $data->user_id)->first();
-                    $user->notify(new StableApproveStep2($data));
-        Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
+        $user = User::where('id', $data1->user_id)->first();
+                    $user->notify(new StableApproveStep2($data2));
+        Alert::success($data2->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
     public function unapproveStable2($id)
     {
-        $data = Stable::find($id);
+        $data = DB::table('stable_user')->where('stable_id',$id)->first();
         $user = User::where('id', $data->user_id)->first();
                     $user->notify(new StableDecline($data));                                        
         Stable::where('id', $data->id)->update([
