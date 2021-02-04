@@ -31,16 +31,3 @@
     <!--end::Content-->
 </div>
 @endsection
-
-@push('page-scripts')
-<script>
-    $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
-    });
-</script>
-@endpush

@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Stable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer(['stable.*'], function ($view) {
+            //
+            $view->with('stable', Auth::user()->stables->first());
+        });
     }
 }

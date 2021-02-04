@@ -3,15 +3,26 @@
 namespace App\Http\Controllers\Stable;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\MediaUploadingTrait;
+use App\Models\City;
+use App\Models\District;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
 // load models
 use App\Models\Stable;
+use App\Models\Village;
+use App\Notifications\StableRegisteredToStableOwner;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StableController extends Controller
 {
+    use MediaUploadingTrait;
     /**
      * Display a listing of the resource.
      *
@@ -41,32 +52,36 @@ class StableController extends Controller
      */
     public function registerSubmit(Request $request, Stable $stable)
     {
-        $stable->name           = $request->name;
-        $stable->contact_person = $request->contact_phone_name;
-        $stable->contact_number = $request->contact_phone_number;
-        $stable->address        = $request->address;
-        $stable->province_id    = $request->province;
-        $stable->city_id        = $request->city;
-        $stable->district_id    = $request->district;
-        $stable->village_id     = $request->village;
-        $stable->user_id        = Auth::user()->id;
+        // CREATE STABLE
+        DB::transaction(function () use ($request, $stable) {
+            $key_stable             = Carbon::now()->format('YmdHi');
 
-        $stable->save();
+            $stable->name           = $request->name;
+            $stable->contact_person = $request->contact_phone_name;
+            $stable->contact_number = $request->contact_phone_number;
+            $stable->address        = $request->address;
+            $stable->province_id    = $request->province;
+            $stable->city_id        = $request->city;
+            $stable->district_id    = $request->district;
+            $stable->village_id     = $request->village;
 
-        Auth::user()->syncRoles('stable-owner');
+            $stable->key_stable     = $key_stable;
 
+            $stable->save();
+
+            // INSERT TO PIVOT
+            $stable->users()->attach(Auth::user()->id);
+        });
+        
+
+        // SET AS STABLE OWNER ROLE
+        Auth::user()->assignRole('stable-owner');
+
+        // SEND EMAIL NOTIFICATION
+        Notification::send(Auth::user(), new StableRegisteredToStableOwner($stable));
+
+        Alert::success('Stable Register Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -75,9 +90,19 @@ class StableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $provinces = Province::all();
+        $cities = City::all();
+        $districts = District::all();
+        $villages = Village::all();
+
+        return view('stable.edit', compact(
+            'provinces',
+            'cities',
+            'districts',
+            'villages'
+        ));
     }
 
     /**
@@ -87,19 +112,34 @@ class StableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
-    }
+        $stable = Auth::user()->stables->first();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $stable->name               = $request->name;
+        $stable->contact_person     = $request->contact_phone_name;
+        $stable->contact_number     = $request->contact_phone_number;
+        $stable->address            = $request->address;
+        $stable->province_id        = $request->province;
+        $stable->city_id            = $request->city;
+        $stable->district_id        = $request->district;
+        $stable->village_id         = $request->village;
+        $stable->owner              = $request->owner;
+        $stable->manager            = $request->manager;
+        $stable->capacity_of_stable = $request->capacity_of_stable;
+        $stable->capacity_of_arena  = $request->capacity_of_arena;
+        $stable->number_of_coach    = $request->number_of_coach;
+        $stable->facilities         = $request->facilities;
+
+        if ($request->logo) {
+            // delete old logo
+            File::delete($stable->logo);
+            $stable->logo = $request->logo;
+        }
+
+        $stable->save();
+
+        Alert::success('Stable Profile Update Success.', 'Success')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.edit');
     }
 }

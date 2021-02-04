@@ -6,12 +6,12 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg')}}')"></div>
+                    <div class="symbol-label" style="background-image:url('{{ asset($stable->logo) }}"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
-                        {{ \App\Models\User::find(Auth::id())->stable->name }}
+                        {{ $stable->name }}
                     </a>
                     <div class="mt-2">
                         <span class="label label-inline label-danger font-weight-bold">Pending</span>
@@ -22,16 +22,16 @@
             <!--begin::Contact-->
             <div class="py-9">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">Email:</span>
-                    <a href="#" class="text-muted text-hover-primary">matt@fifestudios.com</a>
+                    <span class="font-weight-bold mr-2">Owner:</span>
+                    <a href="#" class="text-muted text-hover-primary">{{ $stable->owner }}</a>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="font-weight-bold mr-2">Phone:</span>
-                    <span class="text-muted">44(76)34254578</span>
+                    <span class="text-muted">{{ $stable->contact_number }}</span>
                 </div>
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="font-weight-bold mr-2">Location:</span>
-                    <span class="text-muted">Melbourne</span>
+                    <span class="text-muted">{{ $stable->address }}</span>
                 </div>
             </div>
             <!--end::Contact-->
@@ -56,7 +56,9 @@
                         </span>
                         <span class="navi-text">Horse</span>
                         <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">2</span>
+                            <span class="label label-light-info font-weight-bold">
+                                {{ $stable->horses->count() }}
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
@@ -68,7 +70,9 @@
                         </span>
                         <span class="navi-text">Package</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-primary font-weight-bold">Updated</span>
+                            <span class="label label-inline label-light-primary font-weight-bold">
+                                {{ $stable->packages->count() }}
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
@@ -79,9 +83,6 @@
                             <i class="fas fa-calendar-alt"></i>
                         </span>
                         <span class="navi-text">Schedule</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-danger font-weight-bold">New</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -93,7 +94,9 @@
                         </span>
                         <span class="navi-text">Coach</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                            <span class="label label-inline label-light-success font-weight-bold">
+                                {{ $stable->coaches->count() }}
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
@@ -128,26 +131,30 @@
                 <li class="navi-section mt-5 text-primary text-uppercase font-weight-bolder pb-0">Settings</li>
 
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4 {{ Route::is('stable.edit') ? 'active' : '' }}"" href="{{ route('stable.edit') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-hotel"></i>
                         </span>
                         <span class="navi-text">Stable Profile</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                            <span class="label label-inline label-light-success font-weight-bold">
+                                Pending
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
 
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
+                    <a class="navi-link py-4" href="{{ route('stable.admin.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-house-user"></i>
                         </span>
                         <span class="navi-text">Admin Management</span>
                         <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
+                            <span class="label label-inline label-light-success font-weight-bold">
+                                0
+                            </span>
                         </span>
                         <span class="navi-arrow"></span>
                     </a>
