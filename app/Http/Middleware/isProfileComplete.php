@@ -17,14 +17,6 @@ class isProfileComplete
      */
     public function handle(Request $request, Closure $next)
     {
-        // cek apakah sudah punya stable atau belum
-        $stable = optional(Auth::user()->stables)->first();
-
-        // Redirect ke stable dashboard
-        if ($stable) {
-            return redirect()->route('stable.index');
-        }
-
         // cek jika profile user sudah lengkap atau belum
         $user_sex = Auth::user()->sex;
         $user_birthdate = Auth::user()->birth_date;

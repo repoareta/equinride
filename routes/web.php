@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // STABLE START
     Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
-        Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete');
+        Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete', 'isHasStable');
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
                 
         // ONLY STABLE OWNER HAD ACCESS
