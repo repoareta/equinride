@@ -21,6 +21,7 @@ use App\Http\Controllers\Stable\HorseController;
 use App\Http\Controllers\Stable\CoachController;
 use App\Http\Controllers\Stable\PackageController;
 use App\Http\Controllers\Stable\ScheduleController;
+use App\Http\Controllers\Stable\AdminController as StableAdminController;
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN END
 
@@ -86,7 +87,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // STABLE START
     Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
-        Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete');
+        Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete', 'isHasStable');
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
                 
         // ONLY STABLE OWNER HAD ACCESS
@@ -100,7 +101,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('/', [StableAdminController::class, 'index'])->name('index');
                 Route::get('/create', [StableAdminController::class, 'create'])->name('create');
-                Route::get('/{admin}/edit', [StableAdminController::class, 'edit'])->name('edit');
+                Route::get('/{user}/edit', [StableAdminController::class, 'edit'])->name('edit');
                 Route::get('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
             });
         });
