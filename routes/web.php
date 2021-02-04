@@ -93,8 +93,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner']], function () {
             // STABLE EDIT
-            Route::get('/profile-edit', [StableController::class, 'edit'])->name('edit');
-            Route::post('/profile-edit/media', [StableController::class, 'storeMedia'])->name('edit.media');
+            Route::get('/edit', [StableController::class, 'edit'])->name('edit');
+            Route::post('/edit/media', [StableController::class, 'storeMedia'])->name('edit.media');
             Route::put('/update', [StableController::class, 'update'])->name('update');
             
             //STABLE ADMIN CRUD
