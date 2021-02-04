@@ -146,6 +146,16 @@
                 </li>
 
                 <li class="navi-item mb-2">
+                    <a class="navi-link py-4 {{ Route::is('stable.withdraw.setting') ? 'active' : '' }}"" href="{{ route('stable.withdraw.setting') }}">
+                        <span class="navi-icon mr-2">
+                            <i class="fas fa-vote-yea"></i>
+                        </span>
+                        <span class="navi-text">Withdrawal</span>
+                        <span class="navi-arrow"></span>
+                    </a>
+                </li>
+
+                <li class="navi-item mb-2">
                     <a class="navi-link py-4" href="{{ route('stable.admin.index') }}">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-house-user"></i>

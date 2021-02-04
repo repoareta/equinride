@@ -22,6 +22,7 @@ use App\Http\Controllers\Stable\CoachController;
 use App\Http\Controllers\Stable\PackageController;
 use App\Http\Controllers\Stable\ScheduleController;
 use App\Http\Controllers\Stable\AdminController as StableAdminController;
+use App\Http\Controllers\Stable\WithdrawController;
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN END
 
@@ -151,6 +152,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
                 Route::put('/{schedule}/edit', [ScheduleController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
+            });
+
+            // STABLE WITHDRAW
+            Route::group(['prefix' => 'withdraw', 'as' => 'withdraw.'], function () {
+                Route::get('/', [WithdrawController::class, 'index'])->name('index');
+                Route::post('/store', [WithdrawController::class, 'store'])->name('store');
+
+                // SETTINGS
+                Route::get('/settings', [WithdrawController::class, 'withdrawSetting'])->name('setting');
+                Route::post('/settings-store', [WithdrawController::class, 'withdrawSettingStore'])->name('setting.store');
             });
         });
     });
