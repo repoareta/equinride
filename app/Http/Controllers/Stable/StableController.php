@@ -53,7 +53,7 @@ class StableController extends Controller
 
         $stable->save();
 
-        Auth::user()->syncRoles('stable-owner');
+        Auth::user()->assignRole('stable-owner');
 
         return redirect()->route('stable.index');
     }

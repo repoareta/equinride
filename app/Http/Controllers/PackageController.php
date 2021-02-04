@@ -81,6 +81,11 @@ class PackageController extends Controller
         }])
         ->firstOrFail();
 
+        // CEK BOOKED CAPACITY IN STABLE SLOT
+        // IF BOOKED CAPACITY > CAPACITY
+        // THEN REDIRECT TO RIDING-CLASS SEARCH
+        // ADD INFO IF SCHEDULE IS FULLY BOOKED
+
         $bank_payment = BankPayment::find($request->bank_payment_id);
 
         // CREATE BOOKING

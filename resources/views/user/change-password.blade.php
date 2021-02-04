@@ -37,7 +37,7 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </div>
-                        <div class="alert-text font-weight-bold">Warning! The changed password can't be used to log in anymore</div>
+                        <div class="alert-text font-weight-bold">Warning! The old password can't be used to log in anymore.</div>
                         <div class="alert-close">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">
@@ -53,19 +53,19 @@
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
                             <div class="col-lg-9 col-xl-6">
-                                <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" value="" placeholder="Current password">                            
+                                <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" placeholder="Current password">                            
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
                             <div class="col-lg-9 col-xl-6">
-                                <input type="password" class="form-control form-control-lg form-control-solid" name="password" value="" placeholder="New password">
+                                <input type="password" class="form-control form-control-lg form-control-solid" name="password" placeholder="New password">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
+                            <label class="col-xl-3 col-lg-3 col-form-label text-alert">Confirm New Password</label>
                             <div class="col-lg-9 col-xl-6">
-                                <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Confirm new password">
+                                <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" placeholder="Confirm new password">
                             </div>
                         </div>
                         <div class="row">
@@ -83,15 +83,3 @@
     <!--end::Content-->
 </div>
 @endsection
-
-@push('page-scripts')
-<script>
-    $('#datePicker').datepicker({
-        todayHighlight: true,
-        orientation: "bottom left",
-        autoclose: true,
-        // language : 'id',
-        format   : 'yyyy-mm-dd'
-    });
-</script>
-@endpush
