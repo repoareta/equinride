@@ -23,7 +23,7 @@ class PackageController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
             $query = Package::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -110,7 +110,7 @@ class PackageController extends Controller
     {    
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
 
             $package->name            = $request->name;
             $package->package_number  = $request->package_number;
@@ -165,7 +165,7 @@ class PackageController extends Controller
     {
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
             
             $package->name            = $request->name;
             $package->package_number  = $request->package_number;

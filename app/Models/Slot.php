@@ -12,7 +12,7 @@ class Slot extends Model
     /**
     * Get the owner of package
     */
-    protected $fillable=['user_id','date','time_start', 'time_end','capacity','capacity_booked'];
+    protected $fillable=['user_id','date','time_start', 'time_end','capacity','capacity_booked','stable_id'];
     
     public function package()
     {

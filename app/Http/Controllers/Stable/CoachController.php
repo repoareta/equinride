@@ -23,7 +23,7 @@ class CoachController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
             $query = Coach::where('user_id', $stable->user_id)->get();
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -86,7 +86,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;
@@ -139,7 +139,7 @@ class CoachController extends Controller
     {
         try {
             // Check Stable
-            $stable = DB::table('stable_user')->where('user_id', Auth::user()->id)->first();
+            $stable = Auth::user()->stables->first()->pivot;
 
             $coach->name            = $request->name;            
             $coach->birth_date      = $request->birth_date;
