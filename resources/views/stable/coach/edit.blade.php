@@ -17,7 +17,7 @@
             <div class="card-header py-3">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Create Bank</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Create your new bank</span>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Create your bank</span>
                 </div>
             </div>
             <!--end::Header-->
