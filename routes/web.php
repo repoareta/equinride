@@ -31,6 +31,7 @@ use App\Http\Controllers\AppOwner\HorseBreedController;
 use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
+use Illuminate\Console\Scheduling\Schedule;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
@@ -146,9 +147,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE SCHEDULE
             Route::group(['prefix' => 'schedule', 'as' => 'schedule.'], function () {
                 Route::get('/', [ScheduleController::class, 'index'])->name('index');
-                Route::post('/create', [PackageController::class, 'store'])->name('store');
-                Route::get('/{package}/edit', [PackageController::class, 'edit'])->name('edit');
-                Route::put('/{pacakge}/edit', [PackageController::class, 'update'])->name('update');
+                Route::post('/create', [ScheduleController::class, 'store'])->name('store');
+                Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
+                Route::put('/{schedule}/edit', [ScheduleController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
             });
         });

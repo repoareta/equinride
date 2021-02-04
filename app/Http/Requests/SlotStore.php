@@ -24,8 +24,9 @@ class SlotStore extends FormRequest
     public function rules()
     {
         return [
-            'date_start' => 'required',
-            'date_end'   => 'required',
+            'date' => 'required|before:today',
+            'time_start'   => 'required',
+            'time_end'   => 'required',
             'capacity'   => 'required',
         ];
     }
