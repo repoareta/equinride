@@ -133,14 +133,6 @@
 @push('page-scripts')
 <script>
     $(function() {
-        $('#datePicker').datepicker({
-        todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            // language : 'id',
-            format   : 'yyyy-mm-dd'
-        });
-
         $('#province').select2({
             width:"100%"
         });
