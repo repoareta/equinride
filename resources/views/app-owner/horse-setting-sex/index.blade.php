@@ -23,11 +23,12 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Horse Sex Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting horse sex</span>
                 </div>
+                <a href='{{ route('app_owner.horse.horse_sex.create') }}' class='btn btn-primary ml-5'>Add New +</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -89,7 +90,8 @@
 
 		$('#dataTable tbody').on( 'click', '#deleteData', function (e) {
 			e.preventDefault();
-			var id = $(this).attr('data-id');
+            var id = $(this).attr('data-id');
+            console.log(id);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "You won't be able to revert this!" ,

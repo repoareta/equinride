@@ -23,11 +23,12 @@
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <!--begin::Header-->
-            <div class="card-header py-3">
+            <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Horse Breed Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting horse breed</span>
                 </div>
+                <a href='{{ route('app_owner.horse.horse_breed.create') }}' class='btn btn-primary ml-5'>Add New +</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -47,10 +48,6 @@
                 </div>
             </div>
             <!--end::Body-->
-            <!-- begin::Modal -->
-            @include('app-owner.horse-setting-breed.create')
-            @include('app-owner.horse-setting-breed.edit')
-            <!--end::Modal-->
         </div>
     </div>
     <!--end::Content-->
@@ -81,7 +78,7 @@
                     orderable: false, 
                     searchable: false
                 },
-                {data: 'sex', name: 'sex'},
+                {data: 'breed', name: 'breed'},
                 {
                     data: 'action',
                     name: 'action',
@@ -90,8 +87,6 @@
                 },
             ]
         });
-
-        $("#dataTable_filter").append("<button class='btn btn-primary ml-5' data-toggle='modal' data-target='#modalAdd'>Add New +</button>");		
 
 		$('#dataTable tbody').on( 'click', '#deleteData', function (e) {
 			e.preventDefault();
@@ -107,7 +102,7 @@
 			}).then(function(result) {
 				if (result.value) {
 					$.ajax({
-						url: "{{ route('app_owner.horse.horse_sex.delete') }}",
+						url: "{{ route('app_owner.horse.horse_breed.delete') }}",
 						type: 'DELETE',
 						dataType: 'json',
 						data: {
@@ -135,16 +130,6 @@
 				}
 			});
 		});
-
-        $('body').on('click', '#editData', function () {
-            var id = $(this).data('id');
-            $.get('{{route('app_owner.horse.horse_sex.index')}}'+'/edit/' + id , function (data) {
-                $('#idData').val(data.id);
-                $('#name').val(data.name);
-                jQuery.noConflict();
-                $('#modalEdit').modal('show');
-            })
-        });
     } );
 </script>
 @endpush

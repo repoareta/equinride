@@ -28,7 +28,7 @@ class HorseSexController extends Controller
                     <a href='". route('app_owner.horse.horse_sex.edit', $data->id) ."' class='btn btn-clean btn-icon mr-2' id='editData'>
                         <i class='fas fa-pen edit-horse pointer-link'></i>
                     </a>
-                    <a href='javascript:void(0)' class='btn btn-clean btn-icon mr-2' id='deleteData'>
+                    <a href='javascript:void(0)' class='btn btn-clean btn-icon mr-2' data-id=".$data->id." id='deleteData'>
                         <i class='fas fa-trash pointer-link'></i>
                     </a>
                 ";
@@ -73,9 +73,9 @@ class HorseSexController extends Controller
         return redirect()->route('app_owner.horse.horse_sex.index');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         HorseSex::find($request->id)->delete();
-        return response()->json();
+        return response()->json('success');
     }
 }

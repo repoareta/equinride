@@ -214,7 +214,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::post('create', [HorseSexController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('edit');
                 Route::put('edit/{id}', [HorseSexController::class, 'update'])->name('update');
-                Route::delete('delete', [HorseSexController::class, 'delete'])->name('delete');
+                Route::delete('delete', [HorseSexController::class, 'destroy'])->name('delete');
             });
 
             // HORSE BREED
@@ -224,7 +224,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::post('create', [HorseBreedController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
                 Route::put('edit/{id}', [HorseBreedController::class, 'update'])->name('update');
-                Route::delete('delete', [HorseBreedController::class, 'delete'])->name('delete');
+                Route::delete('delete', [HorseBreedController::class, 'destroy'])->name('delete');
             });
         });
 
