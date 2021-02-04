@@ -58,7 +58,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">City</label>
                         <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" id="city" name="city" onchange="ajaxChained('#city','#district','district')">
+                            <select class="form-control form-control-lg form-control-solid" id="city" name="city" onchange="ajaxChained('#city','#district','district')" disabled>
                                 <option value="">Select city</option>
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}" @if($city->id == $stable->city_id) selected @endif>{{ $city->name }}</option>
@@ -70,7 +70,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">District</label>
                         <div class="col-lg-9 col-xl-6">
-                            <select class="form-control form-control-lg form-control-solid" id="district" name="district" onchange="ajaxChained('#district','#village','village')">
+                            <select class="form-control form-control-lg form-control-solid" id="district" name="district" onchange="ajaxChained('#district','#village','village')" disabled>
                                 <option value="">Select district</option>
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}" @if($district->id == $stable->district_id) selected @endif>{{ $district->name }}</option>
@@ -138,21 +138,21 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Capacity of Stable</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="capacity_of_stable" placeholder="Capacity of Stable" value="{{ $stable->capacity_of_stable }}"/>
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="capacity_of_stable" placeholder="Capacity of Stable" value="{{ $stable->capacity_of_stable }}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Capacity of Arena</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="capacity_of_arena" placeholder="Capacity of Arena" value="{{ $stable->capacity_of_arena }}" />
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="capacity_of_arena" placeholder="Capacity of Arena" value="{{ $stable->capacity_of_arena }}" />
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Number of Coach</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="number_of_coach" placeholder="Number of Coach" value="{{ $stable->number_of_coach }}"/>
+                            <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="number_of_coach" placeholder="Number of Coach" value="{{ $stable->number_of_coach }}"/>
                         </div>
                     </div>
 
