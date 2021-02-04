@@ -33,7 +33,7 @@
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
                 </div>
                 <div>
-                    <a href='{{ route('stable.coach.create') }}' class='btn btn-primary'>Add New +</a>
+                    <a href='javascript:;' data-toggle='modal' data-target='#modalGenerateSchedule' class='btn btn-primary'>Generate Schedule +</a>
                     <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
@@ -99,12 +99,12 @@
                             date_default_timezone_set('Asia/Jakarta');
                             $time = date('H:i');
                         @endphp
-                        <form action="" class="repeater" method="POST">
+                        <form action="{{ route('stable.schedule.store') }}" class="repeater" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <div class="col-11">
                                     <label>Date</label>
-                                    <div class="input-daterange input-group date_range">
+                                    <div class="input-daterange input-group date_range" id="date_range">
                                         <input type="text" class="form-control" name="start" autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
@@ -155,63 +155,6 @@
             </div>
         </div>
         
-        <!-- Modal Edit Schedule -->
-        <div class="modal fade" id="modalPackageEdit"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h4 class="title-text " id="title_modal" data-state="add">
-                            EDIT SCHEDULE
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @php
-                            date_default_timezone_set('Asia/Jakarta');
-                            $time = date('H:i');
-                        @endphp
-                        <form action="" method="POST">
-                            @csrf
-                            <div class="form-group row">
-                                <div class="col-11">
-                                    <label>Date</label>
-                                    <input type="hidden" class="form-control" name="slot_id" id="slot_id">
-                                    <div class="input-daterange input-group date_range">
-                                        <input type="text" class="form-control" name="start" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="la la-ellipsis-h"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" name="end" autocomplete="off">
-                                    </div>
-                                </div>	
-                            </div>	
-                            <div class="form-group row">											
-                                <div class="col-4">
-                                    <label>Time Start</label>
-                                    <input type="text" class="form-control" name="time1" maxlength="5" id="timePickerGen1">
-                                </div>																								
-                                <div class="col-4">
-                                    <label>Time End</label>
-                                    <input type="text" class="form-control" name="time2" maxlength="5" id="timePickerGen2">
-                                </div>
-                                <div class="col-3">
-                                    <label>Capacity</label>
-                                    <input type="text" class="form-control" name="capacity" id="capacity">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">											                            
-                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>  
     <!--end::Content-->
 </div>
@@ -243,7 +186,7 @@
                     snapToStep: !0
                 }
             );
-        });
+        });        
         $('.mt-repeater-add').click(function(){
             $("input[id=timePickerGen1]").each(function () {
                 $(this).timepicker(
@@ -286,66 +229,22 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         //jalankan function load_data diawal agar data ter-load
         load_data();
         $('#date_range_filter').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
             autoclose: true,
-            format: {
-                /*
-                * Say our UI should display a week ahead,
-                * but textbox should store the actual date.
-                * This is useful if we need UI to select local dates,
-                * but store in UTC
-                */
-                toDisplay: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-
-                    return d.toLocaleDateString('default', { 
-                        weekday: 'short', 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: '2-digit' 
-                    });
-                },
-                toValue: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-                    return new Date(d);
-                }
-            }
+            // language : 'id',
+            format   : 'D, M d, yyyy'
         });
         $('#date_range').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
             autoclose: true,
-            format: {
-                /*
-                * Say our UI should display a week ahead,
-                * but textbox should store the actual date.
-                * This is useful if we need UI to select local dates,
-                * but store in UTC
-                */
-                toDisplay: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-
-                    return d.toLocaleDateString('default', { 
-                        weekday: 'short', 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: '2-digit' 
-                    });
-                },
-                toValue: function (date, format, language) {
-                    var d = new Date(date);
-                    d.setDate(d.getDate());
-                    return new Date(d);
-                }
-            }
+            // language : 'id',
+            format   : 'D, M d, yyyy',
+            startDate: new Date(),
         });
         $('#filter').click(function () {
             var from_date = $('#from_date').val(); 
@@ -369,7 +268,7 @@
                 orientation: "bottom left",
                 autoclose: true,
                 // language : 'id',
-                format   : 'yyyy-mm-dd'
+                format   : 'D, M d, yyyy'
             });
             load_data();
         });
@@ -385,7 +284,9 @@
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
                 },
                 ajax: {
-                    url : '{!! url()->current() !!}'
+                    url : '{!! url()->current() !!}',
+                    type: 'GET',
+                    data:{from_date:from_date, end_date:end_date} //jangan lupa kirim parameter tanggal 
                 },          
                 columns: [
                         {data: 'date', name: 'date', orderable: false, searchable: false},
@@ -425,30 +326,9 @@
                 var name = $(this).data('name');
                 collapsedGroups[name] = !collapsedGroups[name];
                 t.draw(false);
-            });  
+            });         
         
-            $('#openDetail').click(function(e) {
-                e.preventDefault();
-                $('#modalAddPackage').modal('show');
-                $('#title_modal').data('state', 'add');
-                $(this).find('form').trigger('reset');
-            });        
-        
-            $("body").on("click","#add-more",function(){ 
-                $("#sess1").attr('disabled', false);
-                $("#sess2").attr('disabled', false);
-                var html = $("#copy").html();
-                $("#after-add-more").after(html);
-            });
-        
-            // saat tombol remove dklik control group akan dihapus 
-            $("body").on("click","#remove",function(){ 
-                $(this).parents(".form-group").remove();
-                // $("#sess1").attr('disabled', true);
-                // $("#sess2").attr('disabled', true);
-            });+        
-        
-            $('#dataTable tbody').on( 'click', '.delete-slot', function (e) {
+            $('#dataTable tbody').on( 'click', '#deleteSlot', function (e) {
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 Swal.fire({
@@ -471,7 +351,7 @@
                             },
                             success: function () {
                                 Swal.fire({
-                                    title: "Delete Data package",
+                                    title: "Delete Data Schedule",
                                     text: "success",
                                     icon: "success",
                                     buttonsStyling: false,
@@ -489,27 +369,11 @@
                         });
                     }
                 });
-            });
-        
-            $('#dataTable tbody').on( 'click', '.edit-package', function (e) {
-                e.preventDefault();
-                var id = $(this).attr('data-id');
-                location.replace("{{url('package/edit')}}"+ '/' +id);
-            });
-
-            $('#date').datepicker({
-                todayHighlight: true,
-                orientation: "bottom left",
-                autoclose: true,
-                // language : 'id',
-                format   : 'yyyy-mm-dd'
-            });
+            });                    
         }    
         
     } );   
 </script>
-<!--Start::dataTable-->
-<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script src="{{ asset('assets/js/pages/crud/datatables/advanced/row-grouping.js') }}"></script>
-<!--End::dataTable-->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\SlotStore') !!}
 @endpush
