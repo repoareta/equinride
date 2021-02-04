@@ -49,26 +49,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 1; $i < 4; $i++)
-                            <tr>
-                                <td>{{ $i }}</td>
-                                <td>1213914198741</td>
-                                <td>Steven</td>
-                                <td>BCA</td>
-                                <td>
-                                    <img src="{{ asset('assets/media/branchsto/bca-logo.png') }}" style="max-width: 200px">
-                                </td>
-                                <td nowrap="nowrap">
-                                    <a href="javascript:;" data-id="{{ $i }}" id="editData" class="btn btn-clean btn-icon mr-2" title="Edit details">
-                                        <i class="la la-edit icon-xl"></i>
-                                    </a>
-
-                                    <a href="javascript:;" class="btn btn-clean btn-icon mr-2" title="Delete details" id="deleteData" data-id="{{ $i }}">
-                                        <i class="la la-trash icon-lg"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endfor
                         </tbody>
                     </table>
                 </div>
@@ -93,7 +73,32 @@
     $(document).ready( function () {
         var t = $('#dataTable').DataTable({
 			scrollX   : true,
-            processing: true
+            processing: true,
+            ordering: true,
+            serverSide: true,
+            ajax: {
+                url : '{!! url()->current() !!}'
+            },
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'account_number', name: 'account_number'},
+                {data: 'account_name', name: 'account_name'},
+                {data: 'branch', name: 'branch'},
+                {data: 'photo', name: 'photo'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: 'false',
+                    searchable: 'false',
+                },
+            ]
         });
 
         $("#dataTable_filter").append("<button class='btn btn-primary ml-5' data-toggle='modal' data-target='#modalAdd'>Add New +</button>");		
@@ -109,14 +114,48 @@
 				confirmButtonColor: '#141D31',
 				showCancelButton: true,
 				reverseButtons: true
-			})
+			}).then(function(result) {
+				if (result.value) {
+					$.ajax({
+						url: "{{ route('app_owner.bank.delete') }}",
+						type: 'DELETE',
+						dataType: 'json',
+						data: {
+							"id": id,
+							"_token": "{{ csrf_token() }}",
+						},
+						success: function () {
+							Swal.fire({
+								title: "Delete Data Bank",
+								text: "success",
+								icon: "success",
+								buttonsStyling: false,
+								confirmButtonText: "Ok",
+								customClass: {
+									confirmButton: "btn btn-dark"
+								}
+							}).then(function() {
+								location.reload();
+							});
+						},
+						error: function () {
+							alert("An error occurred, please try again later.");
+						}
+					});
+				}
+			});
 		});
 
 		$('body').on('click', '#editData', function () {
             var id = $(this).data('id');
-
-            jQuery.noConflict();
-            $('#modalEdit').modal('show');
+            $.get('{{route('app_owner.bank.index')}}'+'/edit/' + id , function (data) {
+                $('#idData').val(data.id);
+                $('#account_name').val(data.account_name);
+                $('#account_number').val(data.account_number);
+                $('#branch').val(data.branch);
+                jQuery.noConflict();
+                $('#modalEdit').modal('show');
+            })
         });
     } );
 </script>

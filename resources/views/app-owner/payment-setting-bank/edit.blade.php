@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" id="formBank" enctype="multipart/form-data">
+                <form action="{{ route('app_owner.bank.update') }}" method="POST" id="formBank" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <input type="hidden" name="id" id="idData">
@@ -29,7 +29,7 @@
                         </div>								
                         <div class="col-md-6 mb-3">
                             <label>Photo</label>
-                            <input type="file" class="form-control" name="photo" id="photo">
+                            <input type="file" class="form-control" name="photo">
                         </div>								
                     </div>
                     <button type="submit" class="btn btn-primary font-weight-bold float-right">UPDATE</button>

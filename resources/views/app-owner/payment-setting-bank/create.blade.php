@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" id="formBank" enctype="multipart/form-data">
+                <form action="{{ route('app_owner.bank.store') }}" method="POST" id="formBank" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <div class="col-md-6 mb-3">

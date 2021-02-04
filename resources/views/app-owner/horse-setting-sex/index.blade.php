@@ -116,7 +116,7 @@
 						},
 						success: function () {
 							Swal.fire({
-								title: "Delete Data Horse",
+								title: "Delete Data",
 								text: "success",
 								icon: "success",
 								buttonsStyling: false,
