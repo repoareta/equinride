@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-{{ Breadcrumbs::render('owner-stable-approval-step-1') }}
+{{ Breadcrumbs::render('owner-horse-breed-edit') }}
 @endsection
 
 @section('content')

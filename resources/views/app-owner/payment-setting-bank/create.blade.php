@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('owner-bank') }}
+    {{ Breadcrumbs::render('owner-bank-create') }}
 @endsection
 
 @section('content')
