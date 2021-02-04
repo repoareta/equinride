@@ -4,21 +4,36 @@ Equinride adalah aplikasi untuk berkuda.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Clone repository ini
 
 ```bash
 pip install foobar
 ```
 
-## Usage
+Seeder Laravolt
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+```bash
+pip install foobar
 ```
+
+Seeder Horse Breeds
+
+```bash
+pip install foobar
+```
+
+Seeder Horse Sexes
+
+```bash
+pip install foobar
+```
+
+Seeder Roles
+
+```bash
+pip install foobar
+```
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -26,4 +41,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+not for commercial
