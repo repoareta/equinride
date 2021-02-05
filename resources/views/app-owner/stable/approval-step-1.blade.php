@@ -91,7 +91,7 @@
                     <div class="modal-content">
                         <div class="modal-header ">
                             <h4 class="title-text " id="title_modal" data-state="add">
-                                DETAIL STABLE
+                                Detail Stable
                             </h4>
                         </div>
                         <div class="modal-body">
