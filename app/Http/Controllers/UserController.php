@@ -86,7 +86,7 @@ class UserController extends Controller
     public function orderHistory()
     {
         $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
-        ->orderBy('id', 'ASC')->get();
+        ->orderBy('created_at', 'DESC')->get();
         if (request()->ajax()) {
             return Datatables::of($query)
                 ->addIndexColumn()
