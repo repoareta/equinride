@@ -32,56 +32,117 @@
             <!--end::Header-->
             <!--begin::Body-->
             <div class="card-body">
-                <div class="card mb-5">
-                    <div class="card-header py-3">
-                        <h4 class="font-weight-bolder text-dark mb-0">Unapproved</h4>
+                <div class="card card-custom">
+                    <div class="card-header card-header-tabs-line">
+                     <div class="card-toolbar">
+                      <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                       <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
+                        <span class="nav-icon"><i class="fas fa-spinner"></i></span>
+                        <span class="nav-text">Pending</span>
+                        </a>
+                       </li>
+                       <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                        <span class="nav-icon"><i class="fas fa-check-circle"></i></span>
+                        <span class="nav-text">Approved</span>
+                        </a>
+                       </li>
+                       <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                        <span class="nav-icon"><i class="fas fa-ban"></i></span>
+                        <span class="nav-text">Unpproved</span>
+                        </a>
+                       </li>
+                      </ul>
+                     </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive mb-5">
-                            <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableunapprov">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Stable Name</th>
-                                    <th scope="col">Owner</th>													
-                                    <th scope="col">Contact Person</th>													
-                                    <th scope="col">Contact Number</th>													
-                                    <th scope="col">Date Created</th>											
-                                    <th scope="col">Status</th>											
-                                    <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>                                    
-                                </tbody>
-                            </table>
+                     <div class="tab-content">
+                      <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
+                        <div class="card mb-5">
+                            <div class="card-header py-3">
+                                <h4 class="font-weight-bolder text-dark mb-0">Pending</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive mb-5">
+                                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTablePending">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Stable Name</th>
+                                            <th scope="col">Owner</th>													
+                                            <th scope="col">Contact Person</th>													
+                                            <th scope="col">Contact Number</th>													
+                                            <th scope="col">Date Created</th>											
+                                            <th scope="col">Status</th>											
+                                            <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card mb-5">
-                    <div class="card-header py-3">                    
-                        <h4 class="font-weight-bolder text-dark mb-0">Approved</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive mb-5">
-                            <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Stable Name</th>
-                                    <th scope="col">Owner</th>													
-                                    <th scope="col">Contact Person</th>													
-                                    <th scope="col">Contact Number</th>													
-                                    <th scope="col">Date Created</th>											
-                                    <th scope="col">Status</th>											
-                                    <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                      </div>
+                      <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
+                        <div class="card mb-5">
+                            <div class="card-header py-3">                    
+                                <h4 class="font-weight-bolder text-dark mb-0">Approved</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive mb-5">
+                                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableApproved">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Stable Name</th>
+                                            <th scope="col">Owner</th>													
+                                            <th scope="col">Contact Person</th>													
+                                            <th scope="col">Contact Number</th>													
+                                            <th scope="col">Date Created</th>											
+                                            <th scope="col">Status</th>											
+                                            <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+                      </div>
+                      <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
+                        <div class="card mb-5">
+                            <div class="card-header py-3">                    
+                                <h4 class="font-weight-bolder text-dark mb-0">Unapproved</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive mb-5">
+                                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableUnapproved">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Stable Name</th>
+                                            <th scope="col">Owner</th>													
+                                            <th scope="col">Contact Person</th>													
+                                            <th scope="col">Contact Number</th>													
+                                            <th scope="col">Date Created</th>											
+                                            <th scope="col">Status</th>											
+                                            <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>      
+                      </div>
+                     </div>
                     </div>
-                </div>
+                </div>                
             </div>
             <!--end::Body-->
 
@@ -156,7 +217,31 @@
 <!--End::dataTable-->
 <script type="text/javascript">
     $(document).ready( function () {
-        $('#dataTable').DataTable({
+        $('#dataTablePending').DataTable({
+            scrollX   : true,
+            processing: true,
+            // serverSide: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax      : "{{ route('app_owner.stable.approval.step_1.pending') }}",
+            columns: [
+                {
+                    "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'owner', name: 'owner'},
+                {data: 'contact_person', name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'approval_status', name: 'approval_status'},
+                {data: 'action', name: 'action'},
+            ]
+        });
+
+        $('#dataTableApproved').DataTable({
             scrollX   : true,
             processing: true,
             // serverSide: true,
@@ -180,7 +265,7 @@
             ]
         });
 
-        $('#dataTableunapprov').DataTable({
+        $('#dataTableUnapproved').DataTable({
             scrollX   : true,
             processing: true,
             // serverSide: true,
