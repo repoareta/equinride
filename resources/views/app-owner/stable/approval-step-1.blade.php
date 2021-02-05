@@ -134,17 +134,16 @@
                                     <p class="mb-0">Approval Status</p>
                                     <h4 class="mb-4" id="approval_status"></h4>
                                 </div>
-                            </div>
-                            <div class="modal-footer">											
-                                <button data-dismiss="modal" class="btn btn-primary font-weight-bold">Close</button>
-                            </form>
+                            </div>                            
+                        </div>
+                        <div class="modal-footer">											
+                            <button data-dismiss="modal" class="btn btn-primary font-weight-bold">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Modal -->
         </div>
-    </div>
     </div>
     <!--end::Content-->
 </div>
