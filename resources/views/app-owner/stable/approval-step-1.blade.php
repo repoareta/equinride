@@ -31,14 +31,14 @@
             </div>
             <!--end::Header-->
             <!--begin::Body-->
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="card card-custom">
                     <div class="card-header card-header-tabs-line">
                      <div class="card-toolbar">
                       <ul class="nav nav-tabs nav-bold nav-tabs-line">
                        <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                        <span class="nav-icon"><i class="fas fa-spinner"></i></span>
+                        <span class="nav-icon"><i class="flaticon2-hourglass-1"></i></span>
                         <span class="nav-text">Pending</span>
                         </a>
                        </li>
@@ -49,7 +49,7 @@
                         </a>
                        </li>
                        <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
                         <span class="nav-icon"><i class="fas fa-ban"></i></span>
                         <span class="nav-text">Unpproved</span>
                         </a>
