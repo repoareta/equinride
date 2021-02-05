@@ -158,13 +158,12 @@ class StableApprovalController extends Controller
     public function unapproveStable1($id)
     {
         $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
-        $data2 = Stable::find($data1->stable_id);
+        $stable = Stable::find($data1->stable_id);
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableDeclineStep1($data2));
-        Stable::find($data2->id)->delete();
+                    $user->notify(new StableDeclineStep1($stable));        
 
-        Alert::success($data2->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
+        Alert::success($stable->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
