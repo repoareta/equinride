@@ -57,11 +57,11 @@
                       </ul>
                      </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                      <div class="tab-content">
                       <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
                         <div class="card mb-5">
-                            <div class="card-header py-3">
+                            <div class="card-header py-5">
                                 <h4 class="font-weight-bolder text-dark mb-0">Pending</h4>
                             </div>
                             <div class="card-body">
@@ -88,7 +88,7 @@
                       </div>
                       <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
                         <div class="card mb-5">
-                            <div class="card-header py-3">                    
+                            <div class="card-header py-5">                    
                                 <h4 class="font-weight-bolder text-dark mb-0">Approved</h4>
                             </div>
                             <div class="card-body">
@@ -115,7 +115,7 @@
                       </div>
                       <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
                         <div class="card mb-5">
-                            <div class="card-header py-3">                    
+                            <div class="card-header py-5">                    
                                 <h4 class="font-weight-bolder text-dark mb-0">Unapproved</h4>
                             </div>
                             <div class="card-body">
