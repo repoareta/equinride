@@ -198,6 +198,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
                     Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
+                    Route::get('pending', [StableApprovalController::class, 'jsonPending2'])->name('pending');
                     Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
                     Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
                     Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
