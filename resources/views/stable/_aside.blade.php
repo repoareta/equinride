@@ -14,7 +14,9 @@
                         {{ $stable->name }}
                     </a>
                     <div class="mt-2">
-                        <span class="label label-inline label-danger font-weight-bold">Pending</span>
+                        <span class="label label-inline label-warning font-weight-bold mb-2">
+                            Pending
+                        </span>
                         <button class="btn btn-primary font-weight-bold label label-inline">
                             Request for review
                         </button>

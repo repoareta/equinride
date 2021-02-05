@@ -22,7 +22,7 @@
 		<!--begin::Form group-->
 		<div class="form-group">
 			<label class="font-size-h6 font-weight-bolder text-dark">{{ __('E-Mail Address') }}</label>
-			<input class="form-control form-control-solid h-auto px-5 py-3 rounded-lg font-size-h3" type="text" name="email" autocomplete="off" />
+			<input class="form-control form-control-solid h-auto px-5 py-3 rounded-lg font-size-h3" type="text" name="email" autocomplete="off" value="{{ old('email') }}" />
 
 			@error('email')
 				<span class="invalid-feedback" role="alert">

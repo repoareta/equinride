@@ -25,7 +25,7 @@
 			<!--end::Form group-->
 			<!--begin::Form group-->
 			<div class="form-group">
-				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3 @error('email') is-invalid @enderror" type="email" placeholder="Email" name="email" autocomplete="off" value="{{ old('name') }}" required />
+				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3 @error('email') is-invalid @enderror" type="email" placeholder="Email" name="email" autocomplete="off" value="{{ old('email') }}" required />
 				@error('email')
 					<span class="invalid-feedback d-block" role="alert">
 						<strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
 			<!--end::Form group-->
 			<!--begin::Form group-->
 			<div class="form-group">
-				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3 @error('password') is-invalid @enderror" type="password" placeholder="Password" name="password" autocomplete="off" value="{{ old('name') }}" required />
+				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3 @error('password') is-invalid @enderror" type="password" placeholder="Password" name="password" autocomplete="off" value="{{ old('password') }}" required />
 				@error('password')
 					<span class="invalid-feedback d-block" role="alert">
 						<strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
 			<!--end::Form group-->
 			<!--begin::Form group-->
 			<div class="form-group">
-				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3" type="password" placeholder="Confirm password" name="password_confirmation" autocomplete="off" value="{{ old('name') }}" required />
+				<input class="form-control form-control-solid h-auto py-3 px-5 rounded-lg font-size-h3" type="password" placeholder="Confirm password" name="password_confirmation" autocomplete="off" required />
 			</div>
 			<!--end::Form group-->
 			<!--begin::Form group-->
@@ -56,7 +56,7 @@
 					<input type="checkbox" name="agree" />
 					<span></span>
 					<div class="ml-2">I Agree the
-					<a href="#">terms and conditions</a>.</div>
+					<a href="{{ url()->current() }}">terms and conditions</a>.</div>
 				</label>
 			</div>
 			<!--end::Form group-->

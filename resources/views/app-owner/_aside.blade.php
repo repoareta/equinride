@@ -43,9 +43,6 @@
                             <i class="fab fa-elementor"></i>
                         </span>
                         <span class="navi-text">Dashboard</span>
-                        <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">2</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -83,12 +80,9 @@
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4" href="#">
                         <span class="navi-icon mr-2">
-                            <i class="fas fa-chess-knight"></i>
+                            <i class="fas fa-wallet"></i>
                         </span>
-                        <span class="navi-text">Stable Withdraw</span>
-                        <span class="navi-label">
-                            <span class="label label-light-info font-weight-bold">2</span>
-                        </span>
+                        <span class="navi-text">Withdraw Request</span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -99,9 +93,6 @@
                             <i class="fab fa-buffer"></i>
                         </span>
                         <span class="navi-text">Package Payment</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-primary font-weight-bold">Updated</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -144,9 +135,6 @@
                             <i class="la la-bank icon-xl"></i>
                         </span>
                         <span class="navi-text">Bank Account</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-success font-weight-bold">Pending</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -157,9 +145,6 @@
                             <i class="fas fa-user-friends"></i>
                         </span>
                         <span class="navi-text">Admin Management</span>
-                        <span class="navi-label">
-                            <span class="label label-inline label-light-danger font-weight-bold">New</span>
-                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
