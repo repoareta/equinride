@@ -125,9 +125,9 @@
             <div class="col-md-3 p-5">
                 <div class="card">
                     @if ($stable->logo)
-                    <img src="{{ asset($stable->logo) }}" class="card-img-top min-h-275px" alt="{{ $stable->name }}">   
+                    <img src="{{ asset($stable->logo) }}" class="card-img-top h-275px" alt="{{ $stable->name }}">   
                     @else
-                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top min-h-275px" alt="{{ $stable->name }}">   
+                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top h-275px" alt="{{ $stable->name }}">   
                     @endif
                     <div class="card-body p-5">
                     <div class="star-rating mb-1">
