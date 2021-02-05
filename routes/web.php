@@ -206,10 +206,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // STABLE REVIEW
             // owner/stable/12/horse
-            Route::get('/{stable}/horse', [StableReviewController::class, 'horse'])->name('horse');
-            Route::get('/{stable}/coach', [StableReviewController::class, 'coach'])->name('coach');
-            Route::get('/{stable}/package', [StableReviewController::class, 'package'])->name('package');
-            Route::get('/{stable}/schedule', [StableReviewController::class, 'schedule'])->name('schedule');
+            Route::get('{stable}/horse', [StableReviewController::class, 'horse'])->name('horse');
+            Route::get('{stable}/coach', [StableReviewController::class, 'coach'])->name('coach');
+            Route::get('{stable}/package', [StableReviewController::class, 'package'])->name('package');
+            Route::get('{stable}/schedule', [StableReviewController::class, 'schedule'])->name('schedule');
         });
 
         // HORSE

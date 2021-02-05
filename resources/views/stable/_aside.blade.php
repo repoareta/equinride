@@ -18,7 +18,7 @@
                             Pending
                         </span>
                         <button class="btn btn-primary font-weight-bold label label-inline">
-                            Request for review
+                            Submit Approval
                         </button>
                     </div>
                 </div>
