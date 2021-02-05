@@ -41,7 +41,10 @@
                         <div class="font-size-h6 font-weight-bold">
                             {{ $bank_payment->branch }}
                         </div>
-                        <img width="100px" src="{{asset('assets/media/branchsto/mandiri.png')}}" alt="">                                        
+                        @if ($bank_payment->photo)
+                            <img class="w-100px h-35px" src="{{ asset($bank_payment->photo) }}" alt="{{ $bank_payment->branch }}">
+                        @endif
+                        {{-- <img width="100px" src="{{asset('assets/media/branchsto/mandiri.png')}}" alt=""> --}}                                        
                     </div>
                     <div class="p-5 row">
                         <div class="font-size-h6 font-weight-normal col-md-3">

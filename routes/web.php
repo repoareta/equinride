@@ -34,6 +34,7 @@ use App\Http\Controllers\AppOwner\BankPaymentController;
 use App\Http\Controllers\AppOwner\HorseBreedController;
 use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
+use App\Http\Controllers\AppOwner\StableReviewController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
@@ -184,7 +185,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // STABLE APPROVAL
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
-
                 Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
                     Route::get('show/{stable}', [StableApprovalController::class, 'show1'])->name('show');
@@ -194,7 +194,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                     Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable1'])->name('unapprove');
                 });
 
-                Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {                    
+                Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
                     Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
                     Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
@@ -203,6 +203,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                     Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable2'])->name('unapprove');
                 });
             });
+
+            // STABLE REVIEW
+            // owner/stable/12/horse
+            Route::get('/{stable}/horse', [StableReviewController::class, 'horse'])->name('horse');
+            Route::get('/{stable}/coach', [StableReviewController::class, 'coach'])->name('coach');
+            Route::get('/{stable}/package', [StableReviewController::class, 'package'])->name('package');
+            Route::get('/{stable}/schedule', [StableReviewController::class, 'schedule'])->name('schedule');
         });
 
         // HORSE
@@ -220,7 +227,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // HORSE BREED
             Route::group(['prefix' => 'horse-breed', 'as' => 'horse_breed.'], function () {
-                Route::get('/', [HorseBreedController::class, 'index'])->name('index');                
+                Route::get('/', [HorseBreedController::class, 'index'])->name('index');
                 Route::get('create', [HorseBreedController::class, 'create'])->name('create');
                 Route::post('create', [HorseBreedController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('edit');
@@ -231,7 +238,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
         // Bank Account
         Route::group(['prefix' => 'bank', 'as' => 'bank.'], function () {
-            Route::get('/', [BankPaymentController::class, 'index'])->name('index');            
+            Route::get('/', [BankPaymentController::class, 'index'])->name('index');
             Route::get('create', [BankPaymentController::class, 'create'])->name('create');
             Route::post('create', [BankPaymentController::class, 'store'])->name('store');
             Route::post('/create/image', [BankPaymentController::class, 'storeImage'])->name('store_img');

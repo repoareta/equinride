@@ -20,6 +20,7 @@
         "laravolt/indonesia": "^0.28.0",
         "proengsoft/laravel-jsvalidation": "^4.4",
         "realrashid/sweet-alert": "^3.2",
+        "simplesoftwareio/simple-qrcode": "^4.1",
         "spatie/laravel-permission": "^3.18",
         "willvincent/laravel-rateable": "^2.3",
         "yajra/laravel-datatables-oracle": "~9.0"

@@ -27,8 +27,8 @@
 
         <input type="hidden" name="random_digit" value="{{ $random_digit }}">
         <input type="hidden" name="price_total" value="{{ $price_total }}">
-        <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}">
-        <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}">
+        <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slots->first()->date)->format('D, d M Y') }}">
+        <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slots->first()->time_start)->format('H:i') }}">
 
         <input type="hidden" name="payment_method" value="bank-transfer">
 
@@ -44,7 +44,9 @@
                         </div>
                     </div>
                     <div class="flex-shrink-0">
-                        <img width="100px" src="http://localhost:8000/assets/media/branchsto/mandiri.png" alt="">
+                        @if ($bank_payment->photo)
+                            <img class="w-100px h-35px" src="{{ asset($bank_payment->photo) }}" alt="{{ $bank_payment->branch }}">
+                        @endif
                     </div>
                 </div>
             </div>

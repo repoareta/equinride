@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 //load models
 use App\Models\Package;
-use App\Models\Stable;
 use App\Models\BankPayment;
 use App\Models\Booking;
 use App\Models\BookingDetail;
-use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
@@ -101,11 +103,28 @@ class PackageController extends Controller
 
         $booking_detail = $booking->booking_detail()->save($booking_detail);
 
+        $slot = $package->stable->slots->first();
+
+        // generate QrCode for each sloton package that have been ordered
+        $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+        
+        $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
+
+        $image_name = 'storage/'.$image_qr_code;
+
+        Storage::disk('public')->put($image_qr_code, $image);
+
         // CREATE SLOT USER
-        Auth::user()->slots->attach(Auth::user()->id, [
-            'booking_detail_id' => $booking_detail->id,
-            'slot_id'           => $package->stable->slot->first()->id
-        ]);
+        Auth::user()->slots()->attach(
+            $slot->id,
+            [
+                'booking_detail_id' => $booking_detail->id,
+                'qr_code'           => $image_name,
+                'qr_code_status'    => "available"
+            ]
+        );
 
         return view('payment.payment-confirmation', compact(
             'package',

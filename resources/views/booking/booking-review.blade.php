@@ -13,7 +13,7 @@
                     <!--begin::Pic-->
                     <div class="flex-shrink-0 mr-7">
                         <div class="symbol symbol-50 symbol-lg-150">
-                            <img alt="Pic" src="{{ asset('assets/media//users/300_1.jpg') }}">
+                            <img alt="Pic" src="{{ asset($package->photo) }}">
                         </div>
                     </div>
                     <!--end::Pic-->
@@ -37,17 +37,17 @@
                         <div class="row mr-30">
                             <div class="col-md-4">
                                 <h6>Booking Date</h6>
-                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}</p>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slots->first()->date)->format('D, d M Y') }}</p>
                             </div>
     
                             <div class="col-md-4">
                                 <h6>Time Start</h6>
-                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}</p>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slots->first()->time_start)->format('H:i') }}</p>
                             </div>
     
                             <div class="col-md-4">
                                 <h6>Time End</h6>
-                                <p>{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_end)->format('H:i') }}</p>
+                                <p>{{ \Carbon\Carbon::parse($package->stable->slots->first()->time_end)->format('H:i') }}</p>
                             </div>
 
                             <div class="col-md-4">
@@ -203,8 +203,8 @@
 
                 <form id="booking-review-form" action="{{ route('package.payment_method', ['package' => $package->id]) }}" method="POST" class="d-none">
                     @csrf
-                    <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}">
-                    <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }}">
+                    <input type="hidden" name="date_start" value="{{ \Carbon\Carbon::parse($package->stable->slots->first()->date)->format('D, d M Y') }}">
+                    <input type="hidden" name="time_start" value="{{ \Carbon\Carbon::parse($package->stable->slots->first()->time_start)->format('H:i') }}">
                 </form>
             </div>
         </div>
