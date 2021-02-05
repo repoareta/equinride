@@ -21,7 +21,7 @@ class BankPaymentController extends Controller
             return datatables()->of($data)
             ->addIndexColumn()
             ->editColumn('photo', function ($data) {
-                return $data->photo ? '<img src="' . asset($data->photo) . '" style="max-width: 200px">' : 'Photo not available';
+                return $data->photo ? '<img src="' . asset($data->photo) . '" class="max-w-200px h-40px">' : 'Photo not available';
             })
             ->addColumn('action', function ($data) {
                 return 
