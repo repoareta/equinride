@@ -46,10 +46,11 @@ class PackageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Undocumented function
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Package $package
+     * @return void
      */
     public function paymentMethod(Request $request, Package $package)
     {
@@ -82,6 +83,9 @@ class PackageController extends Controller
             $q->where('time_start', $request->time_start);
         }])
         ->firstOrFail();
+
+        // CEK BOOKING DETAIL
+        // UNTUK MENGHINDARI RE-SUBMIT FORM PEMBAYARAN
 
         // CEK BOOKED CAPACITY IN STABLE SLOT
         // IF BOOKED CAPACITY > CAPACITY
