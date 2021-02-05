@@ -55,7 +55,7 @@
                        <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
                         <span class="nav-icon"><i class="fas fa-ban"></i></span>
-                        <span class="nav-text">Unpproved</span>
+                        <span class="nav-text">Unapproved</span>
                         </a>
                        </li>
                       </ul>
