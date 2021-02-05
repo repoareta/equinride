@@ -178,10 +178,22 @@
                                     $("#horseid").val(horseid); // inseting horseid into hidden input field
                                     if(myDropzone.files == ''){
                                         location.href = "{{ route('stable.horse.index') }}";
+                                        Swal.fire({
+                                            icon: 'Success',
+                                            title: 'success',
+                                            text: 'Saving data success',
+                                            timer: 3000
+                                        });
                                     }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Saving data error',
+                                        timer: 3000
+                                    });
                                     console.log("error");
                                 }
                             }
@@ -197,6 +209,12 @@
                     
                     this.on("success", function (file, response) {
                         location.href = "{{ route('stable.horse.index') }}";
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Saving data success',
+                            timer: 3000
+                        });
                     });
                 }
             });
