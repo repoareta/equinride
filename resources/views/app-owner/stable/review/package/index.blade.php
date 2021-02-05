@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-package') }}
+    {{ Breadcrumbs::render('owner-stable-review-package') }}
 @endsection
 
 @push('page-styles')
