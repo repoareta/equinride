@@ -25,32 +25,8 @@ class StableApprovalController extends Controller
     {
         return view('app-owner.stable.approval-step-1');
     }
-    public function jsonApproved1()
-    {
-        $data = Stable::where('approval_status', 'Email Sent')->get();
-        return datatables()->of($data)
-        ->addIndexColumn()
-        ->addColumn('created_at', function($data){
-            return date('D, M d Y', strtotime($data->created_at));
-        })
-        ->addColumn('approval_status', function ($data) {
-            return $data->approval_status == 'Email Sent' ?
-                "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
-                    ".$data->approval_status."
-                </span>" : "";
-        })
-        ->addColumn('action', function ($data) {
-            return 
-            "
-            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
-        })
-        ->rawColumns(['approval_status','action'])
-        ->make(true);
-    }
-    public function jsonUnapproved1()
+
+    public function jsonPending1()
     {
         $data = Stable::where('approval_status', null)->get();
         return datatables()->of($data)
@@ -59,7 +35,10 @@ class StableApprovalController extends Controller
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function () {
-            return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
+            return 
+                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
+                    Pending
+                </span>";
         })
         ->addColumn('action', function ($data) {
             return 
@@ -123,6 +102,55 @@ class StableApprovalController extends Controller
                     });
                 });
             </script>
+            ";
+        })
+        ->rawColumns(['approval_status','action'])
+        ->make(true);
+    }
+
+    public function jsonApproved1()
+    {
+        $data = Stable::where('approval_status', 'Email Sent')->get();
+        return datatables()->of($data)
+        ->addIndexColumn()
+        ->addColumn('created_at', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })
+        ->addColumn('approval_status', function ($data) {
+            return $data->approval_status == 'Email Sent' ?
+                "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
+                    Approved
+                </span>" : "";
+        })
+        ->addColumn('action', function ($data) {
+            return 
+            "
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
+                <i class='fas fa-eye'></i>
+            </a>
+            ";
+        })
+        ->rawColumns(['approval_status','action'])
+        ->make(true);
+    }
+
+    public function jsonUnapproved1()
+    {
+        $data = Stable::where('approval_status', 'Decline')->get();
+        return datatables()->of($data)
+        ->addIndexColumn()
+        ->addColumn('created_at', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })
+        ->addColumn('approval_status', function () {
+            return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Decline</span>";
+        })
+        ->addColumn('action', function ($data) {
+            return 
+            "
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+                <i class='fas fa-eye'></i>
+            </a>
             ";
         })
         ->rawColumns(['approval_status','action'])
