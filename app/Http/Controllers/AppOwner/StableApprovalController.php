@@ -215,6 +215,32 @@ class StableApprovalController extends Controller
         return view('app-owner.stable.approval-step-2');
     }
 
+    public function jsonPending2()
+    {
+        $data = Stable::where('approval_status', 'Email Sent')->get();
+        return datatables()->of($data)
+        ->addIndexColumn()
+        ->addColumn('created_at', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })
+        ->addColumn('approval_status', function ($data) {
+            return $data->approval_status == 'Email Sent' ?
+                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
+                    Pending
+                </span>" : "";
+        })
+        ->addColumn('action', function ($data) {
+            return 
+            "
+            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+                <i class='fas fa-eye'></i>
+            </a>
+            ";
+        })
+        ->rawColumns(['approval_status','action'])
+        ->make(true);
+    }
+
     public function jsonApproved2()
     {
         $data = Stable::where('approval_status', 'Accepted')->get();
@@ -243,7 +269,7 @@ class StableApprovalController extends Controller
 
     public function jsonUnapproved2()
     {
-        $data = Stable::where('approval_status', 'Email Sent')->get();
+        $data = Stable::where('approval_status', 'Decline')->get();
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
@@ -251,8 +277,8 @@ class StableApprovalController extends Controller
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status == 'Email Sent' ?
-                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
-                    Pending second Approval
+                "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>
+                    Decline
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
