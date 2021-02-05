@@ -123,7 +123,7 @@ class UserController extends Controller
                 })
                 ->addColumn('price_total', function ($item) { 
                     $price = number_format($item->price_total, 0,',', '.');
-                    return '<span class="float-right">RP. '.$price.'</span>';
+                    return '<span class="float-right">Rp. '.$price.'</span>';
                 })
                 ->addColumn('action', function () {
                     return '

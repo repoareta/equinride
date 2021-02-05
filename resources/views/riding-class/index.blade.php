@@ -125,23 +125,23 @@
             <div class="col-md-3 p-5">
                 <div class="card">
                     @if ($stable->logo)
-                    <img src="{{ asset($stable->logo) }}" class="card-img-top min-h-275px" alt="{{ $stable->name }}">   
+                    <img src="{{ asset($stable->logo) }}" class="card-img-top h-275px" alt="{{ $stable->name }}">   
                     @else
-                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top min-h-275px" alt="{{ $stable->name }}">   
+                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top h-275px" alt="{{ $stable->name }}">   
                     @endif
                     <div class="card-body p-5">
+                    <div class="star-rating mb-1">
+                        <span class="far fa-star" data-rating="1"></span>
+                        <span class="far fa-star" data-rating="2"></span>
+                        <span class="far fa-star" data-rating="3"></span>
+                        <span class="far fa-star" data-rating="4"></span>
+                        <span class="far fa-star" data-rating="5"></span>
+                        <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
+                    </div>
                     <h5 class="card-title d-flex align-items-center justify-content-between">
                         <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">
                             {{ $stable->name }}
                         </a>
-                        <div class="star-rating">
-                            <span class="far fa-star" data-rating="1"></span>
-                            <span class="far fa-star" data-rating="2"></span>
-                            <span class="far fa-star" data-rating="3"></span>
-                            <span class="far fa-star" data-rating="4"></span>
-                            <span class="far fa-star" data-rating="5"></span>
-                            <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
-                        </div>
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ $stable->city->name }}</h6>
                     </div>
