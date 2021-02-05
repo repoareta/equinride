@@ -15,15 +15,15 @@
             <div class="d-flex align-items-center">
                 <span class="label label-dot label-dark"></span>
                 <p class="ml-2 mb-0">
-                    {{ \Carbon\Carbon::parse($package->stable->slot->first()->date)->format('D, d M Y') }}
+                    {{ \Carbon\Carbon::parse($package->stable->slots->first()->date)->format('D, d M Y') }}
                 </p>
             </div>
             <div class="d-flex align-items-center">
                 <span class="label label-dot label-dark"></span>
                 <p class="ml-2 mb-0">
-                    {{ \Carbon\Carbon::parse($package->stable->slot->first()->time_start)->format('H:i') }} 
+                    {{ \Carbon\Carbon::parse($package->stable->slots->first()->time_start)->format('H:i') }} 
                     - 
-                    {{ \Carbon\Carbon::parse($package->stable->slot->first()->time_end)->format('H:i') }}
+                    {{ \Carbon\Carbon::parse($package->stable->slots->first()->time_end)->format('H:i') }}
                 </p>
             </div>
             <div class="d-flex align-items-center">

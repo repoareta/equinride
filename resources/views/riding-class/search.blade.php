@@ -83,7 +83,7 @@
                         <div class="flex-shrink-0 mr-7">
                             <div class="symbol symbol-50 symbol-lg-150">
                                 @if ($package->photo)
-                                    <img alt="Pic" src="{{ asset('assets/media//users/300_7.jpg') }}"> 
+                                    <img alt="Pic" src="{{ asset($package->photo) }}"> 
                                 @else
                                     <img alt="Pic" src="{{ asset('assets/media//users/300_1.jpg') }}">
                                 @endif
