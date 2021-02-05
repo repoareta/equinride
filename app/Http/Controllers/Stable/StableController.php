@@ -152,4 +152,26 @@ class StableController extends Controller
         Alert::success('Stable Profile Update Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.edit');
     }
+
+    public function stableKeyConfirm()
+    {
+        return view('stable.stable-key-confirm');
+    }
+
+    public function stableKeyConfirmStore(Request $request)
+    {
+        // CEK JIKA INPUT STABLE KEY BENAR
+        $stable = Auth::user()->stables->first();
+
+        if ($request->stable_key == $stable->key_stable) {
+            // SET SESSION stable_key_expired_at = TIME NOW + 3 JAM
+            $stable_key_expired_at = Carbon::now()->add(3, 'hours');
+            session(['stable_key_expired_at' => $stable_key_expired_at]);
+
+            return redirect()->route('stable.index');
+        }
+
+        Alert::error('Stable key not match.')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.stable_key.confirm');
+    }
 }

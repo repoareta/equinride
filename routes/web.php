@@ -93,13 +93,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::group(['prefix' => 'stable', 'as' => 'stable.'], function () {
         Route::get('/register', [StableController::class, 'register'])->name('register')->middleware('isProfileComplete', 'isHasStable');
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
+        Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
+        Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
                 
         // ONLY STABLE OWNER HAD ACCESS
-        Route::group(['middleware' => ['role:stable-owner']], function () {
+        Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {
             // STABLE EDIT
             Route::get('/edit', [StableController::class, 'edit'])->name('edit');
             Route::post('/edit/media', [StableController::class, 'storeMedia'])->name('edit.media');
             Route::put('/update', [StableController::class, 'update'])->name('update');
+            
             
             //STABLE ADMIN CRUD
             Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -111,7 +114,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         });
 
         // ONLY STABLE OWNER OR STABLE ADMIN HAD ACCESS
-        Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete']], function () {
+        Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete', 'stableKeyConfirm']], function () {
             // STABLE DASHBOARD
             Route::get('/dashboard', [StableController::class, 'index'])->name('index');
 
