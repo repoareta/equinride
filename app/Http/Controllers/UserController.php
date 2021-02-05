@@ -85,7 +85,8 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)->get();
+        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
+        ->orderBy('id', 'ASC')->get();
         if (request()->ajax()) {
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -95,7 +96,7 @@ class UserController extends Controller
                     <div class="d-flex align-items-center">
                         <div class="symbol symbol-50 symbol-sm flex-shrink-0">
                             <div class="symbol-label">
-                                <img class="h-75 align-self-end" src="'. asset('assets/media/products/6.png') .'" alt="photo">
+                                <img class="h-75 align-self-end" src="'. asset($item->booking_detail->package->photo) .'" alt="photo">
                             </div>
                         </div>
                         <div class="d-flex flex-column ml-3">
@@ -120,15 +121,18 @@ class UserController extends Controller
                 ->addColumn('order_location', function ($item) {
                     return $item->booking_detail->stable_location;
                 })
-                ->addColumn('price_total', function ($item) {
-                    $price = number_format(($item->price_total/100), 2);
+                ->addColumn('price_total', function ($item) { 
+                    $price = number_format(($item->price_total));
                     return 'RP. '.$price;
                 })
                 ->addColumn('action', function () {
                     return '
                     <td nowrap="nowrap">
-                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit details">
+                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
                             <i class="la la-eye icon-xl"></i>
+                        </a>
+                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
+                            <i class="far fa-star"></i>
                         </a>
                     </td>
                     ';
