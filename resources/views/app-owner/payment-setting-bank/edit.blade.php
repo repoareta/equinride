@@ -110,10 +110,22 @@
                                     $("#bankid").val(bankid); // inseting bankid into hidden input field
                                     if(myDropzone.files == ''){
                                         location.href = "{{ route('app_owner.bank.index') }}";
+                                        Swal.fire({
+                                            icon: 'Success',
+                                            title: 'success',
+                                            text: 'Updating data success',
+                                            timer: 3000
+                                        });
                                     }
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Updating data error',
+                                        timer: 3000
+                                    });
                                     console.log("error");
                                 }
                             }
@@ -129,6 +141,12 @@
                     
                     this.on("success", function (file, response) {
                         location.href = "{{ route('app_owner.bank.index') }}";
+                        Swal.fire({
+                            icon: 'Success',
+                            title: 'success',
+                            text: 'Updating data success',
+                            timer: 3000
+                        });
                     });
                 }
             });

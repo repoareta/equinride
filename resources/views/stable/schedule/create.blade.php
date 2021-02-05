@@ -93,7 +93,7 @@
         orientation: "bottom left",
         autoclose: true,
         // language : 'id',
-        format   : 'D, M d Y',
+        format   : 'D, M d yyyy',
         startDate: new Date(),
     });
 

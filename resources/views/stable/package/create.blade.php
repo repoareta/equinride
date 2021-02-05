@@ -138,6 +138,12 @@
                         formData = $('#createform').serialize();
                         if(myDropzone.files == ''){
                             location.href = "{{ route('stable.package.index') }}";
+                            Swal.fire({
+                                icon: 'Success',
+                                title: 'success',
+                                text: 'Saving data success',
+                                timer: 3000
+                            });
                         }
                         $.ajax({
                             type: 'POST',
@@ -151,6 +157,12 @@
                                     //process the queue
                                     myDropzone.processQueue();
                                 }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Saving data error',
+                                        timer: 3000
+                                    });
                                     console.log("error");
                                 }
                             }
@@ -166,6 +178,12 @@
                     
                     this.on("success", function (file, response) {
                         location.href = "{{ route('stable.package.index') }}";
+                        Swal.fire({
+                            icon: 'Success',
+                            title: 'success',
+                            text: 'Saving data success',
+                            timer: 3000
+                        });
                     });
                 }
             });

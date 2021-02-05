@@ -172,9 +172,21 @@
                                     //process the queue
                                     if(myDropzone.files == ''){
                                         location.href = "{{ route('stable.coach.index') }}";
+                                        Swal.fire({
+                                            icon: 'Success',
+                                            title: 'success',
+                                            text: 'Saving data success',
+                                            timer: 3000
+                                        });
                                     }
                                     myDropzone.processQueue();
                                 }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Saving data error',
+                                        timer: 3000
+                                    });
                                     console.log("error");
                                 }
                             }
@@ -190,6 +202,12 @@
                     
                     this.on("success", function (file, response) {
                         location.href = "{{ route('stable.coach.index') }}";
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Saving data success',
+                            timer: 3000
+                        });
                     });
                 }
             });
