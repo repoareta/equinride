@@ -86,7 +86,7 @@ class UserController extends Controller
     public function orderHistory()
     {
         $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
-        ->orderBy('id', 'ASC')->get();
+        ->orderBy('id', 'DESC')->get();
         if (request()->ajax()) {
             return Datatables::of($query)
                 ->addIndexColumn()
@@ -122,8 +122,8 @@ class UserController extends Controller
                     return $item->booking_detail->stable_location;
                 })
                 ->addColumn('price_total', function ($item) { 
-                    $price = number_format(($item->price_total));
-                    return 'RP. '.$price;
+                    $price = number_format($item->price_total, 0,',', '.');
+                    return '<span class="float-right">RP. '.$price.'</span>';
                 })
                 ->addColumn('action', function () {
                     return '
@@ -137,7 +137,7 @@ class UserController extends Controller
                     </td>
                     ';
                 })
-                ->rawColumns(['action', 'approval_status', 'package'])
+                ->rawColumns(['action', 'approval_status', 'package', 'price_total'])
                 ->make();
         }
         return view('booking.booking-history');
