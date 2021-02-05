@@ -200,8 +200,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                     Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
                     Route::get('pending', [StableApprovalController::class, 'jsonPending2'])->name('pending');
                     Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
-                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
                     Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
+                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
                     Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable2'])->name('unapprove');
                 });
             });
@@ -252,6 +252,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // Payment Verification
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('verification', [UserPaymentApprovalController::class, 'index'])->name('verification');
+            Route::get('pending', [UserPaymentApprovalController::class, 'jsonPending'])->name('pending');
+            Route::get('approved', [UserPaymentApprovalController::class, 'jsonApproved'])->name('approved');
+            Route::get('unapproved', [UserPaymentApprovalController::class, 'jsonUnapproved'])->name('unapproved');
+            Route::put('approved/{stable}', [UserPaymentApprovalController::class, 'approveStable2'])->name('approve');
+            Route::put('unapproved/{stable}', [UserPaymentApprovalController::class, 'unapproveStable2'])->name('unapprove');
         });
     });
     // APP OWNER END
