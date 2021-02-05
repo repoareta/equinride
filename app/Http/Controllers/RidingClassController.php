@@ -49,6 +49,7 @@ class RidingClassController extends Controller
             $q->when(request('time_start'), function ($query) use ($request) {
                 return $query->where('time_start', $request->time_start);
             });
+            $q->whereColumn('capacity_booked', '<', 'capacity');
         })
         ->latest()
         ->paginate(10);
