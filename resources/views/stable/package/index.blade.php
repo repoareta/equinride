@@ -23,7 +23,7 @@
                     <h3 class="card-label font-weight-bolder text-dark">Package Management</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your package</span>
                 </div>
-                <a href='{{ route('stable.package.create') }}' class='btn btn-primary ml-5'>Add New +</a>
+                <a href='{{ route('stable.package.create') }}' class='btn btn-primary ml-5 font-weight-bold'><span class="mr-2">Add New</span><i class="fas fa-plus icon-nm"></i></a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
