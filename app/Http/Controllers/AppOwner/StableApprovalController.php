@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendKeyStableMail;
 use App\Mail\StableApproveStep2;
 use App\Mail\StableDecline;
+use App\Mail\StableDeclineStep1;
+use App\Mail\StableDeclineStep2;
 use Illuminate\Http\Request;
 
 use RealRashid\SweetAlert\Facades\Alert;
@@ -159,12 +161,8 @@ class StableApprovalController extends Controller
         $data2 = Stable::find($data1->stable_id);
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableDecline($data2));
-        Stable::where('id', $data2->id)->update([
-            'approval_status' => 'Decline', 
-            'approval_by' => Auth::user()->id,
-            'approval_at' => Carbon::now()
-        ]);
+                    $user->notify(new StableDeclineStep1($data2));
+        Stable::find($data2->id)->delete();
 
         Alert::success($data2->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
@@ -296,7 +294,7 @@ class StableApprovalController extends Controller
     {
         $data = DB::table('stable_user')->where('stable_id',$id)->first();
         $user = User::where('id', $data->user_id)->first();
-                    $user->notify(new StableDecline($data));                                        
+                    $user->notify(new StableDeclineStep2($data));                                        
         Stable::where('id', $data->id)->update([
             'approval_status' => 'Decline', 
             'approval_by' => Auth::user()->id,
