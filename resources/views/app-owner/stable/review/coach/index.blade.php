@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{-- {{ Breadcrumbs::render('stable-coach') }} --}}
+    {{ Breadcrumbs::render('owner-stable-review-coach') }}
 @endsection
 
 @push('page-styles')
