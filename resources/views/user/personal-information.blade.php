@@ -17,7 +17,7 @@
             <div class="card-header d-flex justify-content-between py-3">
                 <div class="card-title align-items-start flex-column mb-0">
                     <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
                 </div>
             </div>
             <!--end::Header-->
