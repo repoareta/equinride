@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Config;
  
-class StableDecline extends Notification implements shouldQueue
+class StableDeclineStep1 extends Notification implements shouldQueue
 {
     use Queueable;
     public $data;
@@ -44,7 +44,7 @@ class StableDecline extends Notification implements shouldQueue
     {    
         $data = $this->data;
         return (new MailMessage)
-            ->subject('We are sorry, your stable declined')
+            ->subject('We are sorry, your stable declined ')
             ->line('Please try to register stable again if you want')
             ->line('Stable Name : '.$data->name);
     }
