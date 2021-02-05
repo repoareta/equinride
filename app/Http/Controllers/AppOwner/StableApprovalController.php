@@ -194,7 +194,7 @@ class StableApprovalController extends Controller
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='" . route('app_owner.stable.approval.step_1.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -220,7 +220,7 @@ class StableApprovalController extends Controller
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='" . route('app_owner.stable.approval.step_1.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -231,24 +231,24 @@ class StableApprovalController extends Controller
 
     public function show2($id)
     {
-        $data = Stable::with(['user'])->where('user_id', $id)->first();
+        $stable = Stable::where('id', $id)->first();
+        $stableUser = DB::table('stable_user')->where('stable_id',$id)->first();   
         $province = Province::all();
-        $city = City::find($data->city_id);
-        $district = District::find($data->district_id);
-        $village = Village::find($data->village_id);
-        $horse_count = Horse::where('stable_id',$data->id)->where('user_id',$id)->count();
-        $coach_count = Coach::where('stable_id',$data->id)->where('user_id',$id)->count();
-        $package_count = Package::where('stable_id',$data->id)->where('user_id',$id)->count();
-        $slot_count = Slot::where('user_id',$id)->count();
-        $data_stable = Stable::with(['user','horse'])->where('user_id', $id)->first();
-        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
+        $city = City::find($stable->city_id);
+        $district = District::find($stable->district_id);
+        $village = Village::find($stable->village_id);
+        $horse_count = Horse::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
+        $coach_count = Coach::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
+        $package_count = Package::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
+        $slot_count = Slot::where('user_id',$stableUser->user_id)->count();
+        if($stable->capacity_of_stable > 0 and  $stable->number_of_coach > 0 and $stable->capacity_of_arena > 0){
             $data_setup = 1;
         }else{
             $data_setup = 0;
         }
-        return view('app-owner.preview.stable.index',
+        return view('app-owner.stable.review.index',
         compact(
-            'data', 
+            'stable', 
             'province',
             'city',
             'district',
@@ -305,144 +305,5 @@ class StableApprovalController extends Controller
 
         Alert::success($data->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
-    }
-
-    // Horse Owner Preview
-    public function horse($id)
-    {
-        return view('app-owner.preview.horse.index', compact('id'));
-    }
-
-    public function horseListJson($id)
-    {
-        $data = Horse::with(['stable'])->where('user_id', $id);
-        return datatables()->of($data)
-            ->addColumn('profile', function ($data) {
-                return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''> ";
-            })
-            ->addColumn('horse_name', function ($data) {
-                return $data->name;
-            })
-            ->addColumn('birth_date', function ($data) {
-                return $data->birth_date;
-            })
-            ->addColumn('age', function ($data) {
-                $dateOfBirth = $data->birth_date;
-                return Carbon::parse($dateOfBirth)->age;
-            })
-            ->addColumn('sex', function ($data) {
-                return $data->sex->name;
-            })
-            ->addColumn('passport_number', function ($data) {
-                return $data->passport_number;
-            })
-            ->addColumn('horse_owner', function ($data) {
-                return $data->owner;
-            })
-            ->addColumn('horse_breeds', function ($data) {
-                return $data->breed->name;
-            })
-            ->rawColumns(['profile'])
-            ->make(true);
-    }
-
-    // Package Owner Preview
-    public function package($id)
-    {
-        return view('app-owner.preview.package.index',compact('id'));
-    }
-    public function packageListJson($id)
-    {
-        $data = Package::where('user_id', $id)->with(['user']);
-        return datatables()->of($data)
-            ->addColumn('profile', function ($data) {
-                return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
-            })
-            ->addColumn('price', function ($data) {
-                return number_format($data->price);
-            })
-            ->addColumn('approval_status', function ($data) {
-            
-                if($data->approval_status == null){
-                    return "<span class='label label-lg label-light-warning label-inline'>Pending.</span>";
-                }else{
-                    return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status.".</span>";
-                }
-            })
-            ->addColumn('package_status', function ($data) {
-            
-                if($data->package_status == null){
-                    return "<span class='label label-lg label-light-danger label-inline'>No Publish.</span>";
-                }else{
-                    return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status." Publish.</span>";
-                }
-            })
-            ->rawColumns(['profile','approval_status','package_status'])
-            ->make(true);
-    }
-
-    // Schedule Owner Preview
-
-    public function schedule($id)
-    {
-        return view('app-owner.preview.schedule.index', compact('id'));
-    }
-    public function scheduleListJson($id)
-    {
-        $data = Slot::where('user_id',$id)->orderBy('time_start', 'asc')->get();
-        return datatables()->of($data)
-        ->addColumn('start_date', function ($data) {
-            return $data->date;
-        })
-        ->addColumn('time_start', function ($data) {
-            return date('H:i', strtotime($data->time_start));
-        })
-        ->addColumn('time_end', function ($data) {
-            return date('H:i', strtotime($data->time_end));
-        })
-        ->addColumn('capacity', function ($data) {
-            return $data->capacity;
-        })
-        ->addColumn('capacity_booked', function ($data) {
-            return $data->capacity_booked;
-        })
-        ->rawColumns(['profile'])
-        ->make(true);
-    }
-
-    // Coach Owner Preview
-
-    public function coach($id)
-    {
-        return view('app-owner.preview.coach.index', compact('id'));
-    }
-    public function coachListJson($id)
-    {
-        $data = Coach::with(['stable'])->where('user_id', $id);
-        return datatables()->of($data)
-            ->addColumn('profile', function ($data) {
-                return "<img src='assets/media/branchsto/user.svg' width='40px' height='40px' alt=''>";
-            })
-            ->addColumn('coach_name', function ($data) {
-                return $data->name;
-            })
-            ->addColumn('birth_date', function ($data) {
-                return $data->birth_date;
-            })
-            ->addColumn('age', function ($data) {
-                $dateOfBirth = $data->birth_date;
-                return Carbon::parse($dateOfBirth)->age;
-            })
-            ->addColumn('sex', function ($data) {
-                return $data->sex;
-            })
-            ->addColumn('experience', function ($data) {
-                return $data->experience;
-            })
-            ->addColumn('certified', function ($data) {
-                return $data->certified;
-            })
-            ->rawColumns(['profile'])
-            ->make(true);
     }
 }
