@@ -40,7 +40,7 @@
 				<!--begin::Aside-->
 				<div class="login-aside d-flex flex-column flex-row-auto" 
 				style="
-				background-image: url(assets/media/branchsto/bg-front.png); 
+				background-image: url(assets/media/branchsto/bg-front-min.png); 
 				background-size: cover;
 				background-repeat: no-repeat;
 				background-position: center center;">
