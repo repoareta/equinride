@@ -76,7 +76,7 @@
                         <label class="col-xl-3 col-lg-3"></label>
                         <div class="col-lg-9 col-xl-6">
                             <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Submit</button>
-                            <button type="reset" class="btn btn-secondary"><i class="fas fa-times"></i> Forgot stable key</button>
+                            <button type="button" class="btn btn-secondary"><i class="fas fa-question"></i> Forgot stable key</button>
                         </div>
                     </div>
 
