@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -145,7 +146,6 @@ class StableApprovalController extends Controller
 
         $user = User::where('id', $data1->user_id)->first();
                     $user->notify(new SendKeyStableMail($data2));
-
         Stable::where('id', $data2->id)->update([
             'approval_status' => 'Email Sent', 
             'approval_by' => Auth::user()->id,
@@ -159,11 +159,24 @@ class StableApprovalController extends Controller
     {
         $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
         $stable = Stable::find($data1->stable_id);
-
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableDeclineStep1($stable));        
 
-        Alert::success($stable->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
+        // Remove Stable Picture
+        File::delete(public_path($stable->photo));
+
+        // Delete Stable User
+        $stable->users()->detach();
+
+        // Remove Stable Owner Role
+        $user->removeRole('stable-owner');        
+
+        // Notify Email
+        $user->notify(new StableDeclineStep1($stable));        
+
+        //Delete Stable
+        $stable->delete();
+
+        Alert::success('Stable Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 

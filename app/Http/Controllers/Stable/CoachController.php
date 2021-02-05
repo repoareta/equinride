@@ -178,7 +178,7 @@ class CoachController extends Controller
             
             //here we are geeting coachid align with an image
             $coach = Coach::find($request->coachid);
-            File::delete(public_path('/storage/coach/photo/'.$request->photo));
+            File::delete(public_path($coach->photo));
             $name = $request->file('photo')->getClientOriginalName();
             $dir = $request->file('photo')->storeAs('coach/photo', $name, 'public');
             $nameDir = 'storage/'.$dir;
