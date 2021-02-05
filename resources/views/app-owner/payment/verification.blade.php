@@ -147,7 +147,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="title-text " id="title_modal" data-state="add">
-                                DETAIL PACKAGE
+                                Detail Package
                             </h4>
                         </div>
                         <div class="modal-body">
@@ -179,9 +179,9 @@
                                     <h4 class="mb-4" id="attendance"></h4>
                                 </div>
                             </div>
-                            <div class="modal-footer">											
-                                <button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">											
+                            <button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
                         </div>
                     </div>
                 </div>
@@ -269,11 +269,38 @@
             ]
         }); 
 
-        $('body').on( 'click', '#openBtn', function () {
+        $('body').on('click', '#openBtn', function () {
             var id = $(this).data('id');
-            jQuery.noConflict();
-            $('#modalDetail').modal('show');
-        });              
+            $.get('{{route('app_owner.payment.verification')}}'+'/show/' + id , function (data) {
+                $('#package_number').html(data.package_number);
+                $('#name').html(data.name);
+                if(data.user_id == null){
+                    $('#owner').html('Something when wrong');
+                }else{
+                    $('#owner').html(data.user.name);
+                }
+                $('#description').html(data.description);
+                $('#price').html(data.price);
+                $('#photo').attr('src','{{asset("storage/package/photo/")}}/'+(data.photo));
+                $('#approval_at').html(data.approval_at);
+                if(data.approval_by == null){
+                    $('#approval_by').html('Need Approval');    
+                }else{
+                    $('#approval_by').html(data.approvalby_package.name);
+                }
+                $('#approval_status').html(data.approval_status);
+                if(data.approval_at == null){
+                    $('#approval_at').html('Need Approval');    
+                }
+                if(data.approval_status == null){
+                    $('#approval_status').html('Need Approval');    
+                }                    
+                $('#stable').html(data.stable_name);
+                $('#attendance').html(data.attendance);
+                jQuery.noConflict();
+                $('#modalDetail').modal('show');
+            })
+        });      
     } );
 </script>
 @endpush

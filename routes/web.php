@@ -252,6 +252,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // Payment Verification
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('verification', [UserPaymentApprovalController::class, 'index'])->name('verification');
+            Route::get('verification/show/{stable}', [UserPaymentApprovalController::class, 'show'])->name('show');
             Route::get('pending', [UserPaymentApprovalController::class, 'jsonPending'])->name('pending');
             Route::get('approved', [UserPaymentApprovalController::class, 'jsonApproved'])->name('approved');
             Route::get('unapproved', [UserPaymentApprovalController::class, 'jsonUnapproved'])->name('unapproved');
