@@ -106,7 +106,7 @@
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody>                                    
                                         </tbody>
                                     </table>
                                 </div>
@@ -133,7 +133,7 @@
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody>                                    
                                         </tbody>
                                     </table>
                                 </div>
@@ -162,6 +162,7 @@
         $('#dataTablePending').DataTable({
             scrollX   : true,
             processing: true,
+            responsive: true,
             // serverSide: true,
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
@@ -186,6 +187,7 @@
         $('#dataTableApproved').DataTable({
             scrollX   : true,
             processing: true,
+            responsive: true,
             // serverSide: true,
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
@@ -210,6 +212,7 @@
         $('#dataTableUnapproved').DataTable({
             scrollX   : true,
             processing: true,
+            responsive: true,
             // serverSide: true,
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
@@ -229,8 +232,8 @@
                 {data: 'approval_status', name: 'approval_status'},
                 {data: 'action', name: 'action'},
             ]
-        });
-
+        });                
+        
     } );
 </script>
 @endpush

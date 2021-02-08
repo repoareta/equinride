@@ -84,14 +84,7 @@
 
             <div class="card border-0 mb-5">
                 <div class="card-body p-0">
-                    <form action="{{ route('package.payment_confirmation_submit', ['package' => $package->id]) }}" method="POST" id="payment-confirmation-form" class="dropzone dropzone-default dropzone-primary dz-clickable" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="fallback">
-                            <input name="file" type="file" />
-                        </div>
-
-                        <input type="hidden" value="{{ $booking->id }}" name="booking_id">
+                    <form class="dropzone dropzone-default dropzone-primary dz-clickable" id="dropzoneDragArea" action="{{ route('package.payment_confirmation_submit') }}" method="post" enctype="multipart/form-data">                        
                     </form>
                 </div>
             </div>                    
@@ -102,12 +95,40 @@
 
 @push('page-scripts')
 <script>
-    $("#payment-confirmation-form").dropzone({
+    Dropzone.autoDiscover = false;
+    // Dropzone.options.createform = false;	
+    let token = $('meta[name="csrf-token"]').attr('content');
+    var dz = new Dropzone("#dropzoneDragArea", { 
+        paramName: "photo",               
+        addRemoveLinks: true,
         autoProcessQueue: false,
-        paramName: "file",
+        acceptedFiles: ".jpeg,.jpg,.png",
+        uploadMultiple: false,
+        parallelUploads: 1,
         maxFiles: 1,
-        maxFilesize: 5,
-        addRemoveLinks: !0
+        params: {
+            _token: token,
+            id: {{ $booking->id }}
+        },
+        // The setting up of the dropzone
+        init: function() {
+                    var myDropzone = this;
+                    //form submission code goes here
+
+                    this.on("success", function (file, response) {
+                        location.href = "{{ route('user.order_history') }}";
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Success',
+                            text: 'Please waiting approval from app',
+                            timer: 3000
+                        });
+                    });
+                }
+    });
+
+    $('#submitForm').click(function(){
+        dz.processQueue();
     });
 </script>
 @endpush

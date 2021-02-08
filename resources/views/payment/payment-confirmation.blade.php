@@ -30,7 +30,7 @@
                     <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of Equinride
                 </div>
                 <div class="col-md-5 mt-3 mt-md-0">
-                    <button class="btn btn-block font-weight-bolder btn-warning py-5" onclick="event.preventDefault();document.getElementById('payment-confirmation-form').submit();">
+                    <button class="btn btn-block font-weight-bolder btn-warning py-5" id="submitForm">
                         Submit Payment
                     </button>
                 </div>

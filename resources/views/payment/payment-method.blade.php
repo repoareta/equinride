@@ -13,7 +13,11 @@
                     <div class="col-4">
                         <div class="d-flex align-items-center mb-5">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                <div class="symbol-label" style="background-image:url({{ asset('assets/media/users/300_21.jpg') }})"></div>
+                                @if ($package->photo)
+                                <div class="symbol-label" style="background-image:url('{{ asset($package->photo) }}')"></div>
+                                @else
+                                    <div class="symbol-label" style="background-image:url({{ asset('assets/media/users/300_21.jpg') }})"></div>
+                                @endif
                                 <i class="symbol-badge bg-success"></i>
                             </div>
                             <div>
