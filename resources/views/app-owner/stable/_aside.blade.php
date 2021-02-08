@@ -14,12 +14,32 @@
                         {{ $stable->name }}
                     </a>
                     <div class="mt-2">
-                        <span class="label label-inline label-warning font-weight-bold mb-2">
-                            Pending
-                        </span>
-                        <button class="btn btn-primary font-weight-bold label label-inline">
-                            Submit Approval
-                        </button>
+                        @if ($stable->approval_status == 'Accepted')
+                            <span class="label label-inline label-success font-weight-bold mb-2">
+                                Accepted
+                            </span>
+                        @else
+                            <span class="label label-inline label-warning font-weight-bold mb-2">
+                                Pending
+                            </span>                            
+                        @endif
+                        <div class="mt-2">
+                            <p class="mb-0">Action</p>
+                            <form class='d-inline' id='formAccept' method='post' action='{{ route('app_owner.stable.approval.step_2.approve',$stable->id) }}'>
+                                @method('PUT')
+                                @csrf
+                                    <button class="btn btn-success font-weight-bold label label-inline" id='accept'>
+                                        Approve
+                                    </button>
+                            </form>
+                            <form class='d-inline' id='formDecline' method='post' action='{{ route('app_owner.stable.approval.step_2.unapprove',$stable->id) }}'>
+                                @method('PUT')
+                                @csrf
+                                    <button class="btn btn-danger font-weight-bold label label-inline" id='decline'>
+                                        Decline
+                                    </button>
+                            </form>                            
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -172,3 +192,49 @@
     </div>
     <!--end::Profile Card-->
 </div>
+
+@push('page-scripts')
+<script>
+    $('body').on('click','#accept', function(e) {
+
+        e.preventDefault();
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            text: 'This is will be accepted the stable',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value === true) {
+                $('#formAccept').submit();
+            }
+        });
+    });
+
+    $('body').on('click','#decline', function(e) {
+
+        e.preventDefault();
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            text: 'This is will be declined the stable',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value === true) {
+                $('#formDecline').submit();
+            }
+        });
+    });
+</script>
+@endpush

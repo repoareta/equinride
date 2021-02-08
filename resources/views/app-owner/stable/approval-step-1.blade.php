@@ -48,12 +48,6 @@
                         <span class="nav-text">Approved</span>
                         </a>
                        </li>
-                       <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
-                        <span class="nav-icon"><i class="fas fa-ban"></i></span>
-                        <span class="nav-text">Unapproved</span>
-                        </a>
-                       </li>
                       </ul>
                      </div>
                     </div>
@@ -112,33 +106,6 @@
                                 </div>
                             </div>
                         </div>
-                      </div>
-                      <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
-                        <div class="card mb-5">
-                            <div class="card-header py-5">                    
-                                <h4 class="font-weight-bolder text-dark mb-0">Unapproved</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive mb-5">
-                                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableUnapproved">
-                                        <thead>
-                                            <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>      
                       </div>
                      </div>
                     </div>

@@ -14,9 +14,16 @@
                         {{ $stable->name }}
                     </a>
                     <div class="mt-2">
-                        <span class="label label-inline label-warning font-weight-bold mb-2">
-                            Pending
-                        </span>
+                        @if ($stable->approval_status == 'Accepted')
+                            <span class="label label-inline label-success font-weight-bold mb-2">
+                                Accepted
+                            </span>
+                        @else
+                            <span class="label label-inline label-warning font-weight-bold mb-2">
+                                Pending
+                            </span>                            
+                        @endif
+                        
                         <button class="btn btn-primary font-weight-bold label label-inline">
                             Submit Approval
                         </button>

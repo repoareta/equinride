@@ -69,6 +69,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER || MEMBER START
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
+        Route::get('/', function(){
+            return redirect()->route('user.personal_information');
+        });
         Route::post('/personal-information/media', [UserController::class, 'storeMedia'])->name('personal_information.media');
         Route::get('/personal-information', [UserController::class, 'index'])->name('personal_information');
         Route::put('/personal-information', [UserController::class, 'update'])->name('personal_information.update');
@@ -118,6 +121,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // ONLY STABLE OWNER OR STABLE ADMIN HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete', 'stableKeyConfirm']], function () {
             // STABLE DASHBOARD
+            Route::get('/', function(){
+                return redirect()->route('stable.index');
+            });
             Route::get('/dashboard', [StableController::class, 'index'])->name('index');
 
             // STABLE COACH
@@ -196,6 +202,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             });
         });
 
+        //OWNER DASHBOARD
+        Route::get('/', function(){
+            return redirect()->route('app_owner.index');
+        });
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
         // STABLE
