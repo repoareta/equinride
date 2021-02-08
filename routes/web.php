@@ -77,7 +77,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::put('/personal-information', [UserController::class, 'update'])->name('personal_information.update');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
         Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
-        Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history');
+        Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history.index');
+        Route::get('/order-history/{id}', [UserController::class, 'orderHistoryShow'])->name('order_history.show');
     });
 
     // USER RIDING CLASS
@@ -284,8 +285,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('pending', [UserPaymentApprovalController::class, 'jsonPending'])->name('pending');
             Route::get('approved', [UserPaymentApprovalController::class, 'jsonApproved'])->name('approved');
             Route::get('unapproved', [UserPaymentApprovalController::class, 'jsonUnapproved'])->name('unapproved');
-            Route::put('approved/{stable}', [UserPaymentApprovalController::class, 'approveStable2'])->name('approve');
-            Route::put('unapproved/{stable}', [UserPaymentApprovalController::class, 'unapproveStable2'])->name('unapprove');
+            Route::put('approved/{stable}', [UserPaymentApprovalController::class, 'approveBooking'])->name('approve');
+            Route::put('unapproved/{stable}', [UserPaymentApprovalController::class, 'unapproveBooking'])->name('unapprove');
         });
     });
     // APP OWNER END

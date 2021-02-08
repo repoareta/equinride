@@ -64,7 +64,7 @@ class Stable extends Model
 
     public function district()
     {
-        return $this->belongsTo(Deistrict::class);
+        return $this->belongsTo(District::class);
     }
 
     public function village()

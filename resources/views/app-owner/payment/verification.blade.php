@@ -76,6 +76,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
+                                            <th scope="col">Pay Date</th>													
                                             <th scope="col">Status</th>													
                                             <th scope="col">Bank Account Name</th>													
                                             <th scope="col">Bank Account Number</th>								
@@ -100,6 +101,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
+                                            <th scope="col">Pay Date</th>													
                                             <th scope="col">Status</th>													
                                             <th scope="col">Bank Account Name</th>													
                                             <th scope="col">Bank Account Number</th>								
@@ -124,6 +126,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
+                                            <th scope="col">Pay Date</th>													
                                             <th scope="col">Status</th>													
                                             <th scope="col">Bank Account Name</th>													
                                             <th scope="col">Bank Account Number</th>								
@@ -152,15 +155,11 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="mb-0">Package Number</p>
-                                    <h4 class="mb-4" id="package_number"></h4>
-                                    <p class="mb-0">Owner</p>
-                                    <h4 class="mb-4" id="owner"></h4>
+                                <div class="col-sm-6">                                    
                                     <p class="mb-0">Name</p>
                                     <h4 class="mb-4" id="name"></h4>
-                                    <p class="mb-0">Description</p>
-                                    <h4 class="mb-4" id="description"></h4>
+                                    <p class="mb-0">Image</p>
+                                    <img src="" alt="" style="max-width: 100px;" id="photo">
                                     <p class="mb-0">Price</p>
                                     <h4 class="mb-4" id="price"></h4>
                                     <p class="mb-0">Approval At</p>
@@ -170,13 +169,13 @@
                                     <p class="mb-0">Approval By</p>
                                     <h4 class="mb-4" id="approval_by"></h4>
                                     <p class="mb-0">Approval Status</p>
-                                    <h4 class="mb-4" id="approval_status"></h4>
-                                    <p class="mb-0">Image</p>
-                                    <img src="" alt="" style="max-width: 100px;" id="photo">
+                                    <h4 class="mb-4" id="approval_status"></h4>                                    
                                     <p class="mb-0">Stable</p>
                                     <h4 class="mb-4" id="stable"></h4>
-                                    <p class="mb-0">Attendance</p>
-                                    <h4 class="mb-4" id="attendance"></h4>
+                                    <p class="mb-0">User</p>
+                                    <h4 class="mb-4" id="user"></h4>
+                                    <p class="mb-0">Phone</p>
+                                    <h4 class="mb-4" id="phone"></h4>
                                 </div>
                             </div>
                         </div>
@@ -216,6 +215,7 @@
                 },
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
+                {data: 'pay_date', name: 'pay_date'},
                 {data: 'approval_status', name: 'approval_status'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_number', name: 'account_number'},                
@@ -239,6 +239,7 @@
                 },
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
+                {data: 'pay_date', name: 'pay_date'},
                 {data: 'approval_status', name: 'approval_status'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_number', name: 'account_number'},                
@@ -262,6 +263,7 @@
                 },
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
+                {data: 'pay_date', name: 'pay_date'},
                 {data: 'approval_status', name: 'approval_status'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_number', name: 'account_number'},                
@@ -271,22 +273,20 @@
 
         $('body').on('click', '#openBtn', function () {
             var id = $(this).data('id');
-            $.get('{{route('app_owner.payment.verification')}}'+'/show/' + id , function (data) {
-                $('#package_number').html(data.package_number);
-                $('#name').html(data.name);
+            $.get('{{route('app_owner.payment.verification')}}'+'/show/' + id , function (data) {                
+                $('#name').html(data.booking_detail.package_name);
                 if(data.user_id == null){
-                    $('#owner').html('Something when wrong');
+                    $('#user').html('Something when wrong');
                 }else{
-                    $('#owner').html(data.user.name);
+                    $('#user').html(data.user.name);
                 }
-                $('#description').html(data.description);
-                $('#price').html(data.price);
-                $('#photo').attr('src','{{asset("storage/package/photo/")}}/'+(data.photo));
+                $('#price').html(data.price_total);
+                $('#photo').attr('src','{{asset('')}}'+(data.photo));
                 $('#approval_at').html(data.approval_at);
                 if(data.approval_by == null){
                     $('#approval_by').html('Need Approval');    
                 }else{
-                    $('#approval_by').html(data.approvalby_package.name);
+                    $('#approval_by').html(data.approvalby_booking.name);
                 }
                 $('#approval_status').html(data.approval_status);
                 if(data.approval_at == null){
@@ -295,8 +295,8 @@
                 if(data.approval_status == null){
                     $('#approval_status').html('Need Approval');    
                 }                    
-                $('#stable').html(data.stable_name);
-                $('#attendance').html(data.attendance);
+                $('#stable').html(data.booking_detail.stable_name);
+                $('#phone').html(data.user.phone);
                 jQuery.noConflict();
                 $('#modalDetail').modal('show');
             })

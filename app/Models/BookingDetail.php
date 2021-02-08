@@ -45,6 +45,7 @@ class BookingDetail extends Model
         return $stable->name;
     }
 
+
     public function getStableLocationAttribute()
     {
         $package = Package::find($this->package_id);
