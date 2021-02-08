@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
-use App\Mail\SendKeyStableMail;
 use App\Mail\StableApproveStep2;
-use App\Mail\StableDecline;
 use App\Mail\StableDeclineStep1;
 use App\Mail\StableDeclineStep2;
-use Illuminate\Http\Request;
+use App\Notifications\StableRegisteredToStableOwner;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +16,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\{User,Stable, Coach, Horse, Package, Slot, Province, City, District, Village};
+
 class StableApprovalController extends Controller
 {
     // Stable Approval 1
@@ -134,29 +133,6 @@ class StableApprovalController extends Controller
         ->make(true);
     }
 
-    public function jsonUnapproved1()
-    {
-        $data = Stable::where('approval_status', 'Decline')->get();
-        return datatables()->of($data)
-        ->addIndexColumn()
-        ->addColumn('created_at', function($data){
-            return date('D, M d Y', strtotime($data->created_at));
-        })
-        ->addColumn('approval_status', function () {
-            return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Decline</span>";
-        })
-        ->addColumn('action', function ($data) {
-            return 
-            "
-            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
-        })
-        ->rawColumns(['approval_status','action'])
-        ->make(true);
-    }
-
     public function show1($id)
     {
         $stable = Stable::with(['approvalby_stable'])->find($id);
@@ -173,7 +149,7 @@ class StableApprovalController extends Controller
         $data2 = Stable::find($data1->stable_id);
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new SendKeyStableMail($data2));
+                    $user->notify(new StableRegisteredToStableOwner($data2));
         Stable::where('id', $data2->id)->update([
             'approval_status' => 'Email Sent', 
             'approval_by' => Auth::user()->id,

@@ -141,8 +141,8 @@
                     this.on("success", function (file, response) {
                         location.href = "{{ route('app_owner.bank.index') }}";
                         Swal.fire({
-                            icon: 'Success',
-                            title: 'success',
+                            icon: 'success',
+                            title: 'Success',
                             text: 'Saving data success',
                             timer: 3000
                         });

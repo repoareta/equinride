@@ -77,8 +77,6 @@ class StableController extends Controller
         // SET AS STABLE OWNER ROLE
         Auth::user()->assignRole('stable-owner');
 
-        // SEND EMAIL NOTIFICATION
-        Notification::send(Auth::user(), new StableRegisteredToStableOwner($stable));
 
         Alert::success('Stable Register Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.index');
