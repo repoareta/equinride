@@ -107,7 +107,7 @@
 					<!--end:Item-->
 
 					<!--begin::Item-->
-					<a href="{{ route('user.order_history') }}" class="navi-item">
+					<a href="{{ route('user.order_history.index') }}" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">

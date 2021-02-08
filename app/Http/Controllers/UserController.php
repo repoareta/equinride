@@ -125,21 +125,40 @@ class UserController extends Controller
                     $price = number_format($item->price_total, 0,',', '.');
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
-                ->addColumn('action', function () {
-                    return '
-                    <td nowrap="nowrap">
-                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
-                            <i class="la la-eye icon-xl"></i>
-                        </a>
-                        <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
-                            <i class="far fa-star"></i>
-                        </a>
-                    </td>
-                    ';
+                ->addColumn('action', function ($item) {
+                    if($item->approval_status == 'Close'){
+                        return '
+                            <td nowrap="nowrap">
+                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                    <i class="la la-eye icon-xl"></i>
+                                </a>
+                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
+                                    <i class="far fa-star"></i>
+                                </a>
+                            </td>
+                            ';
+                    }else{
+                        return '
+                            <td nowrap="nowrap">
+                                <a href="'. route('user.order_history.show', $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                    <i class="la la-eye icon-xl"></i>
+                                </a>
+                            </td>
+                            ';
+                    }
+                    
                 })
                 ->rawColumns(['action', 'approval_status', 'package', 'price_total'])
                 ->make();
         }
         return view('booking.booking-history');
+    }
+
+    // Order History Detail
+    public function orderHistoryShow($id)
+    {
+        $data = Booking::with(['bank','booking_detail', 'booking_detail.package', 'booking_detail.package.stable'])->find($id);
+        $slots = Auth::user()->slots->first();
+        return view('booking.booking-history-detail', compact('data', 'slots'));
     }
 }

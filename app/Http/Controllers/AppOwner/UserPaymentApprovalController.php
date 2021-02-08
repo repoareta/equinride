@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 // load model
 use App\Models\Booking;
+use App\Models\Package;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -30,7 +30,10 @@ class UserPaymentApprovalController extends Controller
         ->addIndexColumn()
         ->addColumn('name', function ($data) {
             return $data->user->name;
-        })        
+        })     
+        ->addColumn('pay_date', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })   
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
                 <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
@@ -124,7 +127,10 @@ class UserPaymentApprovalController extends Controller
         ->addIndexColumn()
         ->addColumn('name', function ($data) {
             return $data->user->name;
-        })        
+        })     
+        ->addColumn('pay_date', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })   
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
                 <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
@@ -137,8 +143,11 @@ class UserPaymentApprovalController extends Controller
                     Accepted
                 </span>";
         })
-        ->addColumn('bank', function ($data) {
+        ->addColumn('account_name', function ($data) {
             return $data->bank->account_name;
+        })
+        ->addColumn('account_number', function ($data) {
+            return $data->bank->account_number;
         })
         ->addColumn('action', function ($data) {
             return
@@ -160,6 +169,9 @@ class UserPaymentApprovalController extends Controller
         ->addColumn('name', function ($data) {
             return $data->user->name;
         })        
+        ->addColumn('pay_date', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
                 <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
@@ -171,9 +183,12 @@ class UserPaymentApprovalController extends Controller
                 "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>
                     Decline
                 </span>";
-        })
-        ->addColumn('bank', function ($data) {
+        })        
+        ->addColumn('account_name', function ($data) {
             return $data->bank->account_name;
+        })
+        ->addColumn('account_number', function ($data) {
+            return $data->bank->account_number;
         })
         ->addColumn('action', function ($data) {
             return
@@ -194,36 +209,46 @@ class UserPaymentApprovalController extends Controller
         return response()->json($booking);
     }
 
-    public function approvBooking($id)
+    public function approveBooking($id)
     {
         $data = Booking::find($id);
         Booking::where('id', $data->id)->update([
-            'approval_status' => 'Accepted',
-            'approval_by' => Auth::user()->id,
-            'approval_at' => Carbon::now()
-        ]);
+                'approval_status' => 'Accepted',
+                'approval_by' => Auth::user()->id,
+                'approval_at' => Carbon::now()
+            ]);
+        $bookingDetail = $data->booking_detail;
+        $cek_package = Package::find($bookingDetail->package_id); 
 
-        foreach ($data->booking_detail as $key => $row) {
+        // Cek Package Regular atau Pony Ride
+        if($cek_package->session_usage == null){
             $image = QrCode::format('png')
                 ->size(200)
-                ->generate(url("/booking-detail/$row->id/confirmation"));
+                ->generate(url("/booking-detail/$bookingDetail->id/confirmation"));
 
-            $output_file = '/img/qr-code/img-' . time() . '.png';
+            $output_file = '/img/qr-code/img-' . time() . $bookingDetail->id . '.png';
 
             Storage::disk('public')->put($output_file, $image);
 
-            $row->qr_code = $output_file;
-            $row->save();
-
-            sleep(1); // add delay 1 seconds
+            $bookingDetail->qr_code = $output_file;
+            $bookingDetail->save();
+        }else{
+            
+            $slot_user = DB::table('slot_user')
+            ->where('booking_detail_id', $bookingDetail->id)
+            ->get();
+            
+            foreach($slot_user as $user){
+                DB::table('slot_user')->where('id',$user->id)->update([
+                    'qr_code_status' => 'Accepted'
+                ]);
+            }                
         }
-
-        
 
         Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
-    public function unapprovBooking($id)
+    public function unapproveBooking($id)
     {
         $data = Booking::find($id);
         Booking::where('id', $data->id)->update([

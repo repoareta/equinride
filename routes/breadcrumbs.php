@@ -43,10 +43,13 @@ Breadcrumbs::for('profile-password', function ($trail) {
     $trail->parent('profile');
     $trail->push('Change Password', route('user.change_password'));
 });
-
 Breadcrumbs::for('order-history', function ($trail) {
     $trail->parent('profile');
-    $trail->push('Order History', route('user.order_history'));
+    $trail->push('Order History', route('user.order_history.index'));
+});
+Breadcrumbs::for('order-history-show', function ($trail) {
+    $trail->parent('order-history');
+    $trail->push('Detail', route('user.order_history.show', 1));
 });
 
 // Stable

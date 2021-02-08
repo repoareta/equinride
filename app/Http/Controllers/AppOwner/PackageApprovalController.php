@@ -55,9 +55,9 @@ class PackageApprovalController extends Controller
         ->addColumn('no', function () {
             return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
         })
-        ->addColumn('stable_name', function ($data) {
-            return $data->stable->name;
-        })
+        ->addColumn('pay_date', function($data){
+            return date('D, M d Y', strtotime($data->created_at));
+        })        
         ->addColumn('package_name', function ($data) {
             return $data->name;
         })

@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="{{ route('user.order_history') }}" class="navi-link py-4 {{ Route::is('user.order_history') ? 'active' : '' }}">
+                    <a href="{{ route('user.order_history.index') }}" class="navi-link py-4 {{ Route::is('user.order_history.*') ? 'active' : '' }}">
                         <span class="navi-icon mr-2">
                             <span class="svg-icon">
                                 <!--begin::Svg Icon | path:/metronic/theme/html/demo4/dist/assets/media/svg/icons/Code/Compiling.svg-->
