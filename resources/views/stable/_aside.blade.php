@@ -159,7 +159,7 @@
                         <span class="navi-text">Admin Management</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                0
+                                {{ $stable->col_stable_admin->count() }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>

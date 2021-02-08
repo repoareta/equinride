@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/{package}/booking', [UserPackageController::class, 'booking'])->name('booking')->middleware('isProfileComplete');
         Route::post('/{package}/payment', [UserPackageController::class, 'paymentMethod'])->name('payment_method');
         Route::post('/{package}/payment-confirmation', [UserPackageController::class, 'paymentConfirmation'])->name('payment_confirmation');
-        Route::put('/{package}/payment-confirmation-submit', [UserPackageController::class, 'paymentConfirmationSubmit'])->name('payment_confirmation_submit');
+        Route::post('/payment-confirmation-submit', [UserPackageController::class, 'paymentConfirmationSubmit'])->name('payment_confirmation_submit');
     });
 
     // USER || MEMBER END
@@ -108,8 +108,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('/', [StableAdminController::class, 'index'])->name('index');
                 Route::get('/create', [StableAdminController::class, 'create'])->name('create');
-                Route::get('/{user}/edit', [StableAdminController::class, 'edit'])->name('edit');
-                Route::get('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
+                Route::post('/create', [StableAdminController::class, 'store'])->name('store');
+                Route::delete('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
             });
         });
 

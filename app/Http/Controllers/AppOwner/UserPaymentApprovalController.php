@@ -33,8 +33,8 @@ class UserPaymentApprovalController extends Controller
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' 
-                . asset('storage/booking/photo/'.$data->photo) . '" class="max-w-200px h-40px"></a>
+                <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
+                . asset($data->photo) . '" class="max-w-200px h-40px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function () {
@@ -127,8 +127,8 @@ class UserPaymentApprovalController extends Controller
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' 
-                . asset('storage/booking/photo/'.$data->photo) . '" class="max-w-200px h-40px"></a>
+                <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
+                . asset($data->photo) . '" class="max-w-200px h-40px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function () {
@@ -162,8 +162,8 @@ class UserPaymentApprovalController extends Controller
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' 
-                . asset('storage/booking/photo/'.$data->photo) . '" class="max-w-200px h-40px"></a>
+                <a href="' . asset($data->photo) . '" target="_blank"><img src="' 
+                . asset($data->photo) . '" class="max-w-200px h-40px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function () {

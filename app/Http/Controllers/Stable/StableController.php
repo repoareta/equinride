@@ -162,7 +162,7 @@ class StableController extends Controller
     {
         // CEK JIKA INPUT STABLE KEY BENAR
         $stable = Auth::user()->stables->first();
-
+        // dd($stable->key_stable);die;
         if ($request->stable_key == $stable->key_stable) {
             // SET SESSION stable_key_expired_at = TIME NOW + 3 JAM
             $stable_key_expired_at = Carbon::now()->add(3, 'hours');

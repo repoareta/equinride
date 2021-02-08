@@ -76,4 +76,19 @@ class Stable extends Model
     {
         return $this->belongsTo(User::class, 'approval_by');
     }
+
+    protected $appends = [
+        'col_stable_admin'
+    ];
+
+    public function getColStableAdminAttribute()
+    {
+        $admin = Stable::with(['users'=> function ($q){
+            $q->whereHas("roles", function($q){ 
+                $q->where("name", "stable-admin"); 
+            });
+        }])->where('id', $this->id)->first()->users;
+
+        return $admin;
+    }
 }

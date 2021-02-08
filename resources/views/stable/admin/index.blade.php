@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('stable-coach') }}
+    {{ Breadcrumbs::render('stable-admin') }}
 @endsection
 
 @push('page-styles')
@@ -20,10 +20,10 @@
             <!--begin::Header-->
             <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
-                    <h3 class="card-label font-weight-bolder text-dark">Coach Management</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your coach</span>
+                    <h3 class="card-label font-weight-bolder text-dark">Admin Management</h3>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your admin</span>
                 </div>
-                <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-5 font-weight-bold'><span class="mr-2">Add New</span><i class="fas fa-plus icon-nm"></i></a>
+                <a href='{{ route('stable.admin.create') }}' class='btn btn-primary ml-5 font-weight-bold'><span class="mr-2">Add New</span><i class="fas fa-plus icon-nm"></i></a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -33,12 +33,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Coach Name</th>
-                                <th scope="col">Birth Date</th>
-                                <th scope="col">Age</th>
+                                <th scope="col">Admin</th>
                                 <th scope="col">Gender</th>
-                                <th scope="col">Experience</th>
-                                <th scope="col">Certified</th>											
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>											
+                                <th scope="col">Address</th>											
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -78,17 +77,16 @@
                     orderable: false, 
                     searchable: false
                 },
-				{data: 'name', name: 'name'},
-				{data: 'birth_date', name: 'birth_date'},
-				{data: 'age', name: 'age'},
+				{data: 'user', name: 'user'},
 				{data: 'sex', name: 'sex'},
-				{data: 'experience', name: 'experience'},
-				{data: 'certified', name: 'certified'},
+				{data: 'email', name: 'email'},
+				{data: 'phone', name: 'phone'},
+				{data: 'address', name: 'address'},
 				{data: 'action', name: 'action'},
 			]
 		});
 
-        $('#dataTable tbody').on( 'click', '#deleteCoach', function (e) {
+        $('#dataTable tbody').on( 'click', '#deleteAdmin', function (e) {
 			e.preventDefault();
 			var id = $(this).attr('data-id');
 			Swal.fire({
@@ -102,7 +100,7 @@
 			}).then(function(result) {
 				if (result.value) {
 					$.ajax({
-						url: "{{ route('stable.coach.destroy') }}",
+						url: "{{ route('stable.admin.destroy') }}",
 						type: 'DELETE',
 						dataType: 'json',
 						data: {
@@ -111,7 +109,7 @@
 						},
 						success: function () {
 							Swal.fire({
-								title: "Delete Data Coach",
+								title: "Delete Data Admin",
 								text: "success",
 								icon: "success",
 								buttonsStyling: false,

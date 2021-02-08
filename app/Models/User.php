@@ -77,6 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function slots()
     {
-        return $this->belongsToMany(Slot::class)->withTimestamps();
+        return $this->belongsToMany(Slot::class)->withTimestamps()->withPivot('qr_code_status');
     }
 }

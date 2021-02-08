@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use RealRashid\SweetAlert\Facades\Alert;
 
 //load models
 use App\Models\Package;
 use App\Models\BankPayment;
 use App\Models\Booking;
 use App\Models\BookingDetail;
-
+use App\Models\Slot;
 class PackageController extends Controller
 {
     /**
@@ -83,14 +85,35 @@ class PackageController extends Controller
             $q->where('time_start', $request->time_start);
         }])
         ->firstOrFail();
-
+        
         // CEK BOOKING DETAIL
         // UNTUK MENGHINDARI RE-SUBMIT FORM PEMBAYARAN
+        $slot_users = Auth::user()->slots()
+                        ->where('date', $request->date_start)
+                        ->where('time_start', $request->time_start)
+                        ->first();
+        if($slot_users){
+            if($slot_users->pivot->qr_code_status == 'Pending'){
+                Alert::error('Payment Error', 'Same package payment unfiniish detected')->persistent(true)->autoClose(3600);
+                return redirect()->route('riding_class');
+            }
+        }        
 
         // CEK BOOKED CAPACITY IN STABLE SLOT
         // IF BOOKED CAPACITY > CAPACITY
         // THEN REDIRECT TO RIDING-CLASS SEARCH
         // ADD INFO IF SCHEDULE IS FULLY BOOKED
+        $slots = Slot::where('date', $request->date_start)
+                    ->where('time_start', $request->time_start)
+                    ->first();
+        if($slots->capacity == $slots->capacity_booked){
+            Alert::error('Payment Error.', 'Capacity full on this date and time')->persistent(true)->autoClose(3600);
+            return redirect()->route('riding_class');
+        }
+
+        // Add Capacity Booked slots
+        $slots->capacity_booked =+ 1;
+        $slots->update();
 
         $bank_payment = BankPayment::find($request->bank_payment_id);
 
@@ -126,7 +149,7 @@ class PackageController extends Controller
             [
                 'booking_detail_id' => $booking_detail->id,
                 'qr_code'           => $image_name,
-                'qr_code_status'    => "available"
+                'qr_code_status'    => 'Pending'
             ]
         );
 
@@ -143,17 +166,20 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function paymentConfirmationSubmit(Request $request, Package $package)
+    public function paymentConfirmationSubmit(Request $request)
     {
-        $package = Package::where('id', $package->id)
-        ->with(['stable.slots' => function ($q) use ($request) {
-            $q->where('date', $request->date_start);
-            $q->where('time_start', $request->time_start);
-        }])
-        ->firstOrFail();
+        if($request->hasFile('photo'))
+        {
+            $booking = Booking::find($request->id);
+            File::delete(public_path('/storage/booking/photo/'.$request->photo));
+                $name = $request->file('photo')->getClientOriginalName();
+                $dir = $request->file('photo')->storeAs('booking/photo', $name, 'public');
+                $nameDir = 'storage/'.$dir;
+                $booking->photo = $nameDir;
+                $booking->update();
 
-        $booking = Booking::find($request->booking_id);
-
-        return redirect()->route('user.order_history');
+            return response()->json(['status'=>"success",'imgdata'=>$nameDir]);
+        }
+        return response()->json(['status'=>"error"]);
     }
 }

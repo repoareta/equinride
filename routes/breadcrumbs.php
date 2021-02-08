@@ -107,6 +107,15 @@ Breadcrumbs::for('stable-schedule-edit', function ($trail) {
     $trail->parent('stable-schedule');
     $trail->push('Edit', route('stable.schedule.edit', 1));
 });
+// Stable Admin
+Breadcrumbs::for('stable-admin', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Stable Admin', route('stable.admin.index'));
+});
+Breadcrumbs::for('stable-admin-create', function ($trail) {
+    $trail->parent('stable-admin');
+    $trail->push('Create', route('stable.admin.create'));
+});
 
 // App Owner
 Breadcrumbs::for('owner-dashboard', function ($trail) {
