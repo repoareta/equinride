@@ -201,3 +201,13 @@ Breadcrumbs::for('owner-bank-edit', function ($trail) {
     $trail->parent('owner-bank');
     $trail->push('Edit', route('app_owner.bank.edit', 1));
 });
+
+// App Owner Admin
+Breadcrumbs::for('owner-admin', function ($trail) {
+    $trail->parent('owner-dashboard');
+    $trail->push('App Owner Admin', route('app_owner.admin.index'));
+});
+Breadcrumbs::for('owner-admin-create', function ($trail) {
+    $trail->parent('owner-admin');
+    $trail->push('Create', route('app_owner.admin.create'));
+});

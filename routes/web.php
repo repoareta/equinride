@@ -23,7 +23,7 @@ use App\Http\Controllers\Stable\PackageController;
 use App\Http\Controllers\Stable\ScheduleController;
 use App\Http\Controllers\Stable\WithdrawController;
 use App\Http\Controllers\Stable\BookingController;
-// USE 'AS' BECAUSE CONFLICT WITH APP OWNER PACKAGE CONTROLLER NAME
+// USE 'AS' BECAUSE CONFLICT WITH APP OWNER ADMIN CONTROLLER NAME
 use App\Http\Controllers\Stable\AdminController as StableAdminController;
 
 // LOAD STABLE CONTROLLER FOR STABLE OWNER AND STABLE ADMIN END
@@ -36,6 +36,8 @@ use App\Http\Controllers\AppOwner\HorseSexController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\StableReviewController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
+// USE 'AS' BECAUSE CONFLICT WITH APP OWNER ADMIN CONTROLLER NAME
+use App\Http\Controllers\AppOwner\AdminController as AppOwnerAdminController;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
@@ -182,17 +184,18 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // APP OWNER START
     Route::group(['middleware' => ['role:app-owner|app-admin'], 'prefix' => 'owner', 'as' => 'app_owner.'], function () {
 
-        // ONLY STABLE OWNER HAD ACCESS
+        // ONLY APP OWNER HAD ACCESS
         Route::group(['middleware' => ['role:app-owner']], function () {
 
-            //STABLE ADMIN CRUD
+            //APP OWNER ADMIN CRUD
             Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-                Route::get('/', [StableAdminController::class, 'index'])->name('index');
-                Route::get('/create', [StableAdminController::class, 'create'])->name('create');
-                Route::post('/create', [StableAdminController::class, 'store'])->name('store');
-                Route::delete('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
+                Route::get('/', [AppOwnerAdminController::class, 'index'])->name('index');
+                Route::get('/create', [AppOwnerAdminController::class, 'create'])->name('create');
+                Route::post('/create', [AppOwnerAdminController::class, 'store'])->name('store');
+                Route::delete('/destroy', [AppOwnerAdminController::class, 'destroy'])->name('destroy');
             });
         });
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
         // STABLE
