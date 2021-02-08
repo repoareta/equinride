@@ -180,7 +180,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // STABLE END
 
     // APP OWNER START
-    Route::group(['prefix' => 'owner', 'as' => 'app_owner.'], function () {
+    Route::group(['middleware' => ['role:app-owner|app-admin'], 'prefix' => 'owner', 'as' => 'app_owner.'], function () {
+
+        // ONLY STABLE OWNER HAD ACCESS
+        Route::group(['middleware' => ['role:app-owner']], function () {
+
+            //STABLE ADMIN CRUD
+            Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+                Route::get('/', [StableAdminController::class, 'index'])->name('index');
+                Route::get('/create', [StableAdminController::class, 'create'])->name('create');
+                Route::post('/create', [StableAdminController::class, 'store'])->name('store');
+                Route::delete('/destroy', [StableAdminController::class, 'destroy'])->name('destroy');
+            });
+        });
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
         // STABLE
