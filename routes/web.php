@@ -80,9 +80,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history.index');
         Route::get('/order-history/slots', [UserController::class, 'slots'])->name('order_history.slots');
         Route::get('/order-history/pay/{id}', [UserController::class, 'pay'])->name('order_history.pay');
-        Route::post('/order-history/pay/{id}', [UserController::class, 'payStore'])->name('order_history.payStore');
         Route::get('/order-history/{id}', [UserController::class, 'orderHistoryShow'])->name('order_history.show');
-        Route::get('/order-history/reschedule', [UserController::class, 'reschedule'])->name('order_history.reschedule');
+        Route::post('/order-history/reschedule', [UserController::class, 'reschedule'])->name('order_history.reschedule');
     });
 
     // USER RIDING CLASS

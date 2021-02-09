@@ -33,7 +33,7 @@
                                 <div class="d-flex flex-column align-items-md-end px-0">
                                     <span class="d-flex flex-column align-items-md-end">
                                         @if ($data->approval_status == 'Accepted')
-                                            <img src="{{ asset($slots->pivot->qr_code) }}" class="h-200px w-200px" alt="">                                                                                    
+                                            <img src="{{ asset($slot_user->qr_code) }}" class="h-200px w-200px" alt="">                                                                                    
                                         @endif
                                     </span>
                                 </div>
@@ -51,13 +51,20 @@
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2">Date & Time</span>
                                     <span class="opacity-70">
-                                        Date : {{ date('D, M d Y', strtotime($slots->date)) }}
+                                        Date : {{ date('D, M d Y', strtotime($slot->date)) }}
                                     </span>
                                     <span class="opacity-70">
-                                        Time : {{ date('H:i', strtotime($slots->time_start)) . ' - ' . date('H:i', strtotime($slots->time_end)) }}
+                                        Time : {{ date('H:i', strtotime($slot->time_start)) . ' - ' . date('H:i', strtotime($slot->time_end)) }}
                                     </span>
-                                    @if ($data->approval_status == 'Accepted')
-                                        <a href="javascript:;" data-toggle="modal" data-target="#modalReschedule" class="btn btn-primary mt-3">Reschedule</a>                                            
+                                    @php
+                                        $data_slot = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->count();
+                                    @endphp
+                                    @if ($data->approval_status == 'Accepted')                                        
+                                        @if ($data_slot > 1)
+                                            <button class="btn btn-primary mt-3" disabled>You Cannot Reschedule Again</button>
+                                        @else
+                                            <a href="javascript:;" data-toggle="modal" data-target="#modalReschedule" class="btn btn-primary mt-3">Reschedule</a>                                            
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -134,12 +141,12 @@
                 </p>
                 <form method="POST" action="{{route('user.order_history.reschedule')}}">
                     @csrf
-                    @if($slots)
-                            <input type="hidden" name="id" value="{{ Crypt::encryptString($slots->id) }}">
-                            <input type="hidden" name="bkid" value="{{ Crypt::encryptString($data->id) }}">
+                    @if($slot)
+                            <input type="hidden" name="id" value="{{ $slot_user->id }}">
+                            <input type="hidden" name="bkid" value="{{ $data->id }}">
                             <input type="hidden" name="uid" value="{{ Auth::user()->id }}">
                             <div class="form-group d-flex justify-content-center">
-                                <div id="datePicker" data-id="{{$slots->user_id}}">                                        
+                                <div id="datePicker" data-id="{{$slot->user_id}}">                                        
                                     <input type="hidden" name="date" value="" id="my_hidden_input">
                                 </div>
                             </div>
@@ -152,7 +159,7 @@
                 </div>
                 <div class="modal-footer">											
                     <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
-                    <button disabled class="btn btn-primary font-weight-bold">SAVE</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">SAVE</button>
                 </form>
             </div>
         </div>
