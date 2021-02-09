@@ -179,8 +179,8 @@
                                     if(myDropzone.files == ''){
                                         location.href = "{{ route('stable.horse.index') }}";
                                         Swal.fire({
-                                            icon: 'Success',
-                                            title: 'success',
+                                            icon: 'success',
+                                            title: 'Success',
                                             text: 'Saving data success',
                                             timer: 3000
                                         });

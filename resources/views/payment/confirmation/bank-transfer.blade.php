@@ -17,7 +17,7 @@
                         Today 03:31 AM
                     </div>
                     <p class="mb-0">
-                        Complete your payment within 17 minutes 41 seconds
+                        Complete your payment within <span id="time"></span>
                     </p>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                     //form submission code goes here
 
                     this.on("success", function (file, response) {
-                        location.href = "{{ route('user.order_history') }}";
+                        location.href = "{{ route('user.order_history.index') }}";
                         Swal.fire({
                             icon: 'success',
                             title: 'Payment Success',
@@ -130,5 +130,37 @@
     $('#submitForm').click(function(){
         dz.processQueue();
     });
+
+    // Set the date we're counting down to
+    var countDownDate = new Date("{{date('F d, Y G:i:s', strtotime($booking->created_at) + 60 * 60 ) }}").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+        
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+        
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("time").innerHTML =  minutes + ":" + seconds;
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("time").innerHTML = "EXPIRED";
+    }
+        
+    }, 1000);
 </script>
 @endpush

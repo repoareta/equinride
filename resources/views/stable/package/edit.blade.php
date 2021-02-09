@@ -150,8 +150,8 @@
                                     if(myDropzone.files == ''){
                                         location.href = "{{ route('stable.package.index') }}";
                                         Swal.fire({
-                                            icon: 'Success',
-                                            title: 'success',
+                                            icon: 'success',
+                                            title: 'Success',
                                             text: 'Updating data success',
                                             timer: 3000
                                         });

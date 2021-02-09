@@ -54,6 +54,7 @@
                                     <span class="opacity-70">
                                         Time : {{ date('H:i', strtotime($slots->time_start)) . ' - ' . date('H:i', strtotime($slots->time_end)) }}
                                     </span>
+                                    <a href="javascript:;" data-toggle="modal" data-target="#modalReschedule" class="btn btn-primary mt-3">Reschedule</a>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between pt-6">
@@ -104,12 +105,101 @@
                     </div>
                     <!-- end: Invoice footer-->
                     <!-- end: Invoice-->
+
                 </div>
             </div>
         </div>
     </div>
     <!--end::Content-->
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalReschedule" tabindex="-1" role="dialog" aria-labelledby="modalReschedulePony" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-end">										
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body justify-content-center">
+                <h2 class="title-text ">
+                    RESCHEDULE
+                </h2>
+                <p class="title-desc">
+                    You have only one chance to rescheduling package
+                </p>
+                <form method="POST" action="{{route('user.order_history.reschedule')}}">
+                    @csrf
+                    @if($slots)
+                            <input type="hidden" name="id" value="{{ Crypt::encryptString($slots->id) }}">
+                            <input type="hidden" name="bkid" value="{{ Crypt::encryptString($data->id) }}">
+                            <input type="hidden" name="uid" value="{{ Auth::user()->id }}">
+                            <div class="form-group d-flex justify-content-center">
+                                <div id="datePicker" data-id="{{$slots->user_id}}">                                        
+                                    <input type="hidden" name="date" value="" id="my_hidden_input">
+                                </div>
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <select name="time" id="selectTime" class="form-control w-100">
+                                </select>
+                            </div>             
+                    @else
+                    @endif
+                </div>
+                <div class="modal-footer">											
+                    <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
+                    <button disabled class="btn btn-primary font-weight-bold">SAVE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('page-scripts')
+<script>
+    $('#datePicker').datepicker({
+        format   : 'yyyy-mm-dd',
+        startDate: new Date(),
+    }).on('changeDate', function(e) {
+        var id = $(this).data('id');       
+        var $time = $("#selectTime");
+        $.ajax({
+            type: "GET",
+            url: '{{ route("user.order_history.index") }}/slots',
+            data: {
+                date: e.date.toDateString(),
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                $time.empty();
+                console.log(data);
+                var len = 0;
+                if(data != null){
+                    len = data.length;
+                }
+
+                if(len > 0){
+                // Read data and create <option >
+                for(var i=0; i<len; i++){
+
+                    var start = data[i].time_start;
+                    var end = data[i].time_end;
+
+                    var option = "<option value='"+start+"-"+end+"'>"+start+"-"+end+"</option>"; 
+
+                    $time.append(option); 
+                }
+                $time.select2();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+    $('#selectTime').select2({
+        dropdownParent: $('#modalReschedule')
+    });
+</script>
 @endpush

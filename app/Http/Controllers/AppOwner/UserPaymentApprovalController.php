@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendNotifUserPaymentApproveMail;
+use App\Mail\SendNotifUserPaymentDeclineMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -10,6 +12,7 @@ use Carbon\Carbon;
 // load model
 use App\Models\Booking;
 use App\Models\Package;
+use App\Models\User;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -238,6 +241,9 @@ class UserPaymentApprovalController extends Controller
             ->where('booking_detail_id', $bookingDetail->id)
             ->get();
             
+            $user = User::find($data->user_id);
+            $user->notify(new SendNotifUserPaymentApproveMail($cek_package));
+
             foreach($slot_user as $user){
                 DB::table('slot_user')->where('id',$user->id)->update([
                     'qr_code_status' => 'Accepted'
@@ -256,6 +262,12 @@ class UserPaymentApprovalController extends Controller
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
+
+        $bookingDetail = $data->booking_detail;
+        $cek_package = Package::find($bookingDetail->package_id); 
+
+        $user = User::find($data->user_id);
+            $user->notify(new SendNotifUserPaymentDeclineMail($cek_package));
 
         Alert::success($data->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
