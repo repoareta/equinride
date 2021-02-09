@@ -14,6 +14,7 @@ use Carbon\Carbon;
 // Load models
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Slot;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -85,7 +86,7 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-        $query = Booking::select('created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
+        $query = Booking::select('photo','created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
         ->orderBy('id', 'DESC')->get();
         if (request()->ajax()) {
             return Datatables::of($query)
@@ -138,13 +139,23 @@ class UserController extends Controller
                             </td>
                             ';
                     }else{
-                        return '
-                            <td nowrap="nowrap">
-                                <a href="'. route('user.order_history.show', $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
-                                    <i class="la la-eye icon-xl"></i>
-                                </a>
-                            </td>
-                            ';
+                        if($item->photo == null){
+                            return '
+                                <td nowrap="nowrap">
+                                    <a href="'. route('user.order_history.pay', $item->id) .'" class="btn btn-danger btn-icon mr-2">
+                                        Pay
+                                    </a>
+                                </td>
+                                ';
+                        }else{
+                            return '
+                                <td nowrap="nowrap">
+                                    <a href="'. route('user.order_history.show', $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                        <i class="la la-eye icon-xl"></i>
+                                    </a>
+                                </td>
+                                ';
+                        }
                     }
                     
                 })
@@ -160,5 +171,31 @@ class UserController extends Controller
         $data = Booking::with(['bank','booking_detail', 'booking_detail.package', 'booking_detail.package.stable'])->find($id);
         $slots = Auth::user()->slots->first();
         return view('booking.booking-history-detail', compact('data', 'slots'));
+    }
+
+    public function slots(Request $request)
+    {
+        if ($request->ajax()) {
+            $slot = Slot::where('date', $request->date)->where('user_id', $request->id)->get();
+            return response()->json($slot);
+        }
+    }
+
+    public function reschedule()
+    {
+
+    }
+
+    public function pay($id)
+    {
+        $booking = Booking::find($id);
+        $bank_payment = $booking->bank;
+        $package = $booking->booking_detail->package;
+
+        return view('payment.payment-confirmation', compact(
+            'package',
+            'bank_payment',
+            'booking'
+        ));
     }
 }
