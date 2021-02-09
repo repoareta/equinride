@@ -84,8 +84,10 @@
 
             <div class="card border-0 mb-5">
                 <div class="card-body p-0">
-                    <form class="dropzone dropzone-default dropzone-primary dz-clickable" id="dropzoneDragArea" action="{{ route('package.payment_confirmation_submit') }}" method="post" enctype="multipart/form-data">                        
-                    </form>
+                    @if ($booking->approval_status == null)
+                        <form class="dropzone dropzone-default dropzone-primary dz-clickable" id="dropzoneDragArea" action="{{ route('package.payment_confirmation_submit') }}" method="post" enctype="multipart/form-data">                        
+                        </form>                        
+                    @endif
                 </div>
             </div>                    
     </div>

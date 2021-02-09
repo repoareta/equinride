@@ -201,6 +201,10 @@ class UserController extends Controller
     public function pay($id)
     {
         $booking = Booking::find($id);
+        if($booking->approval_status == "Expired"){
+            Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
         $bank_payment = $booking->bank;
         $package = $booking->booking_detail->package;
 
