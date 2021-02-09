@@ -77,6 +77,39 @@
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
 <script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
+@php
+foreach(DB::table('bookings')->where('photo', null)->where('approval_status', null)->get() as $item)
+{
+    $time_start = strtotime($item->created_at);
+    $time_end   = strtotime(now());
+
+    //menghitung selisih dengan hasil detik
+    $diff    =$time_end - $time_start;
+    if ($diff > 3600) {
+        DB::table('bookings')->where('id',$item->id)
+        ->update([
+            'approval_status' => "Expired"
+        ]);
+        foreach(DB::table('booking_details')->where('booking_id',$item->id)->get() as $row)
+        {
+            $data_slot = DB::table('slot_user')->select('slot_id')->where('booking_detail_id',  $row->id)->groupBy('slot_id')->get();
+            foreach($data_slot as $item)
+            {  
+                $data_slots = DB::table('slots')->select('capacity_booked')->where('id', $item->slot_id)->get();
+                foreach ($data_slots as $row1) {
+                    # code...
+                    $count = DB::table('slot_user')->where('slot_id',  $item->slot_id)->where('booking_detail_id',  $row->id)->count();
+                    $slot = DB::table('slots')->where('id',$item->slot_id)
+                    ->update([
+                        'capacity_booked' => $row1->capacity_booked - $count,
+                    ]);
+                }
+            }     
+            DB::table('slot_user')->where('booking_detail_id',$row->id)->delete();
+        }
+    }
+}
+@endphp
 @stack("page-scripts")
 
 <!--end::Page Scripts-->
