@@ -84,7 +84,7 @@ foreach(DB::table('bookings')->where('photo', null)->where('approval_status', nu
     $time_end   = strtotime(now());
 
     //menghitung selisih dengan hasil detik
-    $diff    =$time_end - $time_start;
+    $diff =$time_end - $time_start;
     if ($diff > 3600) {
         DB::table('bookings')->where('id',$item->id)
         ->update([
