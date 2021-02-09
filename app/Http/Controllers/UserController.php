@@ -140,13 +140,25 @@ class UserController extends Controller
                             ';
                     }else{
                         if($item->photo == null){
-                            return '
-                                <td nowrap="nowrap">
-                                    <a href="'. route('user.order_history.pay', $item->id) .'" class="btn btn-danger btn-icon mr-2">
-                                        Pay
-                                    </a>
-                                </td>
-                                ';
+
+                            if($item->approval_status == null)
+                            {
+                                return '
+                                    <td nowrap="nowrap">
+                                        <a href="'. route('user.order_history.pay', $item->id) .'" class="btn btn-danger btn-icon mr-2">
+                                            Pay
+                                        </a>
+                                    </td>
+                                    ';
+                            }else{
+                                return '
+                                    <td nowrap="nowrap">
+                                        <a href="#" class="btn btn-danger btn-icon mr-2" disabled>
+                                            <i class="fa fa-ban"></i>
+                                        </a>
+                                    </td>
+                                    ';
+                            }
                         }else{
                             return '
                                 <td nowrap="nowrap">
@@ -189,6 +201,10 @@ class UserController extends Controller
     public function pay($id)
     {
         $booking = Booking::find($id);
+        if($booking->approval_status == "Expired"){
+            Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
         $bank_payment = $booking->bank;
         $package = $booking->booking_detail->package;
 
