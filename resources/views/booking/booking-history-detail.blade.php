@@ -32,7 +32,9 @@
                                 <h1 class="display-4 font-weight-boldest mb-10">ORDER DETAILS</h1>                                   
                                 <div class="d-flex flex-column align-items-md-end px-0">
                                     <span class="d-flex flex-column align-items-md-end">
-                                        <img src="{{ asset($slots->pivot->qr_code) }}" class="h-200px w-200px" alt="">                                        
+                                        @if ($data->approval_status == 'Accepted')
+                                            <img src="{{ asset($slots->pivot->qr_code) }}" class="h-200px w-200px" alt="">                                                                                    
+                                        @endif
                                     </span>
                                 </div>
                             </div>
@@ -54,7 +56,9 @@
                                     <span class="opacity-70">
                                         Time : {{ date('H:i', strtotime($slots->time_start)) . ' - ' . date('H:i', strtotime($slots->time_end)) }}
                                     </span>
-                                    <a href="javascript:;" data-toggle="modal" data-target="#modalReschedule" class="btn btn-primary mt-3">Reschedule</a>
+                                    @if ($data->approval_status == 'Accepted')
+                                        <a href="javascript:;" data-toggle="modal" data-target="#modalReschedule" class="btn btn-primary mt-3">Reschedule</a>                                            
+                                    @endif
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between pt-6">
