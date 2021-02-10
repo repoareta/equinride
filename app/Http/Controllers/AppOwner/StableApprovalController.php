@@ -193,14 +193,14 @@ class StableApprovalController extends Controller
 
     public function jsonPending2()
     {
-        $data = Stable::where('approval_status', 'Email Sent')->get();
+        $data = Stable::where('approval_status', 'Need Approval')->get();
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($data){
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
-            return $data->approval_status == 'Email Sent' ?
+            return $data->approval_status == 'Need Approval' ?
                 "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
                     Pending
                 </span>" : "";

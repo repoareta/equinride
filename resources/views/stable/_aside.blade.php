@@ -23,10 +23,19 @@
                                 Pending
                             </span>                            
                         @endif
-                        
-                        <button class="btn btn-primary font-weight-bold label label-inline">
-                            Submit Approval
-                        </button>
+                        @if ($stable->approval_status == 'Need Approval')
+                            <button class="btn btn-primaty font-weight-bold label label-inline" disabled>
+                                Submitted
+                            </button>
+                        @else
+                            <form id="formAccept" method="post" action="{{ route('stable.submit',$stable->id) }}">
+                                @method('PUT')
+                                @csrf
+                                <button id="submitApprove" class="btn btn-primary font-weight-bold label label-inline">
+                                    Submit Approval
+                                </button>
+                            </form>                            
+                        @endif
                     </div>
                 </div>
             </div>
@@ -179,3 +188,28 @@
     </div>
     <!--end::Profile Card-->
 </div>
+
+@push('page-scripts')
+<script>
+    $('body').on('click','#submitApprove', function(e) {
+
+        e.preventDefault();
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            text: 'This is will be accepted the stable',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value === true) {
+                $('#formAccept').submit();
+            }
+        });
+    });
+</script>
+@endpush

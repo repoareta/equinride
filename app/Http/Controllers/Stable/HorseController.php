@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Horse;
+use App\Models\Stable;
 use App\Models\HorseSex;
 use App\Models\HorseBreed;
 
@@ -100,9 +101,19 @@ class HorseController extends Controller
      */
     public function create()
     {
-        $sexes = HorseSex::all();
+        $sexes  = HorseSex::all();
         $breeds = HorseBreed::all();
 
+        $stable         = Auth::user()->stables->first()->pivot;
+        $horseNum1      = Horse::where('stable_id', $stable->stable_id)->get()->count();
+        $stableCapacity = Stable::find($stable->stable_id)->capacity_of_stable;        
+
+        if($horseNum1 == $stableCapacity)
+        {
+            Alert::error('Error', 'Capacity of stable full')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+        
         return view('stable.horse.create', compact('sexes', 'breeds'));
     }
 
