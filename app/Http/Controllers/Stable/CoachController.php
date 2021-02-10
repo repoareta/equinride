@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Coach;
+use App\Models\Stable;
 class CoachController extends Controller
 {
     /**
@@ -73,6 +74,16 @@ class CoachController extends Controller
      */
     public function create()
     {
+        $stable    = Auth::user()->stables->first()->pivot;
+        $coachNum1 = Coach::where('stable_id', $stable->stable_id)->get()->count();
+        $coachNum2 = Stable::find($stable->stable_id)->number_of_coach;        
+
+        if($coachNum1 == $coachNum2)
+        {
+            Alert::error('Error', 'Number of coach full')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+
         return view('stable.coach.create');
     }
 

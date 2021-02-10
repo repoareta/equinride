@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 // load models
 use App\Models\Stable;
+use App\Models\Coach;
+use App\Models\Horse;
 use App\Models\Village;
 use App\Notifications\StableRegisteredToStableOwner;
 use Carbon\Carbon;
@@ -133,12 +135,28 @@ class StableController extends Controller
         $stable->district_id        = $request->district;
         $stable->village_id         = $request->village;
         $stable->owner              = $request->owner;
-        $stable->manager            = $request->manager;
+        $stable->manager            = $request->manager;        
+        $stable->facilities         = $request->facilities;    
         $stable->capacity_of_stable = $request->capacity_of_stable;
         $stable->capacity_of_arena  = $request->capacity_of_arena;
-        $stable->number_of_coach    = $request->number_of_coach;
-        $stable->facilities         = $request->facilities;
+        $stable->number_of_coach    = $request->number_of_coach;    
+        
+        $coachNum1 = Coach::where('stable_id', $stable->id)->get()->count();
+        $coachNum2 = $stable->number_of_coach; 
+        if($coachNum1 > $coachNum2)
+        {
+            Alert::error('Error', 'Number of coach cannot smaller than coach data')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
 
+        $horseNum1      = Horse::where('stable_id', $stable->id)->get()->count();
+        $stableCapacity = $stable->capacity_of_stable;                
+        if($horseNum1 > $stableCapacity)
+        {
+            Alert::error('Error', 'Capacity of stable full')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+        
         if ($request->logo) {
             // delete old logo
             File::delete($stable->logo);
