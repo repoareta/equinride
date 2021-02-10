@@ -23,23 +23,25 @@
                                 Pending
                             </span>                            
                         @endif
-                        <div class="mt-2">
-                            <p class="mb-0">Action</p>
-                            <form class='d-inline' id='formAccept' method='post' action='{{ route('app_owner.stable.approval.step_2.approve',$stable->id) }}'>
-                                @method('PUT')
-                                @csrf
-                                    <button class="btn btn-success font-weight-bold label label-inline" id='accept'>
-                                        Approve
-                                    </button>
-                            </form>
-                            <form class='d-inline' id='formDecline' method='post' action='{{ route('app_owner.stable.approval.step_2.unapprove',$stable->id) }}'>
-                                @method('PUT')
-                                @csrf
-                                    <button class="btn btn-danger font-weight-bold label label-inline" id='decline'>
-                                        Decline
-                                    </button>
-                            </form>                            
-                        </div>                        
+                        @if ($stable->approval_status == 'Need Approval')
+                            <div class="mt-2">
+                                <p class="mb-0">Action</p>
+                                <form class='d-inline' id='formAccept' method='post' action='{{ route('app_owner.stable.approval.step_2.approve',$stable->id) }}'>
+                                    @method('PUT')
+                                    @csrf
+                                        <button class="btn btn-success font-weight-bold label label-inline" id='accept'>
+                                            Approve
+                                        </button>
+                                </form>
+                                <form class='d-inline' id='formDecline' method='post' action='{{ route('app_owner.stable.approval.step_2.unapprove',$stable->id) }}'>
+                                    @method('PUT')
+                                    @csrf
+                                        <button class="btn btn-danger font-weight-bold label label-inline" id='decline'>
+                                            Decline
+                                        </button>
+                                </form>                            
+                            </div>                            
+                        @endif
                     </div>
                 </div>
             </div>

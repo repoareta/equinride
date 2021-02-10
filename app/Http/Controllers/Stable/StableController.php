@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stable;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\MediaUploadingTrait;
+use App\Mail\StableAdminSendSubmitApproval;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Province;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 
 // load models
 use App\Models\Stable;
+use App\Models\User;
 use App\Models\Coach;
 use App\Models\Horse;
 use App\Models\Village;
@@ -189,5 +191,36 @@ class StableController extends Controller
 
         Alert::error('Stable key not match.')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.stable_key.confirm');
+    }
+
+    public function submitApproval($id)
+    {
+        $data = Stable::find($id);
+
+        $users1 = User::whereHas("roles", function($q){
+                            $q->where("name", "app-owner"); 
+                        })->get();
+
+        $users2 = User::whereHas("roles", function($q){
+                            $q->where("name", "app-admin"); 
+                        })->get();
+        
+        foreach($users1 as $user)
+        {
+            $send = User::where('id', $user->id)->first();
+            $send->notify(new StableAdminSendSubmitApproval($data));
+        }
+
+        foreach($users2 as $user)
+        {
+            $send = User::where('id', $user->id)->first();
+            $send->notify(new StableAdminSendSubmitApproval($data));
+        }
+
+        Stable::where('id', $data->id)->update([
+            'approval_status' => 'Need Approval'
+        ]);
+        Alert::success($data->name.' Submit Approval Sent', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 }

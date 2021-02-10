@@ -38,6 +38,7 @@ use App\Http\Controllers\AppOwner\StableReviewController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 // USE 'AS' BECAUSE CONFLICT WITH APP OWNER ADMIN CONTROLLER NAME
 use App\Http\Controllers\AppOwner\AdminController as AppOwnerAdminController;
+use App\Models\Stable;
 
 // LOAD APP OWNER CONTROLLER FOR APP OWNER AND APP ADMIN END
 
@@ -104,7 +105,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
         Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
         Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
-                
+        Route::put('/submit/{id}', [StableController::class, 'submitApproval'])->name('submit');
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {
             // STABLE EDIT
