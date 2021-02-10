@@ -190,12 +190,14 @@ class UserController extends Controller
         $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->count();
         if($slot_user > 1){
             $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->get()->last();
+            $slot = Slot::find($slot_user->slot_id);        
+            return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
         }
         if($slot_user = 1){
             $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->first();
-        }
-        $slot = Slot::find($slot_user->slot_id);
-        return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
+            $slot = Slot::find($slot_user->slot_id);        
+            return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
+        }        
     }
 
     public function slots(Request $request)
