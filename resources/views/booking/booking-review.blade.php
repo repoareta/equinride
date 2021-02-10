@@ -196,7 +196,7 @@
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <p>
-                    By clicking this button, you acknowladge than you have read and agreed to the <a href="#">Terms & Conditions</a>
+                    By clicking this button, you acknowladge that you have read and agreed to the <a href="#">Terms & Conditions</a>
                     and <a href="#">Privacy Policy</a> of Equinride 
                 </p>
                 <button class="btn btn-block font-weight-bolder btn-warning" onclick="event.preventDefault();document.getElementById('booking-review-form').submit();">Continue to Payment</button>

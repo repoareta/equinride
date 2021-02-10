@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-body p-5">
                     <div class="font-size-h4 font-weight-bold">
-                        Today 03:31 AM
+                        Today {{date('H:i', strtotime($booking->created_at) + 60 * 60 ) }}
                     </div>
                     <p class="mb-0">
                         Complete your payment within <span id="time"></span>
@@ -30,12 +30,12 @@
             </div>
 
             <div class="card">
-                <div class="card-header p-5">
+                {{-- <div class="card-header p-5">
                     <div class="d-flex align-items-center">
                         <div><i class="flaticon-warning icon-xl"></i></div>
                         <div class="ml-5">Payment instructions have been sent to your email</div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card-body p-0">
                     <div class="bg-secondary p-5 d-flex justify-content-between align-items-center">
                         <div class="font-size-h6 font-weight-bold">
