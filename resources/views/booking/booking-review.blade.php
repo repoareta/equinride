@@ -109,7 +109,7 @@
                             <!--End::Dashed Line-->
                             
                             <p class="text-justify">
-                                Free reschedule for same package only 1 attempt as long as not expired or closed by stable.
+                                Packages can be rescheduled only once as long as the package's validity period has not ended or closed by the stable
                             </p>
                     </div>
                     <!--end::Info-->
@@ -196,7 +196,7 @@
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <p>
-                    By clicking this button, you ackowladge than you hav read amd agreed to the <a href="#">Terms & Conditions</a>
+                    By clicking this button, you acknowladge than you have read and agreed to the <a href="#">Terms & Conditions</a>
                     and <a href="#">Privacy Policy</a> of Equinride 
                 </p>
                 <button class="btn btn-block font-weight-bolder btn-warning" onclick="event.preventDefault();document.getElementById('booking-review-form').submit();">Continue to Payment</button>
