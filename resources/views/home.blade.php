@@ -22,7 +22,7 @@
                         <p class="subtitle">
                             Choose a class that you can take according to your current abilities
                         </p>
-                        <a href="#" class="btn btn-warning">
+                        <a href="{{ route('riding_class') }}" class="btn btn-warning">
                             <b>JOIN THE CLASS</b>
                         </a>
                     </div>
@@ -37,7 +37,7 @@
                         <p class="subtitle">
                             Choose a class that you can take according to your current abilities
                         </p>
-                        <a href="#" class="btn btn-warning">
+                        <a href="{{ route('riding_class') }}" class="btn btn-warning">
                             <b>JOIN THE CLASS</b>
                         </a>
                     </div>
@@ -52,7 +52,7 @@
                         <p class="subtitle">
                             Choose a class that you can take according to your current abilities
                         </p>
-                        <a href="#" class="btn btn-warning">
+                        <a href="{{ route('riding_class') }}" class="btn btn-warning">
                             <b>JOIN THE CLASS</b>
                         </a>
                     </div>
