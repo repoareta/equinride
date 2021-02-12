@@ -82,7 +82,8 @@ class StableController extends Controller
         Auth::user()->assignRole('stable-owner');
 
 
-        Alert::success('Stable Register Success.', 'Success')->persistent(true)->autoClose(3600);
+        Alert::success('Stable Register Success.', 'You already submit your stable. 
+        Your request will be reviewed by Apps Owner. Notification will be sent to your e-mail.')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.index');
     }
 
@@ -224,7 +225,7 @@ class StableController extends Controller
         Alert::success($data->name.' Submit Approval Sent', 'You already submit your info. 
         Your request will be reviewed by Apps Owner. Notification will be sent to your e-mail.')
         ->persistent(true)->autoClose(3600);
-        
+
         return redirect()->back();
     }
 }
