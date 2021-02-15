@@ -78,7 +78,8 @@ class Stable extends Model
     }
 
     protected $appends = [
-        'col_stable_admin'
+        'col_stable_admin',
+        'col_bookings'
     ];
 
     public function getColStableAdminAttribute()
@@ -90,5 +91,12 @@ class Stable extends Model
         }])->where('id', $this->id)->first()->users;
 
         return $admin;
+    }
+
+    public function getColBookingsAttribute()
+    {
+        $data = $this->packages->first()->booking_detail->count();
+
+        return $data;
     }
 }
