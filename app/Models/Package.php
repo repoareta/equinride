@@ -23,4 +23,9 @@ class Package extends Model
     {
         return $this->belongsTo(User::class, 'approval_by', 'id');
     }
+
+    public function booking_detail()
+    {
+        return $this->hasMany(BookingDetail::class);
+    }
 }

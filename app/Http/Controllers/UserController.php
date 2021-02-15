@@ -110,7 +110,7 @@ class UserController extends Controller
                             <div class="text-primary font-weight-bolder font-size-lg">'.$item->booking_detail->package_name.'</div>
                             <span class="text-muted font-weight-bold font-size-sm">'.$item->booking_detail->stable_name.'</span>
                         </div>
-                    </div>                    
+                    </div>                  
                     ';
                 })
                 ->addColumn('created_at', function ($item) {

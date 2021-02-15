@@ -119,6 +119,11 @@ Breadcrumbs::for('stable-admin-create', function ($trail) {
     $trail->parent('stable-admin');
     $trail->push('Create', route('stable.admin.create'));
 });
+// Stable Booking Order
+Breadcrumbs::for('stable-booking', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Booking Order', route('stable.booking.index'));
+});
 
 // App Owner
 Breadcrumbs::for('owner-dashboard', function ($trail) {
