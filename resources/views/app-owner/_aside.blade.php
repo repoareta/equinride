@@ -1,3 +1,37 @@
+@php
+    // Load models
+    use App\Models\Stable;
+    use App\Models\Booking;
+    use App\Models\User;
+    use App\Models\BankPayment;
+    use App\Models\HorseSex;
+    use App\Models\HorseBreed;
+
+    // total admin
+    $count_admin =  User::whereHas('roles', function ($q){
+                        $q->where('name', 'app-admin');
+                    })->count();
+    
+    // Total bank 
+    $count_bank =   BankPayment::count();
+    
+    // Total horse sex
+    $count_horse_sex =  HorseSex::count();
+
+    // Total horse breed
+    $count_horse_breed =  HorseBreed::count();
+
+    // Total booking
+    $count_booking = Booking::where('approval_status', null)->count();
+
+    // Total Stable Step 1 need approve
+    $count_stable_1 = Stable::where('approval_status', null)->count();
+
+    // Total Stable Step 1 need approve
+    $count_stable_2 = Stable::where('approval_status', 'Need Approval')->count();
+
+@endphp
+
 <div class="flex-row-auto offcanvas-mobile w-350px w-xxl-350px" id="kt_profile_aside">
     <!--begin::Profile Card-->
     <div class="card card-custom card-stretch">
@@ -53,6 +87,11 @@
                             <i class="fas fa-chess-knight"></i>
                         </span>
                         <span class="navi-text">Stable Approval</span>
+                        <span class="navi-label">
+                            <span class="label label-light-danger font-weight-bold">
+                                {{ $count_stable_1 + $count_stable_2 }}
+                            </span>
+                        </span>
                         <span class="navi-arrow"></span>
                     </a>
 
@@ -63,6 +102,12 @@
                                     <i class="fas fa-check-circle"></i>
                                 </span>
                                 <span class="navi-text">Approval Step 1</span>
+                                <span class="navi-label">
+                                    <span class="label label-light-danger font-weight-bold">
+                                        {{ $count_stable_1 }}
+                                    </span>
+                                </span>
+                                <span class="navi-arrow"></span>
                             </a>
                         </li>
 
@@ -72,6 +117,12 @@
                                     <i class="fas fa-check-circle"></i>
                                 </span>
                                 <span class="navi-text">Approval Step 2</span>
+                                <span class="navi-label">
+                                    <span class="label label-light-danger font-weight-bold">
+                                        {{ $count_stable_2 }}
+                                    </span>
+                                </span>
+                                <span class="navi-arrow"></span>
                             </a>
                         </li>
                     </ul>
@@ -93,6 +144,11 @@
                             <i class="fab fa-buffer"></i>
                         </span>
                         <span class="navi-text">Package Payment</span>
+                        <span class="navi-label">
+                            <span class="label label-light-danger font-weight-bold">
+                                {{ $count_booking }}
+                            </span>
+                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -105,6 +161,11 @@
                             <i class="la la-horse-head icon-xl"></i>
                         </span>
                         <span class="navi-text">Horse</span>
+                        <span class="navi-label">
+                            <span class="label label-light-primary font-weight-bold">
+                                {{ $count_horse_sex + $count_horse_breed }}
+                            </span>
+                        </span>
                         <span class="navi-arrow"></span>
                     </a>
 
@@ -115,6 +176,12 @@
                                     <i class="la la-horse icon-xl"></i>
                                 </span>
                                 <span class="navi-text">Horse Sex</span>
+                                <span class="navi-label">
+                                    <span class="label label-light-primary font-weight-bold">
+                                        {{ $count_horse_sex }}
+                                    </span>
+                                </span>
+                                <span class="navi-arrow"></span>
                             </a>
                         </li>
 
@@ -124,6 +191,12 @@
                                     <i class="la la-horse icon-xl"></i>
                                 </span>
                                 <span class="navi-text">Horse Breed</span>
+                                <span class="navi-label">
+                                    <span class="label label-light-primary font-weight-bold">
+                                        {{ $count_horse_breed }}
+                                    </span>
+                                </span>
+                                <span class="navi-arrow"></span>
                             </a>
                         </li>
                     </ul>
@@ -135,6 +208,11 @@
                             <i class="la la-bank icon-xl"></i>
                         </span>
                         <span class="navi-text">Bank Account</span>
+                        <span class="navi-label">
+                            <span class="label label-light-primary font-weight-bold">
+                                {{ $count_bank }}
+                            </span>
+                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -145,6 +223,11 @@
                             <i class="fas fa-user-friends"></i>
                         </span>
                         <span class="navi-text">Admin Management</span>
+                        <span class="navi-label">
+                            <span class="label label-light-primary font-weight-bold">
+                                {{ $count_admin }}
+                            </span>
+                        </span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
