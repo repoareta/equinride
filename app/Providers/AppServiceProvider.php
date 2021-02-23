@@ -29,7 +29,14 @@ class AppServiceProvider extends ServiceProvider
         // SHARE STABLE PAGES
         View::composer(['stable.*'], function ($view) {
             //
-            $view->with('stable', Auth::user()->stables->first());
+            $stable = Stable::where('id', Auth::user()->stables->first()->id)
+            ->withCount([
+                'horses',
+                'coaches',
+                'packages',
+            ])
+            ->first();
+            $view->with('stable', $stable);
         });
     }
 }

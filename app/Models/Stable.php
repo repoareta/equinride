@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
 class Stable extends Model
 {
     use HasFactory;
+    use HasRelationships;
 
     /**
     * Get the owner of stable
@@ -77,26 +80,55 @@ class Stable extends Model
         return $this->belongsTo(User::class, 'approval_by');
     }
 
-    protected $appends = [
-        'col_stable_admin',
-        'col_bookings'
-    ];
+    // protected $appends = [
+    //     'col_stable_admin',
+    //     'col_bookings'
+    // ];
 
-    public function getColStableAdminAttribute()
+    // public function getColStableAdminAttribute()
+    // {
+    //     $admin = Stable::with(['users'=> function ($q) {
+    //         $q->whereHas("roles", function ($q) {
+    //             $q->where("name", "stable-admin");
+    //         });
+    //     }])->where('id', $this->id)->first()->users;
+
+    //     return $admin;
+    // }
+
+    // public function getColBookingsAttribute()
+    // {
+    //     $data = $this->packages->first()->booking_detail->count();
+
+    //     return $data;
+    // }
+
+    /**
+     * Get all of the booking detail for the stable.
+     */
+    public function booking_details()
     {
-        $admin = Stable::with(['users'=> function ($q){
-            $q->whereHas("roles", function($q){ 
-                $q->where("name", "stable-admin"); 
-            });
-        }])->where('id', $this->id)->first()->users;
-
-        return $admin;
+        return $this->hasManyThrough(BookingDetail::class, Package::class);
     }
 
-    public function getColBookingsAttribute()
-    {
-        $data = $this->packages->first()->booking_detail->count();
+    /**
+     * Get all of the booking detail for the stable.
+     */
+    // public function bookings()
+    // {
+    //     return $this->booking_details->belongsTo(Booking::class);
+    // }
 
-        return $data;
+    public function bookings()
+    {
+        return $this->hasManyDeepFromRelations(
+            $this->booking_details(),
+            (new BookingDetail)->booking()
+        );
+    }
+
+    public function schedule_settings()
+    {
+        return $this->hasMany(SlotSetting::class);
     }
 }

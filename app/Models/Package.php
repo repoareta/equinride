@@ -11,7 +11,7 @@ class Package extends Model
 
     public function stable()
     {
-        return $this->belongsTo(Stable::class);
+        return $this->belongsTo(Stable::class, 'stable_id');
     }
 
     public function user()
@@ -24,7 +24,7 @@ class Package extends Model
         return $this->belongsTo(User::class, 'approval_by', 'id');
     }
 
-    public function booking_detail()
+    public function booking_details()
     {
         return $this->hasMany(BookingDetail::class);
     }

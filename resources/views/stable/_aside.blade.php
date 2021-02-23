@@ -75,7 +75,7 @@
                         <span class="navi-text">Horse</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->horses->count() }}
+                                {{ $stable->horses_count }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>
@@ -89,7 +89,7 @@
                         <span class="navi-text">Package</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->packages->count() }}
+                                {{ $stable->packages_count }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>
@@ -113,7 +113,7 @@
                         <span class="navi-text">Coach</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->coaches->count() }}
+                                {{ $stable->coaches_count }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>
@@ -128,7 +128,7 @@
                         <span class="navi-text">Booking Order</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->col_bookings }}
+                                {{ $stable->bookings->count() }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>
@@ -175,7 +175,7 @@
                         <span class="navi-text">Admin Management</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->col_stable_admin->count() }}
+                                {{-- {{ $stable->col_stable_admin->count() }} --}} 0
                             </span>
                         </span>
                         <span class="navi-arrow"></span>

@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     /**
     * Get the coaches of stable
     */
-    public function booking_detail()
+    public function booking_details()
     {
-        return $this->hasMany(BookingDetail::class, 'booking_id');
+        return $this->hasMany(BookingDetail::class);
     }
 
     public function bank()
@@ -29,15 +30,6 @@ class Booking extends Model
     
     public function approvalby_booking()
     {
-        return $this->belongsTo(User::class, 'approval_by', 'id');
-    }
-
-    protected $appends = [
-        'booking_detail'
-    ];
-
-    public function getBookingDetailAttribute()
-    {
-        return $this->booking_detail()->first();
+        return $this->belongsTo(User::class, 'approval_by');
     }
 }

@@ -13,6 +13,7 @@ use Carbon\CarbonPeriod;
 
 // load model
 use App\Models\Slot;
+use App\Models\SlotSetting;
 use App\Models\StableUser;
 
 class ScheduleController extends Controller
@@ -24,36 +25,33 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){           
-            $stable = Auth::user()->stables->first()->pivot; 
-            if(!empty($request->input('from_date')))
-            {
+        if ($request->ajax()) {
+            $stable = Auth::user()->stables->first()->pivot;
+            if (!empty($request->input('from_date'))) {
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
-                if($request->input('from_date') === $request->input('end_date')){
+                if ($request->input('from_date') === $request->input('end_date')) {
                     //kita filter tanggalnya sesuai dengan request input('from_date')
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
-                    $query = Slot::where('user_id',$stable->user_id)
-                            ->whereDate('date','=', $from)
+                    $query = Slot::where('user_id', $stable->user_id)
+                            ->whereDate('date', '=', $from)
                             ->orderBy('time_start', 'asc')
                             ->get();
-                }
-                else{
+                } else {
                     //kita filter dari tanggal awal ke akhir
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
                     $end = date('Y-m-d', strtotime($request->input('end_date')));
-                    $query = Slot::where('user_id',$stable->user_id)
+                    $query = Slot::where('user_id', $stable->user_id)
                     ->whereBetween('date', array($from, $end))
                     ->orderBy('time_start', 'asc')
                     ->get();
                 }
-                
-            }else{
-                $query = Slot::where('user_id',$stable->user_id)->orderBy('date', 'asc')->orderBy('time_start', 'asc')->get();
+            } else {
+                $query = Slot::where('user_id', $stable->user_id)->orderBy('date', 'asc')->orderBy('time_start', 'asc')->get();
             }
 
             return Datatables::of($query)
             ->addIndexColumn()
-            ->addColumn('date', function($item){
+            ->addColumn('date', function ($item) {
                 return date('D, M d Y', strtotime($item->date));
             })
             ->addColumn('time_start', function ($query) {
@@ -61,9 +59,9 @@ class ScheduleController extends Controller
             })
             ->addColumn('time_end', function ($query) {
                 return date('H:i', strtotime($query->time_end));
-            }) 
-            ->addColumn('action',function ($query) {
-                return 
+            })
+            ->addColumn('action', function ($query) {
+                return
                     '
                     <td nowrap="nowrap">
                         <a href="' . route('stable.schedule.edit', $query->id) . '" class="btn btn-clean btn-icon mr-2" title="Edit">
@@ -88,7 +86,10 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        return view('stable.schedule.create');
+        $stableSlotSettings = SlotSetting::where('stable_id', Auth::user()->stables->first()->id)
+        ->get();
+
+        return view('stable.schedule.create', compact('stableSlotSettings'));
     }
 
     /**
@@ -100,16 +101,27 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        $start = date('Y-m-d',strtotime($request->start));
-        $end = date('Y-m-d',strtotime($request->end));
+        $start = date('Y-m-d', strtotime($request->start));
+        $end = date('Y-m-d', strtotime($request->end));
         $dataAll = $request->all();
 
         $data = $dataAll['group-a'];
         // var_dump(range(intval('07:00:00'),intval('16:00:00')));die;
         $period = new CarbonPeriod($start, '1 day', $end);
         
-        foreach($period as $date)
-        {            
+        $stableSlotSettings = SlotSetting::where('stable_id', Auth::user()->stables->first()->id)
+        ->get()
+        ->pluck('closed_day')
+        ->toArray();
+
+        $days = [1, 2, 3, 4, 5, 6, 7]; // normal days
+        $days = array_diff($days, $stableSlotSettings); // filter stable closed at
+
+        $period = $period->addFilter(function ($date) use ($days) {
+            return in_array($date->dayOfWeekIso, $days);
+        });
+        
+        foreach ($period as $date) {
             if (count($data) > 0) {
                 $previousData = null;
                 foreach ($data as $item) {
@@ -117,12 +129,12 @@ class ScheduleController extends Controller
                         $time1 = date("H:i", strtotime($item['time1']));
                         $time2 = date("H:i", strtotime($item['time2']));
                         $capacity = $item['capacity'];
-                        if($time1 > $time2){
+                        if ($time1 > $time2) {
                             DB::rollback();
                             Alert::error('Generate Error.', 'End time always greater then start time.');
                             return redirect()->route('stable.schedule.index');
                         }
-                        if($capacity == null){
+                        if ($capacity == null) {
                             DB::rollback();
                             Alert::error('Generate Error.', 'Capacity cannot be null.')->persistent(true)->autoClose(3600);
                             return redirect()->route('stable.schedule.index');
@@ -132,23 +144,23 @@ class ScheduleController extends Controller
                                     ->where('date', $date->format('Y-m-d'))
                                     ->latest('time_start')->first();
 
-                        if($time1 == $timeStartLastest){
+                        if ($time1 == $timeStartLastest) {
                             DB::rollback();
                             Alert::error('Generate Error.', 'Cannot save same time with latest time start')->persistent(true)->autoClose(3600);
                             return redirect()->route('stable.schedule.index');
-                        }                        
+                        }
                         $cekDB = Slot::where('user_id', Auth::user()->id)
                                     ->where('date', $date->format('Y-m-d'))
                                     ->where('time_start', $time1)
                                     ->where('time_end', $time2)
                                     ->get();
-                        if(count($cekDB) > 0){
+                        if (count($cekDB) > 0) {
                             DB::rollback();
                             Alert::error('Generate Error.', 'Cannot save same Date & Time')->persistent(true)->autoClose(3600);
                             return redirect()->route('stable.schedule.index');
-                        }else{
-                            if($previousData) {
-                                if($time1 == $previousData['time_start']){
+                        } else {
+                            if ($previousData) {
+                                if ($time1 == $previousData['time_start']) {
                                     DB::rollback();
                                     Alert::error('Generate Error.', 'Cannot save same time with latest time start')->persistent(true)->autoClose(3600);
                                     return redirect()->route('stable.schedule.index');
@@ -166,38 +178,26 @@ class ScheduleController extends Controller
                                 'capacity_booked'   => 0,
                             );
                             Slot::create($data2);
-                            $previousData = $data2;                          
+                            $previousData = $data2;
                         }
-                    }else{
+                    } else {
                         DB::rollback();
                         Alert::error('Generate Error.', 'Time cannot be null.')->persistent(true)->autoClose(3600);
                         return redirect()->route('stable.schedule.index');
                     }
                 }
-            }else{
+            } else {
                 DB::rollback();
                 Alert::error('Generate Error.', 'Time cannot be null.')->persistent(true)->autoClose(3600);
                 return redirect()->route('stable.schedule.index');
             }
-            
         }
 
-        if($data){
+        if ($data) {
             DB::commit();
             Alert::success('Generate Success.', 'Success.')->persistent(true)->autoClose(3600);
-            return redirect()->route('stable.schedule.index'); 
+            return redirect()->route('stable.schedule.index');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -225,12 +225,12 @@ class ScheduleController extends Controller
         $slot = Slot::find($id);
         $time1 = $request->time1;
         $time2 = $request->time2;
-        if($time1 > $time2){            
+        if ($time1 > $time2) {
             Alert::error('Generate Error.', 'End time always greater then start time.');
             return redirect()->route('stable.schedule.index');
         }
 
-        if($request->capacity == null){            
+        if ($request->capacity == null) {
             Alert::error('Generate Error.', 'Capacity cannot be null.')->persistent(true)->autoClose(3600);
             return redirect()->route('stable.schedule.index');
         }
@@ -242,7 +242,7 @@ class ScheduleController extends Controller
                     ->where('stable_id', $slot->stable_id)
                     ->get();
 
-        if(count($cekDB) > 0){            
+        if (count($cekDB) > 0) {
             Alert::error('Generate Error.', 'Cannot save same Date & Time')->persistent(true)->autoClose(3600);
             return redirect()->route('stable.schedule.index');
         }
@@ -254,7 +254,7 @@ class ScheduleController extends Controller
         $slot->save();
 
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('stable.schedule.index'); 
+        return redirect()->route('stable.schedule.index');
     }
 
     /**
@@ -267,5 +267,33 @@ class ScheduleController extends Controller
     {
         Slot::find($request->id)->delete();
         return response()->json('success');
+    }
+
+    public function setting()
+    {
+        $stableSlotSettings = SlotSetting::where('stable_id', Auth::user()->stables->first()->id)
+        ->get();
+
+        return view('stable.schedule.settings', compact('stableSlotSettings'));
+    }
+
+    public function settingStore(Request $request)
+    {
+        $stable = Auth::user()->stables->first();
+
+        $stable->schedule_settings()->delete();
+
+        if ($request->closed_days) {
+            foreach ($request->closed_days as $closed_day) {
+                $stableSlotSetting = new SlotSetting;
+                $stableSlotSetting->stable_id = $stable->id;
+                $stableSlotSetting->closed_day = $closed_day;
+    
+                $stableSlotSetting->save();
+            }
+        }
+
+        Alert::success('Update Schedule Settings Success.')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.schedule.setting');
     }
 }

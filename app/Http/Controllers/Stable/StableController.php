@@ -138,24 +138,22 @@ class StableController extends Controller
         $stable->district_id        = $request->district;
         $stable->village_id         = $request->village;
         $stable->owner              = $request->owner;
-        $stable->manager            = $request->manager;        
-        $stable->facilities         = $request->facilities;    
+        $stable->manager            = $request->manager;
+        $stable->facilities         = $request->facilities;
         $stable->capacity_of_stable = $request->capacity_of_stable;
         $stable->capacity_of_arena  = $request->capacity_of_arena;
-        $stable->number_of_coach    = $request->number_of_coach;    
+        $stable->number_of_coach    = $request->number_of_coach;
         
         $coachNum1 = Coach::where('stable_id', $stable->id)->get()->count();
-        $coachNum2 = $stable->number_of_coach; 
-        if($coachNum1 > $coachNum2)
-        {
+        $coachNum2 = $stable->number_of_coach;
+        if ($coachNum1 > $coachNum2) {
             Alert::error('Error', 'Number of coach cannot smaller than coach data')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
 
         $horseNum1      = Horse::where('stable_id', $stable->id)->get()->count();
-        $stableCapacity = $stable->capacity_of_stable;                
-        if($horseNum1 > $stableCapacity)
-        {
+        $stableCapacity = $stable->capacity_of_stable;
+        if ($horseNum1 > $stableCapacity) {
             Alert::error('Error', 'Capacity of stable full')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
@@ -198,22 +196,20 @@ class StableController extends Controller
     {
         $data = Stable::find($id);
 
-        $users1 = User::whereHas("roles", function($q){
-                            $q->where("name", "app-owner"); 
-                        })->get();
+        $users1 = User::whereHas("roles", function ($q) {
+            $q->where("name", "app-owner");
+        })->get();
 
-        $users2 = User::whereHas("roles", function($q){
-                            $q->where("name", "app-admin"); 
-                        })->get();
+        $users2 = User::whereHas("roles", function ($q) {
+            $q->where("name", "app-admin");
+        })->get();
         
-        foreach($users1 as $user)
-        {
+        foreach ($users1 as $user) {
             $send = User::where('id', $user->id)->first();
             $send->notify(new StableAdminSendSubmitApproval($data));
         }
 
-        foreach($users2 as $user)
-        {
+        foreach ($users2 as $user) {
             $send = User::where('id', $user->id)->first();
             $send->notify(new StableAdminSendSubmitApproval($data));
         }
