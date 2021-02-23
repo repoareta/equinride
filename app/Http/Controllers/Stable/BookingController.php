@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 // Load models
 use App\Models\Booking;
+use App\Models\BookingDetail;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -18,74 +20,77 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
+        $booking_details = BookingDetail::with([
+            'booking',
+            'package',
+            ])
+            ->whereHas('package.stable', function ($q) {
+                $q->where('id', Auth::user()->stables->first()->id);
+            })
+            ->orderBy('id', 'DESC');
         
-        $query = Booking::with(['booking_detail.package.stable' => function ($q){
-            $q->where('id', Auth::user()->stables->first()->pivot->stable_id);
-        }])->orderBy('id', 'DESC')->get();
-        
-        if(request()->ajax()){
-
-        return datatables()->of($query)
-                ->addIndexColumn()
-                ->addColumn('package', function ($item){
-                    return 
+        if (request()->ajax()) {
+            return datatables()->of($booking_details)
+                ->addColumn('package', function ($row) {
+                    return
                     '
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-50 symbol-sm flex-shrink-0">
                                 <div class="symbol-label">
-                                    <img class="h-75 align-self-end" src="'. asset($item->booking_detail->package->photo) .'" alt="photo">
+                                    <img class="h-75 align-self-end" src="'. asset($row->package->photo) .'" alt="photo">
                                 </div>
                             </div>
                             <div class="d-flex flex-column ml-3">
-                                <div class="text-primary font-weight-bolder font-size-lg">'.$item->booking_detail->package_name.'</div>
+                                <div class="text-primary font-weight-bolder font-size-lg">'.$row->package->name.'</div>
                             </div>
                         </div>
                     ';
                 })
-                ->addColumn('user', function ($item){
+                ->addColumn('user', function ($row) {
                     return
                     '
                     <div class="d-flex align-items-center">
                         <div class="d-flex flex-column">
-                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->user->name.'</div>
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$row->booking->user->name.'</div>
                             <span class="text-muted font-weight-bold font-size-sm">
-                                '.date('D, M d Y', strtotime($item->user->birth_date)).', '.Carbon::parse($item->user->birth_date)->age.' years
+                                '.date('D, M d Y', strtotime($row->booking->user->birth_date)).', '.Carbon::parse($row->booking->user->birth_date)->age.' years
                             </span>
                         </div>
-                    </div>                    
+                    </div>
                     ';
                 })
-                ->addColumn('date', function ($item){
-                    return date('D, M d Y', strtotime($item->birth_date));
+                ->addColumn('date', function ($row) {
+                    return date('D, M d Y', strtotime($row->booking->created_at));
                 })
-                ->addColumn('price_total', function ($item) { 
-                    $price = number_format($item->price_total, 0,',', '.');
+                ->addColumn('price_total', function ($row) {
+                    $price = number_format($row->price_subtotal, 0, ',', '.');
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
-                ->addColumn('bank', function ($item){
-                    return 
+                ->addColumn('bank', function ($row) {
+                    return
                     '
                     <div class="d-flex flex-column">
-                        <div class="text-primary font-weight-bolder font-size-lg">'.$item->bank->branch.'</div>
+                        <div class="text-primary font-weight-bolder font-size-lg">'.$row->booking->bank->branch.'</div>
                         <span class="text-muted font-weight-bold font-size-sm">
-                            '.$item->bank->account_number.'
+                            '.$row->booking->bank->account_number.'
                         </span>
                     </div>
                     ';
                 })
-                ->addColumn('approval_status', function ($item) {
-                    if ($item->approval_status == null) {
+                ->addColumn('approval_status', function ($row) {
+                    $status = $row->booking->approval_status;
+                    if ($status == null) {
                         return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
-                    } elseif ($item->approval_status == 'Accepted') {
-                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
+                    } elseif ($status == 'Accepted') {
+                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$status."</span>";
                     } else {
-                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$status."</span>";
                     }
                 })
                 ->rawColumns(['package', 'user', 'price_total', 'bank', 'approval_status'])
                 ->make();
-        }        
+        }
 
         return view('stable.booking.index');
     }

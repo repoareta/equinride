@@ -9,7 +9,6 @@ class BookingDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable=['package_id','price_subtotal','booking_id'];
     /**
     * Get the owner of coach
     */
@@ -26,15 +25,9 @@ class BookingDetail extends Model
         return $this->belongsTo(Package::class);
     }
 
-    protected $appends = [
-        'package_name',
-        'stable_name',
-        'stable_location'
-    ];
-
     public function getPackageNameAttribute()
     {
-        return $this->package()->first()->name;
+        return $this->package->name;
     }
 
     public function getStableNameAttribute()

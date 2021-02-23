@@ -21,7 +21,7 @@
             <div class="card-header py-3 align-items-center">
                 <div class="card-title align-items-start flex-column">
                     <h3 class="card-label font-weight-bolder text-dark">Booking Order</h3>
-                    <span class="text-muted font-weight-bold font-size-sm mt-1">List of users order your package</span>
+                    <span class="text-muted font-weight-bold font-size-sm mt-1">List of users that order your package</span>
                 </div>
             </div>
             <!--end::Header-->
@@ -31,7 +31,7 @@
                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable" style="width:100%">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Booking Id</th>
                                 <th scope="col">Package</th>
                                 <th scope="col">User</th>
                                 <th scope="col">Order Date</th>
@@ -71,11 +71,7 @@
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
             columns: [
-                {
-                    "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false
-                },
+                {data: 'booking_id', name: 'booking_id'},
                 {data: 'package', name: 'package'},
                 {data: 'user', name: 'user'},
                 {data: 'date', name: 'date'},

@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // USER || MEMBER START
     // USER PROFILE
     Route::group(['prefix' => 'user', 'as'=> 'user.'], function () {
-        Route::get('/', function(){
+        Route::get('/', function () {
             return redirect()->route('user.personal_information');
         });
         Route::post('/personal-information/media', [UserController::class, 'storeMedia'])->name('personal_information.media');
@@ -126,7 +126,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         // ONLY STABLE OWNER OR STABLE ADMIN HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete', 'stableKeyConfirm']], function () {
             // STABLE DASHBOARD
-            Route::get('/', function(){
+            Route::get('/', function () {
                 return redirect()->route('stable.index');
             });
             Route::get('/dashboard', [StableController::class, 'index'])->name('index');
@@ -172,6 +172,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
                 Route::put('/{schedule}/edit', [ScheduleController::class, 'update'])->name('update');
                 Route::delete('/destroy', [ScheduleController::class, 'destroy'])->name('destroy');
+                Route::get('/setting', [ScheduleController::class, 'setting'])->name('setting');
+                Route::post('/setting', [ScheduleController::class, 'settingStore'])->name('setting.store');
             });
 
             // STABLE BOOKING ORDERED
@@ -208,7 +210,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         });
 
         //OWNER DASHBOARD
-        Route::get('/', function(){
+        Route::get('/', function () {
             return redirect()->route('app_owner.index');
         });
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');

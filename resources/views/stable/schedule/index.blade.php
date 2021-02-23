@@ -33,8 +33,8 @@
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
                 </div>
                 <div>
-                    <a href='{{ route('stable.schedule.create') }}' class='btn btn-primary'>Generate Schedule +</a>
-                    <a href='#' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
+                    <a href='{{ route('stable.schedule.create') }}' class='btn btn-primary'>Generate Schedule</a>
+                    <a href='{{ route('stable.schedule.setting') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
             <!--end::Header-->
@@ -280,6 +280,7 @@
                 processing: true,
                 ordering: true,
                 serverSide: true,
+                fixedHeader: true,
                 language: {
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
                 },
@@ -316,7 +317,7 @@
         
                         // Add category name to the <tr>. NOTE: Hardcoded colspan
                         return $('<tr/>')
-                            .append('<td colspan="6">' + group + ' (' + rows.count() + ')</td>')
+                            .append('<td colspan="6" style="padding-left: 10px ! important">' + group + ' (' + rows.count() + ')</td>')
                             .attr('data-name', group)
                             .toggleClass('collapsed', collapsed);
                     }
