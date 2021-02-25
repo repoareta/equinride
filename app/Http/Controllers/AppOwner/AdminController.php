@@ -81,6 +81,12 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $user = User::where('email', $request->email)->first();
+
+        if($user->email == Auth::user()->email){
+            Alert::error('Cannot add yourself as admin!', 'Error')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+
         if($user){
             $user->assignRole('app-admin');
             $user->notify(new AttachNewAppAdmin());

@@ -86,6 +86,12 @@ class AdminController extends Controller
     {
         $stable = Auth::user()->stables->first();
         $user = User::where('email', $request->email)->first();
+
+        if($user->email == Auth::user()->email){
+            Alert::error('Cannot add yourself as admin!', 'Error')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+        
         if($user){            
             $stable->users()->attach($user->id);
             $user->assignRole('stable-admin');
