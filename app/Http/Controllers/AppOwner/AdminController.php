@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         $query = User::whereHas("roles", function($q){ 
                     $q->where("name", "app-admin"); 
-                })->get();      
+                })->get();   
         if (request()->ajax()) {
             return DataTables::of($query)                
                 ->addIndexColumn()
@@ -80,14 +80,12 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user   = User::where('email', $request->email)->firstOrFail();
+        $userCheck = User::where('email', $request->email)->whereHas("roles", function($q){ 
+            $q->where("name", "app-admin")->orWhere("name", "app-owner"); 
+        })->first();
 
-        if($user->email == Auth::user()->email){
-            Alert::error('Cannot add yourself as admin!', 'Error')->persistent(true)->autoClose(3600);
-            return redirect()->back();
-        }
-
-        if($user){
+        if(!$userCheck){            
             $user->assignRole('app-admin');
             $user->notify(new AttachNewAppAdmin());
 
@@ -95,8 +93,8 @@ class AdminController extends Controller
             return redirect()->route('app_owner.admin.index');
         }
 
-        Alert::error('User Not Found', 'Error')->persistent(true)->autoClose(3600);
-        return redirect()->route('app_owner.admin.index');
+        Alert::error('Error', 'Something went wrong')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 
     /**

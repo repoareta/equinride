@@ -28,7 +28,7 @@ class AdminController extends Controller
             $q->whereHas("roles", function($q){ 
                 $q->where("name", "stable-admin"); 
             });
-        }])->where('id', $stable->stable_id)->first()->users;      
+        }])->where('id', $stable->stable_id)->first()->users;
         if (request()->ajax()) {
             return DataTables::of($query)                
                 ->addIndexColumn()
@@ -85,14 +85,14 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $stable = Auth::user()->stables->first();
-        $user = User::where('email', $request->email)->first();
 
-        if($user->email == Auth::user()->email){
-            Alert::error('Cannot add yourself as admin!', 'Error')->persistent(true)->autoClose(3600);
-            return redirect()->back();
-        }
-        
-        if($user){            
+        $user   = User::where('email', $request->email)->firstOrFail();
+        $userCheck = User::where('email', $request->email)->whereHas("roles", function($q){ 
+            $q->where("name", "stable-admin")->orWhere("name", "stable-owner"); 
+        })->first();
+
+
+        if(!$userCheck){            
             $stable->users()->attach($user->id);
             $user->assignRole('stable-admin');
             $user->notify(new AttachNewStableAdmin($stable));
@@ -101,8 +101,8 @@ class AdminController extends Controller
             return redirect()->route('stable.admin.index');
         }
 
-        Alert::error('User Not Found', 'Error')->persistent(true)->autoClose(3600);
-        return redirect()->route('stable.admin.index');
+        Alert::error('Error', 'Something went wrong')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 
     /**
