@@ -222,7 +222,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
                 Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
-                    Route::get('show/{stable}', [StableApprovalController::class, 'show1'])->name('show');
+                    Route::get('{stable}/show', [StableApprovalController::class, 'show1'])->name('show');
                     Route::get('pending', [StableApprovalController::class, 'jsonPending1'])->name('pending');
                     Route::get('approved', [StableApprovalController::class, 'jsonApproved1'])->name('approved');
                     Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable1'])->name('approve');

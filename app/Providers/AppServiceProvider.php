@@ -38,11 +38,11 @@ class AppServiceProvider extends ServiceProvider
                     'packages',
                 ])
                 ->first();
-
-                $view->with('stable', $stable);
+            } else {
+                $stable = null;
             }
             
-            $view->with('stable', null);
+            $view->with('stable', $stable);
         });
     }
 }

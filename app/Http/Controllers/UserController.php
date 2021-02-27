@@ -67,19 +67,20 @@ class UserController extends Controller
     // Change Password update data
     public function changePasswordUpdate(Request $request)
     {
-        $data = User::where('id', Auth::user()->id)->first();
+        $user = User::where('id', Auth::user()->id)->first();
         
-        if (Hash::check($request->old_password, $data->password)) {
+        if (Hash::check($request->old_password, $user->password)) {
             $validator = Validator::make($request->all(), [
-                            'password' => 'required|confirmed|min:8',
-                        ]);
+                'password' => 'required|confirmed|min:8',
+            ]);
+
             if ($validator->fails()) {
                 Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
                 return redirect()->back();
             }
 
-            $data->password = Hash::make($request->password);
-            $data->update();
+            $user->password = Hash::make($request->password);
+            $user->update();
 
             Alert::success('Password Updated', 'Success.')->persistent(true)->autoClose(3600);
             return redirect()->back();
@@ -92,49 +93,59 @@ class UserController extends Controller
     // Order History page index
     public function orderHistory()
     {
-        $query = Booking::select('photo','created_at', 'approval_status', 'price_total', 'id')->where('user_id', Auth::user()->id)
-        ->orderBy('id', 'DESC')->get();
+        $bookingDetails = BookingDetail::whereHas('booking', function ($q) {
+            $q->where('user_id', Auth::user()->id);
+        })
+        ->with('package')
+        ->with('package.stable')
+        ->orderBy('id', 'desc')
+        ->get();
+
         if (request()->ajax()) {
-            return Datatables::of($query)
+            return Datatables::of($bookingDetails)
                 ->addIndexColumn()
-                ->addColumn('package', function ($item) {
+                ->addColumn('package', function ($row) {
                     return
                     '
                     <div class="d-flex align-items-center">
-                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
-                            <div class="symbol-label">
-                                <img class="h-75 align-self-end" src="'. asset($item->booking_detail->package->photo) .'" alt="photo">
-                            </div>
+                        <div class="symbol symbol-50 flex-shrink-0">
+                            <img src="'. asset($row->package->photo) .'" alt="photo">
                         </div>
-                        <div class="d-flex flex-column ml-3">
-                            <div class="text-primary font-weight-bolder font-size-lg">'.$item->booking_detail->package_name.'</div>
-                            <span class="text-muted font-weight-bold font-size-sm">'.$item->booking_detail->stable_name.'</span>
+                        <div class="ml-3">
+                            <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                            '.$row->package->name.'
+                            </span>
+                            <a href="#" class="text-muted text-hover-primary">
+                            '.$row->package->stable->name.'
+                            </a>
                         </div>
-                    </div>                  
+                    </div>
                     ';
                 })
-                ->addColumn('created_at', function ($item) {
-                    return date('D, M d Y', strtotime($item->created_at));
+                ->addColumn('created_at', function ($row) {
+                    return date('D, M d Y', strtotime($row->created_at));
                 })
-                ->addColumn('approval_status', function ($item) {
-                    if ($item->approval_status == null) {
+                ->addColumn('approval_status', function ($row) {
+                    $status = $row->booking->approval_status;
+                    if ($status == null) {
                         return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
-                    } elseif ($item->approval_status == 'Accepted') {
-                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
+                    } elseif ($status == 'Accepted') {
+                        return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$status."</span>";
                     } else {
-                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
+                        return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$status."</span>";
                     }
                 })
-                ->addColumn('order_location', function ($item) {
-                    return $item->booking_detail->stable_location;
+                ->addColumn('order_location', function ($row) {
+                    return $row->package->stable->address;
                 })
-                ->addColumn('price_total', function ($item) { 
-                    $price = number_format($item->price_total, 0,',', '.');
+                ->addColumn('price_total', function ($row) {
+                    $price = number_format($row->booking->price_total, 0, ',', '.');
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
                 ->addColumn('action', function ($item) {
-                    if($item->approval_status == 'Close'){
-                        return '
+                    if ($item->approval_status == 'Close') {
+                        return
+                            '
                             <td nowrap="nowrap">
                                 <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
                                     <i class="la la-eye icon-xl"></i>
@@ -144,11 +155,9 @@ class UserController extends Controller
                                 </a>
                             </td>
                             ';
-                    }else{
-                        if($item->photo == null){
-
-                            if($item->approval_status == null)
-                            {
+                    } else {
+                        if ($item->photo == null) {
+                            if ($item->approval_status == null) {
                                 return '
                                     <td nowrap="nowrap">
                                         <a href="'. route('user.order_history.pay', $item->id) .'" class="btn btn-danger btn-icon mr-2">
@@ -156,7 +165,7 @@ class UserController extends Controller
                                         </a>
                                     </td>
                                     ';
-                            }else{
+                            } else {
                                 return '
                                     <td nowrap="nowrap">
                                         <a href="#" class="btn btn-danger btn-icon mr-2" disabled>
@@ -165,7 +174,7 @@ class UserController extends Controller
                                     </td>
                                     ';
                             }
-                        }else{
+                        } else {
                             return '
                                 <td nowrap="nowrap">
                                     <a href="'. route('user.order_history.show', $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
@@ -175,7 +184,6 @@ class UserController extends Controller
                                 ';
                         }
                     }
-                    
                 })
                 ->rawColumns(['action', 'approval_status', 'package', 'price_total'])
                 ->make();
@@ -188,16 +196,16 @@ class UserController extends Controller
     {
         $data = Booking::with(['bank','booking_detail', 'booking_detail.package', 'booking_detail.package.stable'])->find($id);
         $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->count();
-        if($slot_user > 1){
+        if ($slot_user > 1) {
             $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->get()->last();
-            $slot = Slot::find($slot_user->slot_id);        
+            $slot = Slot::find($slot_user->slot_id);
             return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
         }
-        if($slot_user = 1){
+        if ($slot_user = 1) {
             $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->first();
-            $slot = Slot::find($slot_user->slot_id);        
+            $slot = Slot::find($slot_user->slot_id);
             return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
-        }        
+        }
     }
 
     public function slots(Request $request)
@@ -275,8 +283,7 @@ class UserController extends Controller
                 Alert::success('Reschedule Success.', 'Success.')->persistent(true)->autoClose(3600);
                 return redirect()->back();
             }
-        }
-        else{
+        } else {
             $sid = $request->id;
             DB::table('slot_user')
             ->where('id', $sid)
@@ -291,13 +298,12 @@ class UserController extends Controller
             $slot->capacity_booked = $slotCapacity;
             $slot->update();
                         
-            $start = substr($request->time,0,8);
-            $end = substr($request->time,9);
+            $start = substr($request->time, 0, 8);
+            $end = substr($request->time, 9);
             $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
 
-            if($slot->id == $slotID->id)
-            {
+            if ($slot->id == $slotID->id) {
                 DB::rollback();
                 Alert::error('Reschedule Error.', 'Cannot choose same date and time.');
                 return redirect()->back();
@@ -342,7 +348,7 @@ class UserController extends Controller
     public function pay($id)
     {
         $booking = Booking::find($id);
-        if($booking->approval_status == "Expired"){
+        if ($booking->approval_status == "Expired") {
             Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
