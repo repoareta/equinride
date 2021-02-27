@@ -36,7 +36,12 @@ class AppServiceProvider extends ServiceProvider
                 'packages',
             ])
             ->first();
-            $view->with('stable', $stable);
+
+            if ($stable) {
+                $view->with('stable', $stable);
+            }
+            
+            $view->with('stable', null);
         });
     }
 }
