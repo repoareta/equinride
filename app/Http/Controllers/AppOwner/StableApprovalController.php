@@ -15,7 +15,16 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 // load model
-use App\Models\{User,Stable, Coach, Horse, Package, Slot, Province, City, District, Village};
+use App\Models\User;
+use App\Models\Stable;
+use App\Models\Coach;
+use App\Models\Horse;
+use App\Models\Package;
+use App\Models\Slot;
+use App\Models\Province;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Village;
 
 class StableApprovalController extends Controller
 {
@@ -27,39 +36,41 @@ class StableApprovalController extends Controller
 
     public function jsonPending1()
     {
-        $data = Stable::where('approval_status', null)->get();
-        return datatables()->of($data)
+        $stables = Stable::where('approval_status', null);
+
+        return datatables()->of($stables)
         ->addIndexColumn()
-        ->addColumn('created_at', function($data){
-            return date('D, M d Y', strtotime($data->created_at));
+        ->addColumn('created_at', function ($row) {
+            return date('D, M d Y', strtotime($row->created_at));
         })
         ->addColumn('approval_status', function () {
-            return 
+            return
                 "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
                     Pending
                 </span>";
         })
-        ->addColumn('action', function ($data) {
-            return 
+        ->addColumn('action', function ($row) {
+            return
             "
-            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='".route('app_owner.stable.approval.step_1.show', ['stable' => $row->id])."' class='btn btn-clean btn-icon mr-2' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
-            <form class='d-inline' id='formAccept".$data->id."' method='post' action='" . route('app_owner.stable.approval.step_1.approve',$data->id) . "'>
+
+            <form class='d-inline' id='formAccept".$row->id."' method='post' action='" . route('app_owner.stable.approval.step_1.approve', $row->id) . "'>
             " . method_field('PUT') . csrf_field() . "
-                <button class='btn btn-clean btn-icon mr-2' type='submit' id='accept".$data->id."' data-toggle='Accept' data-placement='top' title='Accept'>
+                <button class='btn btn-clean btn-icon mr-2' type='submit' id='accept".$row->id."' data-toggle='Accept' data-placement='top' title='Accept'>
                     <i class='fas fa-check-circle'></i>
                 </button>
             </form>
-            <form class='d-inline' id='formDecline".$data->id."' method='post' action='" . route('app_owner.stable.approval.step_1.unapprove',$data->id) . "'>
+            <form class='d-inline' id='formDecline".$row->id."' method='post' action='" . route('app_owner.stable.approval.step_1.unapprove', $row->id) . "'>
             " . method_field('PUT') . csrf_field() . "
-                <button class='btn btn-clean btn-icon mr-2' type='submit' id='decline".$data->id."' data-toggle='Decline' data-placement='top' title='Decline'>
+                <button class='btn btn-clean btn-icon mr-2' type='submit' id='decline".$row->id."' data-toggle='Decline' data-placement='top' title='Decline'>
                 <i class='fas fa-ban'></i>
                 </button>
             </form>
 
             <script>
-                $('tbody').on('click','#accept".$data->id."', function(e) {
+                $('tbody').on('click','#accept".$row->id."', function(e) {
         
                     e.preventDefault();
                         
@@ -75,12 +86,12 @@ class StableApprovalController extends Controller
                         closeOnCancel: false
                     }).then(function(getAction) {
                         if (getAction.value === true) {
-                            $('#formAccept".$data->id."').submit();
+                            $('#formAccept".$row->id."').submit();
                         }
                     });
                 });
 
-                $('tbody').on('click','#decline".$data->id."', function(e) {
+                $('tbody').on('click','#decline".$row->id."', function(e) {
         
                     e.preventDefault();
                         
@@ -96,7 +107,7 @@ class StableApprovalController extends Controller
                         closeOnCancel: false
                     }).then(function(getAction) {
                         if (getAction.value === true) {
-                            $('#formDecline".$data->id."').submit();
+                            $('#formDecline".$row->id."').submit();
                         }
                     });
                 });
@@ -112,7 +123,7 @@ class StableApprovalController extends Controller
         $data = Stable::where('approval_status', 'Email Sent')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('created_at', function($data){
+        ->addColumn('created_at', function ($data) {
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
@@ -122,7 +133,7 @@ class StableApprovalController extends Controller
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
             <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
                 <i class='fas fa-eye'></i>
@@ -133,25 +144,20 @@ class StableApprovalController extends Controller
         ->make(true);
     }
 
-    public function show1($id)
+    public function show1(Stable $stable)
     {
-        $stable = Stable::with(['approvalby_stable'])->find($id);
-        $province = Province::find($stable->province_id);
-        $city = City::find($stable->city_id);
-        $district = District::find($stable->district_id);
-        $village = Village::find($stable->village_id);
-        return response()->json([$stable,[$province,$city,$district,$village]]);
+        return view('app-owner.stable.review.index', compact('stable'));
     }
 
     public function approveStable1($id)
     {
-        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data1 = DB::table('stable_user')->where('stable_id', $id)->first();
         $data2 = Stable::find($data1->stable_id);
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableRegisteredToStableOwner($data2));
+        $user->notify(new StableRegisteredToStableOwner($data2));
         Stable::where('id', $data2->id)->update([
-            'approval_status' => 'Email Sent', 
+            'approval_status' => 'Email Sent',
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
@@ -161,7 +167,7 @@ class StableApprovalController extends Controller
 
     public function unapproveStable1($id)
     {
-        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data1 = DB::table('stable_user')->where('stable_id', $id)->first();
         $stable = Stable::find($data1->stable_id);
         $user = User::where('id', $data1->user_id)->first();
 
@@ -172,10 +178,10 @@ class StableApprovalController extends Controller
         $stable->users()->detach();
 
         // Remove Stable Owner Role
-        $user->removeRole('stable-owner');        
+        $user->removeRole('stable-owner');
 
         // Notify Email
-        $user->notify(new StableDeclineStep1($stable));        
+        $user->notify(new StableDeclineStep1($stable));
 
         //Delete Stable
         $stable->delete();
@@ -196,7 +202,7 @@ class StableApprovalController extends Controller
         $data = Stable::where('approval_status', 'Need Approval')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('created_at', function($data){
+        ->addColumn('created_at', function ($data) {
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
@@ -206,9 +212,9 @@ class StableApprovalController extends Controller
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
-            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_2.show', $data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -222,7 +228,7 @@ class StableApprovalController extends Controller
         $data = Stable::where('approval_status', 'Accepted')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('created_at', function($data){
+        ->addColumn('created_at', function ($data) {
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
@@ -232,9 +238,9 @@ class StableApprovalController extends Controller
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
-            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_2.show', $data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -248,7 +254,7 @@ class StableApprovalController extends Controller
         $data = Stable::where('approval_status', 'Decline')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('created_at', function($data){
+        ->addColumn('created_at', function ($data) {
             return date('D, M d Y', strtotime($data->created_at));
         })
         ->addColumn('approval_status', function ($data) {
@@ -258,9 +264,9 @@ class StableApprovalController extends Controller
                 </span>" : "";
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
-            <a href='" . route('app_owner.stable.approval.step_2.show',$data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+            <a href='" . route('app_owner.stable.approval.step_2.show', $data->id) . "' class='btn btn-clear mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -272,53 +278,54 @@ class StableApprovalController extends Controller
     public function show2($id)
     {
         $stable = Stable::where('id', $id)->first();
-        $stableUser = DB::table('stable_user')->where('stable_id',$id)->first();   
+        $stableUser = DB::table('stable_user')->where('stable_id', $id)->first();
         $province = Province::all();
         $city = City::find($stable->city_id);
         $district = District::find($stable->district_id);
         $village = Village::find($stable->village_id);
-        $horse_count = Horse::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
-        $coach_count = Coach::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
-        $package_count = Package::where('stable_id',$stableUser->stable_id)->where('user_id',$stableUser->user_id)->count();
-        $slot_count = Slot::where('user_id',$stableUser->user_id)->count();
-        if($stable->capacity_of_stable > 0 and  $stable->number_of_coach > 0 and $stable->capacity_of_arena > 0){
+        $horse_count = Horse::where('stable_id', $stableUser->stable_id)->where('user_id', $stableUser->user_id)->count();
+        $coach_count = Coach::where('stable_id', $stableUser->stable_id)->where('user_id', $stableUser->user_id)->count();
+        $package_count = Package::where('stable_id', $stableUser->stable_id)->where('user_id', $stableUser->user_id)->count();
+        $slot_count = Slot::where('user_id', $stableUser->user_id)->count();
+        if ($stable->capacity_of_stable > 0 and  $stable->number_of_coach > 0 and $stable->capacity_of_arena > 0) {
             $data_setup = 1;
-        }else{
+        } else {
             $data_setup = 0;
         }
-        return view('app-owner.stable.review.index',
-        compact(
-            'stable', 
-            'province',
-            'city',
-            'district',
-            'village',
-            'horse_count',
-            'coach_count',
-            'package_count',
-            'slot_count',
-            'data_setup'
-        ));
+        return view(
+            'app-owner.stable.review.index',
+            compact(
+                'stable',
+                'province',
+                'city',
+                'district',
+                'village',
+                'horse_count',
+                'coach_count',
+                'package_count',
+                'slot_count',
+                'data_setup'
+            )
+        );
     }
 
     public function approveStable2($id)
     {
-        $data1 = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data1 = DB::table('stable_user')->where('stable_id', $id)->first();
         $data2 = Stable::find($data1->stable_id);
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableApproveStep2($data2));
+        $user->notify(new StableApproveStep2($data2));
 
         Stable::where('id', $data2->id)->update([
-            'approval_status' => 'Accepted', 
+            'approval_status' => 'Accepted',
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
         
         $dataPackage = Package::where('stable_id', $id)->get();
 
-        foreach($dataPackage as $package)
-        {
+        foreach ($dataPackage as $package) {
             Package::where('stable_id', $id)->update([
                 'approval_status' => 'Accepted',
                 'approval_by' => Auth::user()->id,
@@ -327,18 +334,18 @@ class StableApprovalController extends Controller
         }
 
         $user = User::where('id', $data1->user_id)->first();
-                    $user->notify(new StableApproveStep2($data2));
+        $user->notify(new StableApproveStep2($data2));
         Alert::success($data2->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 
     public function unapproveStable2($id)
     {
-        $data = DB::table('stable_user')->where('stable_id',$id)->first();
+        $data = DB::table('stable_user')->where('stable_id', $id)->first();
         $user = User::where('id', $data->user_id)->first();
-                    $user->notify(new StableDeclineStep2($data));                                        
+        $user->notify(new StableDeclineStep2($data));
         Stable::where('id', $data->id)->update([
-            'approval_status' => 'Decline', 
+            'approval_status' => 'Decline',
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);

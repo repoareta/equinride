@@ -26,18 +26,15 @@
                         @if ($stable->approval_status == 'Need Approval')
                             <div class="mt-2">
                                 <p class="mb-0">Action</p>
-                                <form class='d-inline' id='formAccept' method='post' action='{{ route('app_owner.stable.approval.step_2.approve',$stable->id) }}'>
+                                <form class="d-inline" method="POST" action="{{ route('app_owner.stable.approval.step_2.approval', ['stable' => $stable->id]) }}">
                                     @method('PUT')
                                     @csrf
-                                        <button class="btn btn-success font-weight-bold label label-inline" id='accept'>
-                                            Approve
+                                        <button type="button" class="btn btn-success font-weight-bold label label-inline" id="accept">
+                                            <i class="fas fa-check"></i> Approve
                                         </button>
-                                </form>
-                                <form class='d-inline' id='formDecline' method='post' action='{{ route('app_owner.stable.approval.step_2.unapprove',$stable->id) }}'>
-                                    @method('PUT')
-                                    @csrf
-                                        <button class="btn btn-danger font-weight-bold label label-inline" id='decline'>
-                                            Decline
+
+                                        <button type="button" class="btn btn-danger font-weight-bold label label-inline" id="decline">
+                                            <i class="fas fa-times"></i> Decline
                                         </button>
                                 </form>                            
                             </div>                            
@@ -67,9 +64,9 @@
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2.show') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2.show',$stable->id) }}">
                         <span class="navi-icon mr-2">
-                            <i class="fab fa-elementor"></i>
+                            <i class="fas fa-hotel"></i>
                         </span>
-                        <span class="navi-text">Dashboard</span>
+                        <span class="navi-text">Stable Profile</span>
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
@@ -125,68 +122,6 @@
                         <span class="navi-arrow"></span>
                     </a>
                 </li>
-
-                {{-- <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="#">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-id-card-alt"></i>
-                        </span>
-                        <span class="navi-text">Booking Order</span>
-                        <span class="navi-label">
-                            <span class="label label-light-primary font-weight-bold">
-                                0
-                            </span>
-                        </span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li>
-
-                <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{ Route::is('stable.withdraw.index') ? 'active' : '' }}" href="{{ route('stable.withdraw.index') }}">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-wallet"></i>
-                        </span>
-                        <span class="navi-text">Withdrawals</span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li>
-
-                <li class="navi-section mt-5 text-primary text-uppercase font-weight-bolder pb-0">Settings</li>
-
-                <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{ Route::is('stable.edit') ? 'active' : '' }}"" href="{{ route('stable.edit') }}">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-hotel"></i>
-                        </span>
-                        <span class="navi-text">Stable Profile</span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li>
-
-                <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{ Route::is('stable.withdraw.setting') ? 'active' : '' }}"" href="{{ route('stable.withdraw.setting') }}">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-vote-yea"></i>
-                        </span>
-                        <span class="navi-text">Withdraw Method</span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li>
-
-                <li class="navi-item mb-2">
-                    <a class="navi-link py-4" href="{{ route('stable.admin.index') }}">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-house-user"></i>
-                        </span>
-                        <span class="navi-text">Admin Management</span>
-                        <span class="navi-label">
-                            <span class="label label-light-primary font-weight-bold">
-                                0
-                            </span>
-                        </span>
-                        <span class="navi-arrow"></span>
-                    </a>
-                </li> --}}
             </ul>
             <!--end::Nav-->
         </div>

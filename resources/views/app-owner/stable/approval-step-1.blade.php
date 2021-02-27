@@ -63,18 +63,17 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTablePending">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>		
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>                                    
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -90,14 +89,14 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableApproved">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -258,7 +257,7 @@
 
         $('body').on( 'click', '#openBtn', function () {
             var id = $(this).data('id');
-            $.get('{{route('app_owner.stable.approval.step_1.index' )}}'+'/show/' + id , function (data) {
+            $.get('{{ route('app_owner.stable.approval.step_1.index') }}' + '/' + id + '/show' , function (data) {
                     $('#name').html(data[0].name);
                     $('#owner').html(data[0].owner);
                     $('#manager').html(data[0].manager);

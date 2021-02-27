@@ -24,9 +24,9 @@
                             </span>                            
                         @endif
                         @if ($stable->approval_status == 'Need Approval')
-                            <button class="btn btn-primaty font-weight-bold label label-inline" disabled>
-                                Submitted
-                            </button>
+                            <span class="label label-inline label-secondary font-weight-bold mb-2">
+                                Approval request sent
+                            </span>
                         @else
                             <form id="formAccept" method="post" action="{{ route('stable.submit',$stable->id) }}">
                                 @method('PUT')
