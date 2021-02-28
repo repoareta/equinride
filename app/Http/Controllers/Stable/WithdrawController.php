@@ -20,6 +20,27 @@ class WithdrawController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('stable.withdraw.create');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return view('stable.withdraw.create');
+    }
+
+
+    /**
      * Undocumented function
      *
      * @return void

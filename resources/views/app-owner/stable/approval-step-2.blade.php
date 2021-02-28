@@ -6,14 +6,18 @@
 
 @push('page-styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" type="text/css">
+@endpush
+
+@section('content')
 <style>
     .btn i {
         padding-right: 0 !important;
     }
-</style>
-@endpush
 
-@section('content')
+    .dataTables_wrapper table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before {
+        margin-top: -5px;
+    }
+</style>
 <div class="d-flex flex-row">
     <!--begin::Aside-->
     @include('app-owner._aside')
@@ -69,14 +73,14 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTablePending">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>		
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>                                    
@@ -96,14 +100,14 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableApproved">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>		
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>                                    
@@ -123,14 +127,14 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableUnapproved">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>                                    

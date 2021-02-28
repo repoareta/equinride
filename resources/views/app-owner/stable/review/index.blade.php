@@ -25,15 +25,6 @@
             <form class="form" id="stable-form" action="#">
                 <!--begin::Body-->
                 <div class="card-body">
-                    {{-- <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Logo</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="form-group">
-                                <div class="dropzone dropzone-default dropzone-primary dz-clickable" id="dropzoneDragArea"></div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">Stable Name</label>
                         <div class="col-lg-9 col-xl-6">
