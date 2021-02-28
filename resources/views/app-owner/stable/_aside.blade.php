@@ -41,17 +41,17 @@
                             </div>                            
                         @endif
 
-                        @if ($stable->approval_status == 'Need Approval Step 2')
+                        @if ($stable->approval_status == 'Need Approval')
                             <div class="mt-2">
                                 <p class="mb-0">Approval Step 2</p>
-                                <form class="d-inline" method="POST" action="{{ route('app_owner.stable.approval.step_2.approval', ['stable' => $stable->id]) }}">
+                                <form class="d-inline" id="formStepTwo" method="POST" action="{{ route('app_owner.stable.approval.step_2.approval', ['stable' => $stable->id]) }}">
                                     @method('PUT')
                                     @csrf
-                                        <button type="button" class="btn btn-success font-weight-bold label label-inline" id="accept">
+                                        <button type="submit" class="btn btn-success font-weight-bold label label-inline" id="stepTwoAccept">
                                             <i class="fas fa-check"></i> Approve
                                         </button>
 
-                                        <button type="button" class="btn btn-danger font-weight-bold label label-inline" id="decline">
+                                        <button type="submit" class="btn btn-danger font-weight-bold label label-inline" id="stepTwoDecline">
                                             <i class="fas fa-times"></i> Decline
                                         </button>
                                 </form>                            
@@ -202,7 +202,7 @@
         });
     });
 
-    $('body').on('click','#accept', function(e) {
+    $('body').on('click','#stepTwoAccept', function(e) {
 
         e.preventDefault();
             
@@ -217,13 +217,19 @@
             closeOnConfirm: false,
             closeOnCancel: false
         }).then(function(getAction) {
-            if (getAction.value === true) {
-                $('#formAccept').submit();
+            if (getAction.value) {
+                $("<input />")
+                .attr("type", "hidden")
+                .attr("name", "approval")
+                .attr("value", "approve")
+                .appendTo("#formStepTwo");
+
+                $('#formStepTwo').submit();
             }
         });
     });
 
-    $('body').on('click','#decline', function(e) {
+    $('body').on('click','#stepTwoDecline', function(e) {
 
         e.preventDefault();
             
@@ -238,8 +244,14 @@
             closeOnConfirm: false,
             closeOnCancel: false
         }).then(function(getAction) {
-            if (getAction.value === true) {
-                $('#formDecline').submit();
+            if (getAction.value) {
+                $("<input />")
+                .attr("type", "hidden")
+                .attr("name", "approval")
+                .attr("value", "decline")
+                .appendTo("#formStepTwo");
+
+                $('#formStepTwo').submit();
             }
         });
     });
