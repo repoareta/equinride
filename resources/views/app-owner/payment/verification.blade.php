@@ -74,6 +74,7 @@
                                         <thead>
                                             <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col">Package</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
                                             <th scope="col">Pay Date</th>													
@@ -99,6 +100,7 @@
                                         <thead>
                                             <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col">Package</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
                                             <th scope="col">Pay Date</th>													
@@ -124,6 +126,7 @@
                                         <thead>
                                             <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col">Package</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Image</th>													
                                             <th scope="col">Pay Date</th>													
@@ -213,6 +216,7 @@
                     orderable: false, 
                     searchable: false
                 },
+                {data: 'package', name: 'package'},
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
                 {data: 'pay_date', name: 'pay_date'},
@@ -237,6 +241,7 @@
                     orderable: false, 
                     searchable: false
                 },
+                {data: 'package', name: 'package'},
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
                 {data: 'pay_date', name: 'pay_date'},
@@ -261,6 +266,7 @@
                     orderable: false, 
                     searchable: false
                 },
+                {data: 'package', name: 'package'},
                 {data: 'name', name: 'name'},
                 {data: 'photo', name: 'photo'},
                 {data: 'pay_date', name: 'pay_date'},
@@ -274,7 +280,7 @@
         $('body').on('click', '#openBtn', function () {
             var id = $(this).data('id');
             $.get('{{route('app_owner.payment.verification')}}'+'/show/' + id , function (data) {                
-                $('#name').html(data.booking_detail.package_name);
+                $('#name').html(data.booking_detail.package.name);
                 if(data.user_id == null){
                     $('#user').html('Something when wrong');
                 }else{
@@ -295,7 +301,7 @@
                 if(data.approval_status == null){
                     $('#approval_status').html('Need Approval');    
                 }                    
-                $('#stable').html(data.booking_detail.stable_name);
+                $('#stable').html(data.booking_detail.package.stable.name);
                 $('#phone').html(data.user.phone);
                 jQuery.noConflict();
                 $('#modalDetail').modal('show');
