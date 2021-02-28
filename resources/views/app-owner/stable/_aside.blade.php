@@ -23,9 +23,27 @@
                                 Pending
                             </span>                            
                         @endif
-                        @if ($stable->approval_status == 'Need Approval')
+
+                        @if ($stable->approval_status === null)
                             <div class="mt-2">
-                                <p class="mb-0">Action</p>
+                                <p class="mb-0">Approval Step 1</p>
+                                <form class="d-inline" id="formStepOne" method="POST" action="{{ route('app_owner.stable.approval.step_1.approval', ['stable' => $stable->id]) }}">
+                                    @method('PUT')
+                                    @csrf
+                                        <button type="submit" class="btn btn-success font-weight-bold label label-inline" id="stepOneAccept">
+                                            <i class="fas fa-check"></i> Approve
+                                        </button>
+
+                                        <button type="submit" class="btn btn-danger font-weight-bold label label-inline" id="stepOneDecline">
+                                            <i class="fas fa-times"></i> Decline
+                                        </button>
+                                </form>                            
+                            </div>                            
+                        @endif
+
+                        @if ($stable->approval_status == 'Need Approval Step 2')
+                            <div class="mt-2">
+                                <p class="mb-0">Approval Step 2</p>
                                 <form class="d-inline" method="POST" action="{{ route('app_owner.stable.approval.step_2.approval', ['stable' => $stable->id]) }}">
                                     @method('PUT')
                                     @csrf
@@ -132,6 +150,58 @@
 
 @push('page-scripts')
 <script>
+    $('body').on('click','#stepOneAccept', function(e) {
+
+        e.preventDefault();
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            text: 'This is will be accepted the stable',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel'
+        }).then(function(getAction) {
+            if (getAction.value) {
+                $("<input />")
+                .attr("type", "hidden")
+                .attr("name", "approval")
+                .attr("value", "approve")
+                .appendTo("#formStepOne");
+
+                $('#formStepOne').submit();
+            }
+        });
+    });
+
+    $('body').on('click','#stepOneDecline', function(e) {
+
+        e.preventDefault();
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            text: 'This is will be declined the stable',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value) {
+                $("<input />")
+                .attr("type", "hidden")
+                .attr("name", "approval")
+                .attr("value", "decline")
+                .appendTo("#formStepOne");
+
+                $('#formStepOne').submit();
+            }
+        });
+    });
+
     $('body').on('click','#accept', function(e) {
 
         e.preventDefault();
