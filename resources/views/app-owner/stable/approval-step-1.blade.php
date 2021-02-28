@@ -131,7 +131,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_1.pending') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_1.json_step_one') }}",
+                "data": {
+                    "approval_status": 'Step 1 Need Approval'
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
@@ -155,7 +160,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_1.approved') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_1.json_step_one') }}",
+                "data": {
+                    "approval_status": "Step 1 Approved"
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',

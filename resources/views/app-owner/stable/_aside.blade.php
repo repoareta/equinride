@@ -14,17 +14,17 @@
                         {{ $stable->name }}
                     </a>
                     <div class="mt-2">
-                        @if ($stable->approval_status == 'Accepted')
+                        @if ($stable->approval_status == 'Step 2 Approved')
                             <span class="label label-inline label-success font-weight-bold mb-2">
-                                Accepted
+                                Ready to sell
                             </span>
                         @else
                             <span class="label label-inline label-warning font-weight-bold mb-2">
-                                Pending
+                                {{ $stable->approval_status }}
                             </span>                            
                         @endif
 
-                        @if ($stable->approval_status === null)
+                        @if ($stable->approval_status == 'Step 1 Need Approval')
                             <div class="mt-2">
                                 <p class="mb-0">Approval Step 1</p>
                                 <form class="d-inline" id="formStepOne" method="POST" action="{{ route('app_owner.stable.approval.step_1.approval', ['stable' => $stable->id]) }}">
@@ -41,7 +41,7 @@
                             </div>                            
                         @endif
 
-                        @if ($stable->approval_status == 'Need Approval')
+                        @if ($stable->approval_status == 'Step 2 Need Approval')
                             <div class="mt-2">
                                 <p class="mb-0">Approval Step 2</p>
                                 <form class="d-inline" id="formStepTwo" method="POST" action="{{ route('app_owner.stable.approval.step_2.approval', ['stable' => $stable->id]) }}">

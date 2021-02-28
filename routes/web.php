@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
         Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
         Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
-        Route::put('/submit/{id}', [StableController::class, 'submitApproval'])->name('submit');
+        Route::put('/{stable}/step-two-approval-request', [StableController::class, 'stepTwoApprovalRequest'])->name('step_two_approval_request');
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {
             // STABLE EDIT
@@ -223,17 +223,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
                 Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
-                    Route::get('pending', [StableApprovalController::class, 'jsonPending1'])->name('pending');
-                    Route::get('approved', [StableApprovalController::class, 'jsonApproved1'])->name('approved');
+                    Route::get('json', [StableApprovalController::class, 'stepOneApprovalJson'])->name('json_step_one');
                     Route::get('{stable}/show', [StableApprovalController::class, 'show'])->name('show');
                     Route::put('{stable}/approval', [StableApprovalController::class, 'stepOneApproval'])->name('approval');
                 });
 
                 Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
-                    Route::get('pending', [StableApprovalController::class, 'jsonPending2'])->name('pending');
-                    Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
-                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
+                    Route::get('json', [StableApprovalController::class, 'stepTwoApprovalJson'])->name('json_step_two');
                     Route::get('{stable}/show', [StableApprovalController::class, 'show'])->name('show');
                     Route::put('{stable}/approval', [StableApprovalController::class, 'stepTwoApproval'])->name('approval');
                 });

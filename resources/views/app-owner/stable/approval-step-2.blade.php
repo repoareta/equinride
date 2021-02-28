@@ -171,7 +171,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_2.pending') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_2.json_step_two') }}",
+                "data": {
+                    "approval_status": "Step 2 Need Approval"
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
@@ -196,7 +201,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_2.approved') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_2.json_step_two') }}",
+                "data": {
+                    "approval_status": "Step 2 Approved"
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
@@ -221,7 +231,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_2.unapproved') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_2.json_step_two') }}",
+                "data": {
+                    "approval_status": "Step 2 Decline"
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
