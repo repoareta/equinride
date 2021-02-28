@@ -31,77 +31,48 @@ class StableApprovalController extends Controller
     /**
      * Undocumented function
      *
-     * @param [type] $approvalStatus
+     * @param Request $request
      * @return void
      */
-    public function jsonApprovalStepOne($approvalStatus = null)
+    public function stepOneApprovalJson(Request $request)
     {
-        $stables = Stable::where('approval_status', $approvalStatus);
+        $stables = Stable::where('approval_status', $request->approval_status);
 
-        return $stables;
-    }
-
-    public function jsonPending1()
-    {
-        $stables = $this->jsonApprovalStepOne();
-
-        return datatables()->of($stables)
-        ->addIndexColumn()
-        ->addColumn('created_at', function ($row) {
-            return date('D, M d Y', strtotime($row->created_at));
-        })
-        ->addColumn('approval_status', function () {
-            return
-                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
-                    Pending
-                </span>";
-        })
-        ->addColumn('action', function ($row) {
-            return
-            "
-            <a href='".route('app_owner.stable.approval.step_1.show', ['stable' => $row->id])."' class='btn btn-clean btn-icon mr-2' title='Detail'>
-                <i class='fas fa-eye'></i>
-            </a>
-
-            <form class='d-inline' id='formDecline".$row->id."' method='post' action='#'>
-            " . method_field('PUT') . csrf_field() . "
-                <button class='btn btn-clean btn-icon mr-2' type='submit' id='decline".$row->id."' data-toggle='Decline' data-placement='top' title='Decline'>
-                <i class='fas fa-ban'></i>
-                </button>
-            </form>
-            ";
-        })
-        ->rawColumns(['approval_status','action'])
-        ->make(true);
-    }
-
-    public function jsonApproved1()
-    {
-        $stables = $this->jsonApprovalStepOne('Email Sent');
-        
         return datatables()->of($stables)
         ->addIndexColumn()
         ->addColumn('created_at', function ($row) {
             return date('D, M d Y', strtotime($row->created_at));
         })
         ->addColumn('approval_status', function ($row) {
-            return $row->approval_status == 'Email Sent' ?
-                "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
-                    Approved
-                </span>" : "";
+            if ($row->approval_status == 'Step 1 Approved') {
+                return
+                    "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
+                        $row->approval_status
+                    </span>";
+            }
+
+            // default return pending
+            return
+                "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
+                    $row->approval_status
+                </span>";
         })
         ->addColumn('action', function ($row) {
             return
-            "
-            <a href='".route('app_owner.stable.approval.step_1.show', ['stable' => $row])."' target='_blank' class='btn btn-clean btn-icon mr-2'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
+                "<a href='".route('app_owner.stable.approval.step_1.show', ['stable' => $row->id])."' target='_blank' class='btn btn-clean btn-icon mr-2' title='Detail'>
+                    <i class='fas fa-eye'></i>
+                </a>";
         })
         ->rawColumns(['approval_status','action'])
         ->make(true);
     }
 
+    /**
+     * Stable Show Detail
+     *
+     * @param Stable $stable
+     * @return void
+     */
     public function show(Stable $stable)
     {
         return view('app-owner.stable.review.index', compact('stable'));
@@ -113,7 +84,7 @@ class StableApprovalController extends Controller
             $this->stepOneDeclineStable($stable);
         }
 
-        $stable->approval_status = 'Email Sent';
+        $stable->approval_status = 'Step 1 Approved';
         $stable->approval_by = Auth::user()->id;
         $stable->approval_at = Carbon::now();
 
@@ -124,7 +95,7 @@ class StableApprovalController extends Controller
         $user = User::where('id', $data1->user_id)->first();
         $user->notify(new StableRegisteredToStableOwner($stable));
         
-        Alert::success($stable->name.' Email Sent', 'Success.')->persistent(true)->autoClose(3600);
+        Alert::success($stable->name.' Step 1 Approved', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('app_owner.stable.approval.step_1.index');
     }
 
@@ -152,29 +123,15 @@ class StableApprovalController extends Controller
         return redirect()->back();
     }
 
-
     // Stable Approval 2
     public function step_2()
     {
         return view('app-owner.stable.approval-step-2');
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param [type] $approvalStatus
-     * @return void
-     */
-    public function jsonApprovalStepTwo($approvalStatus = null)
+    public function stepTwoApprovalJson(Request $request)
     {
-        $stables = Stable::where('approval_status', $approvalStatus);
-
-        return $stables;
-    }
-
-    public function jsonPending2()
-    {
-        $stables = $this->jsonApprovalStepTwo('Need Approval');
+        $stables = Stable::where('approval_status', $request->approval_status);
 
         return datatables()->of($stables)
         ->addIndexColumn()
@@ -182,72 +139,28 @@ class StableApprovalController extends Controller
             return date('D, M d Y', strtotime($row->created_at));
         })
         ->addColumn('approval_status', function ($row) {
+            if ($row->approval_status == 'Step 2 Approved') {
+                return
+                    "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
+                        $row->approval_status
+                    </span>";
+            } elseif ($row->approval_status == 'Step 2 Decline') {
+                return
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>
+                        $row->approval_status
+                    </span>";
+            }
+            // default return Pending
             return
-            "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
-                $row->approval_status
-            </span>";
+                    "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>
+                        $row->approval_status
+                    </span>";
         })
         ->addColumn('action', function ($row) {
             return
-            "
-            <a href='" . route('app_owner.stable.approval.step_2.show', $row->id) . "' class='btn btn-clear mr-2' target='_blank' title='Detail'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
-        })
-        ->rawColumns(['approval_status','action'])
-        ->make(true);
-    }
-
-    public function jsonApproved2()
-    {
-        $stables = $this->jsonApprovalStepTwo('Accepted');
-        
-        return datatables()->of($stables)
-        ->addIndexColumn()
-        ->addColumn('created_at', function ($row) {
-            return date('D, M d Y', strtotime($row->created_at));
-        })
-        ->addColumn('approval_status', function ($row) {
-            return
-            "<span class='label font-weight-bold label-lg  label-light-success label-inline'>
-                $row->approval_status
-            </span>";
-        })
-        ->addColumn('action', function ($row) {
-            return
-            "
-            <a href='" . route('app_owner.stable.approval.step_2.show', $row->id) . "' class='btn btn-clear mr-2' target='_blank'  title='Detail'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
-        })
-        ->rawColumns(['approval_status','action'])
-        ->make(true);
-    }
-
-    public function jsonUnapproved2()
-    {
-        $stables = $this->jsonApprovalStepTwo('Decline');
-
-        return datatables()->of($stables)
-        ->addIndexColumn()
-        ->addColumn('created_at', function ($data) {
-            return date('D, M d Y', strtotime($data->created_at));
-        })
-        ->addColumn('approval_status', function ($data) {
-            return
-            "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>
-                Decline
-            </span>";
-        })
-        ->addColumn('action', function ($data) {
-            return
-            "
-            <a href='" . route('app_owner.stable.approval.step_2.show', $data->id) . "' class='btn btn-clear mr-2' target='_blank' title='Detail'>
-                <i class='fas fa-eye'></i>
-            </a>
-            ";
+                "<a href='" . route('app_owner.stable.approval.step_2.show', $row->id) . "' class='btn btn-clear mr-2' target='_blank' title='Detail'>
+                    <i class='fas fa-eye'></i>
+                </a>";
         })
         ->rawColumns(['approval_status','action'])
         ->make(true);
@@ -259,7 +172,7 @@ class StableApprovalController extends Controller
             $this->stepTwoDeclineStable($stable);
         }
 
-        $stable->approval_status = 'Accepted';
+        $stable->approval_status = 'Step 2 Approved';
         $stable->approval_by = Auth::user()->id;
         $stable->approval_at = Carbon::now();
 
@@ -281,12 +194,12 @@ class StableApprovalController extends Controller
         $user->notify(new StableApproveStep2($stable));
 
         Alert::success($stable->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('app_owner.stable.step_2.index');
+        return redirect()->route('app_owner.stable.approval.step_2.index');
     }
 
     public function stepTwoDeclineStable(Stable $stable)
     {
-        $stable->approval_status = 'Decline';
+        $stable->approval_status = 'Step 2 Decline';
         $stable->approval_by = Auth::user()->id;
         $stable->approval_at = Carbon::now();
 
@@ -297,6 +210,6 @@ class StableApprovalController extends Controller
         $user->notify(new StableDeclineStep2($data));
 
         Alert::success($stable->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('app_owner.stable.step_2.index');
+        return redirect()->route('app_owner.stable.approval.step_2.index');
     }
 }

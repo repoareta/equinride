@@ -25,10 +25,10 @@
     $count_booking = Booking::where('approval_status', null)->count();
 
     // Total Stable Step 1 need approve
-    $count_stable_1 = Stable::where('approval_status', null)->count();
+    $count_stable_1 = Stable::where('approval_status', 'Step 1 Need Approval')->count();
 
     // Total Stable Step 1 need approve
-    $count_stable_2 = Stable::where('approval_status', 'Need Approval')->count();
+    $count_stable_2 = Stable::where('approval_status', 'Step 2 Need Approval')->count();
 
 @endphp
 
