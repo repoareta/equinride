@@ -33,15 +33,16 @@
                     <span class="text-muted font-weight-bold font-size-sm mt-1">Setting your schedule</span>
                 </div>
                 <div>
-                    <a href='{{ route('stable.schedule.create') }}' class='btn btn-primary'>Generate Schedule</a>
+                    <a href='{{ route('stable.schedule.create') }}' class='btn btn-primary'><i class="fas fa-tasks"></i> Generate Schedule</a>
                     <a href='{{ route('stable.schedule.setting') }}' class='btn btn-primary ml-3'><i class="fas fa-cog"></i> Settings</a>
                 </div>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
             <div class="card-body">
+                @include('stable.schedule.settings-alert')
                 <!--begin::Filter-->
-                <h5 class="title-text">Filter</h5>
+                <h5 class="title-text"><i class="fas fa-filter"></i> Filter</h5>
                 <div class="form-group mb-3 row">
                     <div class="col-md-6">
                         <label>Date Range</label>
@@ -58,8 +59,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
-                        <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
+                        <button type="button" name="filter" id="filter" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                        <button type="button" name="refresh" id="refresh" class="btn btn-default"><i class="fas fa-sync"></i> Refresh</button>
                     </div>
                 </div>
                 <div class="divider"></div>
@@ -80,81 +81,7 @@
                 </div>
             </div>
             <!--end::Body-->
-        </div>
-
-        <!-- Modal Generate Schedule -->
-        <div class="modal fade" id="modalGenerateSchedule"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h4 class="title-text " id="title_modal" data-state="add">
-                            GENERATE SCHEDULE
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @php
-                            date_default_timezone_set('Asia/Jakarta');
-                            $time = date('H:i');
-                        @endphp
-                        <form action="{{ route('stable.schedule.store') }}" class="repeater" method="POST">
-                            @csrf
-                            <div class="form-group row">
-                                <div class="col-11">
-                                    <label>Date</label>
-                                    <div class="input-daterange input-group date_range" id="date_range">
-                                        <input type="text" class="form-control" name="start" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="la la-ellipsis-h"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" name="end" autocomplete="off">
-                                    </div>
-                                </div>	
-                            </div>
-                                <!--
-                                    The value given to the data-repeater-list attribute will be used as the
-                                    base of rewritten name attributes.  In this example, the first
-                                    data-repeater-item's name attribute would become group-a[0][text-input],
-                                    and the second data-repeater-item would become group-a[1][text-input]
-                                -->
-                            <div data-repeater-list="group-a">
-                                <div data-repeater-item class="form-group row">											
-                                    <div class="col-md-3">
-                                        <label>Time Start</label>
-                                        <input type="text" class="form-control" name="time1" id="timePickerGen1">
-                                    </div>																								
-                                    <div class="col-md-3">
-                                        <label>Time End</label>
-                                        <input type="text" class="form-control" name="time2" id="timePickerGen2">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>Capacity</label>
-                                        <input type="number" class="form-control" name="capacity" id="capacity">
-                                    </div>
-                                    <div class="col-md-3 align-self-end">
-                                        <button data-repeater-delete type="button" class="btn btn-sm font-weight-bolder btn-light-danger">
-                                            <i class="la la-trash-o"></i>Delete</a>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button data-repeater-create type="button" class="btn btn-sm font-weight-bolder btn-light-primary mt-repeater-add">
-                                <i class="la la-plus"></i>Add</a>
-                            </button>
-                        </div>
-                        <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</button>
-                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fas fa-check"></i> Save</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        </div>        
     </div>  
     <!--end::Content-->
 </div>
@@ -293,8 +220,8 @@
                         {data: 'date', name: 'date', orderable: false, searchable: false},
                         {data: 'time_start', name: 'time_start'},
                         {data: 'time_end', name: 'time_end'},
-                        {data: 'capacity', name: 'capacity'},
-                        {data: 'capacity_booked', name: 'capacity_booked'},
+                        {data: 'capacity', name: 'capacity', class:'text-right'},
+                        {data: 'capacity_booked', name: 'capacity_booked', class:'text-right'},
                         {data: 'action', name: 'action'},
                 ],
                 columnDefs:[
@@ -310,6 +237,9 @@
                     dataSrc: "date",
                     startRender: function (rows, group) {
                         var collapsed = !!collapsedGroups[group];
+
+                        //fontawsome + and -
+                        var toggleClass = collapsed ? 'fa fa-plus-circle' : 'fa fa-minus-circle';
         
                         rows.nodes().each(function (r) {
                             r.style.display = collapsed ? 'none' : '';
@@ -317,7 +247,7 @@
         
                         // Add category name to the <tr>. NOTE: Hardcoded colspan
                         return $('<tr/>')
-                            .append('<td colspan="6" style="padding-left: 10px ! important">' + group + ' (' + rows.count() + ')</td>')
+                            .append('<td colspan="6" style="padding-left: 5px ! important">' + '<span class="fa fa-fw label-primary' + toggleClass + ' toggler"/> ' + group + ' (' + rows.count() + ')</td>')
                             .attr('data-name', group)
                             .toggleClass('collapsed', collapsed);
                     }

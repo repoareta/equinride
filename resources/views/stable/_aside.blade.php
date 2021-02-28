@@ -14,27 +14,28 @@
                         {{ $stable->name }}
                     </a>
                     <div class="mt-2">
-                        @if ($stable->approval_status == 'Accepted')
+                        @if ($stable->approval_status == 'Step 2 Approved')
                             <span class="label label-inline label-success font-weight-bold mb-2">
-                                Accepted
+                                Ready to Sell
                             </span>
                         @else
                             <span class="label label-inline label-warning font-weight-bold mb-2">
-                                Pending
+                                {{ $stable->approval_status }}
                             </span>                            
                         @endif
-                        @if ($stable->approval_status == 'Need Approval')
-                            <button class="btn btn-primaty font-weight-bold label label-inline" disabled>
-                                Submitted
-                            </button>
+                        
+                        @if ($stable->approval_status == 'Step 2 Need Approval')
+                            <span class="label label-inline label-secondary font-weight-bold mb-2">
+                                Step 2 Approval Request Sent
+                            </span>
                         @else
-                            <form id="formAccept" method="post" action="{{ route('stable.submit',$stable->id) }}">
+                            <form id="formAccept" method="post" action="{{ route('stable.step_two_approval_request', ['stable' => $stable->id]) }}">
                                 @method('PUT')
                                 @csrf
-                                <button id="submitApprove" class="btn btn-primary font-weight-bold label label-inline">
-                                    Submit Approval
+                                <button id="submitApprove" class="btn btn-primary btn-sm font-weight-bold">
+                                    <i class="fas fa-user-check"></i> Request Step 2 Approval
                                 </button>
-                            </form>                            
+                            </form>
                         @endif
                     </div>
                 </div>
@@ -198,7 +199,7 @@
         Swal.fire({
             title: 'Are you sure?',
             icon: 'warning',
-            text: 'This is will be accepted the stable',
+            text: "Stable will not ready to sell until administrator reviewed.",
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Submit',
@@ -206,7 +207,7 @@
             closeOnConfirm: false,
             closeOnCancel: false
         }).then(function(getAction) {
-            if (getAction.value === true) {
+            if (getAction.value) {
                 $('#formAccept').submit();
             }
         });

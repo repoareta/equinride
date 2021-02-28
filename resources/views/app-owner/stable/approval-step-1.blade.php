@@ -34,22 +34,22 @@
             <div class="card-body p-0">
                 <div class="card card-custom">
                     <div class="card-header card-header-tabs-line">
-                     <div class="card-toolbar">
-                      <ul class="nav nav-tabs nav-bold nav-tabs-line">
-                       <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                        <span class="nav-icon"><i class="flaticon2-hourglass-1"></i></span>
-                        <span class="nav-text">Pending</span>
-                        </a>
-                       </li>
-                       <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                        <span class="nav-icon"><i class="fas fa-check-circle"></i></span>
-                        <span class="nav-text">Approved</span>
-                        </a>
-                       </li>
-                      </ul>
-                     </div>
+                        <div class="card-toolbar">
+                            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
+                                    <span class="nav-icon"><i class="flaticon2-hourglass-1"></i></span>
+                                    <span class="nav-text">Pending</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                                    <span class="nav-icon"><i class="fas fa-check-circle"></i></span>
+                                    <span class="nav-text">Approved</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="card-body p-0">
                      <div class="tab-content">
@@ -63,18 +63,17 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTablePending">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>		
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>                                    
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -90,14 +89,14 @@
                                     <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTableApproved">
                                         <thead>
                                             <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Stable Name</th>
-                                            <th scope="col">Owner</th>													
-                                            <th scope="col">Contact Person</th>													
-                                            <th scope="col">Contact Number</th>													
-                                            <th scope="col">Date Created</th>											
-                                            <th scope="col">Status</th>											
-                                            <th scope="col">Action</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Stable Name</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Contact Person</th>
+                                                <th scope="col">Contact Number</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -112,65 +111,6 @@
                 </div>                
             </div>
             <!--end::Body-->
-
-            <!-- Modal -->
-            <div class="modal fade" id="modalDetail"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header ">
-                            <h4 class="title-text " id="title_modal" data-state="add">
-                                Detail Stable
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="mb-0">Stable Name</p>
-                                    <h4 class="mb-4" id="name"></h4>
-                                    <p class="mb-0">Owner</p>
-                                    <h4 class="mb-4" id="owner"></h4>
-                                    <p class="mb-0">Manager</p>
-                                    <h4 class="mb-4" id="manager"></h4>
-                                    <p class="mb-0">Contact Person</p>
-                                    <h4 class="mb-4" id="contact_person"></h4>
-                                    <p class="mb-0">Contact Number</p>
-                                    <h4 class="mb-4" id="contact_number"></h4>
-                                    <p class="mb-0">Capacity of Stable</p>
-                                    <h4 class="mb-4" id="capacity_of_stable"></h4>
-                                    <p class="mb-0">Capacity of Arena</p>
-                                    <h4 class="mb-4" id="capacity_of_arena"></h4>
-                                    <p class="mb-0">Number of Coach</p>
-                                    <h4 class="mb-4" id="number_of_coach"></h4>
-                                    <p class="mb-0">Address</p>
-                                    <h4 class="mb-4" id="address"></h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="mb-0">Province</p>
-                                    <h4 class="mb-4" id="province"></h4>
-                                    <p class="mb-0">City</p>
-                                    <h4 class="mb-4" id="city"></h4>
-                                    <p class="mb-0">District</p>
-                                    <h4 class="mb-4" id="district"></h4>
-                                    <p class="mb-0">Village</p>
-                                    <h4 class="mb-4" id="village"></h4>
-                                    <p class="mb-0">Logo</p>
-                                    <img src="" alt="" id="logo" style="max-width: 100px">
-                                    <p class="mb-0">Approval At</p>
-                                    <h4 class="mb-4" id="approval_at"></h4>
-                                    <p class="mb-0">Approval By</p>
-                                    <h4 class="mb-4" id="approval_by"></h4>
-                                    <p class="mb-0">Approval Status</p>
-                                    <h4 class="mb-4" id="approval_status"></h4>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="modal-footer">											
-                            <button data-dismiss="modal" class="btn btn-primary font-weight-bold">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
         </div>
     </div>
     <!--end::Content-->
@@ -191,7 +131,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_1.pending') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_1.json_step_one') }}",
+                "data": {
+                    "approval_status": 'Step 1 Need Approval'
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
@@ -215,7 +160,12 @@
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
             },
-            ajax      : "{{ route('app_owner.stable.approval.step_1.approved') }}",
+            ajax : {
+                "url": "{{ route('app_owner.stable.approval.step_1.json_step_one') }}",
+                "data": {
+                    "approval_status": "Step 1 Approved"
+                }
+            },
             columns: [
                 {
                     "data": 'DT_RowIndex',
@@ -232,33 +182,9 @@
             ]
         });
 
-        $('#dataTableUnapproved').DataTable({
-            scrollX   : true,
-            processing: true,
-            // serverSide: true,
-            language: {
-                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
-            },
-            ajax      : "{{ route('app_owner.stable.approval.step_1.unapproved') }}",
-            columns: [
-                {
-                    "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false
-                },
-                {data: 'name', name: 'name'},
-                {data: 'owner', name: 'owner'},
-                {data: 'contact_person', name: 'contact_person'},
-                {data: 'contact_number', name: 'contact_number'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'approval_status', name: 'approval_status'},
-                {data: 'action', name: 'action'},
-            ]
-        }); 
-
         $('body').on( 'click', '#openBtn', function () {
             var id = $(this).data('id');
-            $.get('{{route('app_owner.stable.approval.step_1.index' )}}'+'/show/' + id , function (data) {
+            $.get('{{ route('app_owner.stable.approval.step_1.index') }}' + '/' + id + '/show' , function (data) {
                     $('#name').html(data[0].name);
                     $('#owner').html(data[0].owner);
                     $('#manager').html(data[0].manager);

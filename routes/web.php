@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
         Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
         Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
-        Route::put('/submit/{id}', [StableController::class, 'submitApproval'])->name('submit');
+        Route::put('/{stable}/step-two-approval-request', [StableController::class, 'stepTwoApprovalRequest'])->name('step_two_approval_request');
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {
             // STABLE EDIT
@@ -184,7 +184,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             // STABLE WITHDRAW
             Route::group(['prefix' => 'withdraw', 'as' => 'withdraw.'], function () {
                 Route::get('/', [WithdrawController::class, 'index'])->name('index');
-                Route::post('/store', [WithdrawController::class, 'store'])->name('store');
+                Route::get('/create', [WithdrawController::class, 'create'])->name('create');
+                Route::post('/create', [WithdrawController::class, 'store'])->name('store');
 
                 // SETTINGS
                 Route::get('/settings', [WithdrawController::class, 'withdrawSetting'])->name('setting');
@@ -222,22 +223,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::group(['prefix' => 'approval', 'as' => 'approval.'], function () {
                 Route::group(['prefix' => 'step-1', 'as' => 'step_1.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_1'])->name('index');
-                    Route::get('show/{stable}', [StableApprovalController::class, 'show1'])->name('show');
-                    Route::get('pending', [StableApprovalController::class, 'jsonPending1'])->name('pending');
-                    Route::get('approved', [StableApprovalController::class, 'jsonApproved1'])->name('approved');
-                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable1'])->name('approve');
-                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved1'])->name('unapproved');
-                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable1'])->name('unapprove');
+                    Route::get('json', [StableApprovalController::class, 'stepOneApprovalJson'])->name('json_step_one');
+                    Route::get('{stable}/show', [StableApprovalController::class, 'show'])->name('show');
+                    Route::put('{stable}/approval', [StableApprovalController::class, 'stepOneApproval'])->name('approval');
                 });
 
                 Route::group(['prefix' => 'step-2', 'as' => 'step_2.'], function () {
                     Route::get('/', [StableApprovalController::class, 'step_2'])->name('index');
-                    Route::get('show/{stable}', [StableApprovalController::class, 'show2'])->name('show');
-                    Route::get('pending', [StableApprovalController::class, 'jsonPending2'])->name('pending');
-                    Route::get('approved', [StableApprovalController::class, 'jsonApproved2'])->name('approved');
-                    Route::get('unapproved', [StableApprovalController::class, 'jsonUnapproved2'])->name('unapproved');
-                    Route::put('approved/{stable}', [StableApprovalController::class, 'approveStable2'])->name('approve');
-                    Route::put('unapproved/{stable}', [StableApprovalController::class, 'unapproveStable2'])->name('unapprove');
+                    Route::get('json', [StableApprovalController::class, 'stepTwoApprovalJson'])->name('json_step_two');
+                    Route::get('{stable}/show', [StableApprovalController::class, 'show'])->name('show');
+                    Route::put('{stable}/approval', [StableApprovalController::class, 'stepTwoApproval'])->name('approval');
                 });
             });
 

@@ -25,6 +25,9 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
+        $stableSlotSettings = SlotSetting::where('stable_id', Auth::user()->stables->first()->id)
+        ->get();
+
         if ($request->ajax()) {
             $stable = Auth::user()->stables->first()->pivot;
             if (!empty($request->input('from_date'))) {
@@ -76,7 +79,7 @@ class ScheduleController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('stable.schedule.index');
+        return view('stable.schedule.index', compact('stableSlotSettings'));
     }
 
     /**

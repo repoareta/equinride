@@ -23,7 +23,7 @@
                     <h3 class="card-label font-weight-bolder text-dark">Withdrawals</h3>
                     <span class="text-muted font-weight-bold font-size-sm mt-1">The preferred payment method is selected as Bank Transfer</span>
                 </div>
-                <a href='{{ route('stable.coach.create') }}' class='btn btn-primary ml-5'>Make a Withdraw</a>
+                <a href='{{ route('stable.withdraw.create') }}' class='btn btn-primary ml-5'>Make a Withdraw</a>
             </div>
             <!--end::Header-->
             <!--begin::Body-->

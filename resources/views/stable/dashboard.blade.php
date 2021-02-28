@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.horse.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -54,7 +54,7 @@
 
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.coach.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -72,7 +72,7 @@
                                 <span class="text-white font-size-h2 font-weight-bold">
                                     Coaches
                                 </span>
-                                <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">2</div>
+                                <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ $stable->coaches_count }}</div>
                                 <div class="font-weight-bold text-inverse-dark font-size-sm">Number of Coaches: {{ $stable->number_of_coach }}</div>
                             </div>
                             <!--end::Body-->
@@ -82,7 +82,7 @@
 
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.package.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -100,7 +100,7 @@
                                 <span class="text-white font-size-h2 font-weight-bold">
                                     Packages
                                 </span>
-                                <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">5</div>
+                                <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ $stable->packages_count }}</div>
                             </div>
                             <!--end::Body-->
                         </a>
@@ -111,7 +111,7 @@
                 <div class="row">
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.withdraw.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -138,7 +138,7 @@
 
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.booking.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -165,7 +165,7 @@
 
                     <div class="col-xl-4">
                         <!--begin::Stats Widget 18-->
-                        <a href="#" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                        <a href="{{ route('stable.withdraw.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <span class="svg-icon svg-icon-2x svg-icon-white">

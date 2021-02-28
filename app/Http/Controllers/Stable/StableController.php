@@ -16,12 +16,10 @@ use App\Models\User;
 use App\Models\Coach;
 use App\Models\Horse;
 use App\Models\Village;
-use App\Notifications\StableRegisteredToStableOwner;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class StableController extends Controller
@@ -61,16 +59,17 @@ class StableController extends Controller
         DB::transaction(function () use ($request, $stable) {
             $key_stable             = Carbon::now()->format('YmdHi');
 
-            $stable->name           = $request->name;
-            $stable->contact_person = $request->contact_phone_name;
-            $stable->contact_number = $request->contact_phone_number;
-            $stable->address        = $request->address;
-            $stable->province_id    = $request->province;
-            $stable->city_id        = $request->city;
-            $stable->district_id    = $request->district;
-            $stable->village_id     = $request->village;
+            $stable->name            = $request->name;
+            $stable->contact_person  = $request->contact_phone_name;
+            $stable->contact_number  = $request->contact_phone_number;
+            $stable->address         = $request->address;
+            $stable->province_id     = $request->province;
+            $stable->city_id         = $request->city;
+            $stable->district_id     = $request->district;
+            $stable->village_id      = $request->village;
 
-            $stable->key_stable     = $key_stable;
+            $stable->approval_status = 'Step 1 Need Approval';
+            $stable->key_stable      = $key_stable;
 
             $stable->save();
 
@@ -81,9 +80,9 @@ class StableController extends Controller
         // SET AS STABLE OWNER ROLE
         Auth::user()->assignRole('stable-owner');
 
-
         Alert::success('Stable Register Success.', 'You already submit your stable. 
         Your request will be reviewed by Apps Owner. Notification will be sent to your e-mail.')->persistent(true)->autoClose(3600);
+
         return redirect()->route('stable.index');
     }
 
@@ -192,9 +191,10 @@ class StableController extends Controller
         return redirect()->route('stable.stable_key.confirm');
     }
 
-    public function submitApproval($id)
+    public function stepTwoApprovalRequest(Stable $stable)
     {
-        $data = Stable::find($id);
+        $stable->approval_status = 'Step 2 Need Approval';
+        $stable->save();
 
         $users1 = User::whereHas("roles", function ($q) {
             $q->where("name", "app-owner");
@@ -206,19 +206,15 @@ class StableController extends Controller
         
         foreach ($users1 as $user) {
             $send = User::where('id', $user->id)->first();
-            $send->notify(new StableAdminSendSubmitApproval($data));
+            $send->notify(new StableAdminSendSubmitApproval($stable));
         }
 
         foreach ($users2 as $user) {
             $send = User::where('id', $user->id)->first();
-            $send->notify(new StableAdminSendSubmitApproval($data));
+            $send->notify(new StableAdminSendSubmitApproval($stable));
         }
 
-        Stable::where('id', $data->id)->update([
-            'approval_status' => 'Need Approval'
-        ]);
-
-        Alert::success($data->name.' Submit Approval Sent', 'You already submit your info. 
+        Alert::success($stable->name.' Step 2 Approval Request Sent', 'You already submit your info. 
         Your request will be reviewed by Apps Owner. Notification will be sent to your e-mail.')
         ->persistent(true)->autoClose(3600);
 
