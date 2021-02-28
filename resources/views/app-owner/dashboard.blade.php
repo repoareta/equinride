@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-xl-4">
                             <!--begin::Stats Widget 18-->
-                            <a href="{{ route('stable.horse.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                            <div class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -46,16 +46,16 @@
                                     <span class="text-white font-size-h2 font-weight-bold">
                                         Stables
                                     </span>
-                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">Total: {{ 12 }}</div>
+                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">Total: {{ $stables_count }}</div>
                                 </div>
                                 <!--end::Body-->
-                            </a>
+                            </div>
                             <!--end::Stats Widget 18-->
                         </div>
     
                         <div class="col-xl-4">
                             <!--begin::Stats Widget 18-->
-                            <a href="{{ route('stable.coach.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                            <div class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -73,16 +73,16 @@
                                     <span class="text-white font-size-h2 font-weight-bold">
                                         Bookings
                                     </span>
-                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ 12 }}</div>
+                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ $bookings_count }}</div>
                                 </div>
                                 <!--end::Body-->
-                            </a>
+                            </div>
                             <!--end::Stats Widget 18-->
                         </div>
     
                         <div class="col-xl-4">
                             <!--begin::Stats Widget 18-->
-                            <a href="{{ route('stable.package.index') }}" class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
+                            <div class="card card-custom bg-dark bg-hover-state-dark card-stretch gutter-b">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -100,10 +100,10 @@
                                     <span class="text-white font-size-h2 font-weight-bold">
                                         Earnings
                                     </span>
-                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ 12 }}</div>
+                                    <div class="text-inverse-dark font-weight-bolder font-size-h5 mb-2 mt-5">{{ 12.000 }}</div>
                                 </div>
                                 <!--end::Body-->
-                            </a>
+                            </div>
                             <!--end::Stats Widget 18-->
                         </div>
                     </div>
@@ -116,16 +116,3 @@
     <!--end::Content-->
 </div>
 @endsection
-
-@push('page-scripts')
-<script>
-    $('#datePicker').datetimepicker({
-        format: 'ddd, DD MMM YYYY',
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'bottom'
-        },
-        minDate: new Date()
-    });
-</script>
-@endpush

@@ -18,6 +18,14 @@ class Booking extends Model
         return $this->hasMany(BookingDetail::class);
     }
 
+    /**
+    * Get the coaches of stable
+    */
+    public function booking_detail()
+    {
+        return $this->hasOne(BookingDetail::class);
+    }
+
     public function bank()
     {
         return $this->belongsTo(BankPayment::class, 'bank_payment_id');
