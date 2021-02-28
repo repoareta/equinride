@@ -16,6 +16,7 @@ use App\Models\BankPayment;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\Slot;
+
 class PackageController extends Controller
 {
     /**
@@ -92,12 +93,12 @@ class PackageController extends Controller
                         ->where('date', $request->date_start)
                         ->where('time_start', $request->time_start)
                         ->first();
-        if($slot_users){
-            if($slot_users->pivot->qr_code_status == 'Pending'){
+        if ($slot_users) {
+            if ($slot_users->pivot->qr_code_status == 'Pending') {
                 Alert::error('Payment Error', 'Same package payment unfiniish detected')->persistent(true)->autoClose(3600);
                 return redirect()->route('riding_class');
             }
-        }        
+        }
 
         // CEK BOOKED CAPACITY IN STABLE SLOT
         // IF BOOKED CAPACITY > CAPACITY
@@ -106,7 +107,7 @@ class PackageController extends Controller
         $slots = Slot::where('date', $request->date_start)
                     ->where('time_start', $request->time_start)
                     ->first();
-        if($slots->capacity == $slots->capacity_booked){
+        if ($slots->capacity == $slots->capacity_booked) {
             Alert::error('Payment Error.', 'Capacity full on this date and time')->persistent(true)->autoClose(3600);
             return redirect()->route('riding_class');
         }
@@ -168,15 +169,14 @@ class PackageController extends Controller
      */
     public function paymentConfirmationSubmit(Request $request)
     {
-        if($request->hasFile('photo'))
-        {
+        if ($request->hasFile('photo')) {
             $booking = Booking::find($request->id);
             File::delete(public_path('/storage/booking/photo/'.$request->photo));
-                $name = $request->file('photo')->getClientOriginalName();
-                $dir = $request->file('photo')->storeAs('booking/photo', $name, 'public');
-                $nameDir = 'storage/'.$dir;
-                $booking->photo = $nameDir;
-                $booking->update();
+            $name = $request->file('photo')->getClientOriginalName();
+            $dir = $request->file('photo')->storeAs('booking/photo', $name, 'public');
+            $nameDir = 'storage/'.$dir;
+            $booking->photo = $nameDir;
+            $booking->update();
 
             return response()->json(['status'=>"success",'imgdata'=>$nameDir]);
         }
