@@ -37,7 +37,7 @@ class RidingClassController extends Controller
         $stables = Stable::all();
         $packages = Package::where('session_usage', 'Yes')
         ->whereHas('stable', function ($q) use ($request) {
-            $q->where('approval_status', 'Accepted');
+            $q->where('approval_status', 'Step 2 Approved');
             $q->when(request('stable_name'), function ($query) use ($request) {
                 return $query->where('name', $request->stable_name);
             });
