@@ -160,7 +160,7 @@ class UserController extends Controller
                             if ($item->approval_status == null) {
                                 return '
                                     <td nowrap="nowrap">
-                                        <a href="'. route('user.order_history.pay', $item->id) .'" class="btn btn-danger btn-icon mr-2">
+                                        <a href="'. route('user.order_history.pay', $item->id) .'" class="label font-weight-bold label-lg  label-light-danger label-inline mr-2">
                                             Pay
                                         </a>
                                     </td>

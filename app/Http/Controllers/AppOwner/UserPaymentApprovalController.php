@@ -28,9 +28,29 @@ class UserPaymentApprovalController extends Controller
 
     public function jsonPending()
     {
-        $data = Booking::where('approval_status', null)->get();
+        $data = Booking::where('approval_status', null)
+                ->with('booking_detail.package')
+                ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
+        ->addColumn('package', function ($data) {
+            return
+            '
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-50 flex-shrink-0">
+                    <img src="'. asset($data->booking_detail->package->photo) .'" alt="photo">
+                </div>
+                <div class="ml-3">
+                    <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                    '.$data->booking_detail->package->name.'
+                    </span>
+                    <a href="#" class="text-muted text-hover-primary">
+                    '.$data->booking_detail->package->stable->name.'
+                    </a>
+                </div>
+            </div>
+            ';
+        })
         ->addColumn('name', function ($data) {
             return $data->user->name;
         })     
@@ -120,14 +140,34 @@ class UserPaymentApprovalController extends Controller
             ";
         })
         
-        ->rawColumns(['photo','action','approval_status'])
+        ->rawColumns(['photo','action','approval_status','package'])
         ->make(true);
     }
     public function jsonApproved()
     {
-        $data = Booking::where('approval_status', 'Accepted')->get();
+        $data = Booking::where('approval_status', 'Accepted')
+                ->with('booking_detail.package')
+                ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
+        ->addColumn('package', function ($data) {
+            return
+            '
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-50 flex-shrink-0">
+                    <img src="'. asset($data->booking_detail->package->photo) .'" alt="photo">
+                </div>
+                <div class="ml-3">
+                    <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                    '.$data->booking_detail->package->name.'
+                    </span>
+                    <a href="#" class="text-muted text-hover-primary">
+                    '.$data->booking_detail->package->stable->name.'
+                    </a>
+                </div>
+            </div>
+            ';
+        })
         ->addColumn('name', function ($data) {
             return $data->user->name;
         })     
@@ -161,14 +201,34 @@ class UserPaymentApprovalController extends Controller
             ";
         })
         
-        ->rawColumns(['photo','action','approval_status'])
+        ->rawColumns(['photo','action','approval_status','package'])
         ->make(true);
     }
     public function jsonUnapproved()
     {
-        $data = Booking::where('approval_status', 'Decline')->get();
+        $data = Booking::where('approval_status', 'Decline')
+                ->with('booking_detail.package')
+                ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
+        ->addColumn('package', function ($data) {
+            return
+            '
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-50 flex-shrink-0">
+                    <img src="'. asset($data->booking_detail->package->photo) .'" alt="photo">
+                </div>
+                <div class="ml-3">
+                    <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                    '.$data->booking_detail->package->name.'
+                    </span>
+                    <a href="#" class="text-muted text-hover-primary">
+                    '.$data->booking_detail->package->stable->name.'
+                    </a>
+                </div>
+            </div>
+            ';
+        })
         ->addColumn('name', function ($data) {
             return $data->user->name;
         })        
@@ -202,7 +262,7 @@ class UserPaymentApprovalController extends Controller
             ";
         })
         
-        ->rawColumns(['photo','action','approval_status'])
+        ->rawColumns(['photo','action','approval_status','package'])
         ->make(true);
     }
 
