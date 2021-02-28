@@ -13,6 +13,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 // Load Models
 use App\Models\User;
+
 class AdminController extends Controller
 {
     /**
@@ -22,11 +23,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $query = User::whereHas("roles", function($q){ 
-                    $q->where("name", "app-admin"); 
-                })->get();   
+        $query = User::whereHas("roles", function ($q) {
+            $q->where("name", "app-admin");
+        })->get();
         if (request()->ajax()) {
-            return DataTables::of($query)                
+            return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('user', function ($item) {
                     return
@@ -34,7 +35,7 @@ class AdminController extends Controller
                     <div class="d-flex align-items-center">
                         <div class="symbol symbol-50 symbol-sm flex-shrink-0">
                             <div class="symbol-label">
-                                <img class="h-75 align-self-center" src="'. asset($item->photo) .'" alt="photo">
+                                <img class="h-100 align-self-center" src="'. asset($item->photo) .'" alt="photo">
                             </div>
                         </div>
                         <div class="d-flex flex-column ml-3">
@@ -81,11 +82,11 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $user   = User::where('email', $request->email)->firstOrFail();
-        $userCheck = User::where('email', $request->email)->whereHas("roles", function($q){ 
-            $q->where("name", "app-admin")->orWhere("name", "app-owner"); 
+        $userCheck = User::where('email', $request->email)->whereHas("roles", function ($q) {
+            $q->where("name", "app-admin")->orWhere("name", "app-owner");
         })->first();
 
-        if(!$userCheck){            
+        if (!$userCheck) {
             $user->assignRole('app-admin');
             $user->notify(new AttachNewAppAdmin());
 

@@ -1,7 +1,7 @@
 <?php
  
 namespace App\Mail;
- 
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -41,12 +41,14 @@ class SendNotifUserPaymentApproveMail extends Notification implements shouldQueu
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
-    {    
+    {
         $data = $this->data;
         return (new MailMessage)
             ->subject('Your Payment Approved')
             ->line('Your Riding Class Name :')
-            ->line($data->name);
+            ->line($data->name)
+            ->line("Link:")
+            ->line("https://us02web.zoom.us/j/7905145265?pwd=MU00b0s5Z2lkWlFONnJjZ1B5OWtZUT09");
     }
 
     /**

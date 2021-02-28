@@ -108,16 +108,16 @@ class UserController extends Controller
                     return
                     '
                     <div class="d-flex align-items-center">
-                        <div class="symbol symbol-50 flex-shrink-0">
-                            <img src="'. asset($row->package->photo) .'" alt="photo">
+                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                            <div class="symbol-label">
+                                <img class="h-100 align-self-center" src="'. asset($row->package->photo) .'" alt="photo">
+                            </div>
                         </div>
-                        <div class="ml-3">
-                            <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
-                            '.$row->package->name.'
-                            </span>
-                            <a href="#" class="text-muted text-hover-primary">
+                        <div class="d-flex flex-column ml-3">
+                            <div class="text-primary font-weight-bolder font-size-lg">'.$row->package->name.'</div>
+                            <span class="text-muted font-weight-bold font-size-sm">
                             '.$row->package->stable->name.'
-                            </a>
+                            </span>
                         </div>
                     </div>
                     ';
