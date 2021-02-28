@@ -195,7 +195,7 @@ class UserPaymentApprovalController extends Controller
         ->addColumn('action', function ($data) {
             return
             "
-            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='openBtn'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
@@ -256,7 +256,7 @@ class UserPaymentApprovalController extends Controller
         ->addColumn('action', function ($data) {
             return
             "
-            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-clean btn-icon mr-2' id='openBtn'>
                 <i class='fas fa-eye'></i>
             </a>
             ";
