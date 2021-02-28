@@ -38,7 +38,7 @@ class BookingController extends Controller
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-50 symbol-sm flex-shrink-0">
                                 <div class="symbol-label">
-                                    <img class="h-75 align-self-end" src="'. asset($row->package->photo) .'" alt="photo">
+                                    <img class="h-75 align-self-center" src="'. asset($row->package->photo) .'" alt="photo">
                                 </div>
                             </div>
                             <div class="d-flex flex-column ml-3">
