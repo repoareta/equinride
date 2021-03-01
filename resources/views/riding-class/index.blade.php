@@ -124,11 +124,15 @@
         @foreach ($stables_footer as $stable)
             <div class="col-md-3 p-5">
                 <div class="card">
-                    @if ($stable->logo)
-                    <img src="{{ asset($stable->logo) }}" class="card-img-top h-275px" alt="{{ $stable->name }}">   
-                    @else
-                    <img src="assets/media/branchsto/lastest-competition.png" class="card-img-top h-275px" alt="{{ $stable->name }}">   
-                    @endif
+                    <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">
+                        <img src="
+                        @if($stable->logo)
+                        {{ asset($stable->logo) }}
+                        @else
+                        {{ 'assets/media/branchsto/lastest-competition.png' }} 
+                        @endif
+                        " class="card-img-top h-275px" alt="{{ $stable->name }}">
+                    </a>
                     <div class="card-body p-5">
                     <div class="star-rating mb-1">
                         <span class="far fa-star" data-rating="1"></span>
