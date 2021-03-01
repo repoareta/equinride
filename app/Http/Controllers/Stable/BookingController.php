@@ -74,7 +74,12 @@ class BookingController extends Controller
                     return
                     '
                     <div class="d-flex flex-column">
-                        <div class="text-primary font-weight-bolder font-size-lg">'.$row->booking->bank->branch.'</div>
+                        <div class="text-primary font-weight-bolder font-size-lg">
+                        '.$row->booking->bank->branch.'
+                        </div>
+                        <span class="text-muted font-weight-bold font-size-sm">
+                            '.$row->booking->bank->account_name.'
+                        </span>
                         <span class="text-muted font-weight-bold font-size-sm">
                             '.$row->booking->bank->account_number.'
                         </span>
