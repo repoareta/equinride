@@ -96,6 +96,7 @@ class UserController extends Controller
         $bookingDetails = BookingDetail::whereHas('booking', function ($q) {
             $q->where('user_id', Auth::user()->id);
         })
+        ->with('booking')
         ->with('package')
         ->with('package.stable')
         ->orderBy('id', 'desc')
@@ -160,7 +161,7 @@ class UserController extends Controller
                             if ($item->approval_status == null) {
                                 return '
                                     <td nowrap="nowrap">
-                                        <a href="'. route('user.order_history.pay', $item->id) .'" class="label font-weight-bold label-lg  label-light-danger label-inline mr-2">
+                                        <a href="'. route('user.order_history.pay',$item->booking->id) .'" class="label font-weight-bold label-lg  label-light-danger label-inline mr-2">
                                             Pay
                                         </a>
                                     </td>
@@ -177,7 +178,7 @@ class UserController extends Controller
                         } else {
                             return '
                                 <td nowrap="nowrap">
-                                    <a href="'. route('user.order_history.show', $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                    <a href="'. route('user.order_history.show', $item->booking->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
                                         <i class="la la-eye icon-xl"></i>
                                     </a>
                                 </td>
@@ -348,6 +349,7 @@ class UserController extends Controller
     public function pay($id)
     {
         $booking = Booking::find($id);
+
         if ($booking->approval_status == "Expired") {
             Alert::error('Something wrong.', 'Decline.')->persistent(true)->autoClose(3600);
             return redirect()->back();
