@@ -26,10 +26,9 @@ class HorseController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()){
-            $stable = Auth::user()->stables->first()->pivot;
-            $query = Horse::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
-            return Datatables::of($query)
+        if (request()->ajax()) {
+            $horses = Horse::where('stable_id', Auth::user()->stables->first()->id)->orderBy('id', 'desc');
+            return Datatables::of($horses)
                 ->addIndexColumn()
                 ->addColumn('horse', function ($item) {
                     return
@@ -49,28 +48,28 @@ class HorseController extends Controller
                     </div>                    
                     ';
                 })
-                ->addColumn('horse_sex', function($item){
+                ->addColumn('horse_sex', function ($item) {
                     return $item->sex->name;
                 })
-                ->addColumn('horse_breed', function($item){
+                ->addColumn('horse_breed', function ($item) {
                     return $item->breed->name;
                 })
-                ->addColumn('passport_number', function($item){
-                    return $item->passport_number == null ? 
-                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                ->addColumn('passport_number', function ($item) {
+                    return $item->passport_number == null ?
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" :
                     $item->passport_number;
                 })
-                ->addColumn('pedigree_male', function($item){
-                    return $item->pedigree_male == null ? 
-                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                ->addColumn('pedigree_male', function ($item) {
+                    return $item->pedigree_male == null ?
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" :
                     $item->pedigree_male;
                 })
-                ->addColumn('pedigree_female', function($item){
-                    return $item->pedigree_female == null ? 
-                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                ->addColumn('pedigree_female', function ($item) {
+                    return $item->pedigree_female == null ?
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" :
                     $item->pedigree_female;
                 })
-                ->addColumn('action', function($item){
+                ->addColumn('action', function ($item) {
                     return '
                     <td nowrap="nowrap">
                         <a href="'. route("stable.horse.edit", $item->id) . '" class="btn btn-clean btn-icon mr-2" title="Edit details">
@@ -106,10 +105,9 @@ class HorseController extends Controller
 
         $stable         = Auth::user()->stables->first()->pivot;
         $horseNum1      = Horse::where('stable_id', $stable->stable_id)->get()->count();
-        $stableCapacity = Stable::find($stable->stable_id)->capacity_of_stable;        
+        $stableCapacity = Stable::find($stable->stable_id)->capacity_of_stable;
 
-        if($horseNum1 == $stableCapacity)
-        {
+        if ($horseNum1 == $stableCapacity) {
             Alert::error('Error', 'Capacity of stable full')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
@@ -124,7 +122,7 @@ class HorseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Horse $horse)
-    {    
+    {
         try {
             // Check Stable
             $stable = Auth::user()->stables->first()->pivot;
@@ -145,7 +143,7 @@ class HorseController extends Controller
             return response()->json(['status'=>"success", 'horseid'=>$horse->id]);
         } catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
-        }        
+        }
     }
 
     /**
@@ -202,7 +200,7 @@ class HorseController extends Controller
             return response()->json(['status'=>"success", 'horseid'=>$horse->id]);
         } catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
-        }    
+        }
     }
 
     /**
@@ -222,7 +220,7 @@ class HorseController extends Controller
     // Store image to database and directory from dropZone
     public function storeImage(Request $request)
     {
-        if($request->file('photo')){
+        if ($request->file('photo')) {
             
             //here we are geeting horseid align with an image
             $horse = Horse::find($request->horseid);

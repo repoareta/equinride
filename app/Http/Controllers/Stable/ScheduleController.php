@@ -29,13 +29,13 @@ class ScheduleController extends Controller
         ->get();
 
         if ($request->ajax()) {
-            $stable = Auth::user()->stables->first()->pivot;
+            $stable = Auth::user()->stables->first();
             if (!empty($request->input('from_date'))) {
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
                 if ($request->input('from_date') === $request->input('end_date')) {
                     //kita filter tanggalnya sesuai dengan request input('from_date')
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
-                    $query = Slot::where('user_id', $stable->user_id)
+                    $query = Slot::where('stable_id', $stable->id)
                             ->whereDate('date', '=', $from)
                             ->orderBy('time_start', 'asc')
                             ->get();
@@ -43,13 +43,16 @@ class ScheduleController extends Controller
                     //kita filter dari tanggal awal ke akhir
                     $from = date('Y-m-d', strtotime($request->input('from_date')));
                     $end = date('Y-m-d', strtotime($request->input('end_date')));
-                    $query = Slot::where('user_id', $stable->user_id)
+                    $query = Slot::where('stable_id', $stable->id)
                     ->whereBetween('date', array($from, $end))
                     ->orderBy('time_start', 'asc')
                     ->get();
                 }
             } else {
-                $query = Slot::where('user_id', $stable->user_id)->orderBy('date', 'asc')->orderBy('time_start', 'asc')->get();
+                $query = Slot::where('stable_id', $stable->id)
+                ->orderBy('date', 'asc')
+                ->orderBy('time_start', 'asc')
+                ->get();
             }
 
             return Datatables::of($query)
