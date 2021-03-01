@@ -14,6 +14,7 @@ use Carbon\Carbon;
 // load model
 use App\Models\Coach;
 use App\Models\Stable;
+
 class CoachController extends Controller
 {
     /**
@@ -23,10 +24,10 @@ class CoachController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()){
-            $stable = Auth::user()->stables->first()->pivot;
-            $query = Coach::where('user_id', $stable->user_id)->get();
-            return Datatables::of($query)
+        if (request()->ajax()) {
+            $stable = Auth::user()->stables->first();
+            $coaches = Coach::where('stable_id', $stable->id)->get();
+            return Datatables::of($coaches)
                 ->addIndexColumn()
                 ->addColumn('coach', function ($item) {
                     return
@@ -46,10 +47,10 @@ class CoachController extends Controller
                     </div>                    
                     ';
                 })
-                ->addColumn('experience', function($item){
+                ->addColumn('experience', function ($item) {
                     return $item->experience.' Years';
                 })
-                ->addColumn('action', function($item){
+                ->addColumn('action', function ($item) {
                     return '
                     <td nowrap="nowrap">
                         <a href="'. route("stable.coach.edit", $item->id) . '" class="btn btn-clean btn-icon mr-2" title="Edit details">
@@ -76,10 +77,9 @@ class CoachController extends Controller
     {
         $stable    = Auth::user()->stables->first()->pivot;
         $coachNum1 = Coach::where('stable_id', $stable->stable_id)->get()->count();
-        $coachNum2 = Stable::find($stable->stable_id)->number_of_coach;        
+        $coachNum2 = Stable::find($stable->stable_id)->number_of_coach;
 
-        if($coachNum1 == $coachNum2)
-        {
+        if ($coachNum1 == $coachNum2) {
             Alert::error('Error', 'Number of coach full')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
@@ -99,12 +99,12 @@ class CoachController extends Controller
             // Check Stable
             $stable = Auth::user()->stables->first()->pivot;
 
-            $coach->name            = $request->name;            
+            $coach->name            = $request->name;
             $coach->birth_date      = $request->birth_date;
             $coach->sex             = $request->sex;
             $coach->experience      = $request->experience;
             $coach->contact_number  = $request->contact_number;
-            $coach->certified       = $request->certified;            
+            $coach->certified       = $request->certified;
             $coach->stable_id       = $stable->stable_id;
             $coach->user_id         = $stable->user_id;
 
@@ -152,12 +152,12 @@ class CoachController extends Controller
             // Check Stable
             $stable = Auth::user()->stables->first()->pivot;
 
-            $coach->name            = $request->name;            
+            $coach->name            = $request->name;
             $coach->birth_date      = $request->birth_date;
             $coach->sex             = $request->sex;
             $coach->experience      = $request->experience;
             $coach->contact_number  = $request->contact_number;
-            $coach->certified       = $request->certified;            
+            $coach->certified       = $request->certified;
             $coach->stable_id       = $stable->stable_id;
             $coach->user_id         = $stable->user_id;
             
@@ -165,7 +165,7 @@ class CoachController extends Controller
             return response()->json(['status'=>"success", 'coachid'=>$coach->id]);
         } catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
-        }    
+        }
     }
 
     /**
@@ -185,7 +185,7 @@ class CoachController extends Controller
     // Store image to database and directory from dropZone
     public function storeImage(Request $request)
     {
-        if($request->file('photo')){
+        if ($request->file('photo')) {
             
             //here we are geeting coachid align with an image
             $coach = Coach::find($request->coachid);
