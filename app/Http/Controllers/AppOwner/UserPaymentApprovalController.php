@@ -268,7 +268,9 @@ class UserPaymentApprovalController extends Controller
 
     public function show($id)
     {
-        $booking = Booking::with(['bank','user','approvalby_booking'])->find($id);
+        $booking = Booking::with(['bank','user','approvalby_booking'])
+                    ->with('booking_detail.package')
+                    ->with('booking_detail.package.stable')->find($id);
         return response()->json($booking);
     }
 
