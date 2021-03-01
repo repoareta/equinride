@@ -22,10 +22,10 @@ class PackageController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()){
-            $stable = Auth::user()->stables->first()->pivot;
-            $query = Package::where('user_id', $stable->user_id)->orderBy('id', 'desc')->get();
-            return Datatables::of($query)
+        if (request()->ajax()) {
+            $stable = Auth::user()->stables->first();
+            $packages = Package::where('stable_id', $stable->id)->orderBy('id', 'desc')->get();
+            return Datatables::of($packages)
                 ->addIndexColumn()
                 ->addColumn('package', function ($item) {
                     return
@@ -45,34 +45,30 @@ class PackageController extends Controller
                     </div>                    
                     ';
                 })
-                ->addColumn('price', function($item){
+                ->addColumn('price', function ($item) {
                     $price = number_format(($item->price/100), 2);
                     return 'RP. '.$price;
                 })
-                ->addColumn('package_number', function($item){
-                    return $item->package_number == null ? 
-                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" : 
+                ->addColumn('package_number', function ($item) {
+                    return $item->package_number == null ?
+                    "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Not Found</span>" :
                     $item->package_number;
                 })
-                ->addColumn('package_status', function($item){
-                    return $item->package_status == 'Yes' ? 
-                    "<span class='label font-weight-bold label-lg  label-light-success label-inline'>Publish</span>" : 
+                ->addColumn('package_status', function ($item) {
+                    return $item->package_status == 'Yes' ?
+                    "<span class='label font-weight-bold label-lg  label-light-success label-inline'>Publish</span>" :
                     "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>Unpublish</span>";
                 })
-                ->addColumn('approval_status', function($item){
-                    if($item->approval_status == null)
-                    {
+                ->addColumn('approval_status', function ($item) {
+                    if ($item->approval_status == null) {
                         return "<span class='label font-weight-bold label-lg  label-light-warning label-inline'>Pending</span>";
-                    }
-                    elseif($item->approval_status == 'Accepted')
-                    {
+                    } elseif ($item->approval_status == 'Accepted') {
                         return "<span class='label font-weight-bold label-lg  label-light-success label-inline'>".$item->approval_status."</span>";
-                    }else
-                    {
+                    } else {
                         return "<span class='label font-weight-bold label-lg  label-light-danger label-inline'>".$item->approval_status."</span>";
                     }
                 })
-                ->addColumn('action', function($item){
+                ->addColumn('action', function ($item) {
                     return '
                     <td nowrap="nowrap">
                         <a href="'. route("stable.package.edit", $item->id) . '" class="btn btn-clean btn-icon mr-2" title="Edit details">
@@ -86,7 +82,7 @@ class PackageController extends Controller
                 })
                 ->rawColumns(['package','action', 'package_status', 'approval_status', 'package_number'])
                 ->make();
-        }        
+        }
         return view('stable.package.index');
     }
 
@@ -107,7 +103,7 @@ class PackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Package $package)
-    {    
+    {
         try {
             // Check Stable
             $stable = Auth::user()->stables->first()->pivot;
@@ -117,7 +113,7 @@ class PackageController extends Controller
             $package->attendance      = 1;
             $package->description     = $request->description;
             $package->price           = $request->price;
-            $package->session_usage   = $request->session_usage;      
+            $package->session_usage   = $request->session_usage;
             $package->package_status  = $request->status;
             $package->user_id         = $stable->user_id;
             $package->stable_id       = $stable->stable_id;
@@ -127,7 +123,7 @@ class PackageController extends Controller
             return response()->json(['status'=>"success", 'packageid'=>$package->id]);
         } catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
-        }        
+        }
     }
 
     /**
@@ -172,7 +168,7 @@ class PackageController extends Controller
             $package->attendance      = 1;
             $package->description     = $request->description;
             $package->price           = $request->price;
-            $package->session_usage   = $request->session_usage;      
+            $package->session_usage   = $request->session_usage;
             $package->package_status  = $request->status;
             $package->user_id         = $stable->user_id;
             $package->stable_id       = $stable->stable_id;
@@ -201,7 +197,7 @@ class PackageController extends Controller
     // Store image to database and directory from dropZone
     public function storeImage(Request $request)
     {
-        if($request->file('photo')){
+        if ($request->file('photo')) {
             
             //here we are geeting packageid align with an image
             $package = Package::find($request->packageid);
