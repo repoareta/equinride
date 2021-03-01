@@ -37,19 +37,19 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Bank Name</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Account Name</label>
                         <div class="col-lg-9 col-xl-6">
                             <input class="form-control form-control-lg form-control-solid" type="text" name="account_name"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Bank Number</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Account Number</label>
                         <div class="col-lg-9 col-xl-6">
                             <input class="form-control form-control-lg form-control-solid" type="number" min="0" name="account_number"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Branch</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">Bank Name</label>
                         <div class="col-lg-9 col-xl-6">
                             <input class="form-control form-control-lg form-control-solid" type="text" name="branch"/>
                         </div>
