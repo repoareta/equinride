@@ -129,7 +129,9 @@
                         <span class="navi-text">Booking Order</span>
                         <span class="navi-label">
                             <span class="label label-light-primary font-weight-bold">
-                                {{ $stable->bookings->count() }}
+                                {{ $stable->bookings->filter(function ($row) {
+                                    return $row->approval_status == 'Accepted';
+                                })->count() }}
                             </span>
                         </span>
                         <span class="navi-arrow"></span>

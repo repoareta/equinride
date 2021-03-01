@@ -28,6 +28,9 @@ class BookingController extends Controller
             ->whereHas('package.stable', function ($q) {
                 $q->where('id', Auth::user()->stables->first()->id);
             })
+            ->whereHas('booking', function ($q) {
+                $q->where('approval_status', 'Accepted');
+            })
             ->orderBy('id', 'DESC');
         
         if (request()->ajax()) {
