@@ -95,7 +95,7 @@ class PackageController extends Controller
                         ->first();
         if ($slot_users) {
             if ($slot_users->pivot->qr_code_status == 'Pending') {
-                Alert::error('Payment Error', 'Same package payment unfiniish detected')->persistent(true)->autoClose(3600);
+                Alert::error('Payment Error', 'Same package with unfinish payment detected.')->persistent(true)->autoClose(3600);
                 return redirect()->route('riding_class');
             }
         }

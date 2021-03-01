@@ -112,7 +112,7 @@
             and <a href="#">Privacy Policy</a> of Equinride
             </div>
             <div class="col-md-5 mt-3 mt-md-0">
-                <button class="btn btn-block font-weight-bolder btn-warning py-5" onclick="event.preventDefault();document.getElementById('bank-transfer-form').submit();">
+                <button type="submit" class="btn btn-block font-weight-bolder btn-warning py-5" id="payBankTransferBtn">
                     Pay with Bank Transfer
                 </button>
             </div>
@@ -120,3 +120,28 @@
     </div>
 
 </div>
+
+@push('page-scripts')
+<script>
+    $( document ).ready(function() {
+        $('body').on('click','#payBankTransferBtn', function(e) {
+            
+            e.preventDefault();
+            
+            var bank_payment = $("input[name='bank_payment_id']:checked").length;
+
+            if (bank_payment > 0) {
+                $('#bank-transfer-form').submit();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please Select Bank Transfer Account',
+                });
+            }
+        });
+    });
+
+    
+</script>
+@endpush
