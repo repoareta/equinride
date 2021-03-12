@@ -11,6 +11,7 @@
         <p class="text-muted font-weight-bold font-size-h4">
             {{ __('Before proceeding, please check your email for a verification link.') }}
             {{ __('If you did not receive the email') }},
+            <span class="font-weight-bold text-dark">{{ __('Please check your spam folder.') }}</span>
         </p>
     </div>
     <!--end::Title-->
@@ -18,6 +19,8 @@
     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
         @csrf
         <button type="submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">{{ __('Click here to request another') }}</button>.
+
+        <a href="{{ route('home') }}" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">{{ __('Back') }}</a>.
     </form>
     <!--end::Form-->
 
