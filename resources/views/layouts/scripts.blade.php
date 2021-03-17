@@ -77,6 +77,13 @@
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
 <script src="{{ asset('assets/js/pages/custom/profile/profile.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+
+<script>
+    Echo.channel('events')
+        .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
+</script>
+
 @php
 foreach(DB::table('bookings')->where('photo', null)->where('approval_status', null)->get() as $item)
 {
