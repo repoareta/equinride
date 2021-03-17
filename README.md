@@ -34,22 +34,10 @@ php artisan migrate
 php artisan laravolt:indonesia:seed
 ```
 
-### Seeder Horse Breeds
-
-```bash
-pip install foobar
-```
-
-### Seeder Horse Sexes
-
-```bash
-pip install foobar
-```
-
 ### Seeder Roles
 
 ```bash
-pip install foobar
+php artisan db:seed
 ```
 
 
