@@ -36,6 +36,7 @@ class RidingClassController extends Controller
         // dd(\Carbon\Carbon::parse('Tue, 02 Mar 2021')->format('Y-m-d'));
         $stables = Stable::all();
         $packages = Package::where('session_usage', 'Yes')
+        ->where('package_status', 'Yes')
         ->whereHas('stable', function ($q) use ($request) {
             $q->where('approval_status', 'Step 2 Approved');
             $q->when(request('stable_name'), function ($query) use ($request) {

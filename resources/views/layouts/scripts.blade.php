@@ -80,8 +80,21 @@
 <script src="{{ asset('js/app.js') }}"></script>
 
 <script>
-    Echo.channel('events')
-        .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
+
+    // Echo.channel('messages').listen('MessageCreated', (e) => {
+    //     addMessageToList(e.message);
+    // });
+
+    Echo.private('App.Models.User.1').notification((e) => {
+        addMessageToList(e.message);
+    });
+
+    function addMessageToList(message) {
+        // const newLi = `<li class="list-group-item">${message}</li>`;
+        // $("#messagesList").prepend(newLi);
+
+        alert(message);
+    }    
 </script>
 
 @php

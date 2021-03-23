@@ -49,7 +49,7 @@
 		<!--begin::Action-->
 		<div class="pb-lg-0 pb-5">
 			<button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
-			<button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
+			{{-- <button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
 			<span class="svg-icon svg-icon-md">
 				<!--begin::Svg Icon | path:assets/media/svg/social-icons/google.svg-->
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -59,7 +59,7 @@
 					<path d="M10.1993 3.85336C12.1142 3.85336 13.406 4.66168 14.1425 5.33717L17.0207 2.59107C15.253 0.985496 12.9527 0 10.1993 0C6.2106 0 2.76588 2.23672 1.08887 5.49214L4.38626 7.99466C5.21352 5.59183 7.50242 3.85336 10.1993 3.85336Z" fill="#EB4335" />
 				</svg>
 				<!--end::Svg Icon-->
-			</span>Sign in with Google</button>
+			</span>Sign in with Google</button> --}}
 		</div>
 		<!--end::Action-->
 	</form>

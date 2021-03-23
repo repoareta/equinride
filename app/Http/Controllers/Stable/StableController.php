@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Stable;
 
+use App\Events\StableCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\MediaUploadingTrait;
-use App\Mail\StableAdminSendSubmitApproval;
-use App\Models\City;
-use App\Models\District;
-use App\Models\Province;
 use Illuminate\Http\Request;
 
 // load models
@@ -15,12 +11,17 @@ use App\Models\Stable;
 use App\Models\User;
 use App\Models\Coach;
 use App\Models\Horse;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Province;
 use App\Models\Village;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Traits\MediaUploadingTrait;
+use App\Mail\StableAdminSendSubmitApproval;
 
 class StableController extends Controller
 {
@@ -57,7 +58,7 @@ class StableController extends Controller
     {
         // CREATE STABLE
         DB::transaction(function () use ($request, $stable) {
-            $key_stable             = Carbon::now()->format('YmdHi');
+            $key_stable              = Carbon::now()->format('YmdHi');
 
             $stable->name            = $request->name;
             $stable->contact_person  = $request->contact_phone_name;
@@ -74,11 +75,21 @@ class StableController extends Controller
             $stable->save();
 
             // INSERT TO PIVOT
-            $stable->users()->attach(Auth::user()->id);
+            $stable->users()->attach(
+                Auth::user()->id,
+                array(
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                )
+            );
         });
         
         // SET AS STABLE OWNER ROLE
         Auth::user()->assignRole('stable-owner');
+        
+        // trigger event StableCreated
+        // for app-owner and app-admin
+        event(new StableCreated($stable));
 
         Alert::success('Stable Register Success.', 'You already submit your stable. 
         Your request will be reviewed by Apps Owner. Notification will be sent to your e-mail.')->persistent(true)->autoClose(3600);
@@ -150,10 +161,10 @@ class StableController extends Controller
             return redirect()->back();
         }
 
-        $horseNum1      = Horse::where('stable_id', $stable->id)->get()->count();
+        $horse_count      = Horse::where('stable_id', $stable->id)->get()->count();
         $stableCapacity = $stable->capacity_of_stable;
-        if ($horseNum1 > $stableCapacity) {
-            Alert::error('Error', 'Capacity of stable full')->persistent(true)->autoClose(3600);
+        if ($horse_count > $stableCapacity) {
+            Alert::error('Error', 'Capacity of stable is full')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
         
