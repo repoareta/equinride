@@ -7,6 +7,11 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Events\StableUpdated;
+use App\Listeners\SendStableUpdatedNotificationToAppOwnerAdmin;
+use App\Events\StableCreated;
+use App\Listeners\SendStableCreatedNotificationToAppOwnerAdmin;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -18,6 +23,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        StableCreated::class => [
+            SendStableCreatedNotificationToAppOwnerAdmin::class
+        ],
+        StableUpdated::class => [
+            SendStableUpdatedNotificationToAppOwnerAdmin::class
+        ],
+        
     ];
 
     /**

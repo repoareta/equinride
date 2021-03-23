@@ -74,8 +74,8 @@
 							<span class="mr-1">2020©</span>
 							<a href="{{ config('app.url', url()) }}" target="_blank" class="text-dark-75 text-hover-primary">{{ config('app.name', 'Equinride') }}</a>
 						</div>
-						<a href="#" class="text-primary font-weight-bolder font-size-lg">Terms</a>
-						<a href="#" class="text-primary ml-5 font-weight-bolder font-size-lg">Plans</a>
+						<a href="#" class="text-primary font-weight-bolder font-size-lg">Privacy Policy</a>
+						<a href="#" class="text-primary ml-5 font-weight-bolder font-size-lg">Terms</a>
 						<a href="#" class="text-primary ml-5 font-weight-bolder font-size-lg">Contact Us</a>
 					</div>
 					<!--end::Content footer-->
