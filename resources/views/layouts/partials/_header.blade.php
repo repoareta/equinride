@@ -78,7 +78,7 @@
 		<!--begin::Topbar-->
 		<div class="topbar">
 
-			<!--begin::Search-->
+			{{-- <!--begin::Search-->
 			<div class="topbar-item mr-3">
 				<div class="btn btn-icon btn-clean btn-lg" id="kt_quick_search_toggle">
 					<span class="svg-icon svg-icon-xl">
@@ -97,7 +97,7 @@
 				</div>
 			</div>
 
-			<!--end::Search-->
+			<!--end::Search--> --}}
 
 			<!--begin::Notifications-->
 			<div class="dropdown">
@@ -132,7 +132,7 @@
 			<!--end::Notifications-->
 
 			<!--begin::Quick Actions-->
-			<div class="dropdown">
+			{{-- <div class="dropdown">
 
 				<!--begin::Toggle-->
 				<div class="topbar-item mr-3" data-toggle="dropdown" data-offset="10px,0px">
@@ -165,7 +165,7 @@
 				</div>
 
 				<!--end::Dropdown-->
-			</div>
+			</div> --}}
 
 			<!--end::Quick Actions-->
 
