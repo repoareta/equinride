@@ -136,8 +136,7 @@ class PackageController extends Controller
         // generate QrCode for each sloton package that have been ordered
         $image = QrCode::format('png')
                 ->size(200)
-                // ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
-                ->generate(url("https://us02web.zoom.us/j/7905145265?pwd=MU00b0s5Z2lkWlFONnJjZ1B5OWtZUT09")); // ganti link zoom untuk sementara
+                ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
         
         $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
 
@@ -181,6 +180,7 @@ class PackageController extends Controller
 
             return response()->json(['status'=>"success",'imgdata'=>$nameDir]);
         }
+        
         return response()->json(['status'=>"error"]);
     }
 }

@@ -209,7 +209,7 @@
 
 				<!--end::Separator-->
 
-				<!--begin::Notifications-->
+				{{-- <!--begin::Notifications-->
 				<div>
 
 					<!--begin:Heading-->
@@ -324,7 +324,7 @@
 					<!--end::Item-->
 				</div>
 
-				<!--end::Notifications-->
+				<!--end::Notifications--> --}}
 			</div>
 
 			<!--end::Content-->
