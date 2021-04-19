@@ -54,9 +54,11 @@ Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 Route::get('stable', [StableController::class, 'index']);
 Route::post('stable', [StableController::class, 'store']);
 Route::put('stable/{stable}', [StableController::class, 'update']);
-Route::delete('stable/{stable}', [StableController::class, 'destroy']);
 Route::get('stable/{stable}', [StableController::class, 'show']);
 Route::get('stable-by-user/{user}', [StableController::class, 'showByUserId']);
+Route::get('stable/{stable}/dashboard', [StableController::class, 'dashboard']);
+Route::post('stable/{stable}/key-confirm', [StableController::class, 'keyConfirm']);
+Route::put('stable/{stable}/withdraw-setting', [StableController::class, 'withdrawSetting']);
 
 // Horse API
 Route::get('horse', [HorseController::class, 'index']);

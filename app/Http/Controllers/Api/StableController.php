@@ -29,16 +29,6 @@ class StableController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -116,17 +106,6 @@ class StableController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -188,6 +167,54 @@ class StableController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Stable deleted successfully."
+        ]);
+    }
+
+    public function dashboard(Stable $stable)
+    {
+        $dashboard = [
+            'horses'   => $stable->capacity_of_arena,
+            'coaches'  => $stable->number_of_coach,
+            'packages' => 4,
+            'earnings' => 134000000,
+            'bookings' => 40,
+            'withdraw' => 90000000
+        ];
+
+        return response()->json([
+            'success' => true,
+            'message' => "Stable dashboard show.",
+            'data'    => $dashboard
+        ]);
+    }
+
+    public function keyConfirm(Request $request, Stable $stable)
+    {
+        $key = $stable->key_stable;
+        if ($request->key === $key) {
+            return response()->json([
+                "success" => true,
+                "message" => "Stable key confirm successfully correct."
+            ]);
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => "Stable key confirm incorrect."
+        ]);
+    }
+
+    public function withdrawSetting(Request $request, Stable $stable)
+    {
+        $stable->account_name = $request->account_name;
+        $stable->account_number = $request->account_number;
+        $stable->branch = $request->branch;
+
+        $stable->save();
+
+        return response()->json([
+            "success" => false,
+            "message" => "Stable withdraw settings saved successfully."
         ]);
     }
 }
