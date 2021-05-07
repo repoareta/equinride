@@ -46,7 +46,7 @@ class PackageController extends Controller
                     ';
                 })
                 ->addColumn('price', function ($item) {
-                    $price = number_format(($item->price/100), 2);
+                    $price = number_format($item->price, 0, ',', '.');
                     return 'RP. '.$price;
                 })
                 ->addColumn('package_number', function ($item) {

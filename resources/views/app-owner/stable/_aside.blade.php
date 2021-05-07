@@ -80,13 +80,25 @@
             <!--begin::Nav-->
             <ul class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <li class="navi-item mb-2">
-                    <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2.show') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2.show',$stable->id) }}">
-                        <span class="navi-icon mr-2">
-                            <i class="fas fa-hotel"></i>
-                        </span>
-                        <span class="navi-text">Stable Profile</span>
-                        <span class="navi-arrow"></span>
-                    </a>
+                    @if ($stable->approval_status == 'Step 1 Need Approval')
+                        <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_1.show') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_1.show',$stable->id) }}">
+                            <span class="navi-icon mr-2">
+                                <i class="fas fa-hotel"></i>
+                            </span>
+                            <span class="navi-text">Stable Profile</span>
+                            <span class="navi-arrow"></span>
+                        </a>
+                    @endif
+
+                    @if ($stable->approval_status == 'Step 2 Need Approval')
+                        <a class="navi-link py-4 {{ Route::is('app_owner.stable.approval.step_2.show') ? 'active' : '' }}" href="{{ route('app_owner.stable.approval.step_2.show',$stable->id) }}">
+                            <span class="navi-icon mr-2">
+                                <i class="fas fa-hotel"></i>
+                            </span>
+                            <span class="navi-text">Stable Profile</span>
+                            <span class="navi-arrow"></span>
+                        </a>
+                    @endif                    
                 </li>
                 <li class="navi-item mb-2">
                     <a class="navi-link py-4 {{ Route::is('app_owner.stable.horse') ? 'active' : '' }}" href="{{ route('app_owner.stable.horse',$stable->id) }}">
