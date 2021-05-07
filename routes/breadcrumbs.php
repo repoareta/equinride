@@ -144,27 +144,27 @@ Breadcrumbs::for('owner-stable-approval-step-2', function ($trail) {
 // App Owner Stable Review
 // Review Dashboard
 Breadcrumbs::for('owner-stable-review-dashboard', function ($trail) {
-    $trail->parent('owner-stable-approval-step-2');
+    $trail->parent('owner-dashboard');
     $trail->push('Dashboard Review', route('app_owner.stable.approval.step_2.show',1));
 });
 // Review Horse
 Breadcrumbs::for('owner-stable-review-horse', function ($trail) {
-    $trail->parent('owner-stable-approval-step-2');
+    $trail->parent('owner-dashboard');
     $trail->push('Horse Review', route('app_owner.stable.horse',1));
 });
 // Review Package
 Breadcrumbs::for('owner-stable-review-package', function ($trail) {
-    $trail->parent('owner-stable-approval-step-2');
+    $trail->parent('owner-dashboard');
     $trail->push('Package Review', route('app_owner.stable.package',1));
 });
 // Review Schedule
 Breadcrumbs::for('owner-stable-review-schedule', function ($trail) {
-    $trail->parent('owner-stable-approval-step-2');
+    $trail->parent('owner-dashboard');
     $trail->push('Schedule Review', route('app_owner.stable.schedule',1));
 });
 // Review Coach
 Breadcrumbs::for('owner-stable-review-coach', function ($trail) {
-    $trail->parent('owner-stable-approval-step-2');
+    $trail->parent('owner-dashboard');
     $trail->push('Coach Review', route('app_owner.stable.coach',1));
 });
 

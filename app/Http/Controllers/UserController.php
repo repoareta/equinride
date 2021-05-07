@@ -157,8 +157,8 @@ class UserController extends Controller
                             </td>
                             ';
                     } else {
-                        if ($item->photo == null) {
-                            if ($item->approval_status == null) {
+                        if ($item->booking->photo == null) {
+                            if ($item->booking->approval_status == null) {
                                 return '
                                     <td nowrap="nowrap">
                                         <a href="'. route('user.order_history.pay',$item->booking->id) .'" class="label font-weight-bold label-lg  label-light-danger label-inline mr-2">

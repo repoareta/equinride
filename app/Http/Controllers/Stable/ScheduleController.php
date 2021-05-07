@@ -229,8 +229,8 @@ class ScheduleController extends Controller
     public function update(Request $request, $id)
     {
         $slot = Slot::find($id);
-        $time1 = $request->time1;
-        $time2 = $request->time2;
+        $time1 = strtotime($request->time1);
+        $time2 = strtotime($request->time2);
         if ($time1 > $time2) {
             Alert::error('Generate Error.', 'End time always greater then start time.');
             return redirect()->route('stable.schedule.index');
@@ -243,8 +243,8 @@ class ScheduleController extends Controller
         
         $cekDB = Slot::where('user_id', $slot->user_id)
                     ->where('date', $slot->date)
-                    ->where('time_start', $time1)
-                    ->where('time_end', $time2)
+                    ->where('time_start', $request->time1)
+                    ->where('time_end', $request->time2)
                     ->where('stable_id', $slot->stable_id)
                     ->get();
 
@@ -253,8 +253,8 @@ class ScheduleController extends Controller
             return redirect()->route('stable.schedule.index');
         }
 
-        $slot->time_start   =   $time1;
-        $slot->time_end     =   $time2;
+        $slot->time_start   =   $request->time1;
+        $slot->time_end     =   $request->time2;
         $slot->capacity     =   $request->capacity;
 
         $slot->save();

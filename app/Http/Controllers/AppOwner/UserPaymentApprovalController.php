@@ -33,7 +33,7 @@ class UserPaymentApprovalController extends Controller
                 ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('package', function ($data) {
+        ->addColumn('package', function ($data) {            
             return
             '
             <div class="d-flex align-items-center">
@@ -45,7 +45,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
                     </a>
                 </div>
             </div>
@@ -150,7 +150,7 @@ class UserPaymentApprovalController extends Controller
                 ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('package', function ($data) {
+        ->addColumn('package', function ($data) {            
             return
             '
             <div class="d-flex align-items-center">
@@ -162,7 +162,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
                     </a>
                 </div>
             </div>
@@ -211,7 +211,7 @@ class UserPaymentApprovalController extends Controller
                 ->with('booking_detail.package.stable')->get();
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('package', function ($data) {
+        ->addColumn('package', function ($data) {            
             return
             '
             <div class="d-flex align-items-center">
@@ -223,7 +223,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
                     </a>
                 </div>
             </div>
