@@ -45,6 +45,7 @@ Auth::routes();
 // User API
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login-check', [AuthController::class, 'check_login']);
 Route::post('/logout/{user}', [AuthController::class, 'logout']);
 
 Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
