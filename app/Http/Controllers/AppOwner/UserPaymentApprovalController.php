@@ -45,7 +45,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.number_format($data->price_total, 0, ',', '.').'
                     </a>
                 </div>
             </div>
@@ -162,7 +162,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.number_format($data->price_total, 0, ',', '.').'
                     </a>
                 </div>
             </div>
@@ -223,7 +223,7 @@ class UserPaymentApprovalController extends Controller
                     '.$data->booking_detail->package->name.'
                     </span>
                     <a href="#" class="text-muted text-hover-primary">
-                    '.$data->booking_detail->package->stable->name.' | Rp. '.$data->price_total.'
+                    '.$data->booking_detail->package->stable->name.' | Rp. '.number_format($data->price_total, 0, ',', '.').'
                     </a>
                 </div>
             </div>
@@ -271,6 +271,8 @@ class UserPaymentApprovalController extends Controller
         $booking = Booking::with(['bank','user','approvalby_booking'])
                     ->with('booking_detail.package')
                     ->with('booking_detail.package.stable')->find($id);
+        
+        $booking->price_total = number_format($booking->price_total, 0, ',', '.');                 
         return response()->json($booking);
     }
 
