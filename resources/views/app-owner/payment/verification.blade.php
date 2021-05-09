@@ -286,7 +286,7 @@
                 }else{
                     $('#user').html(data.user.name);
                 }
-                $('#price').html(data.price_total);
+                $('#price').html('Rp. ' + data.price_total);
                 $('#photo').attr('src','{{asset('')}}'+(data.photo));
                 $('#approval_at').html(data.approval_at);
                 if(data.approval_by == null){
