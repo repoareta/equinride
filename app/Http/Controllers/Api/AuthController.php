@@ -106,11 +106,14 @@ class AuthController extends Controller
         $data = User::where('id', $request->user_id)
         ->where('remember_token', $request->token)
         ->first();
+
+        $user= User::where('id', $request->user_id)->first();
         
         if ($data) {
             return response()->json([
                 'success' => true,
-                'message' => 'Token check login sucessfully'
+                'message' => 'Token check login sucessfully',
+                'user'    => $user,
             ], 200);
         }
 
