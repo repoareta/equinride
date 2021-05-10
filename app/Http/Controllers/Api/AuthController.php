@@ -122,4 +122,36 @@ class AuthController extends Controller
             'message' => 'Token failed'
         ], 200);
     }
+
+    /**
+     * logout
+     *
+     * @return void
+     */
+    public function update(Request $request, User $user)
+    {
+        $user = User::find($user->id);
+
+        $user->name       = $request->name;
+        $user->sex        = $request->sex;
+        $user->phone      = $request->phone;
+        $user->height     = $request->height;
+        $user->weight     = $request->weight;
+        $user->birth_date = $request->birth_date;
+        $user->address    = $request->address;
+
+        // if ($request->photo) {
+        //     // delete old photo
+        //     File::delete($user->photo);
+        //     $user->photo = $request->photo;
+        // }
+        
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User profile update sucessfully',
+            'user'    => $user
+        ], 200);
+    }
 }
