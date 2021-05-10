@@ -130,6 +130,8 @@ class AuthController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $user = User::find($user->id);
+
         $user->name       = $request->name;
         $user->sex        = $request->sex;
         $user->phone      = $request->phone;
