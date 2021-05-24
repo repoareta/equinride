@@ -136,7 +136,8 @@ class PackageController extends Controller
         // generate QrCode for each sloton package that have been ordered
         $image = QrCode::format('png')
                 ->size(200)
-                ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+                ->generate(url("/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+        // ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
         
         $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
 
