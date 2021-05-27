@@ -47,7 +47,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login-check', [AuthController::class, 'check_login']);
 Route::post('/logout/{user}', [AuthController::class, 'logout']);
-Route::put('/user/{user}/update', [AuthController::class, 'update']);
+Route::post('/user/{user}/update', [AuthController::class, 'update']);
 
 Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
