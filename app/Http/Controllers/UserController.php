@@ -233,7 +233,7 @@ class UserController extends Controller
 
             if (!$booking->booking_detail) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 1.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
 
@@ -259,7 +259,7 @@ class UserController extends Controller
 
             if (!$Query1) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 2.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             
@@ -276,7 +276,7 @@ class UserController extends Controller
 
             if (!$Query1) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 3.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             if ($Query1) {
@@ -301,8 +301,14 @@ class UserController extends Controller
                         
             $start = substr($request->time, 0, 8);
             $end = substr($request->time, 9);
+            if (!$request->time) {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
             $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
+            
 
             if ($slot->id == $slotID->id) {
                 DB::rollback();
@@ -314,7 +320,7 @@ class UserController extends Controller
             // generate QrCode for each sloton package that have been ordered
             $image = QrCode::format('png')
             ->size(200)
-            ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+            ->generate(url("/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
 
             $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
 
@@ -337,7 +343,7 @@ class UserController extends Controller
 
             if (!$slot) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 4.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             DB::commit();

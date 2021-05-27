@@ -106,7 +106,13 @@
                                         <tr class="font-weight-bolder">
                                             <td>{{ $data->bank->branch }}</td>
                                             <td>{{ $data->bank->account_number }}</td>
-                                            <td>{{ $data->approval_status }}</td>
+                                            <td>
+                                                @if ($data->approval_status == NULL)
+                                                    Pending Approval
+                                                @else
+                                                    {{ $data->approval_status }}                                            
+                                                @endif
+                                            </td>
                                             <td class="text-primary font-size-h3 font-weight-boldest text-right">Rp. {{number_format($data->price_total, 0,',', '.') }}</td>
                                         </tr>
                                     </tbody>

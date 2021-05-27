@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 // Load Models
@@ -85,15 +86,24 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $stable = Auth::user()->stables->first();
-
+        
         $user   = User::where('email', $request->email)->firstOrFail();
         $userCheck = User::where('email', $request->email)->whereHas("roles", function($q){ 
             $q->where("name", "stable-admin")->orWhere("name", "stable-owner"); 
         })->first();
+        $userHasStable = DB::table('stable_user')
+                            ->where('user_id', $user->id)
+                            ->first();
 
 
-        if(!$userCheck){            
-            $stable->users()->attach($user->id);
+        if(!$userCheck && !$userHasStable){            
+            $stable->users()->attach(
+                $user->id,
+                array(
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                )
+            );
             $user->assignRole('stable-admin');
             $user->notify(new AttachNewStableAdmin($stable));
 

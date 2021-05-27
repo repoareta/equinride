@@ -105,6 +105,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
         Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
         Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
+        Route::get('/stable-key-forget', [StableController::class, 'stableKeyForget'])->name('stable_key.forget')->middleware('isStableOwner');
+        Route::post('/stable-key-forget/store', [StableController::class, 'stableKeyForgetStore'])->name('stable_key.forget.store')->middleware('isStableOwner');
         Route::put('/{stable}/step-two-approval-request', [StableController::class, 'stepTwoApprovalRequest'])->name('step_two_approval_request');
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {

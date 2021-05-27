@@ -32,11 +32,10 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form class="form" action="{{ route('stable.stable_key.confirm.store') }}" enctype="multipart/form-data" method="POST">
+            <form class="form" action="{{ route('stable.stable_key.forget.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <!--begin::Body-->
                 <div class="card-body">
-                    @if ($message = Session::get('warning'))
                     <div class="alert alert-custom alert-light-warning fade show mb-10" role="alert">
                         <div class="alert-icon">
                             <span class="svg-icon svg-icon-3x svg-icon-warning">
@@ -53,7 +52,7 @@
                             </span>
                         </div>
                         <div class="alert-text font-weight-bold">
-                            {{ $message }}
+                            New stable key will send to your email
                         </div>
                         <div class="alert-close">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -63,20 +62,11 @@
                             </button>
                         </div>
                     </div>
-                    @endif
 
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Stable Key</label>
                         <div class="col-lg-9 col-xl-6">
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="stable_key" value="{{ old('stable_key') }}" />
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3"></label>
-                        <div class="col-lg-9 col-xl-6">
-                            <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i> Submit</button>
-                            <a href="{{ route('stable.stable_key.forget') }}" class="btn btn-secondary"><i class="fas fa-question"></i> Forgot stable key</a>
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check"></i>Request New Key</button>
+                            <a href="{{ route('stable.stable_key.confirm') }}" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
                         </div>
                     </div>
 

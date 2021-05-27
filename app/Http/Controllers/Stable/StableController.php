@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Traits\MediaUploadingTrait;
 use App\Mail\StableAdminSendSubmitApproval;
+use App\Mail\StableResetKey;
 
 class StableController extends Controller
 {
@@ -200,6 +201,36 @@ class StableController extends Controller
 
         Alert::error('Stable key not match.')->persistent(true)->autoClose(3600);
         return redirect()->route('stable.stable_key.confirm');
+    }
+
+    public function stableKeyForget()
+    {
+        return view('stable.stable-key-forget');
+    }
+
+    public function stableKeyForgetStore()
+    {
+        $stable = Auth::user()->stables->first();
+
+        $key_stable              = Carbon::now()->format('YmdHi');
+        $stable->key_stable      = $key_stable;
+        
+        $stable->update();
+        
+        $users = DB::table('stable_user')
+                    ->where('stable_id', $stable->id)
+                    ->get();
+        
+        foreach ($users as $user) {
+            $send = User::where('id', $user->user_id)->first();
+            $send->notify(new StableResetKey($stable));
+        }
+
+
+        if($stable){
+            Alert::success('Success', 'Stable key has been reset, please check your email')->persistent(true)->autoClose(3600);
+            return redirect()->route('stable.stable_key.confirm');
+        }
     }
 
     public function stepTwoApprovalRequest(Stable $stable)
