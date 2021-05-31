@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
         Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history.index');
+        Route::get('/order-history/{id}/rating', [UserController::class, 'rating'])->name('order_history.rating');
+        Route::post('/order-history/rating', [UserController::class, 'ratingStore'])->name('order_history.rating.store');
         Route::get('/order-history/slots', [UserController::class, 'slots'])->name('order_history.slots');
         Route::get('/order-history/pay/{id}', [UserController::class, 'pay'])->name('order_history.pay');
         Route::get('/order-history/{id}', [UserController::class, 'orderHistoryShow'])->name('order_history.show');

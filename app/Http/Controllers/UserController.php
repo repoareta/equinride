@@ -19,6 +19,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\BookingDetail;
+use App\Models\Horse;
+use App\Models\Coach;
+use App\Models\Stable;
 use App\Models\Package;
 use App\Models\Slot;
 use Illuminate\Support\Facades\Validator;
@@ -144,11 +147,20 @@ class UserController extends Controller
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
                 ->addColumn('action', function ($item) {
-                    if ($item->booking->approval_status == 'Close') {
+                    if ($item->booking->approval_status == 'Close' && $item->userAverageRating) {
                         return
                             '
                             <td nowrap="nowrap">
-                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
+                                <a href="#" class="btn btn-warning btn-icon mr-2" title="Has been rated">
+                                    <i class="far fa-star"></i>
+                                </a>
+                            </td>
+                            ';
+                    }elseif($item->booking->approval_status == 'Close'){
+                        return
+                            '
+                            <td nowrap="nowrap">
+                                <a href="'. route("user.order_history.rating", $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Rating">
                                     <i class="far fa-star"></i>
                                 </a>
                             </td>
@@ -166,7 +178,7 @@ class UserController extends Controller
                             } else {
                                 return '
                                     <td nowrap="nowrap">
-                                        <a href="#" class="btn btn-danger btn-icon mr-2" disabled>
+                                        <a href="#" class="btn btn-danger btn-icon mr-2" disabled title="Expired">
                                             <i class="fa fa-ban"></i>
                                         </a>
                                     </td>
@@ -175,7 +187,7 @@ class UserController extends Controller
                         } else {
                             return '
                                 <td nowrap="nowrap">
-                                    <a href="'. route('user.order_history.show', $item->booking->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                    <a href="'. route('user.order_history.show', $item->booking->id) .'" class="btn btn-clean btn-icon mr-2" title="Detail">
                                         <i class="la la-eye icon-xl"></i>
                                     </a>
                                 </td>
@@ -369,5 +381,55 @@ class UserController extends Controller
             'bank_payment',
             'booking'
         ));
+    }
+
+    public function rating($id)
+    {
+        $bookingDetail = BookingDetail::find($id);
+
+        if($bookingDetail->userAverageRating)
+        {
+            Alert::error('Error', 'Something wrong')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+        $slot_user = DB::table('slot_user')
+                        ->where('booking_detail_id', $id)
+                        ->where('horse_id', '!=', null)
+                        ->where('coach_id', '!=', null)
+                        ->first();
+
+        $horse      = Horse::findOrFail($slot_user->horse_id);
+        $coach      = Coach::findOrFail($slot_user->coach_id);
+        $stable     = Stable::findOrFail($horse->stable_id);
+        $package    = Package::findOrFail($bookingDetail->package_id);
+
+        return view("booking.rating", compact('horse', 'coach', 'stable','package','id'));
+    }
+
+    public function ratingStore(Request $request)
+    {
+        $stable            = Stable::find($request->stable_id);
+        $stable->rate($request->stable_rate);
+
+        $horse             = Horse::find($request->horse_id);
+        $horse->rate($request->coach_rate);
+
+        $coach             = Coach::find($request->coach_id);
+        $coach->rate($request->coach_rate);
+
+        $package           = Package::find($request->package_id);
+        $package->rate($request->package_rate);
+        
+        $bookingDetail     = BookingDetail::find($request->booking_detail_id);
+        $bookingDetail->rate($request->stable_rate);
+
+        if($stable and $horse and $coach and $package)
+        {
+            Alert::success('Success', 'Your rating submitted')->persistent(true)->autoClose(3600);
+            return redirect()->route('user.order_history.index');
+        }
+
+        Alert::error('Error', 'Check your data')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 }

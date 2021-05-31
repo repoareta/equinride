@@ -135,12 +135,39 @@
                     </a>
                     <div class="card-body p-5">
                     <div class="star-rating mb-1">
-                        <span class="far fa-star" data-rating="1"></span>
-                        <span class="far fa-star" data-rating="2"></span>
+                        @if (!$stable->ratingPercent(5))
+                            <span class="text-dark font-weight-bold">Not rating yet</span>
+                        @endif
+                        @if ($stable->ratingPercent(5) >= 0.1 && $stable->ratingPercent(5) <= 20)
+                            <span class="far fa-star" data-rating="1"></span>                            
+                        @endif
+                        @if ($stable->ratingPercent(5) > 20 && $stable->ratingPercent(5) <= 40)
+                            <span class="far fa-star" data-rating="1"></span>                           
+                            <span class="far fa-star" data-rating="1"></span>                           
+                        @endif
+                        @if ($stable->ratingPercent(5) > 40 && $stable->ratingPercent(5) <= 60)
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                        @endif
+                        @if ($stable->ratingPercent(5) > 60 && $stable->ratingPercent(5) <= 80)
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                        @endif
+                        @if ($stable->ratingPercent(5) > 80)
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                            <span class="far fa-star" data-rating="1"></span>                            
+                        @endif
+                        {{-- <span class="far fa-star" data-rating="2"></span>
                         <span class="far fa-star" data-rating="3"></span>
                         <span class="far fa-star" data-rating="4"></span>
-                        <span class="far fa-star" data-rating="5"></span>
-                        <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
+                        <span class="far fa-star" data-rating="5"></span> --}}
+                        <input type="hidden" name="rating_stable" class="rating-value" value="{{ $stable->ratingPercent(5) }}">
                     </div>
                     <h5 class="card-title d-flex align-items-center justify-content-between">
                         <a href="{{ route('riding_class.search') }}?stable_name={{ $stable->name }}">

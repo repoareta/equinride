@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rateable;
 
 class Horse extends Model
 {
     use HasFactory;
+    use Rateable;
 
     /**
     * Get the stable of horse
