@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use willvincent\Rateable\Rateable;
 use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Stable extends Model
 {
     use HasFactory;
     use HasRelationships;
+    use Rateable;
 
     /**
     * Get the owner of stable

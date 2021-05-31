@@ -124,6 +124,13 @@ Breadcrumbs::for('stable-booking', function ($trail) {
     $trail->parent('stable-dashboard');
     $trail->push('Booking Order', route('stable.booking.index'));
 });
+// Stable Booking Order
+Breadcrumbs::for('stable-assign', function ($trail) {
+    $trail->parent('stable-dashboard');
+    $trail->push('Assign Horse And Coach');
+});
+
+
 
 // App Owner
 Breadcrumbs::for('owner-dashboard', function ($trail) {

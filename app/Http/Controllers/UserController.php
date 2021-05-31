@@ -19,6 +19,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\BookingDetail;
+use App\Models\Horse;
+use App\Models\Coach;
+use App\Models\Stable;
 use App\Models\Package;
 use App\Models\Slot;
 use Illuminate\Support\Facades\Validator;
@@ -144,14 +147,20 @@ class UserController extends Controller
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
                 ->addColumn('action', function ($item) {
-                    if ($item->approval_status == 'Close') {
+                    if ($item->booking->approval_status == 'Close' && $item->userAverageRating) {
                         return
                             '
                             <td nowrap="nowrap">
-                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
-                                    <i class="la la-eye icon-xl"></i>
+                                <a href="#" class="btn btn-warning btn-icon mr-2" title="Has been rated">
+                                    <i class="far fa-star"></i>
                                 </a>
-                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
+                            </td>
+                            ';
+                    }elseif($item->booking->approval_status == 'Close'){
+                        return
+                            '
+                            <td nowrap="nowrap">
+                                <a href="'. route("user.order_history.rating", $item->id) .'" class="btn btn-clean btn-icon mr-2" title="Rating">
                                     <i class="far fa-star"></i>
                                 </a>
                             </td>
@@ -169,7 +178,7 @@ class UserController extends Controller
                             } else {
                                 return '
                                     <td nowrap="nowrap">
-                                        <a href="#" class="btn btn-danger btn-icon mr-2" disabled>
+                                        <a href="#" class="btn btn-danger btn-icon mr-2" disabled title="Expired">
                                             <i class="fa fa-ban"></i>
                                         </a>
                                     </td>
@@ -178,7 +187,7 @@ class UserController extends Controller
                         } else {
                             return '
                                 <td nowrap="nowrap">
-                                    <a href="'. route('user.order_history.show', $item->booking->id) .'" class="btn btn-clean btn-icon mr-2" title="Edit">
+                                    <a href="'. route('user.order_history.show', $item->booking->id) .'" class="btn btn-clean btn-icon mr-2" title="Detail">
                                         <i class="la la-eye icon-xl"></i>
                                     </a>
                                 </td>
@@ -198,8 +207,9 @@ class UserController extends Controller
         $data = Booking::with(['bank','booking_detail', 'booking_detail.package', 'booking_detail.package.stable'])->find($id);
         $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->count();
         if ($slot_user > 1) {
-            $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->get()->last();
+            $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->orderByDesc('id')->first();            
             $slot = Slot::find($slot_user->slot_id);
+            // dd($slot_user);
             return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
         }
         if ($slot_user = 1) {
@@ -233,7 +243,7 @@ class UserController extends Controller
 
             if (!$booking->booking_detail) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 1.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
 
@@ -259,7 +269,7 @@ class UserController extends Controller
 
             if (!$Query1) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 2.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             
@@ -276,7 +286,7 @@ class UserController extends Controller
 
             if (!$Query1) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 3.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             if ($Query1) {
@@ -289,7 +299,8 @@ class UserController extends Controller
             DB::table('slot_user')
             ->where('id', $sid)
             ->update([
-                'qr_code_status' => "Reschedule"
+                'qr_code_status' => "Reschedule",
+                "updated_at"     => Carbon::now(),
             ]);
             $slots = DB::table('slot_user')
                     ->where('id', $sid)
@@ -301,10 +312,16 @@ class UserController extends Controller
                         
             $start = substr($request->time, 0, 8);
             $end = substr($request->time, 9);
-            $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
+            if (!$request->time) {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
+            $slotNew = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
+            
 
-            if ($slot->id == $slotID->id) {
+            if ($slot->id == $slotNew->id) {
                 DB::rollback();
                 Alert::error('Reschedule Error.', 'Cannot choose same date and time.');
                 return redirect()->back();
@@ -314,7 +331,7 @@ class UserController extends Controller
             // generate QrCode for each sloton package that have been ordered
             $image = QrCode::format('png')
             ->size(200)
-            ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+            ->generate(url("/slot/{$slotNew->id}/user/{$booking->user_id}/confirmation"));
 
             $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
 
@@ -323,21 +340,23 @@ class UserController extends Controller
             Storage::disk('public')->put($image_qr_code, $image);
 
             DB::table('slot_user')->insert([
-                'slot_id'           => $slotID->id,
+                'slot_id'           => $slotNew->id,
                 'user_id'           => Auth::user()->id,
                 'booking_detail_id' => $booking->booking_detail->id,
                 'qr_code_status'    => 'Accepted',
-                'qr_code'           => $image_name
+                'qr_code'           => $image_name,
+                "created_at"        => Carbon::now(),
+                "updated_at"        => Carbon::now(),
             ]);
 
-            $slot = Slot::find($slotID->id);
+            $slot = Slot::find($slotNew->id);
             $slotCapacity = $slot->capacity_booked + 1;
             $slot->capacity_booked = $slotCapacity;
             $slot->update();
 
             if (!$slot) {
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data 4.');
+                Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
             DB::commit();
@@ -362,5 +381,55 @@ class UserController extends Controller
             'bank_payment',
             'booking'
         ));
+    }
+
+    public function rating($id)
+    {
+        $bookingDetail = BookingDetail::find($id);
+
+        if($bookingDetail->userAverageRating)
+        {
+            Alert::error('Error', 'Something wrong')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+        $slot_user = DB::table('slot_user')
+                        ->where('booking_detail_id', $id)
+                        ->where('horse_id', '!=', null)
+                        ->where('coach_id', '!=', null)
+                        ->first();
+
+        $horse      = Horse::findOrFail($slot_user->horse_id);
+        $coach      = Coach::findOrFail($slot_user->coach_id);
+        $stable     = Stable::findOrFail($horse->stable_id);
+        $package    = Package::findOrFail($bookingDetail->package_id);
+
+        return view("booking.rating", compact('horse', 'coach', 'stable','package','id'));
+    }
+
+    public function ratingStore(Request $request)
+    {
+        $stable            = Stable::find($request->stable_id);
+        $stable->rate($request->stable_rate);
+
+        $horse             = Horse::find($request->horse_id);
+        $horse->rate($request->coach_rate);
+
+        $coach             = Coach::find($request->coach_id);
+        $coach->rate($request->coach_rate);
+
+        $package           = Package::find($request->package_id);
+        $package->rate($request->package_rate);
+        
+        $bookingDetail     = BookingDetail::find($request->booking_detail_id);
+        $bookingDetail->rate($request->stable_rate);
+
+        if($stable and $horse and $coach and $package)
+        {
+            Alert::success('Success', 'Your rating submitted')->persistent(true)->autoClose(3600);
+            return redirect()->route('user.order_history.index');
+        }
+
+        Alert::error('Error', 'Check your data')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 }

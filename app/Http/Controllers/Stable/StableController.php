@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Traits\MediaUploadingTrait;
 use App\Mail\StableAdminSendSubmitApproval;
+use App\Mail\StableResetKey;
+use App\Models\BookingDetail;
+use App\Models\Booking;
+use App\Models\Slot;
 
 class StableController extends Controller
 {
@@ -202,6 +206,36 @@ class StableController extends Controller
         return redirect()->route('stable.stable_key.confirm');
     }
 
+    public function stableKeyForget()
+    {
+        return view('stable.stable-key-forget');
+    }
+
+    public function stableKeyForgetStore()
+    {
+        $stable = Auth::user()->stables->first();
+
+        $key_stable              = Carbon::now()->format('YmdHi');
+        $stable->key_stable      = $key_stable;
+        
+        $stable->update();
+        
+        $users = DB::table('stable_user')
+                    ->where('stable_id', $stable->id)
+                    ->get();
+        
+        foreach ($users as $user) {
+            $send = User::where('id', $user->user_id)->first();
+            $send->notify(new StableResetKey($stable));
+        }
+
+
+        if($stable){
+            Alert::success('Success', 'Stable key has been reset, please check your email')->persistent(true)->autoClose(3600);
+            return redirect()->route('stable.stable_key.confirm');
+        }
+    }
+
     public function stepTwoApprovalRequest(Stable $stable)
     {
         $stable->approval_status = 'Step 2 Need Approval';
@@ -230,5 +264,54 @@ class StableController extends Controller
         ->persistent(true)->autoClose(3600);
 
         return redirect()->back();
+    }
+
+    public function assignHorseAndCoach($slot, $user){
+
+        $slot_user = DB::table('slot_user')
+                    ->where('slot_id', $slot)
+                    ->where('user_id', $user)
+                    ->first();        
+    
+        $slot = Slot::find($slot_user->slot_id);
+
+        $stable = Stable::with(['horses','coaches'])->find($slot->stable_id);
+
+        $booking_detail = BookingDetail::with(['package', 'booking.user'])->find($slot_user->booking_detail_id);
+
+        $userData = User::find($user);
+        
+        return view('stable.assign-horse-and-coach', [
+            'booking_detail' => $booking_detail,
+            'stable' => $stable,
+            'slot' => $slot,
+            'user' => $userData
+        ]);
+    }
+
+    public function assignHorseAndCoachStore($slot, $user, Request $request){
+        $slot_user = DB::table('slot_user')
+                    ->where('slot_id', $slot)
+                    ->where('user_id', $user)
+                    ->orderByDesc('id')
+                    ->first();
+
+        DB::table('slot_user')
+            ->where('id', $slot_user->id)
+            ->update([
+                'horse_id' => $request->horse_id,
+                'coach_id' => $request->coach_id,
+                'updated_at' => Carbon::now()
+            ]);
+
+        $booking_detail = BookingDetail::find($slot_user->booking_detail_id);
+
+        $booking = Booking::find($booking_detail->booking_id);
+
+        $booking->approval_status = "Close";
+        $booking->update();
+
+        Alert::success('Success', 'Horse and Coach assigned')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.index');
     }
 }

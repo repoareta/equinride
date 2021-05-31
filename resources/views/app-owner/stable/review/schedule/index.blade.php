@@ -136,6 +136,7 @@
         function load_data(from_date = '', end_date = '')
         {
             var t = $('#dataTable').DataTable({
+                
                 scrollX   : true,
                 processing: true,
                 ordering: true,

@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         // isProfileComplete
         'isProfileComplete' => \App\Http\Middleware\isProfileComplete::class,
         'isStableProfileComplete' => \App\Http\Middleware\isStableProfileComplete::class,
+        'isStableOwner' => \App\Http\Middleware\isStableOwner::class,
         'isHasStable' => \App\Http\Middleware\isHasStable::class,
         'stableKeyConfirm' => \App\Http\Middleware\stableKeyConfirm::class,
     ];

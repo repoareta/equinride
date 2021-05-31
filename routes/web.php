@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('change_password');
         Route::put('/change-password', [UserController::class, 'changePasswordUpdate'])->name('change_password.update');
         Route::get('/order-history', [UserController::class, 'orderHistory'])->name('order_history.index');
+        Route::get('/order-history/{id}/rating', [UserController::class, 'rating'])->name('order_history.rating');
+        Route::post('/order-history/rating', [UserController::class, 'ratingStore'])->name('order_history.rating.store');
         Route::get('/order-history/slots', [UserController::class, 'slots'])->name('order_history.slots');
         Route::get('/order-history/pay/{id}', [UserController::class, 'pay'])->name('order_history.pay');
         Route::get('/order-history/{id}', [UserController::class, 'orderHistoryShow'])->name('order_history.show');
@@ -105,6 +107,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/register-submit', [StableController::class, 'registerSubmit'])->name('register.submit')->middleware('isProfileComplete');
         Route::get('/stable-key-confirm', [StableController::class, 'stableKeyConfirm'])->name('stable_key.confirm');
         Route::post('/stable-key-confirm/store', [StableController::class, 'stableKeyConfirmStore'])->name('stable_key.confirm.store');
+        Route::get('/stable-key-forget', [StableController::class, 'stableKeyForget'])->name('stable_key.forget')->middleware('isStableOwner');
+        Route::post('/stable-key-forget/store', [StableController::class, 'stableKeyForgetStore'])->name('stable_key.forget.store')->middleware('isStableOwner');
         Route::put('/{stable}/step-two-approval-request', [StableController::class, 'stepTwoApprovalRequest'])->name('step_two_approval_request');
         // ONLY STABLE OWNER HAD ACCESS
         Route::group(['middleware' => ['role:stable-owner', 'stableKeyConfirm']], function () {
@@ -191,7 +195,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/settings', [WithdrawController::class, 'withdrawSetting'])->name('setting');
                 Route::put('/settings-store', [WithdrawController::class, 'withdrawSettingStore'])->name('setting.store');
             });
+
         });
+    });
+
+    Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete', 'stableKeyConfirm'], 'prefix' => 'slot', 'as' => 'slot.'], function () {
+        
+            Route::get('/{slot}/user/{user}/confirmation', [StableController::class, 'assignHorseAndCoach'])->name('index');
+            Route::put('/{slot}/user/{user}/confirmation', [StableController::class, 'assignHorseAndCoachStore'])->name('store');
+        
     });
     // STABLE END
 

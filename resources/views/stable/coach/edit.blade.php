@@ -23,6 +23,7 @@
             <!--end::Header-->
             <!--begin::Form-->
             <form class="form" method="post" name="createform" id="createform" action="{{ route('stable.coach.update', $item->id) }}" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
                 <!--begin::Body-->
                 <input type="hidden" class="coachid" name="coachid" id="coachid" value="">

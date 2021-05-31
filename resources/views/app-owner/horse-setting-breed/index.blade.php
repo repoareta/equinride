@@ -61,7 +61,7 @@
 <!--End::dataTable-->
 <script type="text/javascript">
     $(document).ready( function () {
-        var t = $('#dataTable').DataTable({
+        var t = $('#dataTable').DataTable({            
 			scrollX   : true,
             processing: true,
             ordering: true,
