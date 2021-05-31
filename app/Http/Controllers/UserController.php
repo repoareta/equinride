@@ -144,13 +144,10 @@ class UserController extends Controller
                     return '<span class="float-right">Rp. '.$price.'</span>';
                 })
                 ->addColumn('action', function ($item) {
-                    if ($item->approval_status == 'Close') {
+                    if ($item->booking->approval_status == 'Close') {
                         return
                             '
                             <td nowrap="nowrap">
-                                <a href="#" class="btn btn-clean btn-icon mr-2" title="Edit">
-                                    <i class="la la-eye icon-xl"></i>
-                                </a>
                                 <a href="#" class="btn btn-clean btn-icon mr-2" title="Detail">
                                     <i class="far fa-star"></i>
                                 </a>
@@ -198,8 +195,9 @@ class UserController extends Controller
         $data = Booking::with(['bank','booking_detail', 'booking_detail.package', 'booking_detail.package.stable'])->find($id);
         $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->count();
         if ($slot_user > 1) {
-            $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->get()->last();
+            $slot_user = DB::table('slot_user')->where('booking_detail_id', $data->booking_detail->id)->orderByDesc('id')->first();            
             $slot = Slot::find($slot_user->slot_id);
+            // dd($slot_user);
             return view('booking.booking-history-detail', compact('data', 'slot_user', 'slot'));
         }
         if ($slot_user = 1) {
@@ -289,7 +287,8 @@ class UserController extends Controller
             DB::table('slot_user')
             ->where('id', $sid)
             ->update([
-                'qr_code_status' => "Reschedule"
+                'qr_code_status' => "Reschedule",
+                "updated_at"     => Carbon::now(),
             ]);
             $slots = DB::table('slot_user')
                     ->where('id', $sid)
@@ -306,11 +305,11 @@ class UserController extends Controller
                 Alert::error('Reschedule Error.', 'Check your own data.');
                 return redirect()->back();
             }
-            $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
+            $slotNew = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
             
 
-            if ($slot->id == $slotID->id) {
+            if ($slot->id == $slotNew->id) {
                 DB::rollback();
                 Alert::error('Reschedule Error.', 'Cannot choose same date and time.');
                 return redirect()->back();
@@ -320,7 +319,7 @@ class UserController extends Controller
             // generate QrCode for each sloton package that have been ordered
             $image = QrCode::format('png')
             ->size(200)
-            ->generate(url("/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+            ->generate(url("/slot/{$slotNew->id}/user/{$booking->user_id}/confirmation"));
 
             $image_qr_code = 'user/package/qr-code/web-'.time().'.png';
 
@@ -329,14 +328,16 @@ class UserController extends Controller
             Storage::disk('public')->put($image_qr_code, $image);
 
             DB::table('slot_user')->insert([
-                'slot_id'           => $slotID->id,
+                'slot_id'           => $slotNew->id,
                 'user_id'           => Auth::user()->id,
                 'booking_detail_id' => $booking->booking_detail->id,
                 'qr_code_status'    => 'Accepted',
-                'qr_code'           => $image_name
+                'qr_code'           => $image_name,
+                "created_at"        => Carbon::now(),
+                "updated_at"        => Carbon::now(),
             ]);
 
-            $slot = Slot::find($slotID->id);
+            $slot = Slot::find($slotNew->id);
             $slotCapacity = $slot->capacity_booked + 1;
             $slot->capacity_booked = $slotCapacity;
             $slot->update();

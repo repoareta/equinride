@@ -29,7 +29,7 @@
                 <div class="card-body p-5">
                     <div class="form-group">
                         <select class="form-control select2" placeholder="Select Stable" name="stable_name" id="stable_name">
-                            <option value="">Selet Stable</option>
+                            <option value="">Select Stable</option>
                             @foreach ($stables as $stable)
                                 <option value="{{ $stable->name }}" @if($stable->name == request()->input('stable_name')) selected @endif>{{ $stable->name }}</option>
                             @endforeach

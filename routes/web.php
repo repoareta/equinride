@@ -193,7 +193,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/settings', [WithdrawController::class, 'withdrawSetting'])->name('setting');
                 Route::put('/settings-store', [WithdrawController::class, 'withdrawSettingStore'])->name('setting.store');
             });
+
         });
+    });
+
+    Route::group(['middleware' => ['role:stable-owner|stable-admin', 'isStableProfileComplete', 'stableKeyConfirm'], 'prefix' => 'slot', 'as' => 'slot.'], function () {
+        
+            Route::get('/{slot}/user/{user}/confirmation', [StableController::class, 'assignHorseAndCoach'])->name('index');
+            Route::put('/{slot}/user/{user}/confirmation', [StableController::class, 'assignHorseAndCoachStore'])->name('store');
+        
     });
     // STABLE END
 

@@ -81,6 +81,8 @@
 
 		@include('layouts.scripts')
 
+		@stack('page-scripts')
+		
 		@include('sweetalert::alert')	
 	</body>
 

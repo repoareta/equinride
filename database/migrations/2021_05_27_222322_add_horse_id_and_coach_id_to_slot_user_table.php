@@ -14,7 +14,11 @@ class AddHorseIdAndCoachIdToSlotUserTable extends Migration
     public function up()
     {
         Schema::table('slot_user', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('horse_id')->nullable();
+            $table->unsignedBigInteger('coach_id')->nullable();
+
+            $table->foreign('horse_id')->references('id')->on('horses');
+            $table->foreign('coach_id')->references('id')->on('coaches');
         });
     }
 

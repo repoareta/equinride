@@ -23,6 +23,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Traits\MediaUploadingTrait;
 use App\Mail\StableAdminSendSubmitApproval;
 use App\Mail\StableResetKey;
+use App\Models\BookingDetail;
+use App\Models\Booking;
+use App\Models\Slot;
 
 class StableController extends Controller
 {
@@ -261,5 +264,54 @@ class StableController extends Controller
         ->persistent(true)->autoClose(3600);
 
         return redirect()->back();
+    }
+
+    public function assignHorseAndCoach($slot, $user){
+
+        $slot_user = DB::table('slot_user')
+                    ->where('slot_id', $slot)
+                    ->where('user_id', $user)
+                    ->first();        
+    
+        $slot = Slot::find($slot_user->slot_id);
+
+        $stable = Stable::with(['horses','coaches'])->find($slot->stable_id);
+
+        $booking_detail = BookingDetail::with(['package', 'booking.user'])->find($slot_user->booking_detail_id);
+
+        $userData = User::find($user);
+        
+        return view('stable.assign-horse-and-coach', [
+            'booking_detail' => $booking_detail,
+            'stable' => $stable,
+            'slot' => $slot,
+            'user' => $userData
+        ]);
+    }
+
+    public function assignHorseAndCoachStore($slot, $user, Request $request){
+        $slot_user = DB::table('slot_user')
+                    ->where('slot_id', $slot)
+                    ->where('user_id', $user)
+                    ->orderByDesc('id')
+                    ->first();
+
+        DB::table('slot_user')
+            ->where('id', $slot_user->id)
+            ->update([
+                'horse_id' => $request->horse_id,
+                'coach_id' => $request->coach_id,
+                'updated_at' => Carbon::now()
+            ]);
+
+        $booking_detail = BookingDetail::find($slot_user->booking_detail_id);
+
+        $booking = Booking::find($booking_detail->booking_id);
+
+        $booking->approval_status = "Close";
+        $booking->update();
+
+        Alert::success('Success', 'Horse and Coach assigned')->persistent(true)->autoClose(3600);
+        return redirect()->route('stable.index');
     }
 }

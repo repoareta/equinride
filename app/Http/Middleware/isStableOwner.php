@@ -22,12 +22,13 @@ class isStableOwner
         $stable = Auth::user()->stables->first();
 
         // cek role stable owner
-        $user = User::whereHas("roles", function ($q) {
+        $user = User::where('id', Auth::user()->id)->whereHas("roles", function ($q) {
             $q->where("name", "stable-owner");
-        })->get();
-
+        })->first();
+        
+        
         if ($stable and
-            $user) {
+            $user != null) {
             // Lolos ke next route
             return $next($request);
         }

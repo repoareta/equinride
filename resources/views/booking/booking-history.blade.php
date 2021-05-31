@@ -28,7 +28,7 @@
             <!--end::Header-->
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTable" style="width:100%">
+                    <table class="table table-separate table-head-custom table-checkable nowrap" id="dataTables" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -58,11 +58,12 @@
 <!--End::dataTable-->
 <script type="text/javascript">
     $(document).ready( function () {
-        var t = $('#dataTable').DataTable({
+        var t = $('#dataTables').DataTable({
 			scrollX   : true,
             processing: true,
             ordering: true,
             serverSide: true,
+            "bDestroy": true,
             ajax: {
                 url : '{!! url()->current() !!}'
             },
